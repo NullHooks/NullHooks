@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>D:\DATACORE\004-PROYECTOS\004-CPP\cheat\csgo\001\output\debug\csgo-cheat.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>D:\DATACORE\004-PROYECTOS\004-CPP\cheat\csgo\001\dependencies\interfaces\i_player_movement.hpp</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
