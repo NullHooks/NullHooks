@@ -6,12 +6,14 @@ I am learning c++, so it was hard for me to do the simplest thing. Don't be too 
 Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
 
 ## Features:
-#### Visuals:
+#### Visuals - ESP:
 * Enable/disable team glow
 * Glow
 * Name ESP
 * Health ESP
 * Line
 * C4 ESP
+#### Visuals - Others:
+* Noflash
 #### Misc:
 * BunnyHop
