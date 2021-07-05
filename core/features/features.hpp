@@ -15,4 +15,14 @@ namespace visuals {
 	void glowesp();
 	void snaplineesp();
 	void drawc4();
+
+	namespace noflash {
+		void handle();
+	}
+}
+
+namespace legitbot
+{
+	player_t* GetBestTarget(c_usercmd* cmd);
+	void AimBot(c_usercmd* cmd);
 }

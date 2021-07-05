@@ -22,8 +22,10 @@ void menu::render() {
 	switch (current_tab) {
 	case 0:
 		menu_framework::group_box(variables::menu::x + 110, variables::menu::y + 35, 285, 260, render::fonts::watermark_font, "Aimbot", false); {
-			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 45, variables::menu::x + 375, render::fonts::watermark_font, "Legit aim (test bool)", variables::test_bool);
-			menu_framework::slider(variables::menu::x + 120, variables::menu::y + 60, 125, render::fonts::watermark_font, "FOV (test slider)", variables::test_float, -101.f, 101.f);
+			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 45, variables::menu::x + 375, render::fonts::watermark_font, "Legit aimbot", variables::aimbot_bool);
+			menu_framework::slider(variables::menu::x + 120, variables::menu::y + 60, 125, render::fonts::watermark_font, "Aimbot FOV", variables::aimbot_fov, 0.f, 10.f);
+			menu_framework::slider(variables::menu::x + 120, variables::menu::y + 75, 125, render::fonts::watermark_font, "Aimbot smoothing", variables::aimbot_smoothing, 1.f, 5.f);
+			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 90, variables::menu::x + 375, render::fonts::watermark_font, "Only visible", variables::aimbot_isvisiblecheck);
 		}
 		break;
 	case 1:
@@ -35,6 +37,7 @@ void menu::render() {
 			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 120, variables::menu::x + 375, render::fonts::watermark_font, "Health ESP", variables::healthesp);
 			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 135, variables::menu::x + 375, render::fonts::watermark_font, "Line ESP", variables::snaplineesp);
 			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 150, variables::menu::x + 375, render::fonts::watermark_font, "C4 ESP", variables::drawc4);
+			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 180, variables::menu::x + 375, render::fonts::watermark_font, "No flash", variables::noflash_bool);
 		}
 		break;
 	case 2:

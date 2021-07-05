@@ -1,10 +1,13 @@
 #pragma once
 
 namespace variables {
-	// Misc
-	inline bool test_bool = false;
-	inline float test_float = 0.f;
-	inline bool bhop_bool = false;
+	
+	// Legitbot
+	inline bool aimbot_bool = false;
+	inline float aimbot_fov = 0.f;
+	inline float aimbot_smoothing = 2.f;
+	inline bool aimbot_isvisiblecheck = true;
+
 	// Visuals
 	inline bool showteamesp = false;
 	inline bool boxesp = false;
@@ -13,7 +16,10 @@ namespace variables {
 	inline bool glowesp = false;
 	inline bool snaplineesp = false;
 	inline bool drawc4 = false;
+	inline bool noflash_bool  = false;
 	
+	// Misc
+	inline bool bhop_bool = true;
 
 	namespace menu {
 		inline bool opened = false;

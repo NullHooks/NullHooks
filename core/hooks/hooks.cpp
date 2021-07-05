@@ -89,6 +89,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		visuals::snaplineesp();
 		visuals::drawc4();
 
+		visuals::noflash::handle();
+
 		menu::toggle();
 		menu::render();
 
