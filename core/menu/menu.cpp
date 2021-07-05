@@ -43,6 +43,7 @@ void menu::render() {
 	case 2:
 		menu_framework::group_box(variables::menu::x + 110, variables::menu::y + 35, 285, 260, render::fonts::watermark_font, "Misc", false); {
 			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 45, variables::menu::x + 375, render::fonts::watermark_font, "Bhop", variables::bhop_bool);
+			menu_framework::check_box(variables::menu::x + 120, variables::menu::y + 60, variables::menu::x + 375, render::fonts::watermark_font, "Spectator list", variables::spectator_list_bool);
 		}
 		break;
 	}

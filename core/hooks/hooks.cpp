@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../dependencies/utilities/csgo.hpp"
 #include "../features/features.hpp"
 #include "../features/misc/engine_prediction.hpp"
@@ -90,6 +90,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		visuals::drawc4();
 
 		visuals::noflash::handle();
+		misc::spectators();
 
 		menu::toggle();
 		menu::render();

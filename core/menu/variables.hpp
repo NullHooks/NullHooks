@@ -20,6 +20,7 @@ namespace variables {
 	
 	// Misc
 	inline bool bhop_bool = true;
+	inline bool spectator_list_bool = true;
 
 	namespace menu {
 		inline bool opened = false;

@@ -6,6 +6,7 @@ namespace misc {
 	namespace movement {
 		void bunny_hop(c_usercmd* cmd);
 	};
+	void spectators();
 }
 
 namespace visuals {
