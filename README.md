@@ -17,3 +17,4 @@ Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/) an
 * Noflash
 #### Misc:
 * BunnyHop
+* Spectator list
