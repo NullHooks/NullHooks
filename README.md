@@ -3,7 +3,7 @@
 
 I am learning c++, so it was hard for me to do the simplest thing. Don't be too hard if there is a lot wrong, my goal is not to make a perfect cheat.
 
-Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
+Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [CoolHack](https://github.com/StrafeTool/CoolHack) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
 
 ## Features:
 #### Visuals - ESP:
