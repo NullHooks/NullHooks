@@ -18,3 +18,6 @@ Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [
 #### Misc:
 * BunnyHop
 * Spectator list
+
+## Screenshots:
+![Screenshot 1](Screenshots/screenshot1.png)
