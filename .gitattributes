@@ -1,3 +1,5 @@
 *.cpp linguist-detectable=false
 *.hpp linguist-detectable=false
+*.h linguist-detectable=false
+*.c linguist-detectable=false
 CMakeLists.txt linguist-detectable=false
