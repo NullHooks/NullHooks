@@ -1,0 +1,4 @@
+*.hpp linguist-detectable=false
+*.h linguist-detectable=false
+dependencies/* linguist-vendored
+source-sdk/* linguist-vendored
