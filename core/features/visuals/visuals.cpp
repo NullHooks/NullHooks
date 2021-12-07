@@ -48,3 +48,9 @@ void visuals::boxesp()
 		}
 	}
 }
+
+// ------------------------------
+
+// Tracers?
+// Custom fov?
+// Custom netgraph / speed indicator?

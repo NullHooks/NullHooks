@@ -21,10 +21,12 @@ void misc::custom_crosshair() {
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
 
-		int pos_x = wa / 2 - 1;
-		int pos_y = ha / 2 - 1;
+		int pos_x = wa / 2;
+		int pos_y = ha / 2;
 
-		interfaces::surface->set_drawing_color(181, 0, 0, 240);
-		interfaces::surface->draw_filled_rectangle(pos_x, pos_y, 2, 2);
+		render::draw_line(pos_x - 5, pos_y - 5, pos_x - 1, pos_y - 1, color::red(255));
+		render::draw_line(pos_x + 5, pos_y + 5, pos_x + 1, pos_y + 1, color::red(255));
+		render::draw_line(pos_x + 5, pos_y - 5, pos_x + 1, pos_y - 1, color::red(255));
+		render::draw_line(pos_x - 5, pos_y + 5, pos_x - 1, pos_y + 1, color::red(255));
 	}
 }

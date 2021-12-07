@@ -18,3 +18,34 @@ namespace visuals {
 		void handle();
 	}
 }
+
+// -----------------------------------------------------
+
+/*
+class cbullet_tracer
+{
+public:
+    void log(i_game_event* event);
+    void render();
+private:
+    class cbullet_tracer_info
+    {
+    public:
+        
+        cbullet_tracer_info(vec3_t src, vec3_t dst, float time, color color)
+        {
+            this->src = src;
+            this->dst = dst;
+            this->time = time;
+            this->color = color;
+        }
+        
+        vec3_t src, dst;
+        float time;
+        color color;
+    };
+
+    std::vector<cbullet_tracer_info> logs;
+};
+
+*/

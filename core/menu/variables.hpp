@@ -13,6 +13,7 @@ namespace variables {
 	inline bool boxesp = false;
 	
 	inline bool noflash_bool  = false;
+	inline bool draw_stats_bool = false;
 	
 	// Misc
 	inline bool bhop_bool = true;

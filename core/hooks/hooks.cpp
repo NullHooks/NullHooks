@@ -26,6 +26,7 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to enable hooks.");
 
 	console::log("[setup] hooks initialized!\n");
+	interfaces::console->console_color_printf(color::green(255), "[NullHooks] NullHooks loaded!");
 	return true;
 }
 
@@ -78,7 +79,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 	case fnv::hash("MatSystemTopPanel"):
-		render::draw_text_string(7, 10, render::fonts::watermark_font, "NullHooks Lite Tester", false, color::red(255));
+		render::draw_text_string(5, 20, render::fonts::watermark_font, "NullHooks Lite", false, color::red(255));
 
 		visuals::boxesp();
 
