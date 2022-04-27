@@ -5,19 +5,25 @@ I am learning c++, so it was hard for me to do the simplest thing. Don't be too 
 
 Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [CoolHack](https://github.com/StrafeTool/CoolHack) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
 
-## Features:
-#### Visuals - ESP:
-* Enable/disable team glow
-* Glow
-* Name ESP
-* Health ESP
-* Line
-* C4 ESP
-#### Visuals - Others:
-* Noflash
-#### Misc:
-* BunnyHop
-* Spectator list
+## Features
+### Visuals - ESP
+- Enable/disable team glow
+- Glow
+- Name ESP
+- Health ESP
+- Line
+- C4 ESP
 
-## Screenshots:
+### Visuals - Others
+- Noflash
+
+### Misc:
+- BunnyHop
+- Spectator list
+
+## Todo
+- [ ] Clean the code
+- [ ] Continue development :^)
+
+## Screenshots
 ![Screenshot 1](Screenshots/screenshot1.png)
