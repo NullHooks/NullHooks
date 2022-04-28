@@ -30,6 +30,7 @@ bool hooks::initialize() {
 
 	//interfaces::engine->execute_cmd("echo Hooks initialized!");
 	custom_helpers::state_to_console("Hooks", "Hooks initialized!");
+	custom_helpers::print_to_console("---------- Welcome to NullHooks ----------\n\n");
 
 	return true;
 }
@@ -78,7 +79,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 		case fnv::hash("MatSystemTopPanel"):
-			render::draw_text_string(15, 15, render::fonts::watermark_font, "NullHooks Lite  :^)", false, color::red(255));
+			render::draw_text_string(15, 15, render::fonts::watermark_font, "NullHooks Lite", false, color::red(255));
 
 			visuals::boxesp();
 			visuals::nameesp();
