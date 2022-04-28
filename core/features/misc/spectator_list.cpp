@@ -1,5 +1,6 @@
 #include "../features.hpp"
 
+//TODO: Reduce window size depending on number of spectators
 void misc::spectators()
 {
 	if (!variables::spectator_list_bool) return;
@@ -9,8 +10,8 @@ void misc::spectators()
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
 
-		int pos_x = 10;
-		int pos_y = ha / 2 + 20;
+		inline const int pos_x = 10;
+		inline const int pos_y = ha / 2 + 20;
 
 		int loop = 0;
 
@@ -35,12 +36,13 @@ void misc::spectators()
 				if (spec == nullptr) continue;
 				player_info_t spec_info;
 				interfaces::engine->get_player_info(i, &spec_info);
-				char buf[255]; sprintf_s(buf, "%s", pinfo.name);
+				char buf[255];
+				sprintf_s(buf, "%s", pinfo.name);
 
 				if (strstr(pinfo.name, "GOTV")) continue;
 
 				if (spec->index() == csgo::local_player->index()) {
-					render::draw_text_string(pos_x + 5, (pos_y + (14 * loop)), render::fonts::watermark_font, buf, false, color(255, 255, 255));
+					render::draw_text_string(pos_x + 5, (pos_y + 5 + (14 * loop)), render::fonts::watermark_font, buf, false, color(255, 255, 255));
 					loop++;
 				}
 			}

@@ -33,7 +33,6 @@ void misc::custom_crosshair() {
 			custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
 		}
 
-
 		render::draw_line(pos_x - 5, pos_y - 5, pos_x - 1, pos_y - 1, color::red(255));
 		render::draw_line(pos_x + 5, pos_y + 5, pos_x + 1, pos_y + 1, color::red(255));
 		render::draw_line(pos_x + 5, pos_y - 5, pos_x + 1, pos_y - 1, color::red(255));
