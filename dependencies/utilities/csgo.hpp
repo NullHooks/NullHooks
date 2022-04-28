@@ -26,8 +26,8 @@
 #include "../utilities/csgo.hpp"
 
 //interfaces
-//#define sig_client_state "A1 ? ? ? ? 8B 80 ? ? ? ? C3"
-#define sig_client_state "A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0"
+#define sig_client_state "A1 ? ? ? ? 8B 80 ? ? ? ? C3"
+//#define sig_client_state "A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0"
 #define sig_directx "A1 ? ? ? ? 50 8B 08 FF 51 0C"
 #define sig_input "B9 ? ? ? ? F3 0F 11 04 24 FF 50 10"
 #define sig_glow_manager "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00"
