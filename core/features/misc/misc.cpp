@@ -20,7 +20,7 @@ void misc::custom_crosshair() {
 		return;
 	}
 
-	if (interfaces::engine->is_connected() && csgo::local_player->is_alive()) {
+	if (interfaces::engine->is_connected()) {
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
 
