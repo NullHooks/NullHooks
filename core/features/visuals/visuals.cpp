@@ -55,14 +55,10 @@ void visuals::nameesp()
 	for (int iPlayer = 0; iPlayer < interfaces::globals->max_clients; iPlayer++)
 	{
 		auto pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
-		if (!pCSPlayer)
-			continue;
-		if (pCSPlayer == csgo::local_player)
-			continue;
-		if (pCSPlayer->dormant())
-			continue;
-		if (!(pCSPlayer->is_alive() && pCSPlayer->health() > 0))
-			continue;
+		if (!pCSPlayer) continue;
+		if (pCSPlayer == csgo::local_player) continue;
+		if (pCSPlayer->dormant()) continue;
+		if (!(pCSPlayer->is_alive() && pCSPlayer->health() > 0)) continue;
 
 		vec3_t vecHead, vecHeadScreen;
 		vecHead = pCSPlayer->get_bone_position(8);
