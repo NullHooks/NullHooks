@@ -78,7 +78,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 		case fnv::hash("MatSystemTopPanel"):
-			render::draw_text_string(10, 20, render::fonts::watermark_font, "NullHooks Lite", false, color::red(255));
+			render::draw_text_string(15, 15, render::fonts::watermark_font, "NullHooks Lite  :^)", false, color::red(255));
 
 			visuals::boxesp();
 			visuals::nameesp();
