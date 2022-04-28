@@ -2,4 +2,4 @@
 **The fucking cheat I made but with less features.**
 
 ### Todo:
-- [ ] Clean the code
+- [X] Clean the code
