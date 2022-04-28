@@ -4,6 +4,44 @@
 POINT cursor;
 POINT cursor_corrected;
 
+/*------------------------------------------------------*/
+
+void custom_menu_framework::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, int function_id) {
+	GetCursorPos(&cursor);
+
+	const int w = 30, h = 10;	// Button size
+	const color c_default = color(150, 22, 22, 255);
+	const color c_hover = color(135, 21, 21, 255);
+
+	// Checkbox label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+
+	// Cursor in button and clicked
+	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
+		render::draw_filled_rect(butt_pos, y, w, h, color(135, 21, 21, 255));		// Checkbox background (Hover)
+		if (GetAsyncKeyState(VK_LBUTTON) & 1) menu_button_fuctions::exec_button_function(function_id);
+	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+}
+
+void custom_menu_framework::unhook_button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
+	GetCursorPos(&cursor);
+
+	const int w = 30, h = 10;	// Button size
+	const color c_default = color(150, 22, 22, 255);
+	const color c_hover = color(135, 21, 21, 255);
+
+	// Checkbox label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+
+	// Cursor in button and clicked
+	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
+		render::draw_filled_rect(butt_pos, y, w, h, color(135, 21, 21, 255));		// Checkbox background (Hover)
+		if (GetAsyncKeyState(VK_LBUTTON) & 1) hooks::release();						// (*my_func) ?
+	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+}
+
+/*------------------------------------------------------*/
+
 void menu_framework::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
 	//groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));

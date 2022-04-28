@@ -11,3 +11,12 @@ namespace menu_framework {
 	inline bool should_drag = false;
 	inline bool should_move = false; 
 };
+
+namespace custom_menu_framework {
+	void button(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int function_id);
+	void unhook_button(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string);
+};
+
+namespace menu_button_fuctions {
+	void exec_button_function(int id);
+};

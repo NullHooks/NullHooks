@@ -31,7 +31,8 @@ bool interfaces::initialize() {
 	move_helper = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
 
-	console->console_printf("[NullHooks] [Setup] interfaces initialized!\n");
+	console->console_printf("\n-------------------------------------------\n");
+	console->console_printf("[NullHooks] [Setup] Interfaces initialized!\n");
 
 	return true;
 }
