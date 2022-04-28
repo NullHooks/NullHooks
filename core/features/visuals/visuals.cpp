@@ -44,8 +44,6 @@ void visuals::boxesp()
 	}
 }
 
-// ------------------------------
-
 void visuals::nameesp()
 {
 	if (!variables::nameesp_bool) return;
@@ -63,20 +61,15 @@ void visuals::nameesp()
 		vec3_t vecHead, vecHeadScreen;
 		vecHead = pCSPlayer->get_bone_position(8);
 		vecHead.z += 20.f;
-		if (!(math::world_to_screen(vecHead, vecHeadScreen)))
-			continue;
+		if (!(math::world_to_screen(vecHead, vecHeadScreen))) continue;
 
 		player_info_t playerinfo;
 		interfaces::engine->get_player_info(iPlayer, &playerinfo);
 
 		if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp)
-		{
 			render::draw_text_string(vecHeadScreen.x, vecHeadScreen.y, render::fonts::watermark_font, playerinfo.name, true, color::blue());
-		}
 		else if (pCSPlayer->team() != csgo::local_player->team())
-		{
 			render::draw_text_string(vecHeadScreen.x, vecHeadScreen.y, render::fonts::watermark_font, playerinfo.name, true, color::red());
-		}
 	}
 }
 
