@@ -10,3 +10,13 @@ namespace menu {
 	void render();
 	void toggle();
 };
+
+namespace watermark {
+	void draw();
+	void draw_stats();
+
+	namespace helpers {
+		int  get_fps() noexcept;
+		std::string get_timestamp_string() noexcept;
+	};
+};

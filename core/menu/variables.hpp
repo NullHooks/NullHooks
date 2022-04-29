@@ -31,5 +31,10 @@ namespace variables {
 		inline bool opened = false;
 		inline int x = 140, y = 140;
 		inline int w = 300, h = 250;
-	}
+	};
+
+	namespace watermark {
+		inline int y = 10;
+		inline int x = 15;
+	};
 }
