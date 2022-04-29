@@ -3,6 +3,8 @@
 
 ### Todo:
 - [X] Clean the code
+- [ ] Choose team not working (click)
+- [ ] Move *NullHooks-Lite* to *NullHooks* branches
 
 ### Media:
 ![Screenshot 1](screenshots/screenshot1.jpg)
