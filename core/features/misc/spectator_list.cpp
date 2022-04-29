@@ -10,8 +10,8 @@ void misc::spectators()
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
 
-		inline const int pos_x = 10;
-		inline const int pos_y = ha / 2 + 20;
+		const int pos_x = 10;
+		const int pos_y = ha / 2 + 20;
 
 		int loop = 0;
 
