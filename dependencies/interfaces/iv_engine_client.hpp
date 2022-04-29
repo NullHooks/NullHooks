@@ -66,7 +66,6 @@ public:
 	}
 
 	void get_view_angles(vec3_t& angles) {
-		// TODO: IMPORTANT!
 		return utilities::call_virtual<void(__thiscall*)(void*, vec3_t&)>(this, 18)(this, angles);
 	}
 

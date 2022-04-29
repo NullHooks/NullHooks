@@ -20,8 +20,9 @@ bool interfaces::initialize() {
 	game_movement = get_interface<player_game_movement, interface_type::index>("client.dll", "GameMovement001");
 	prediction = get_interface<player_prediction, interface_type::index>("client.dll", "VClientPrediction001");
 
-	/*custom interfaces*/
-	clientmode = **reinterpret_cast<i_client_mode * **>((*reinterpret_cast<uintptr_t * *>(client))[10] + 5);
+	/* Custom interfaces */
+	clientmode = **reinterpret_cast<i_client_mode***>((*reinterpret_cast<uintptr_t**>(client))[10] + 5);	// Original
+	//clientmode = **reinterpret_cast<i_client_mode***>((*reinterpret_cast<unsigned int**>(client))[10] + 5);
 	globals = **reinterpret_cast<c_global_vars_base***>((*reinterpret_cast<uintptr_t**>(client))[11] + 10);
 
 	clientstate = **reinterpret_cast<i_client_state***>(utilities::pattern_scan("engine.dll", sig_client_state) + 1);
