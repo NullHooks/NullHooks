@@ -5,6 +5,10 @@ namespace hooks {
 	void release();
 
 	inline unsigned int get_virtual(void* _class, unsigned int index) { return static_cast<unsigned int>((*static_cast<int**>(_class))[index]); }
+	
+	using AllocKeyValuesMemoryFn = void* (__thiscall*)(void*, const std::int32_t) noexcept;
+	inline AllocKeyValuesMemoryFn AllocKeyValuesMemoryOriginal;
+	void* __stdcall AllocKeyValuesMemory(const std::int32_t size) noexcept;
 
 	namespace create_move {
 		using fn = bool(__stdcall*)(float, c_usercmd*);
