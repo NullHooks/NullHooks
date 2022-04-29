@@ -2,7 +2,7 @@
 
 // https://github.com/notbemji/templehook based on based repo
 void watermark::draw() {
-    render::draw_text_string(variables::watermark::x, variables::watermark::y, render::fonts::watermark_font, "PissHooks frfr", false, color::red(255));
+    render::draw_text_string(variables::watermark::x, variables::watermark::y, render::fonts::watermark_font, "NullHooks Beta", false, color::red(255));
 }
 
 void watermark::draw_stats() {
