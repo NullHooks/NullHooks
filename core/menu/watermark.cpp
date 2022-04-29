@@ -26,7 +26,7 @@ void watermark::draw_stats() {
     else render::draw_text_string(xpos_fps, ypos, render::fonts::watermark_font, "| FPS: " + std::to_string(fps), false, color_h);
 
     if (csgo::local_player) {
-        const int xpos_speed = xpos_fps + 60;
+        const int xpos_speed = xpos_fps + 55;   // No 1k fps... right?
         const int speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 
         if (speed < 95) render::draw_text_string(xpos_speed, ypos, render::fonts::watermark_font, "| Speed: " + std::to_string(speed), false, color_l);
