@@ -70,7 +70,7 @@ namespace interfaces {
 	inline i_input* input;
 	inline i_client_entity_list* entity_list;
 	inline iv_engine_client* engine;
-	inline i_client_mode* clientmode;
+	inline i_client_mode* clientmode = nullptr;
 	inline i_client_state* clientstate;
 	inline i_panel* panel;
 	inline i_surface* surface;

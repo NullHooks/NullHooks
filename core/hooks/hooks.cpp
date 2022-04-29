@@ -7,6 +7,7 @@
 #include "../helpers/misc_helpers.hpp"
 #include "../../source-sdk/sdk.hpp"
 
+hooks::AllocKeyValuesMemoryFn AllocKeyValuesMemoryOriginal;
 hooks::create_move::fn create_move_original = nullptr;
 hooks::paint_traverse::fn paint_traverse_original = nullptr;
 
@@ -21,12 +22,11 @@ bool hooks::initialize() {
 	if (MH_CreateHook(alloc_key_values_target, &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal)) != MH_OK)
 		throw std::runtime_error("failed to initialize alloc_key_values. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "alloc_key_values initialized!");
-
-	// TODO: Fix team selection thing (createmove)
+	
 	if (MH_CreateHook(create_move_target, &create_move::hook, reinterpret_cast<void**>(&create_move_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize create_move. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "create_move initialized!");
-
+	
 	if (MH_CreateHook(paint_traverse_target, &paint_traverse::hook, reinterpret_cast<void**>(&paint_traverse_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize paint_traverse. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "paint_traverse initialized!");
@@ -52,20 +52,17 @@ void hooks::release() {
 	MH_Uninitialize();
 }
 
-void* __stdcall hooks::AllocKeyValuesMemory(const std::int32_t size) noexcept
-{
+void* __stdcall hooks::AllocKeyValuesMemory(const std::int32_t size) {
 	// if function is returning to speficied addresses, return nullptr to "bypass"
 	if (const std::uint32_t address = reinterpret_cast<std::uint32_t>(_ReturnAddress());
 		address == reinterpret_cast<std::uint32_t>(interfaces::key_values_engine) ||
 		address == reinterpret_cast<std::uint32_t>(interfaces::key_values_client))
-		
 		return nullptr;
 
 	// return original
 	return AllocKeyValuesMemoryOriginal(interfaces::key_values_system, size);
 }
 
-// TODO: Fix team selection thing (createmove)
 bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd* cmd) {
 	create_move_original(input_sample_frametime, cmd);
 
@@ -73,15 +70,11 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	csgo::local_player = static_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
 
-	uintptr_t* frame_pointer;
-	__asm mov frame_pointer, ebp;
-	bool& send_packet = *reinterpret_cast<bool*>(*frame_pointer - 0x1C);
+	misc::movement::bunny_hop(cmd);
 
 	auto old_viewangles = cmd->viewangles;
 	auto old_forwardmove = cmd->forwardmove;
 	auto old_sidemove = cmd->sidemove;
-
-	misc::movement::bunny_hop(cmd);
 
 	prediction::start(cmd); {
 	} prediction::end();
