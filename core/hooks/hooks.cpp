@@ -34,7 +34,12 @@ bool hooks::initialize() {
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
 
-	//interfaces::engine->execute_cmd("echo Hooks initialized!");
+	// Reset crosshair
+	if (!variables::crosshair_bool) {
+		interfaces::engine->execute_cmd("crosshair 1");
+		custom_helpers::state_to_console("Crosshair", "Crosshair reset!");
+	}
+
 	custom_helpers::state_to_console("Hooks", "Hooks initialized!");
 	custom_helpers::print_to_console("---------- Welcome to NullHooks ----------\n\n");
 

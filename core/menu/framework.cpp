@@ -18,7 +18,7 @@ void custom_menu_framework::button(std::int32_t x, std::int32_t y, std::int32_t 
 
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(135, 21, 21, 255));		// Checkbox background (Hover)
+		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
 		if (GetAsyncKeyState(VK_LBUTTON) & 1) menu_button_fuctions::exec_button_function(function_id);
 	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
 }
@@ -35,7 +35,7 @@ void custom_menu_framework::unhook_button(std::int32_t x, std::int32_t y, std::i
 
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(135, 21, 21, 255));		// Checkbox background (Hover)
+		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
 		if (GetAsyncKeyState(VK_LBUTTON) & 1) hooks::release();						// (*my_func) ?
 	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
 }
