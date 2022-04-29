@@ -91,6 +91,11 @@ namespace interfaces {
 	inline player_prediction* prediction;
 	inline player_move_helper* move_helper;
 	inline i_weapon_system* weapon_system;
-
+	
+	// https://github.com/cazzwastaken/based/search?q=keyValuesSystem
+	inline void* key_values_system = nullptr;
+	inline std::uint8_t* key_values_engine = nullptr;
+	inline std::uint8_t* key_values_client = nullptr;
+	
 	bool initialize();
 }

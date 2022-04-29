@@ -31,6 +31,14 @@ bool interfaces::initialize() {
 	move_helper = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
 
+	// get the exported KeyValuesSystem function
+	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))
+		// set our pointer by calling the function
+		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();
+	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine) + 1;
+	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client) + 1;
+
+
 	console->console_printf("\n-------------------------------------------\n");
 	console->console_printf("[NullHooks] [Setup] Interfaces initialized!\n");
 
