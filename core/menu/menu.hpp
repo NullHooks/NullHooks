@@ -14,6 +14,7 @@ namespace menu {
 namespace watermark {
 	void draw();
 	void draw_stats();
+	void draw_stats_string(std::string ts, color tscolor, std::string fps, color fpscolor, std::string speed, color speedcolor, bool draw_speed);
 
 	namespace helpers {
 		int  get_fps() noexcept;

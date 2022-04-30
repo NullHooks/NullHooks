@@ -36,8 +36,8 @@ bool interfaces::initialize() {
 	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))
 		// set our pointer by calling the function
 		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();
-	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine) + 1;
-	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client) + 1;
+	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine) + 3;	// FF 52 04 85 C0 74 0C 56
+	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client) + 3;	// FF 52 04 85 C0 74 0C 56
 
 
 	console->console_printf("\n-------------------------------------------\n");
