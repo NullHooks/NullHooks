@@ -19,6 +19,7 @@ bool hooks::initialize() {
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize MH_Initialize.");
 
+	// TODO: Need to fix this?
 	if (MH_CreateHook(alloc_key_values_target, &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal)) != MH_OK)
 		throw std::runtime_error("failed to initialize alloc_key_values. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "alloc_key_values initialized!");
