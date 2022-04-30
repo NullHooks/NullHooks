@@ -4,21 +4,21 @@
 Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [CoolHack](https://github.com/StrafeTool/CoolHack) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
 
 ## Features
-### Visuals - ESP
+#### Visuals - ESP
 - Enable/disable team ESP
 - Box ESP
-<!-- 
 - Name ESP
+<!-- 
 - Health ESP
 - Line
 - C4 ESP
 -->
 
-### Visuals - Others
+#### Visuals - Others
 - No flash
 - Custom crosshair
 
-### Misc:
+#### Misc:
 - BunnyHop
 - Spectator list
 
