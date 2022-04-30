@@ -26,6 +26,7 @@ Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [
 ## Todo:
 - [X] Clean the code
 - [X] Choose team not working (click)
+- [ ] Change spectator list style
 - [ ] Move *NullHooks-Lite* to *NullHooks* branches
 
 ## Screenshots
