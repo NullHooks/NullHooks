@@ -21,6 +21,7 @@ Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [
 #### Misc:
 - BunnyHop
 - Spectator list
+- Stats watermark (*username, time, fps, speed...*)
 
 ## Todo:
 - [X] Clean the code
