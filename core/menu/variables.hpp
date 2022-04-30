@@ -23,7 +23,11 @@ namespace variables {
 	namespace crosshair {
 		const inline bool only_engine_crosshair = true;		// Edit here
 		inline bool using_cs_crosshair = true;
-	}
+
+		inline int crosshair_w = 4;
+		inline int crosshair_len = 5;
+		inline int crosshair_gap = 1;
+	};
 
 	namespace menu {
 		inline bool opened = false;

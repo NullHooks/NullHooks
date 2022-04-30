@@ -24,8 +24,8 @@ void misc::custom_crosshair() {
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
 
-		const int pos_x = wa / 2;
-		const int pos_y = ha / 2;
+		const int mid_x = wa / 2;
+		const int mid_y = ha / 2;
 
 		if (variables::crosshair::only_engine_crosshair && variables::crosshair::using_cs_crosshair) {
 			variables::crosshair::using_cs_crosshair = false;
@@ -33,9 +33,21 @@ void misc::custom_crosshair() {
 			custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
 		}
 
-		render::draw_line(pos_x - 5, pos_y - 5, pos_x - 1, pos_y - 1, color::red(255));
-		render::draw_line(pos_x + 5, pos_y + 5, pos_x + 1, pos_y + 1, color::red(255));
-		render::draw_line(pos_x + 5, pos_y - 5, pos_x + 1, pos_y - 1, color::red(255));
-		render::draw_line(pos_x - 5, pos_y + 5, pos_x - 1, pos_y + 1, color::red(255));
+		/*
+		// Draw diagonal with gap (cod hitmarker) crosshair
+		render::draw_line(mid_x - 5, mid_y - 5, mid_x - 1, mid_y - 1, color::red(255));
+		render::draw_line(mid_x + 5, mid_y + 5, mid_x + 1, mid_y + 1, color::red(255));
+		render::draw_line(mid_x + 5, mid_y - 5, mid_x + 1, mid_y - 1, color::red(255));
+		render::draw_line(mid_x - 5, mid_y + 5, mid_x - 1, mid_y + 1, color::red(255));
+		*/
+
+		render::draw_line(mid_x, mid_y - variables::crosshair::crosshair_len,
+			mid_x, mid_y - variables::crosshair::crosshair_gap, color::red(255));
+		render::draw_line(mid_x, mid_y + variables::crosshair::crosshair_gap,
+			mid_x, mid_y + variables::crosshair::crosshair_len, color::red(255));
+		render::draw_line(mid_x - variables::crosshair::crosshair_len, mid_y,
+			mid_x - variables::crosshair::crosshair_gap, mid_y, color::red(255));
+		render::draw_line(mid_x + variables::crosshair::crosshair_gap, mid_y,
+			mid_x + variables::crosshair::crosshair_len, mid_y, color::red(255));
 	}
 }
