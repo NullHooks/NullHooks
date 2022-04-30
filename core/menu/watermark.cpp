@@ -1,8 +1,43 @@
 #include "menu.hpp"
 
-// https://github.com/notbemji/templehook based on based repo
+/*
+ * Based on based repos:
+ * https://github.com/notbemji/templehook 
+ * https://github.com/notbemji/5shekelcheats
+ */
+
 void watermark::draw() {
-    render::draw_text_string(variables::watermark::x, variables::watermark::y, render::fonts::watermark_font, "NullHooks-Beta", false, color::red(255));
+    const std::string cheat_name = "NullHooks-Beta";
+    if (csgo::local_player) {
+        player_info_t player_info;
+        interfaces::engine->get_player_info(interfaces::engine->get_local_player(), &player_info);
+        const std::string name(player_info.name);
+        const std::string at = "@";
+
+        const color at_color = color(180, 5, 5, 255);
+        const color watermark_color = color::red(255);
+        const std::wstring converted_name = std::wstring(name.begin(), name.end());
+        const std::wstring converted_at = std::wstring(at.begin(), at.end());
+        const std::wstring converted_cn = std::wstring(cheat_name.begin(), cheat_name.end());
+
+        int width, height;
+        interfaces::surface->draw_text_font(render::fonts::watermark_font);
+        interfaces::surface->draw_text_pos(variables::watermark::x, variables::watermark::y);
+
+        interfaces::surface->get_text_size(render::fonts::watermark_font, converted_name.c_str(), width, height);
+        interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
+        interfaces::surface->draw_render_text(converted_name.c_str(), wcslen(converted_name.c_str()));
+        
+        //interfaces::surface->get_text_size(render::fonts::watermark_font, converted_at.c_str(), width, height);
+        interfaces::surface->set_text_color(at_color.r, at_color.g, at_color.b, at_color.a);
+        interfaces::surface->draw_render_text(converted_at.c_str(), wcslen(converted_at.c_str()));
+
+        //interfaces::surface->get_text_size(render::fonts::watermark_font, converted_cn.c_str(), width, height);
+        interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
+        interfaces::surface->draw_render_text(converted_cn.c_str(), wcslen(converted_cn.c_str()));
+    } else {
+        render::draw_text_string(variables::watermark::x, variables::watermark::y, render::fonts::watermark_font, cheat_name, false, color::red(255));
+    }
 }
 
 void watermark::draw_stats() {
@@ -53,36 +88,31 @@ void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps
     const unsigned long font = render::fonts::watermark_font;
     const int margin = 40;
 
-    const auto converted_ts = std::wstring(ts.begin(), ts.end());
-    const auto converted_fps = std::wstring(fps.begin(), fps.end());
+    const std::wstring converted_ts = std::wstring(ts.begin(), ts.end());
+    const std::wstring converted_fps = std::wstring(fps.begin(), fps.end());
 
     interfaces::surface->draw_text_font(font);
 
-    int ts_width, ts_height;
-    interfaces::surface->get_text_size(font, converted_ts.c_str(), ts_width, ts_height);
+    int width, height;
+    interfaces::surface->get_text_size(font, converted_ts.c_str(), width, height);
     interfaces::surface->set_text_color(tscolor.r, tscolor.g, tscolor.b, tscolor.a);
     interfaces::surface->draw_text_pos(x, y);
     interfaces::surface->draw_render_text(converted_ts.c_str(), wcslen(converted_ts.c_str()));
 
-    int fps_width, fps_height;
-    interfaces::surface->get_text_size(font, converted_fps.c_str(), fps_width, fps_height);
+    //interfaces::surface->get_text_size(font, converted_fps.c_str(), width, height);
     interfaces::surface->set_text_color(fpscolor.r, fpscolor.g, fpscolor.b, fpscolor.a);
-    //interfaces::surface->draw_text_pos(x + ts_width + margin, y);
     interfaces::surface->draw_render_text(converted_fps.c_str(), wcslen(converted_fps.c_str()));
 
     if (draw_speed) {
         const std::string speedtext = " | Speed: ";
-        const auto converted_speedtext = std::wstring(speedtext.begin(), speedtext.end());
-        const auto converted_speed = std::wstring(speed.begin(), speed.end());
+        const std::wstring converted_speedtext = std::wstring(speedtext.begin(), speedtext.end());
+        const std::wstring converted_speed = std::wstring(speed.begin(), speed.end());
 
-        int speedtext_width, speedtext_height;
-        interfaces::surface->get_text_size(font, converted_speedtext.c_str(), speedtext_width, speedtext_height);
+        //interfaces::surface->get_text_size(font, converted_speedtext.c_str(), width, height);
         interfaces::surface->set_text_color(tscolor.r, tscolor.g, tscolor.b, tscolor.a);
-        //interfaces::surface->draw_text_pos(x + fps_width + margin, y);
         interfaces::surface->draw_render_text(converted_speedtext.c_str(), wcslen(converted_speedtext.c_str()));
 
         interfaces::surface->set_text_color(speedcolor.r, speedcolor.g, speedcolor.b, speedcolor.a);
-        //interfaces::surface->draw_text_pos(x + speedtext_width + margin, y);
         interfaces::surface->draw_render_text(converted_speed.c_str(), wcslen(converted_speed.c_str()));
     }
 }
