@@ -1,7 +1,7 @@
 # NullHooks
 **CS:GO cheat I made based on the famous base, and many other cheats I found.**
 
-Based on: [csgo-cheat-base](https://github.com/designer1337/csgo-cheat-base/), [CoolHack](https://github.com/StrafeTool/CoolHack) and [LegitInternalSource](https://github.com/clem45/LegitInternalSource)
+Based on: [Click me](REFERENCES.md)
 
 ## Features
 #### Visuals - ESP
