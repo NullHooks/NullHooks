@@ -102,8 +102,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			watermark::draw();
 			watermark::draw_stats();
 
-			visuals::boxesp();
-			visuals::nameesp();
+			visuals::playeresp();
 			visuals::noflash::handle();
 
 			misc::spectators();

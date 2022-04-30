@@ -24,9 +24,9 @@ void menu::render() {
 
 	menu_framework::group_box(variables::menu::x + 5, variables::menu::y + top_margin, variables::menu::w - 10, part1_h - 15, render::fonts::watermark_font, "Visuals", false); {
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_items_margin + (15 * 1), variables::menu::x + variables::menu::w - 25,	// 25 = 15 - check w
-			render::fonts::watermark_font, "Enable team ESP", variables::showteamesp);
+			render::fonts::watermark_font, "Enable team ESP", variables::showteamesp_bool);
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_items_margin + (15 * 2), variables::menu::x + variables::menu::w - 25,
-			render::fonts::watermark_font, "Box ESP", variables::boxesp);
+			render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_items_margin + (15 * 3), variables::menu::x + variables::menu::w - 25,
 			render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_items_margin + (15 * 4), variables::menu::x + variables::menu::w - 25,
