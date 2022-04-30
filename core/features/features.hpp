@@ -13,8 +13,8 @@ namespace misc {
 }
 
 namespace visuals {
-	void boxesp();
-    void nameesp();
+	void playeresp();
+
 	namespace noflash {
 		void handle();
 	}
