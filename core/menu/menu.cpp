@@ -15,9 +15,12 @@ void menu::render() {
 	const int top_margin = 35;
 	const int part1_items_num = 4;
 	const int part1_items_margin = 30;
-	const int part2_con_margin = part1_items_margin - 5;
-	const int part2_items_margin = part1_items_margin - 10;
 	const int part1_h = 15 * part1_items_num + part1_items_margin;
+
+	const int part2_items_num = 2;
+	const int part2_with_margin = part1_items_margin - 5;
+	const int part2_items_margin = part1_items_margin - 10;
+	const int part2_h = 15 * part2_items_num + part2_items_margin;
 
 	do_frame(variables::menu::x, variables::menu::y, variables::menu::w, variables::menu::h,
 		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks Lite");
@@ -35,12 +38,13 @@ void menu::render() {
 		//	render::fonts::watermark_font, "Display stats?", variables::draw_stats_bool);
 	}
 
-	menu_framework::group_box(variables::menu::x + 5, variables::menu::y + part1_h + part2_con_margin , variables::menu::w - 10 , 60 /*TODO: H*/, render::fonts::watermark_font, "Misc", false); {
+	/*menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_h + part2_items_margin + (15 * 2), variables::menu::x + variables::menu::w - 25,
+		render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);*/
+
+	menu_framework::group_box(variables::menu::x + 5, variables::menu::y + part1_h + part2_with_margin, variables::menu::w - 10 , part2_h, render::fonts::watermark_font, "Misc", false); {
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_h + part2_items_margin + (15 * 1), variables::menu::x + variables::menu::w - 25,
 			render::fonts::watermark_font, "Bhop", variables::bhop_bool);
 		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_h + part2_items_margin + (15 * 2), variables::menu::x + variables::menu::w - 25,
-			render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
-		menu_framework::check_box(variables::menu::x + 15, variables::menu::y + part1_h + part2_items_margin + (15 * 3), variables::menu::x + variables::menu::w - 25,
 			render::fonts::watermark_font, "Spectator list", variables::spectator_list_bool);
 	}
 
