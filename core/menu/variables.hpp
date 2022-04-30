@@ -29,7 +29,7 @@ namespace variables {
 
 	namespace menu {
 		inline bool opened = false;
-		inline int x = 140, y = 140;
+		inline int x = 300, y = 200;
 		inline int w = 300, h = 250;
 	};
 
