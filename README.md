@@ -1,7 +1,7 @@
 # NullHooks Lite
 **The fucking cheat I made but with less features.**
 
-⚠️ Continued in [`vs_branch`](https://github.com/r4v10l1/NullHooks-Lite/tree/vs-branch) ⚠️
+⚠️ Continued in [`main`](https://github.com/r4v10l1/NullHooks) ⚠️
 
 ### Todo:
-- [ ] Clean the code
+- [X] Clean the code
