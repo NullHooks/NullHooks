@@ -23,16 +23,14 @@ void watermark::draw() {
         int width, height;
         interfaces::surface->draw_text_font(render::fonts::watermark_font);
         interfaces::surface->draw_text_pos(variables::watermark::x, variables::watermark::y);
-
         interfaces::surface->get_text_size(render::fonts::watermark_font, converted_name.c_str(), width, height);
+
         interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
         interfaces::surface->draw_render_text(converted_name.c_str(), wcslen(converted_name.c_str()));
         
-        //interfaces::surface->get_text_size(render::fonts::watermark_font, converted_at.c_str(), width, height);
         interfaces::surface->set_text_color(at_color.r, at_color.g, at_color.b, at_color.a);
         interfaces::surface->draw_render_text(converted_at.c_str(), wcslen(converted_at.c_str()));
 
-        //interfaces::surface->get_text_size(render::fonts::watermark_font, converted_cn.c_str(), width, height);
         interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
         interfaces::surface->draw_render_text(converted_cn.c_str(), wcslen(converted_cn.c_str()));
     } else {
@@ -94,12 +92,11 @@ void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps
     interfaces::surface->draw_text_font(font);
 
     int width, height;
+    interfaces::surface->draw_text_pos(x, y);
     interfaces::surface->get_text_size(font, converted_ts.c_str(), width, height);
     interfaces::surface->set_text_color(tscolor.r, tscolor.g, tscolor.b, tscolor.a);
-    interfaces::surface->draw_text_pos(x, y);
     interfaces::surface->draw_render_text(converted_ts.c_str(), wcslen(converted_ts.c_str()));
 
-    //interfaces::surface->get_text_size(font, converted_fps.c_str(), width, height);
     interfaces::surface->set_text_color(fpscolor.r, fpscolor.g, fpscolor.b, fpscolor.a);
     interfaces::surface->draw_render_text(converted_fps.c_str(), wcslen(converted_fps.c_str()));
 
@@ -108,7 +105,6 @@ void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps
         const std::wstring converted_speedtext = std::wstring(speedtext.begin(), speedtext.end());
         const std::wstring converted_speed = std::wstring(speed.begin(), speed.end());
 
-        //interfaces::surface->get_text_size(font, converted_speedtext.c_str(), width, height);
         interfaces::surface->set_text_color(tscolor.r, tscolor.g, tscolor.b, tscolor.a);
         interfaces::surface->draw_render_text(converted_speedtext.c_str(), wcslen(converted_speedtext.c_str()));
 
