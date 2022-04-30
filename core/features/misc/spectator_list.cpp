@@ -13,17 +13,16 @@ void misc::spectators()
 		const int pos_x = 10;
 		const int pos_y = ha / 2 + 20;
 
-		const int arr_len = 64;				// For the spectator array
-		int spec_count = 0;					// Will count actual spectators
-		const char *spec_arr[arr_len + 1];
+		int spec_count = 0;			// Will count actual spectators
+		std::string spec_arr[64 + 1];
 
 		// Clear usernames array
-		for (int i = 0; i <= arr_len; i++) {
+		for (int i = 0; i <= interfaces::globals->max_clients; i++) {
 			spec_arr[i] = "";
 		}
 
 		// Get usernames from spectators
-		for (int i = 0; i <= arr_len; i++) {
+		for (int i = 0; i <= interfaces::globals->max_clients; i++) {
 			player_t* e = (player_t*)interfaces::entity_list->get_client_entity(i);
 			player_info_t pinfo;
 
@@ -62,8 +61,9 @@ void misc::spectators()
 			render::draw_text_string(pos_x, pos_y - 15, render::fonts::watermark_font, "Spectators", false, color(230, 0, 0));
 
 			// Print each username
+			std::string username = "";
 			for (int i = 0; i < spec_count; i++) {
-				const char* username = spec_arr[i];
+				username = spec_arr[i];
 				if (username != "")
 					render::draw_text_string(pos_x + 5, (pos_y + 5 + (15 * i)), render::fonts::watermark_font, username, false, color(255, 255, 255));
 			}
