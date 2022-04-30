@@ -36,21 +36,6 @@ void menu::render() {
 	const int part3_base_item_y = part3_y + container_padding;
 	const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
 
-	/*
-	const int part2_items_num = 1;
-	const int part2_margin = 10;
-	const int part2_pos = part1_pos + part1_h + part2_margin;
-	const int part2_items_margin = part1_items_margin - 10;
-	const int part2_items_h = part1_items_h + part1_h;
-	const int part2_h = 15 * part2_items_num + part2_items_margin;
-
-	const int part3_items_num = 2;
-	const int part3_with_margin = part2_items_margin - 5;
-	const int part3_items_margin = part2_items_margin - 10;
-	const int part3_items_h = variables::menu::y + part1_h + part2_items_margin;
-	const int part3_h = 15 * part3_items_num + part3_items_margin;
-	*/
-
 	// Menu title
 	do_frame(variables::menu::x, variables::menu::y, variables::menu::w, variables::menu::h,
 		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks");
