@@ -31,8 +31,8 @@ Based on: [Click me](REFERENCES.md)
 - [X] Move *NullHooks-Lite* to *NullHooks* branches
 - [X] Change spectator list style
 - [X] Add recoil crosshair
+- [X] Make spectator list movable (same as menu)
 - [ ] Add bullet tracers
-- [ ] Make spectator list movable (same as menu)
 
 
 ## Screenshots
