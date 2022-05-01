@@ -1,18 +1,19 @@
 #include "../features.hpp"
+#include "../../menu/menu.hpp"
 
-//TODO: Reduce window size depending on number of spectators
-void misc::spectator_list()
-{
-	if (!variables::spectator_list_bool) return;
+void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, std::int32_t wname_h, std::int32_t wname_margin, color bg, color header_text, color header_line, const std::string& name) {
+	// Background
+	render::draw_filled_rect(x, y, w, h, bg);
+	// Header title
+	render::draw_filled_rect(x, y, w, wname_h, header_text);
+	render::draw_filled_rect(x, y + wname_h, w, 2, header_line);
+	render::draw_text_string(x + 10, y + wname_margin, render::fonts::watermark_font, name, false, color::white(255));
+};
+
+void misc::spectator_list() {
+	if (!variables::spectators::spectator_list_bool) return;
 
 	if (interfaces::engine->is_connected() || variables::menu::opened) {
-
-		int wa, ha;
-		interfaces::engine->get_screen_size(wa, ha);
-
-		const int pos_x = 10;
-		const int pos_y = ha / 2 + 20;
-
 		int spec_count = 0;			// Will count actual spectators
 		std::string spec_arr[64 + 1];
 
@@ -35,7 +36,7 @@ void misc::spectator_list()
 				player_info_t spec_info;
 				interfaces::engine->get_player_info(i, &spec_info);
 				char buf[255];
-				sprintf(buf, "%s", pinfo.name);		// TODO
+				sprintf(buf, "%s", pinfo.name);
 
 				if (strstr(pinfo.name, "GOTV")) continue;
 
@@ -46,11 +47,9 @@ void misc::spectator_list()
 			}
 		}
 
-		const int win_w = 100;
-		const int win_h = 5 + (15 * spec_count) + 5;
-
 		// Only render if there are spectators or the menu is open
 		if (spec_arr[0] != "" || variables::menu::opened) {
+			/*
 			// Bakground
 			interfaces::surface->set_drawing_color(34, 34, 37, 200);
 			interfaces::surface->draw_filled_rectangle(pos_x, pos_y - 1, win_w, win_h);
@@ -59,14 +58,29 @@ void misc::spectator_list()
 			interfaces::surface->draw_outlined_rect(pos_x, pos_y - 1, win_w, win_h);
 			// Title
 			render::draw_text_string(pos_x, pos_y - 15, render::fonts::watermark_font, "Spectators", false, color(230, 0, 0));
+			*/
+
+			int wa, ha;
+			interfaces::engine->get_screen_size(wa, ha);
+
+			const int wname_h = 25;
+			variables::spectators::y = ha / 2 + wname_h;
+			variables::spectators::h = 5 + (15 * spec_count) + 5;
+			
+			draw_spec_frame(variables::spectators::x, variables::spectators::y - wname_h, variables::spectators::w, variables::spectators::h + wname_h, wname_h, 5,
+				color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 
 			// Print each username
 			std::string username = "";
 			for (int i = 0; i < spec_count; i++) {
 				username = spec_arr[i];
 				if (username != "")
-					render::draw_text_string(pos_x + 5, (pos_y + 5 + (15 * i)), render::fonts::watermark_font, username, false, color(255, 255, 255));
+					render::draw_text_string(variables::spectators::x + 10, (variables::spectators::y + 5 + (15 * i)),
+						render::fonts::watermark_font, username, false, color(255, 255, 255));
 			}
+
+			// TODO: Make it dragable
+			//menu_framework::menu_movement(variables::menu::x, variables::menu::y, variables::menu::w, 30);
 		}
 	}
 }

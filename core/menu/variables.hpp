@@ -19,7 +19,12 @@ namespace variables {
 
 	// Misc
 	inline bool bhop_bool = true;
-	inline bool spectator_list_bool = true;
+
+	namespace spectators {
+		inline bool spectator_list_bool = true;
+		inline int x = 10, y = 560;
+		inline int w = 100, h = 10;
+	};
 
 	namespace crosshair {
 		const inline bool only_engine_crosshair = true;		// Edit here
