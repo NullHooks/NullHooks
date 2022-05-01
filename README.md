@@ -18,6 +18,7 @@ Based on: [Click me](REFERENCES.md)
 - No flash
 - No scope
 - Custom crosshair
+- Recoil crosshair
 
 #### Misc:
 - BunnyHop
@@ -28,7 +29,9 @@ Based on: [Click me](REFERENCES.md)
 - [X] Clean the code
 - [X] Choose team not working (click)
 - [X] Move *NullHooks-Lite* to *NullHooks* branches
-- [ ] Change spectator list style
+- [X] Change spectator list style
+- [X] Add recoil crosshair
+- [ ] Add bullet tracers
 - [ ] Make spectator list movable (same as menu)
 
 
