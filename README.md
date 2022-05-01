@@ -32,7 +32,10 @@ Based on: [Click me](REFERENCES.md)
 - [X] Change spectator list style
 - [X] Add recoil crosshair
 - [X] Make spectator list movable (same as menu)
+- [ ] Add nade prediction
+- [ ] Add chams
 - [ ] Add bullet tracers
+- [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 
 
 ## Screenshots
