@@ -1,5 +1,5 @@
-dependencies/** linguist-detectable=false
-source-sdk/** linguist-detectable=false
+dependencies/** linguist-vendored
+source-sdk/** linguist-vendored
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
