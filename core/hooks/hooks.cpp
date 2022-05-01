@@ -102,9 +102,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			watermark::draw_stats();
 
 			visuals::playeresp();
-			visuals::custom_crosshair();
 			visuals::noflash();
-			//visuals::noscope();
+			visuals::custom_crosshair();
 
 			misc::spectator_list();
 
@@ -116,9 +115,19 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
 			interfaces::panel->set_mouse_input_enabled(panel, variables::menu::opened);
 			break;
-		/*case fnv::hash("HudZoom"):
-			return;
-			break;*/
+		case fnv::hash("HudZoom"):	// No sniper scope
+			if (variables::noscope_bool && csgo::local_player->is_scoped()) {
+				int screen_w, screen_h;
+				interfaces::engine->get_screen_size(screen_w, screen_h);
+				const int mid_x = screen_w / 2;
+				const int mid_y = screen_h / 2;
+
+				render::draw_line(0, mid_y,	screen_w, mid_y, color::black(255));	// X
+				render::draw_line(mid_x, 0,	mid_x, screen_h, color::black(255));	// Y
+
+				return;
+			}
+			break;
 	}
 
 	paint_traverse_original(interfaces::panel, panel, force_repaint, allow_force);

@@ -13,11 +13,12 @@ namespace variables {
 	inline bool boxesp_bool = false;
 	inline bool nameesp_bool = false;
 	
-	inline bool noflash_bool  = true;
+	inline bool noflash_bool = true;
+	inline bool noscope_bool  = true;
+	inline bool crosshair_bool = false;
 
 	// Misc
 	inline bool bhop_bool = true;
-	inline bool crosshair_bool = false;
 	inline bool spectator_list_bool = true;
 
 	namespace crosshair {

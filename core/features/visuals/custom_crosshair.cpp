@@ -1,7 +1,6 @@
 #include "../features.hpp"
 
 void visuals::custom_crosshair() {
-
 	if (!variables::crosshair_bool) {
 		if (variables::crosshair::only_engine_crosshair && !variables::crosshair::using_cs_crosshair) {
 			variables::crosshair::using_cs_crosshair = true;
@@ -11,12 +10,14 @@ void visuals::custom_crosshair() {
 		return;
 	}
 
-	if (interfaces::engine->is_connected()) {
-		int wa, ha;
-		interfaces::engine->get_screen_size(wa, ha);
+	if (csgo::local_player->is_scoped()) return;
 
-		const int mid_x = wa / 2;
-		const int mid_y = ha / 2;
+	if (interfaces::engine->is_connected()) {
+		int screen_w, screen_h;
+		interfaces::engine->get_screen_size(screen_w, screen_h);
+
+		const int mid_x = screen_w / 2;
+		const int mid_y = screen_h / 2;
 
 		if (variables::crosshair::only_engine_crosshair && variables::crosshair::using_cs_crosshair) {
 			variables::crosshair::using_cs_crosshair = false;
