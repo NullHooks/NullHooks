@@ -16,6 +16,7 @@ Based on: [Click me](REFERENCES.md)
 
 #### Visuals - Others
 - No flash
+- No scope
 - Custom crosshair
 
 #### Misc:
