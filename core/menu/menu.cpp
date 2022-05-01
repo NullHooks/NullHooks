@@ -24,7 +24,7 @@ void menu::render() {
 	const int container_width = variables::menu::w - container_margin*2;
 	const int item_left_pos = container_left_pos + 10;
 	const int item_checkbox_pos = variables::menu::x + container_width - container_margin - 10;	// 10 is the checkbox width
-	const int item_slider_length = 70;
+	const int item_slider_length = 80;
 	const int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// top left corner of the actual slider
 
 	const int part1_y = variables::menu::y + top_margin + container_margin;
@@ -42,7 +42,7 @@ void menu::render() {
 	}
 
 	const int part2_y = part1_y + part1_h + container_margin;
-	const int part2_items_num = 3;
+	const int part2_items_num = 2;
 	const int part2_base_item_y = part2_y + container_padding;
 	const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
@@ -51,8 +51,15 @@ void menu::render() {
 			render::fonts::watermark_font, "No flash", variables::noflash_bool);
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
 			render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
+		/*
+		// In case you want the user to change the values
 		menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-			render::fonts::watermark_font, "Custom crosshair length", variables::crosshair::crosshair_len, 1.f, 20.f);
+			render::fonts::watermark_font, "Custom crosshair length", variables::crosshair::crosshair_len, 2.f, 20.f);
+		menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+			render::fonts::watermark_font, "Custom crosshair width", variables::crosshair::crosshair_w, 2.f, 15.f);
+		menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
+			render::fonts::watermark_font, "Custom crosshair gap", variables::crosshair::crosshair_gap, 0.f, 5.f);
+		*/
 	}
 
 
