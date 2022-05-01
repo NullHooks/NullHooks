@@ -7,17 +7,15 @@ namespace misc {
 	namespace movement {
 		void bunny_hop(c_usercmd* cmd);
 	};
-	void spectators();
-	void custom_crosshair();
-	//void custom_net_graph();
+	void spectator_list();
 }
 
 namespace visuals {
 	void playeresp();
 
-	namespace noflash {
-		void handle();
-	}
+	void custom_crosshair();
+	void noflash();
+	void noscope();
 }
 
 namespace commands_features {

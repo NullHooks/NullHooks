@@ -27,9 +27,11 @@ void visuals::playeresp() {
 
 		if (variables::boxesp_bool) {
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_rect(x, y, w, h, color::blue()); // drawing with render tools
+				render::draw_rect(x, y, w, h, color::blue()); // Drawing with render tools
+				/*
 				//interfaces::surface->set_drawing_color(0, 0, 255, 255);  second way of drawing it with the surface interface, we set color, blue here
 				//interfaces::surface->draw_outlined_rect(x, y, w, h);  then we draw
+				*/
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_rect(x, y, w, h, color::red());
 		}

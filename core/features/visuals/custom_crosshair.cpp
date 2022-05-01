@@ -1,15 +1,6 @@
 #include "../features.hpp"
 
-void misc::movement::bunny_hop(c_usercmd* cmd) {
-	if (!variables::bhop_bool) return;
-
-	const int move_type = csgo::local_player->move_type();
-	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
-
-	if (!(csgo::local_player->flags() & fl_onground)) cmd->buttons &= ~in_jump;
-};
-
-void misc::custom_crosshair() {
+void visuals::custom_crosshair() {
 
 	if (!variables::crosshair_bool) {
 		if (variables::crosshair::only_engine_crosshair && !variables::crosshair::using_cs_crosshair) {
@@ -81,15 +72,15 @@ void misc::custom_crosshair() {
 		const int right = mid_x + len + gap;
 
 		// Draw outline
-		render::draw_rect(mid_x - 1,	top - 1,		3,			len + 2,		color::black(255));
-		render::draw_rect(mid_x - 1,	mid_y + gap,	3,			len + 2,		color::black(255));
-		render::draw_rect(left - 1,		mid_y - 1,		len + 2,	3,				color::black(255));
-		render::draw_rect(mid_x + gap,	mid_y - 1,		len + 2,	3,				color::black(255));
+		render::draw_rect(mid_x - 1, top - 1, 3, len + 2, color::black(255));
+		render::draw_rect(mid_x - 1, mid_y + gap, 3, len + 2, color::black(255));
+		render::draw_rect(left - 1, mid_y - 1, len + 2, 3, color::black(255));
+		render::draw_rect(mid_x + gap, mid_y - 1, len + 2, 3, color::black(255));
 		// Draw 1px crosshair
-		render::draw_line(mid_x,	top,		mid_x,			mid_y - gap,	color::white(255));
-		render::draw_line(mid_x,	bottom,		mid_x,			mid_y + gap,	color::white(255));
-		render::draw_line(left,		mid_y,		mid_x - gap,	mid_y,			color::white(255));
-		render::draw_line(right,	mid_y,		mid_x + gap,	mid_y,			color::white(255));
-		
+		render::draw_line(mid_x, top, mid_x, mid_y - gap, color::white(255));
+		render::draw_line(mid_x, bottom, mid_x, mid_y + gap, color::white(255));
+		render::draw_line(left, mid_y, mid_x - gap, mid_y, color::white(255));
+		render::draw_line(right, mid_y, mid_x + gap, mid_y, color::white(255));
+
 	}
 }

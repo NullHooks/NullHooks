@@ -1,11 +1,11 @@
 #include "../features.hpp"
 
 //TODO: Reduce window size depending on number of spectators
-void misc::spectators()
+void misc::spectator_list()
 {
 	if (!variables::spectator_list_bool) return;
 
-	if (interfaces::engine->is_connected()) {
+	if (interfaces::engine->is_connected() || variables::menu::opened) {
 
 		int wa, ha;
 		interfaces::engine->get_screen_size(wa, ha);
@@ -49,8 +49,8 @@ void misc::spectators()
 		const int win_w = 100;
 		const int win_h = 5 + (15 * spec_count) + 5;
 
-		// Only render if there are spectators
-		if (spec_arr[0] != "") {
+		// Only render if there are spectators or the menu is open
+		if (spec_arr[0] != "" || variables::menu::opened) {
 			// Bakground
 			interfaces::surface->set_drawing_color(34, 34, 37, 200);
 			interfaces::surface->draw_filled_rectangle(pos_x, pos_y - 1, win_w, win_h);
