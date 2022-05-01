@@ -1,5 +1,4 @@
 #include "../features.hpp"
-#include "../../menu/menu.hpp"
 
 void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, std::int32_t wname_h, std::int32_t wname_margin, color bg, color header_text, color header_line, const std::string& name) {
 	// Background

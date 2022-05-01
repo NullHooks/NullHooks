@@ -13,8 +13,12 @@ namespace misc {
 namespace visuals {
 	void playeresp();
 
-	void custom_crosshair();
 	void noflash();
+	namespace crosshair {
+		void draw_custom_crosshair(int x, int y, int outline, color cross_color);
+		void custom_crosshair();
+		void recoil_crosshair();
+	};
 }
 
 namespace commands_features {
