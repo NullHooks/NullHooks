@@ -42,7 +42,7 @@ void menu::render() {
 	}
 
 	const int part2_y = part1_y + part1_h + container_margin;
-	const int part2_items_num = 3;
+	const int part2_items_num = 4;
 	const int part2_base_item_y = part2_y + container_padding;
 	const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
@@ -62,6 +62,8 @@ void menu::render() {
 		menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 			render::fonts::watermark_font, "Custom crosshair gap", variables::crosshair::crosshair_gap, 0.f, 5.f);
 		*/
+		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
+			render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
 	}
 
 	const int part3_y = part2_y + part2_h + container_margin;

@@ -16,6 +16,7 @@ namespace variables {
 	inline bool noflash_bool = true;
 	inline bool noscope_bool  = true;
 	inline bool crosshair_bool = false;
+	inline bool recoil_crosshair_bool = false;
 
 	// Misc
 	inline bool bhop_bool = true;
