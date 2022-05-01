@@ -132,3 +132,27 @@ void menu_framework::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_
 		should_move = false;
 	}
 }
+
+void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
+	GetCursorPos(&cursor);
+
+	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
+		should_drag = true;
+
+		if (!should_move) {
+			cursor_corrected.x = cursor.x - x;
+			cursor_corrected.y = cursor.y - y;
+			should_move = true;
+		}
+	}
+
+	if (should_drag) {
+		x = cursor.x - cursor_corrected.x;
+		y = cursor.y - cursor_corrected.y;
+	}
+
+	if (GetAsyncKeyState(VK_LBUTTON) == 0) {
+		should_drag = false;
+		should_move = false;
+	}
+}

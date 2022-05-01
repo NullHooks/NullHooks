@@ -89,7 +89,9 @@ void menu::render() {
 		custom_menu_framework::button(item_left_pos, buttons_items_base_y + (15 * 0), item_checkbox_pos - 20,	// bigger "checkbox" as button
 			render::fonts::watermark_font, "Autoexec (Test button)", 2);
 	}
-	
+
+	// TODO: If the 2 dragable zones are in top of each other, they both get dragged
+	spectator_framework::spec_list_movement(variables::spectators::x, variables::spectators::y, variables::spectators::w, variables::spectators::h);
 	menu_framework::menu_movement(variables::menu::x, variables::menu::y, variables::menu::w, 30);
 }
 

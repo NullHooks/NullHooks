@@ -1,38 +1,6 @@
 #include "../features.hpp"
 #include "../../menu/menu.hpp"
 
-POINT spec_cursor;
-POINT spec_cursor_corrected;
-
-namespace spectator {
-	inline bool should_drag = false;
-	inline bool should_move = false;
-}
-
-void spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
-	GetCursorPos(&spec_cursor);
-
-	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (spec_cursor.x > x && spec_cursor.x < x + w && spec_cursor.y > y && spec_cursor.y < y + h)) {
-		spectator::should_drag = true;
-
-		if (!spectator::should_move) {
-			spec_cursor_corrected.x = spec_cursor.x - x;
-			spec_cursor_corrected.y = spec_cursor.y - y;
-			spectator::should_move = true;
-		}
-	}
-
-	if (spectator::should_drag) {
-		x = spec_cursor.x - spec_cursor_corrected.x;
-		y = spec_cursor.y - spec_cursor_corrected.y;
-	}
-
-	if (GetAsyncKeyState(VK_LBUTTON) == 0) {
-		spectator::should_drag = false;
-		spectator::should_move = false;
-	}
-}
-
 void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, std::int32_t wname_h, std::int32_t wname_margin, color bg, color header_text, color header_line, const std::string& name) {
 	// Background
 	render::draw_filled_rect(x, y, w, h, bg);
@@ -109,8 +77,6 @@ void misc::spectator_list() {
 					render::draw_text_string(variables::spectators::x + 10, (variables::spectators::y + wname_h + 5 + (15 * i)),
 						render::fonts::watermark_font, username, false, color(255, 255, 255));
 			}
-
-			spec_list_movement(variables::spectators::x, variables::spectators::y, variables::spectators::w, variables::spectators::h);
 		}
 	}
 }
