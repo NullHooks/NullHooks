@@ -12,6 +12,12 @@ namespace menu_framework {
 	inline bool should_move = false; 
 };
 
+namespace spectator_framework {
+	void spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
+	inline bool should_drag = false;
+	inline bool should_move = false;
+};
+
 namespace custom_menu_framework {
 	void button(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int function_id);
 	void unhook_button(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string);
