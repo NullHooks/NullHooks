@@ -1,46 +1,6 @@
 #include "../features.hpp"
 
 void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color cross_color) {
-
-	// TODO: Remove comments
-	/*
-	// Draw diagonal with gap (cod hitmarker) crosshair
-	render::draw_line(mid_x - len, mid_y - len, mid_x - gap, mid_y - gap, color::red(255));
-	render::draw_line(mid_x + len, mid_y + len, mid_x + gap, mid_y + gap, color::red(255));
-	render::draw_line(mid_x + len, mid_y - len, mid_x + gap, mid_y - gap, color::red(255));
-	render::draw_line(mid_x - len, mid_y + len, mid_x - gap, mid_y + gap, color::red(255));
-	*/
-	/*
-	// Draw horizontal with gap (1px width)
-	render::draw_line(mid_x,	top,		mid_x, mid_y - gap, color::red(255));
-	render::draw_line(mid_x,	bottom,		mid_x, mid_y + gap, color::red(255));
-	render::draw_line(left,		mid_y,		mid_x - gap, mid_y, color::red(255));
-	render::draw_line(right,	mid_y,		mid_x + gap, mid_y, color::red(255));
-	*/
-	/*
-	if (width > 2) {	// With outline
-		render::draw_filled_rect(mid_x - width / 2, top, width, len, color::red(255));
-		render::draw_rect(mid_x - width / 2, top, width, len, color::black(255));
-		render::draw_filled_rect(mid_x - width / 2, mid_y + gap, width, len, color::red(255));
-		render::draw_rect(mid_x - width / 2, mid_y + gap, width, len, color::black(255));
-		render::draw_filled_rect(left + 1, mid_y - width / 2 + 1, len, width, color::red(255));
-		render::draw_rect(left + 1, mid_y - width / 2 + 1, len, width, color::black(255));
-		render::draw_filled_rect(mid_x + gap + 1, mid_y - width / 2 + 1, len, width, color::red(255));
-		render::draw_rect(mid_x + gap + 1, mid_y - width / 2 + 1, len, width, color::black(255));
-	} else {
-		render::draw_filled_rect(mid_x - width / 2, top, width, len, color::red(255));
-		render::draw_filled_rect(mid_x - width / 2, mid_y + gap, width, len, color::red(255));
-		render::draw_filled_rect(left, mid_y - width / 2, len, width, color::red(255));
-		render::draw_filled_rect(mid_x + gap, mid_y - width / 2, len, width, color::red(255));
-	}
-	*/
-	/*
-	render::draw_filled_rect(mid_x - (width - width / 2), top, width, len, color::red(255));
-	render::draw_filled_rect(mid_x - (width - width / 2), mid_y + gap, width, len, color::red(255));
-	render::draw_filled_rect(left, mid_y - (width - width / 2), len, width, color::red(255));
-	render::draw_filled_rect(mid_x + gap, mid_y - (width - width / 2), len, width, color::red(255));
-	*/
-
 	const int gap = (int)variables::crosshair::crosshair_gap;
 	//const int width = (int)variables::crosshair::crosshair_w;
 	const int len = (int)variables::crosshair::crosshair_len;
