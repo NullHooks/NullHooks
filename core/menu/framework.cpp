@@ -76,28 +76,36 @@ void menu_framework::check_box(std::int32_t x, std::int32_t y, std::int32_t posi
 	if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
 		value = !value;
 
-	//checkbox background
+	// Checkbox itself
 	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));  //color(52, 134, 235, 255)
 
-	//checkbox label
+	// Checkbox label
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
+// Thanks to https://github.com/bobloxmonke
+float map_slider_constrain(float n, float start1, float stop1, float start2, float stop2)
+{
+	float value = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+
+	return std::clamp(value, start2, stop2);
+};
+
 void menu_framework::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	GetCursorPos(&cursor);
-	
-	//const int slider_x = x + 140;
 	const int slider_y = y + 2;
 	const int slider_width = 8;
 	
+	// Get value from cursor and assign it
 	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_width) && (GetAsyncKeyState(VK_LBUTTON)))
-		value = (cursor.x - slider_pos_x) / (float(slider_len) / float(max_value));
+		value = map_slider_constrain((cursor.x - slider_pos_x), 0.0f, float(slider_len), float(min_value), float(max_value));
 
-	//slider background
+	// Slider background and value display
+	const float reverse_map = map_slider_constrain(value, float(min_value), float(max_value), 0.0f, float(slider_len));
 	render::draw_filled_rect(slider_pos_x, slider_y, slider_len, slider_width, color(36, 36, 36, 255));
-	render::draw_filled_rect(slider_pos_x, slider_y, value * (float(slider_len) / float(max_value)), slider_width, color(150, 22, 22, 255));
+	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_width, color(150, 22, 22, 255));
 
-	//slider label
+	// Slider label
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
 }
 

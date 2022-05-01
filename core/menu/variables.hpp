@@ -24,15 +24,15 @@ namespace variables {
 		const inline bool only_engine_crosshair = true;		// Edit here
 		inline bool using_cs_crosshair = true;
 
-		inline float crosshair_len = 5;	// 1-20
-		inline float crosshair_w = 4;
-		inline float crosshair_gap = 1;
+		inline float crosshair_len = 3;		// 2-20
+		inline float crosshair_w = 2;		// 2-15
+		inline float crosshair_gap = 0;		// 0-10
 	};
 
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 300, h = 250;
+		inline int w = 400, h = 350;
 	};
 
 	namespace watermark {
