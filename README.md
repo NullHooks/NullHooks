@@ -30,6 +30,6 @@ Based on: [Click me](REFERENCES.md)
 - [ ] Move *NullHooks-Lite* to *NullHooks* branches
 
 ## Screenshots
-![Screenshot 1](screenshots/screenshot1.jpg)
-![Screenshot 2](screenshots/screenshot2.jpg)
-![Screenshot 3](screenshots/screenshot3.jpg)
+*Some might be a bit outdated...*
+![Screenshot 4](screenshots/screenshot4.png)
+![Screenshot 5](screenshots/screenshot5.png)
