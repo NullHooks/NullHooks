@@ -102,10 +102,11 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			watermark::draw_stats();
 
 			visuals::playeresp();
-			visuals::noflash::handle();
+			visuals::custom_crosshair();
+			visuals::noflash();
+			//visuals::noscope();
 
-			misc::spectators();
-			misc::custom_crosshair();
+			misc::spectator_list();
 
 			menu::toggle();
 			menu::render();
@@ -115,6 +116,9 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
 			interfaces::panel->set_mouse_input_enabled(panel, variables::menu::opened);
 			break;
+		/*case fnv::hash("HudZoom"):
+			return;
+			break;*/
 	}
 
 	paint_traverse_original(interfaces::panel, panel, force_repaint, allow_force);
