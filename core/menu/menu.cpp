@@ -17,8 +17,8 @@ void menu::render() {
 		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks");
 
 	const int top_margin = 30;
-	const int container_margin = 5; // empty space between containers
-	const int container_padding = 10; // space before and after item list (top and bottom)
+	const int container_margin = 5;		// empty space between containers
+	const int container_padding = 10;	// space before and after item list (top and bottom)
 
 	const int container_left_pos = variables::menu::x + container_margin;
 	const int container_width = variables::menu::w - container_margin*2;
@@ -29,7 +29,7 @@ void menu::render() {
 
 	const int part1_y = variables::menu::y + top_margin + container_margin;
 	const int part1_items_num = 3;
-	const int part1_base_item_y = part1_y + container_padding;				// container pos + margin
+	const int part1_base_item_y = part1_y + container_padding;					// container pos + margin
 	const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 	menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals", false); {
@@ -73,7 +73,7 @@ void menu::render() {
 		menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
 			render::fonts::watermark_font, "Bhop", variables::bhop_bool);
 		menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-			render::fonts::watermark_font, "Spectator list", variables::spectator_list_bool);
+			render::fonts::watermark_font, "Spectator list", variables::spectators::spectator_list_bool);
 	}
 
 	// Buttons (start from bottom)
@@ -85,7 +85,7 @@ void menu::render() {
 
 	menu_framework::group_box(container_left_pos, buttons_con_y, container_width, button_items_h, render::fonts::watermark_font, "Misc", false); {
 		custom_menu_framework::button(item_left_pos, buttons_items_base_y + (15 * 0), item_checkbox_pos - 20,	// bigger "checkbox" as button
-			render::fonts::watermark_font, "Disconnect (Test button)", 1);
+			render::fonts::watermark_font, "Autoexec (Test button)", 2);
 	}
 	
 	menu_framework::menu_movement(variables::menu::x, variables::menu::y, variables::menu::w, 30);

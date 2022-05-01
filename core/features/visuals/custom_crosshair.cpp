@@ -10,9 +10,11 @@ void visuals::custom_crosshair() {
 		return;
 	}
 
-	if (csgo::local_player->is_scoped()) return;
+	if (!interfaces::engine->is_in_game()) return;
+	if (!csgo::local_player) return;
 
 	if (interfaces::engine->is_connected()) {
+		if (csgo::local_player->is_scoped()) return;
 		int screen_w, screen_h;
 		interfaces::engine->get_screen_size(screen_w, screen_h);
 

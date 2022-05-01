@@ -53,13 +53,13 @@ void hooks::release() {
 }
 
 void* __stdcall hooks::AllocKeyValuesMemory(const std::int32_t size) {
-	// if function is returning to speficied addresses, return nullptr to "bypass"
+	// If function is returning to speficied addresses, return nullptr to "bypass"
 	if (const std::uint32_t address = reinterpret_cast<std::uint32_t>(_ReturnAddress());
 		address == reinterpret_cast<std::uint32_t>(interfaces::key_values_engine) ||
 		address == reinterpret_cast<std::uint32_t>(interfaces::key_values_client))
 		return nullptr;
 
-	// return original
+	// Return original
 	return AllocKeyValuesMemoryOriginal(interfaces::key_values_system, size);
 }
 
@@ -116,17 +116,20 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			interfaces::panel->set_mouse_input_enabled(panel, variables::menu::opened);
 			break;
 		case fnv::hash("HudZoom"):	// No sniper scope
-			if (variables::noscope_bool && csgo::local_player->is_scoped()) {
-				int screen_w, screen_h;
-				interfaces::engine->get_screen_size(screen_w, screen_h);
-				const int mid_x = screen_w / 2;
-				const int mid_y = screen_h / 2;
+			if (!variables::noscope_bool) break;
+			if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
+			if (!csgo::local_player) break;
+			if (!csgo::local_player->is_scoped()) break;
 
-				render::draw_line(0, mid_y,	screen_w, mid_y, color::black(255));	// X
-				render::draw_line(mid_x, 0,	mid_x, screen_h, color::black(255));	// Y
+			int screen_w, screen_h;
+			interfaces::engine->get_screen_size(screen_w, screen_h);
+			const int mid_x = screen_w / 2;
+			const int mid_y = screen_h / 2;
 
-				return;
-			}
+			render::draw_line(0, mid_y,	screen_w, mid_y, color::black(255));	// X
+			render::draw_line(mid_x, 0,	mid_x, screen_h, color::black(255));	// Y
+
+			return;
 			break;
 	}
 
