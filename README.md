@@ -26,10 +26,12 @@ Based on: [Click me](REFERENCES.md)
 ## Todo:
 - [X] Clean the code
 - [X] Choose team not working (click)
+- [X] Move *NullHooks-Lite* to *NullHooks* branches
 - [ ] Change spectator list style
-- [ ] Move *NullHooks-Lite* to *NullHooks* branches
+
 
 ## Screenshots
-*Some might be a bit outdated...*
+*Some screenshots might be a bit outdated...*  
+
 ![Screenshot 4](screenshots/screenshot4.png)
 ![Screenshot 5](screenshots/screenshot5.png)
