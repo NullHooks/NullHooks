@@ -24,9 +24,9 @@ namespace variables {
 		const inline bool only_engine_crosshair = true;		// Edit here
 		inline bool using_cs_crosshair = true;
 
-		inline int crosshair_w = 4;
-		inline int crosshair_len = 5;
-		inline int crosshair_gap = 1;
+		inline float crosshair_len = 5;	// 1-20
+		inline float crosshair_w = 4;
+		inline float crosshair_gap = 1;
 	};
 
 	namespace menu {
