@@ -15,7 +15,6 @@ namespace visuals {
 
 	void custom_crosshair();
 	void noflash();
-	void noscope();
 }
 
 namespace commands_features {
