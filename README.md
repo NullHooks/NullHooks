@@ -28,6 +28,7 @@ Based on: [Click me](REFERENCES.md)
 - [X] Choose team not working (click)
 - [X] Move *NullHooks-Lite* to *NullHooks* branches
 - [ ] Change spectator list style
+- [ ] Make spectator list movable (same as menu)
 
 
 ## Screenshots
