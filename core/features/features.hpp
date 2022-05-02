@@ -12,7 +12,7 @@ namespace misc {
 
 namespace visuals {
 	void playeresp();
-	void active_grenade_esp();
+	void grenade_projectile_esp();
 
 	void noflash();
 
