@@ -1,7 +1,7 @@
 #include "../features.hpp"
 
 void visuals::playeresp() {
-	if (!(variables::boxesp_bool || variables::nameesp_bool)) return;
+	if (!(variables::boxesp_bool || variables::nameesp_bool || variables::skeletonesp_bool)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -25,6 +25,37 @@ void visuals::playeresp() {
 		const int y = vecHeadScreen.y;
 		const int x = vecHeadScreen.x - w / 2;
 
+		/* ------------- SKELETON ESP ------------- */
+		if (variables::skeletonesp_bool) {
+			auto pStudioModel = interfaces::model_info->get_studio_model(pCSPlayer->model());
+			if (!pStudioModel) return;
+
+			static matrix_t pBoneToWorldOut[128];
+			if (pCSPlayer->setup_bones(pBoneToWorldOut, 128, 256, 0))
+			{
+				for (int i = 0; i < pStudioModel->bones_count; i++)
+				{
+					studio_bone_t* pBone = pStudioModel->bone(i);
+					if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
+						continue;
+
+					vec3_t vBonePos1;
+					if (!math::world_to_screen(vec3_t(pBoneToWorldOut[i][0][3], pBoneToWorldOut[i][1][3], pBoneToWorldOut[i][2][3]), vBonePos1))
+						continue;
+
+					vec3_t vBonePos2;
+					if (!math::world_to_screen(vec3_t(pBoneToWorldOut[pBone->parent][0][3], pBoneToWorldOut[pBone->parent][1][3], pBoneToWorldOut[pBone->parent][2][3]), vBonePos2))
+						continue;
+
+					if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, color(85, 235, 255, 255));
+					else if (pCSPlayer->team() != csgo::local_player->team())
+						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, color(255, 82, 82, 255));
+				}
+			}
+		}
+
+		/* ------------- BOX ESP ------------- */
 		if (variables::boxesp_bool) {
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
 				render::draw_rect(x, y, w, h, color::blue()); // Drawing with render tools
@@ -36,6 +67,7 @@ void visuals::playeresp() {
 				render::draw_rect(x, y, w, h, color::red());
 		}
 
+		/* ------------- NAME ESP ------------- */
 		if (variables::nameesp_bool) {
 			player_info_t playerinfo;
 			interfaces::engine->get_player_info(iPlayer, &playerinfo);

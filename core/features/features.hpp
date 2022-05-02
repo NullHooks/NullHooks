@@ -3,13 +3,6 @@
 #include "../helpers/misc_helpers.hpp"
 #include "../menu/variables.hpp"
 
-namespace misc {
-	namespace movement {
-		void bunny_hop(c_usercmd* cmd);
-	};
-	void spectator_list();
-}
-
 namespace visuals {
 	void playeresp();
 	void grenade_projectile_esp();
@@ -25,10 +18,17 @@ namespace visuals {
 		void custom_crosshair();
 		void recoil_crosshair();
 	};
-}
+};
+
+namespace misc {
+	namespace movement {
+		void bunny_hop(c_usercmd* cmd);
+	};
+	void spectator_list();
+};
 
 namespace commands_features {
 	void disconnect();
 	void test_command();
 	void exec_autoexec();
-}
+};
