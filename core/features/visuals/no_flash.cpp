@@ -15,5 +15,5 @@ void visuals::noflash() {
 
 		if (csgo::local_player->flash_alpha() > 0.f)
 			csgo::local_player->flash_alpha() = 0.f;
-	}	
+	}
 }

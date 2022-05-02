@@ -52,7 +52,7 @@ void watermark::draw_stats() {
     else if (fps < 150) fps_color = color_m;
     else fps_color = color_h;
 
-    if (csgo::local_player) {
+    if (csgo::local_player && interfaces::engine->is_connected()) {
         const int speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 
         color speed_color = base_color;
