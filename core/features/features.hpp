@@ -15,6 +15,11 @@ namespace visuals {
 	void active_grenade_esp();
 
 	void noflash();
+
+	namespace misc {
+		void nade_predict() noexcept;
+	};
+
 	namespace crosshair {
 		void draw_custom_crosshair(int x, int y, int outline, color cross_color);
 		void custom_crosshair();

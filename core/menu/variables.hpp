@@ -13,7 +13,8 @@ namespace variables {
 	inline bool boxesp_bool = false;
 	inline bool nameesp_bool = false;
 	inline bool nade_esp_bool = false;
-	
+
+	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;
 	inline bool noscope_bool  = true;
 	inline bool crosshair_bool = false;
