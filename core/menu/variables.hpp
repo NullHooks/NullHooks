@@ -13,6 +13,7 @@ namespace variables {
 	inline bool boxesp_bool = false;
 	inline bool skeletonesp_bool = false;
 	inline bool nameesp_bool = false;
+	inline bool healthesp_bool = false;
 	inline bool nade_esp_bool = false;
 
 	inline bool nade_predict_bool = true;
