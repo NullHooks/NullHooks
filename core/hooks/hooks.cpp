@@ -102,6 +102,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			watermark::draw_stats();
 
 			visuals::playeresp();
+			visuals::active_grenade_esp();
+
 			visuals::noflash();
 			visuals::crosshair::custom_crosshair();
 			visuals::crosshair::recoil_crosshair();

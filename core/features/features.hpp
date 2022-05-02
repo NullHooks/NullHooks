@@ -12,6 +12,7 @@ namespace misc {
 
 namespace visuals {
 	void playeresp();
+	void active_grenade_esp();
 
 	void noflash();
 	namespace crosshair {

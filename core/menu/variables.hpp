@@ -12,6 +12,7 @@ namespace variables {
 	inline bool showteamesp_bool = false;
 	inline bool boxesp_bool = false;
 	inline bool nameesp_bool = false;
+	inline bool nade_esp_bool = false;
 	
 	inline bool noflash_bool = true;
 	inline bool noscope_bool  = true;
@@ -34,6 +35,8 @@ namespace variables {
 		inline float crosshair_len = 3;		// 2-20
 		inline float crosshair_w = 2;		// 2-15
 		inline float crosshair_gap = 0;		// 0-10
+
+		inline bool rainbow_crosshair = false;
 	};
 
 	namespace menu {

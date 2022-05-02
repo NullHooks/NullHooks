@@ -28,7 +28,7 @@ void menu::render() {
 	const int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// top left corner of the actual slider
 
 	const int part1_y = variables::menu::y + top_margin + container_margin;
-	const int part1_items_num = 3;
+	const int part1_items_num = 4;
 	const int part1_base_item_y = part1_y + container_padding;					// container pos + margin
 	const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
@@ -39,10 +39,12 @@ void menu::render() {
 			render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 		menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
 			render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+		menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+			render::fonts::watermark_font, "Dropped nades ESP", variables::nade_esp_bool);
 	}
 
 	const int part2_y = part1_y + part1_h + container_margin;
-	const int part2_items_num = 4;
+	const int part2_items_num = 5;
 	const int part2_base_item_y = part2_y + container_padding;
 	const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
@@ -64,6 +66,8 @@ void menu::render() {
 		*/
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
 			render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
+		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 4), item_checkbox_pos,
+			render::fonts::watermark_font, "Rainbow crosshair", variables::crosshair::rainbow_crosshair);
 	}
 
 	const int part3_y = part2_y + part2_h + container_margin;
