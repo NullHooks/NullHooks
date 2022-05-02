@@ -39,7 +39,8 @@ Based on: [Click me](REFERENCES.md)
 	- [X] Fix smoke class id
 - [X] Add nade prediction
 - [X] Add player skeleton ESP
-- [ ] Bring menu tabs back (rip)
+- [X] Bring menu tabs back (rip)
+- [ ] Make spectator list width dynamic depending on name lengths
 - [ ] Add chams
 - [ ] Add bullet tracers
 - [ ] Add C4 timer and ESP
