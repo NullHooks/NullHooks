@@ -44,16 +44,18 @@ void menu::render() {
 	}
 
 	const int part2_y = part1_y + part1_h + container_margin;
-	const int part2_items_num = 5;
+	const int part2_items_num = 6;
 	const int part2_base_item_y = part2_y + container_padding;
 	const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
 	menu_framework::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Misc", false); {
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-			render::fonts::watermark_font, "No flash", variables::noflash_bool);
+			render::fonts::watermark_font, "Nade predict", variables::nade_predict_bool);
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-			render::fonts::watermark_font, "No sniper scope", variables::noscope_bool);
+			render::fonts::watermark_font, "No flash", variables::noflash_bool);
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
+			render::fonts::watermark_font, "No sniper scope", variables::noscope_bool);
+		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
 			render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
 		/*
 		// In case you want the user to change the values
@@ -64,9 +66,9 @@ void menu::render() {
 		menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 			render::fonts::watermark_font, "Custom crosshair gap", variables::crosshair::crosshair_gap, 0.f, 5.f);
 		*/
-		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
-			render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
 		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 4), item_checkbox_pos,
+			render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
+		menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 5), item_checkbox_pos,
 			render::fonts::watermark_font, "Rainbow crosshair", variables::crosshair::rainbow_crosshair);
 	}
 
