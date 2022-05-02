@@ -40,7 +40,7 @@ void menu::render() {
 		menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
 			render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
 		menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-			render::fonts::watermark_font, "Dropped nades ESP", variables::nade_esp_bool);
+			render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
 	}
 
 	const int part2_y = part1_y + part1_h + container_margin;

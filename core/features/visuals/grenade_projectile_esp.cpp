@@ -1,6 +1,6 @@
 #include "../features.hpp"
 
-void visuals::active_grenade_esp() {
+void visuals::grenade_projectile_esp() {
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 	if (!variables::nade_esp_bool) return;
