@@ -35,7 +35,7 @@ void visuals::grenade_projectile_esp() {
 				case cinferno:
 					render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "fire", true, color(255, 0, 0));
 					break;
-				case csmokestack:
+				case csmokegrenadeprojectile:
 					render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "smoke", true, color(0, 160, 255));
 					break;
 				case cdecoyprojectile:
