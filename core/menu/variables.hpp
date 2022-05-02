@@ -45,7 +45,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 300, h = 350;
+		inline int w = 350, h = 300;
 	};
 
 	namespace watermark {

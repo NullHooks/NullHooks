@@ -54,18 +54,23 @@ void menu_framework::group_box(std::int32_t x, std::int32_t y, std::int32_t w, s
 		render::draw_text_string(x + 2, y - 12, font, string, false, color::white());
 }
 
-void menu_framework::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count, bool show_outline) {
+void menu_framework::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
 	GetCursorPos(&cursor);
 
 	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
 		tab = count;
 	
-	//tab background
-	if (show_outline)
-		render::draw_rect(x, y, w, h, tab == count ? color(150, 22, 22, 255) : color(25, 25, 25, 255));
+	// Tab background and line
+	if (tab == count) {
+		render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
+		render::draw_filled_rect(x, y+h-1, w, 2, color(150, 22, 22, 255));
+	} else {
+		render::draw_filled_rect(x, y, w, h, color(34, 34, 34, 255));
+		render::draw_line(x, y+h, x+w, y+h, color(45, 45, 45, 255));
+	}
 
-	//tab label
-	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + 50, y + h / 2 - 8, font, string, false, show_outline ? color::white() : tab == count ? color(150, 22, 22, 255) : color::white());
+	// Tab label
+	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + w / 2, y + h / 2 - 6, font, string, false, color::white());
 }
 
 void menu_framework::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
