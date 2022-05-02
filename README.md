@@ -8,6 +8,7 @@ Based on: [Click me](REFERENCES.md)
 - Enable/disable team ESP
 - Box ESP
 - Name ESP
+- Active nade ESP
 <!-- 
 - Health ESP
 - Line
@@ -32,9 +33,12 @@ Based on: [Click me](REFERENCES.md)
 - [X] Change spectator list style
 - [X] Add recoil crosshair
 - [X] Make spectator list movable (same as menu)
+- [X] Add active nade ESP
+	- [ ] Fix smoke on some maps?
 - [ ] Add nade prediction
 - [ ] Add chams
 - [ ] Add bullet tracers
+- [ ] Add C4 timer and ESP
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 
 
