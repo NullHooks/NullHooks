@@ -73,9 +73,9 @@ void visuals::playeresp() {
 			interfaces::engine->get_player_info(iPlayer, &playerinfo);
 
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_text_string(x + 10, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::blue());
+				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::blue());
 			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_text_string(x + 10, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::red());
+				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::red());
 		}
 	}
 }
