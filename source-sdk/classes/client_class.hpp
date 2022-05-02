@@ -8,6 +8,11 @@ class i_client_mode;
 typedef i_client_networkable* (*create_client_class_fn)(int ent_number, int serial_number);
 typedef i_client_networkable* (*create_event_fn)();
 
+/*
+ * Get the current class ids:
+ *   sv_cheats 1
+ *   sv_dump_class_info
+ */
 enum class_ids {
 	cai_basenpc = 0,
 	cak47,
