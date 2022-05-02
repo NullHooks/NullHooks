@@ -11,6 +11,7 @@ namespace variables {
 	// Visuals
 	inline bool showteamesp_bool = false;
 	inline bool boxesp_bool = false;
+	inline bool skeletonesp_bool = false;
 	inline bool nameesp_bool = false;
 	inline bool nade_esp_bool = false;
 
