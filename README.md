@@ -16,6 +16,7 @@ Based on: [Click me](REFERENCES.md)
 -->
 
 #### Visuals - Others
+- Grenade prediction
 - No flash
 - No scope
 - Custom crosshair
@@ -35,7 +36,7 @@ Based on: [Click me](REFERENCES.md)
 - [X] Make spectator list movable (same as menu)
 - [X] Add active nade ESP
 	- [ ] Fix smoke on some maps?
-- [ ] Add nade prediction
+- [X] Add nade prediction
 - [ ] Add chams
 - [ ] Add bullet tracers
 - [ ] Add C4 timer and ESP
@@ -45,5 +46,5 @@ Based on: [Click me](REFERENCES.md)
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
 
-![Screenshot 4](screenshots/screenshot4.png)
-![Screenshot 5](screenshots/screenshot5.png)
+![Screenshot 7](screenshots/screenshot7.png)
+![Screenshot 6](screenshots/screenshot6.png)
