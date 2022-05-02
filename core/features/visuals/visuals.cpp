@@ -73,9 +73,29 @@ void visuals::playeresp() {
 			interfaces::engine->get_player_info(iPlayer, &playerinfo);
 
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::blue());
+				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color(0, 150, 255, 255));
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::red());
+		}
+		
+		/* ------------- HEALTH ESP ------------- */
+		if (variables::healthesp_bool) {
+			auto health = pCSPlayer->health();
+			const int health_h = (h * health) / 100;
+			const int health_w = 3;
+			const int health_y = y + (h - health_h);
+			const int health_x = x - 6;
+			//render::draw_text_string(10, 20, render::fonts::watermark_font, std::to_string(h), true, color::red());
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+			{
+				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+			}
+			else if (pCSPlayer->team() != csgo::local_player->team())
+			{
+				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+			}
 		}
 	}
 }
