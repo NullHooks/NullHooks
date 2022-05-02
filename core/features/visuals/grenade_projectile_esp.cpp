@@ -1,12 +1,12 @@
 #include "../features.hpp"
 
 void visuals::grenade_projectile_esp() {
+	if (!variables::nade_esp_bool) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (!variables::nade_esp_bool) return;
 
 	for (int i = 1; i <= interfaces::entity_list->get_highest_index(); i++) {
-		auto entity = reinterpret_cast<entity_t*>(interfaces::entity_list->get_client_entity(i));
+		entity_t* entity = reinterpret_cast<entity_t*>(interfaces::entity_list->get_client_entity(i));
 
 		if (!entity) continue;
 
