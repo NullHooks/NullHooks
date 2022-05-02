@@ -121,8 +121,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			break;
 		case fnv::hash("HudZoom"):	// No sniper scope
 			if (!variables::noscope_bool) break;
-			if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
 			if (!csgo::local_player) break;
+			if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
 			if (!csgo::local_player->is_scoped()) break;
 
 			int screen_w, screen_h;

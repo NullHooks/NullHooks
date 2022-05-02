@@ -5,9 +5,9 @@ void visuals::playeresp() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
-	for (int iPlayer = 0; iPlayer < interfaces::globals->max_clients; iPlayer++)
+	for (int iPlayer = 0; iPlayer < 64; iPlayer++)
 	{
-		auto pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
+		player_t* pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
 		if (!pCSPlayer) continue;
 		if (pCSPlayer == csgo::local_player) continue;
 		if (pCSPlayer->dormant()) continue;
@@ -54,7 +54,6 @@ void visuals::playeresp() {
 				}
 			}
 		}
-
 		/* ------------- BOX ESP ------------- */
 		if (variables::boxesp_bool) {
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
@@ -77,10 +76,9 @@ void visuals::playeresp() {
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::red());
 		}
-		
 		/* ------------- HEALTH ESP ------------- */
 		if (variables::healthesp_bool) {
-			auto health = pCSPlayer->health();
+			int health = pCSPlayer->health();
 			const int health_h = (h * health) / 100;
 			const int health_w = 3;
 			const int health_y = y + (h - health_h);

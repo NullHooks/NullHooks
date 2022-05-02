@@ -14,6 +14,7 @@ void misc::spectator_list() {
 	if (!variables::spectators::spectator_list_bool) return;
 
 	if (interfaces::engine->is_connected() || variables::menu::opened) {
+		if (!csgo::local_player) return;
 		int spec_count = 0;			// Will count actual spectators
 		std::string spec_arr[64 + 1];
 
