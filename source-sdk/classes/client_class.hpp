@@ -122,7 +122,7 @@ enum class_ids {
 	cmaterialmodifycontrol,
 	cmelee,
 	cmolotovgrenade,
-	cmolotovprojectile,
+	cmolotovprojectile,	// Should be +1?
 	cmoviedisplay,
 	cparadropchopper,
 	cparticlefire,
@@ -166,7 +166,7 @@ enum class_ids {
 	cslideshowdisplay,
 	csmokegrenade,
 	csmokegrenadeprojectile,
-	csmokestack,
+	csmokestack,	// Smoke nade projectile
 	csnowball,
 	csnowballpile,
 	csnowballprojectile,
