@@ -1,7 +1,7 @@
 #include "../features.hpp"
 
 void visuals::playeresp() {
-	if (!(variables::boxesp_bool || variables::nameesp_bool || variables::skeletonesp_bool)) return;
+	if (!(variables::boxesp_bool || variables::nameesp_bool || variables::skeletonesp_bool || variables::healthesp_bool)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
