@@ -51,6 +51,6 @@ void visuals::crosshair::custom_crosshair() {
 			custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
 		}
 
-		visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, color::white(255));
+		visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, (variables::crosshair::rainbow_crosshair) ? color(rand() % 255, rand() % 255, rand() % 255) : color::white(255));
 	}
 }

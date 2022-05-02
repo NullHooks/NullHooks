@@ -92,6 +92,8 @@
     <ClCompile Include="core\features\misc\engine_prediction.cpp" />
     <ClCompile Include="core\features\misc\bhop.cpp" />
     <ClCompile Include="core\features\visuals\custom_crosshair.cpp" />
+    <ClCompile Include="core\features\visuals\active_grenade_esp.cpp" />
+    <ClCompile Include="core\features\visuals\misc_visuals.cpp" />
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
