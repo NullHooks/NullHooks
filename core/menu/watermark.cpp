@@ -7,7 +7,7 @@
  */
 
 void watermark::draw() {
-    const std::string cheat_name = "NullHooks-Beta";
+    const std::string cheat_name = "NullHooks";
     if (csgo::local_player && interfaces::engine->is_connected()) {
         player_info_t player_info;
         interfaces::engine->get_player_info(interfaces::engine->get_local_player(), &player_info);
