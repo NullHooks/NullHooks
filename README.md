@@ -7,6 +7,7 @@ Based on: [Click me](REFERENCES.md)
 #### Visuals - ESP
 - Enable/disable team ESP
 - Box ESP
+- Player skeleton
 - Name ESP
 - Nade projectile ESP
 <!-- 
@@ -37,7 +38,7 @@ Based on: [Click me](REFERENCES.md)
 - [X] Add active nade ESP
 	- [X] Fix smoke class id
 - [X] Add nade prediction
-- [ ] Add player skeleton ESP
+- [X] Add player skeleton ESP
 - [ ] Bring menu tabs back (rip)
 - [ ] Add chams
 - [ ] Add bullet tracers
