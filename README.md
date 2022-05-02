@@ -8,7 +8,7 @@ Based on: [Click me](REFERENCES.md)
 - Enable/disable team ESP
 - Box ESP
 - Name ESP
-- Active nade ESP
+- Nade projectile ESP
 <!-- 
 - Health ESP
 - Line
@@ -35,8 +35,10 @@ Based on: [Click me](REFERENCES.md)
 - [X] Add recoil crosshair
 - [X] Make spectator list movable (same as menu)
 - [X] Add active nade ESP
-	- [ ] Fix smoke on some maps?
+	- [X] Fix smoke class id
 - [X] Add nade prediction
+- [ ] Add player skeleton ESP
+- [ ] Bring menu tabs back (rip)
 - [ ] Add chams
 - [ ] Add bullet tracers
 - [ ] Add C4 timer and ESP
