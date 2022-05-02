@@ -8,4 +8,4 @@ Functions or parts of the cheat that might get detected easily after some time.
 
 #### `hooks.cpp`
 - Sniper scope panel remover (No black shit).
-
+- Event listeners ([1](https://www.unknowncheats.me/forum/3095774-post9.html) and [2](https://www.unknowncheats.me/forum/3097431-post18.html))
