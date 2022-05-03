@@ -5,7 +5,7 @@
 #include "variables.hpp"
 
 namespace menu {
-	inline int current_tab{0};
+	inline int current_tab {1};
 
 	void render();
 	void toggle();

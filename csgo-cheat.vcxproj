@@ -95,7 +95,7 @@
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
-    <ClCompile Include="core\features\visuals\visuals.cpp" />
+    <ClCompile Include="core\features\visuals\player_esp.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
