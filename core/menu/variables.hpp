@@ -11,10 +11,18 @@ namespace variables {
 	// Visuals
 	inline bool showteamesp_bool = false;
 	inline bool boxesp_bool = false;
+	inline bool lineesp_bool = false;
 	inline bool skeletonesp_bool = false;
 	inline bool nameesp_bool = false;
 	inline bool healthesp_bool = false;
 	inline bool nade_esp_bool = false;
+
+	namespace colors {
+		inline color friendly_color = color(0, 72, 255, 255);
+		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
+		inline color enemy_color = color::red(255);
+		inline color enemy_color_soft = color(158, 50, 50, 255);
+	};
 
 	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;
@@ -45,7 +53,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 350, h = 300;
+		inline int w = 350, h = 330;
 	};
 
 	namespace watermark {
