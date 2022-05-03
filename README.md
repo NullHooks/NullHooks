@@ -40,15 +40,20 @@ Based on: [Click me](REFERENCES.md)
 - [X] Add nade prediction
 - [X] Add player skeleton ESP
 - [X] Bring menu tabs back (rip)
-- [ ] Make spectator list width dynamic depending on name lengths
-- [ ] Add chams
-- [ ] Add bullet tracers
+- [X] Make spectator list width dynamic depending on name lengths
 - [ ] Add C4 timer and ESP
+- [ ] Add line esp (*pos based on int slider?*)
+- [ ] Add chams
+- [ ] Add bullet tracers :(
+- [ ] Add config and all that
+- [ ] Add aim stuff
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
 
-![Screenshot 7](screenshots/screenshot7.png)
-![Screenshot 6](screenshots/screenshot6.png)
+![Screenshot 10](screenshots/screenshot10.png)
+![Screenshot 8](screenshots/screenshot8.png)
+![Screenshot 9](screenshots/screenshot9.png)
+![Screenshot 11](screenshots/screenshot11.png)
