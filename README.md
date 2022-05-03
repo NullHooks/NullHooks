@@ -11,8 +11,8 @@ Based on: [Click me](REFERENCES.md)
 - Name ESP
 - Nade projectile ESP
 - Health ESP
-<!-- 
 - Line
+<!-- 
 - C4 ESP
 -->
 
@@ -22,6 +22,10 @@ Based on: [Click me](REFERENCES.md)
 - No scope
 - Custom crosshair
 - Recoil crosshair
+<!-- 
+- C4 timer
+-->
+
 
 #### Misc:
 - BunnyHop
@@ -41,8 +45,8 @@ Based on: [Click me](REFERENCES.md)
 - [X] Add player skeleton ESP
 - [X] Bring menu tabs back (rip)
 - [X] Make spectator list width dynamic depending on name lengths
+- [X] Add line esp
 - [ ] Add C4 timer and ESP
-- [ ] Add line esp (*pos based on int slider?*)
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
