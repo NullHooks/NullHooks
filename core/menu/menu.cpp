@@ -53,34 +53,45 @@ void menu::render() {
 			const int part1_items_num = 6;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
-			menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - ESP", false); {
+			menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - Player ESP", false); {
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable team ESP", variables::showteamesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+				// Weapon esp
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
+					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 6;
+			const int part2_items_num = 1;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
-			
-			menu_framework::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Visuals - Misc", false); {
+
+			menu_framework::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Visuals - Other ESP", false); {
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
+			}
+
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_items_num = 5;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			menu_framework::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Visuals - Misc", false); {
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Nade predict", variables::nade_predict_bool);
-				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "No flash", variables::noflash_bool);
-				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "No sniper scope", variables::noscope_bool);
-				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
 				/*
 				// In case you want the user to change the values
@@ -91,10 +102,12 @@ void menu::render() {
 				menu_framework::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom crosshair gap", variables::crosshair::crosshair_gap, 0.f, 5.f);
 				*/
-				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 4), item_checkbox_pos,
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos,
 					render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
+				/*
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Rainbow crosshair", variables::crosshair::rainbow_crosshair);
+				*/
 			}
 			break;
 		}

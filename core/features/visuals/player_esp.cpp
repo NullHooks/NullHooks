@@ -1,7 +1,12 @@
 #include "../features.hpp"
 
 void visuals::playeresp() {
-	if (!(variables::boxesp_bool || variables::nameesp_bool || variables::skeletonesp_bool || variables::healthesp_bool)) return;
+	if (!(variables::boxesp_bool
+		|| variables::nameesp_bool
+		|| variables::skeletonesp_bool
+		|| variables::healthesp_bool
+		|| variables::lineesp_bool))
+		return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -48,33 +53,52 @@ void visuals::playeresp() {
 						continue;
 
 					if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, color(85, 235, 255, 255));
+						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, variables::colors::friendly_color_soft);
 					else if (pCSPlayer->team() != csgo::local_player->team())
-						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, color(255, 82, 82, 255));
+						render::draw_line(vBonePos1.x, vBonePos1.y, vBonePos2.x, vBonePos2.y, variables::colors::enemy_color_soft);
 				}
 			}
 		}
 		/* ------------- BOX ESP ------------- */
 		if (variables::boxesp_bool) {
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_rect(x, y, w, h, color::blue()); // Drawing with render tools
+				render::draw_rect(x, y, w, h, variables::colors::friendly_color); // Drawing with render tools
 				/*
 				//interfaces::surface->set_drawing_color(0, 0, 255, 255);  second way of drawing it with the surface interface, we set color, blue here
 				//interfaces::surface->draw_outlined_rect(x, y, w, h);  then we draw
 				*/
 			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_rect(x, y, w, h, color::red());
+				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
 		}
-
+		/* ------------- LINE ESP ------------- */
+		// TODO: Move to box esp -> mid of bottom line
+		if (variables::lineesp_bool) {
+			vec3_t entPosScreen;
+			int screen_width, screen_height;
+			interfaces::engine->get_screen_size(screen_width, screen_height);
+			if (math::world_to_screen(pCSPlayer->origin(), entPosScreen)) {
+				if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height - 1, variables::colors::friendly_color);
+				else if (pCSPlayer->team() != csgo::local_player->team())
+					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height - 1, variables::colors::enemy_color);
+				/*
+				// Draw from crosshair
+				if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
+				else if (pCSPlayer->team() != csgo::local_player->team())
+					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::enemy_color);
+				*/
+			}
+		}
 		/* ------------- NAME ESP ------------- */
 		if (variables::nameesp_bool) {
 			player_info_t playerinfo;
 			interfaces::engine->get_player_info(iPlayer, &playerinfo);
 
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color(0, 150, 255, 255));
+				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, variables::colors::friendly_color_soft);
 			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, color::red());
+				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, variables::colors::enemy_color);
 		}
 		/* ------------- HEALTH ESP ------------- */
 		if (variables::healthesp_bool) {
@@ -84,13 +108,10 @@ void visuals::playeresp() {
 			const int health_y = y + (h - health_h);
 			const int health_x = x - 6;
 			//render::draw_text_string(10, 20, render::fonts::watermark_font, std::to_string(h), true, color::red());
-			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-			{
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
 				render::draw_rect(health_x, y, health_w, h, color::black());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
-			}
-			else if (pCSPlayer->team() != csgo::local_player->team())
-			{
+			} else if (pCSPlayer->team() != csgo::local_player->team()) {
 				render::draw_rect(health_x, y, health_w, h, color::black());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
 			}
