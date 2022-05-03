@@ -21,7 +21,7 @@ namespace variables {
 		inline color friendly_color = color(0, 72, 255, 255);
 		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
 		inline color enemy_color = color::red(255);
-		inline color enemy_color_soft = color(158, 50, 50, 255);
+		inline color enemy_color_soft = color(190, 25, 25, 255);
 	};
 
 	inline bool nade_predict_bool = true;
