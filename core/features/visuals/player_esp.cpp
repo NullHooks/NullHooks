@@ -71,24 +71,20 @@ void visuals::playeresp() {
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
 		}
 		/* ------------- LINE ESP ------------- */
-		// TODO: Move to box esp -> mid of bottom line
 		if (variables::lineesp_bool) {
-			vec3_t entPosScreen;
 			int screen_width, screen_height;
 			interfaces::engine->get_screen_size(screen_width, screen_height);
-			if (math::world_to_screen(pCSPlayer->origin(), entPosScreen)) {
-				if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height - 1, variables::colors::friendly_color);
-				else if (pCSPlayer->team() != csgo::local_player->team())
-					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height - 1, variables::colors::enemy_color);
-				/*
-				// Draw from crosshair
-				if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
-				else if (pCSPlayer->team() != csgo::local_player->team())
-					render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::enemy_color);
-				*/
-			}
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+				render::draw_line(x + w/2, y + h, screen_width / 2, screen_height - 1, variables::colors::friendly_color);
+			else if (pCSPlayer->team() != csgo::local_player->team())
+				render::draw_line(x + w/2, y + h, screen_width / 2, screen_height - 1, variables::colors::enemy_color);
+			/*
+			// Draw from crosshair
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+				render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
+			else if (pCSPlayer->team() != csgo::local_player->team())
+				render::draw_line(entPosScreen.x, entPosScreen.y, screen_width / 2, screen_height / 2, variables::colors::enemy_color);
+			*/
 		}
 		/* ------------- NAME ESP ------------- */
 		if (variables::nameesp_bool) {
