@@ -146,7 +146,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 }
 
 void __stdcall hooks::DoPostScreenSpaceEffects(const void* viewSetup) noexcept {
-	//visuals::glow::draw_c4();
+	visuals::glow::draw_c4();
 
 	DoPostScreenSpaceEffectsOriginal(interfaces::clientmode, viewSetup);
 }
