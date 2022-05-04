@@ -6,17 +6,19 @@ Based on: [Click me](REFERENCES.md)
 ## Features
 #### Visuals - ESP
 - Enable/disable team ESP
+- Player glow
 - Box ESP
 - Player skeleton
 - Name ESP
-- Nade projectile ESP
 - Health ESP
-- Line
-<!-- 
-- C4 ESP
+<!--
+- Player info (flashed, weapons, etc.)
 -->
+- Line
 
 #### Visuals - Others
+- C4 glow
+- Nade projectile ESP
 - Grenade prediction
 - No flash
 - No scope
@@ -46,13 +48,18 @@ Based on: [Click me](REFERENCES.md)
 - [X] Bring menu tabs back (rip)
 - [X] Make spectator list width dynamic depending on name lengths
 - [X] Add line esp
-- [ ] Add C4 timer and ESP
+- [X] Add glows 
+	- [X] Add bomb glow
+	- [X] Add player glow
+	- [X] Add chicken glow
+	- [ ] Add weapon glow
+- [ ] Add bomb timer
+- [ ] Add weapon info about player
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
 - [ ] Add aim stuff
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
-
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
