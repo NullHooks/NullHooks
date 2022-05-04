@@ -15,6 +15,8 @@ namespace variables {
 	inline bool skeletonesp_bool = false;
 	inline bool nameesp_bool = false;
 	inline bool healthesp_bool = false;
+
+	inline bool drawc4_bool = false;
 	inline bool nade_esp_bool = false;
 
 	namespace colors {
