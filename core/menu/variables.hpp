@@ -10,6 +10,7 @@ namespace variables {
 
 	// Visuals
 	inline bool showteamesp_bool = false;
+	inline bool playerglow_bool = false;
 	inline bool boxesp_bool = false;
 	inline bool lineesp_bool = false;
 	inline bool skeletonesp_bool = false;
@@ -18,6 +19,7 @@ namespace variables {
 
 	inline bool drawc4_bool = false;
 	inline bool nade_esp_bool = false;
+
 
 	namespace colors {
 		inline color friendly_color = color(0, 72, 255, 255);
@@ -34,7 +36,8 @@ namespace variables {
 
 	// Misc
 	inline bool bhop_bool = true;
-
+	inline bool chickenpride_bool = false;
+	
 	namespace spectators {
 		inline bool spectator_list_bool = true;
 		inline int x = 10, y = 560;
@@ -55,7 +58,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 350, h = 330;
+		inline int w = 360, h = 330;
 	};
 
 	namespace watermark {

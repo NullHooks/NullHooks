@@ -50,22 +50,24 @@ void menu::render() {
 		case 0:		// Aim
 			break;
 		case 1:	{	// Visuals
-			const int part1_items_num = 6;
+			const int part1_items_num = 7;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - Player ESP", false); {
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable team ESP", variables::showteamesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
+					render::fonts::watermark_font, "Player glow", variables::playerglow_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
+					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
+					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
 				// Weapon esp
-				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
+				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
 					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
 			}
 
@@ -78,7 +80,7 @@ void menu::render() {
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw C4", variables::drawc4_bool);
+					render::fonts::watermark_font, "C4 info", variables::drawc4_bool);
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;
@@ -122,6 +124,16 @@ void menu::render() {
 					render::fonts::watermark_font, "Bhop", variables::bhop_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Spectator list", variables::spectators::spectator_list_bool);
+			}
+
+			const int part2_y = part1_y + part1_h + container_margin;
+			const int part2_items_num = 1;
+			const int part2_base_item_y = part2_y + container_padding;
+			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
+
+			menu_framework::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Misc 2", false); {
+				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Chicken pride", variables::chickenpride_bool);
 			}
 
 			// Buttons (start from bottom)

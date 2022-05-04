@@ -28,7 +28,7 @@ bool interfaces::initialize() {
 	directx = **reinterpret_cast<IDirect3DDevice9***>(utilities::pattern_scan("shaderapidx9.dll", sig_directx) + 1);
 	input = *reinterpret_cast<i_input**>(utilities::pattern_scan("client.dll", sig_input) + 1);
 	//glow_manager = reinterpret_cast<glow_manager_t*>(*reinterpret_cast<uintptr_t*>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3));
-	glow_manager = reinterpret_cast<glow_manager_t*>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3);
+	glow_manager = *reinterpret_cast<glow_manager_t**>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3);	// "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00"
 	move_helper = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
 
