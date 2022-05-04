@@ -42,7 +42,7 @@ void visuals::glow::draw_c4() {
 
 				float flblow = glowEnt.entity->m_flC4Blow();
 				float ExplodeTimeRemaining = flblow - (csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick);
-				float ExplodeTimeRemaining = (int)(ExplodeTimeRemaining * 100) / 100;
+				ExplodeTimeRemaining = (int)(ExplodeTimeRemaining * 100) / 100;
 				std::string explosion_time_str = "Bomb will explode in: ";
 				explosion_time_str += std::to_string(ExplodeTimeRemaining);
 
@@ -65,10 +65,12 @@ void visuals::glow::draw_c4() {
 			case cchicken: {
 				if (!variables::chickenpride_bool) break;
 
-				float r = float(rand()) / float((RAND_MAX)) * 1.f;
-				float g = float(rand()) / float((RAND_MAX)) * 1.f;
-				float b = float(rand()) / float((RAND_MAX)) * 1.f;
-				glowEnt.set(r, g, b, 1.0f);
+				static float rainbow;
+				rainbow += custom_helpers::rainbow_speed;
+				if (rainbow > 1.f) rainbow = 0.f;
+
+				const color col = custom_helpers::hsv_float2color(rainbow, 1.f, 1.f);
+				glowEnt.set(col.r / 255, col.g / 255, col.b / 255, 1.f);
 				break;
 			}
 			default:

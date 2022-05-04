@@ -80,7 +80,7 @@ void menu::render() {
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "C4 info", variables::drawc4_bool);
+					render::fonts::watermark_font, "Bomb glow and info", variables::drawc4_bool);
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;
