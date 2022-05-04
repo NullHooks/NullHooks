@@ -18,4 +18,8 @@ namespace hooks {
 		using fn = void(__thiscall*)(i_panel*, unsigned int, bool, bool);
 		void __stdcall hook(unsigned int panel, bool force_repaint, bool allow_force);
 	};
+
+	using DoPostScreenSpaceEffectsFn = void(__thiscall*)(void*, const void*) noexcept;
+	inline DoPostScreenSpaceEffectsFn DoPostScreenSpaceEffectsOriginal = nullptr;
+	void __stdcall DoPostScreenSpaceEffects(const void* viewSetup) noexcept;
 }

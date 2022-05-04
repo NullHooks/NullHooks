@@ -15,13 +15,14 @@ bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
 	const auto paint_traverse_target = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
+	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize MH_Initialize.");
 
 	if (MH_CreateHook(alloc_key_values_target, &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal)) != MH_OK)
-		throw std::runtime_error("failed to initialize alloc_key_values. (outdated index?)");
-	custom_helpers::state_to_console("Hooks", "alloc_key_values initialized!");
+		throw std::runtime_error("failed to initialize AllocKeyValuesMemory.");
+	custom_helpers::state_to_console("Hooks", "AllocKeyValuesMemory initialized!");
 	
 	if (MH_CreateHook(create_move_target, &create_move::hook, reinterpret_cast<void**>(&create_move_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize create_move. (outdated index?)");
@@ -30,6 +31,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(paint_traverse_target, &paint_traverse::hook, reinterpret_cast<void**>(&paint_traverse_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize paint_traverse. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "paint_traverse initialized!");
+
+	if (MH_CreateHook(post_screen_space_effects_target, &DoPostScreenSpaceEffects, reinterpret_cast<void**>(&DoPostScreenSpaceEffectsOriginal)) != MH_OK)
+		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+	custom_helpers::state_to_console("Hooks", "DoPostScreenSpaceEffects initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
@@ -138,4 +143,10 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 	}
 
 	paint_traverse_original(interfaces::panel, panel, force_repaint, allow_force);
+}
+
+void __stdcall hooks::DoPostScreenSpaceEffects(const void* viewSetup) noexcept {
+	//visuals::glow::draw_c4();
+
+	DoPostScreenSpaceEffectsOriginal(interfaces::clientmode, viewSetup);
 }

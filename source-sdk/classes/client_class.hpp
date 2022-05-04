@@ -288,6 +288,7 @@ enum class_ids {
 	cweaponump45,
 	cweaponusp,
 	cweaponxm1014,
+	cweaponzonerepulsor,
 	cworld,
 	cworldvguitext,
 	dusttrail,

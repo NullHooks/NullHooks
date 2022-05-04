@@ -9,6 +9,10 @@ namespace visuals {
 
 	void noflash();
 
+	namespace glow {
+		void draw_c4();
+	};
+
 	namespace misc {
 		void nade_predict() noexcept;
 	};
