@@ -17,9 +17,10 @@ namespace visuals {
 		void nade_predict() noexcept;
 	};
 
-	namespace entity_info {
+	namespace entity_info {		// paint_traverse
 		void bomb(entity_t* bomb_ent);
 		void dropped_bomb(entity_t* bomb_ent);
+		void weapon_name(entity_t* entity, const char* text);
 	};
 
 	namespace crosshair {
