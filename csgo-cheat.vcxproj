@@ -84,7 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\features\legitbot\legitbot.cpp" />
+    <ClCompile Include="core\features\legitbot\triggerbot.cpp" />
     <ClCompile Include="core\features\misc\commands.cpp" />
     <ClCompile Include="core\features\misc\engine_prediction.cpp" />
     <ClCompile Include="core\features\misc\bhop.cpp" />
