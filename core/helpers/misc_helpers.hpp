@@ -9,6 +9,7 @@ namespace custom_helpers {
 	color hsv_float2color(float hue, float saturation, float brightness);
 	vec3_t hsv_float2color2(float hue);
 	color int2color(int* id);
+	void draw_bomb_text(float time);
 
 	const float rainbow_speed_f = 0.001f;
 	const int rainbow_speed_i = 1;
