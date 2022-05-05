@@ -14,6 +14,7 @@ struct smoke_t : public entity_t {
 	}
 };
 
+// Todo: Fix
 struct decoy_t : public entity_t {
 	OFFSET(float, get_spawn_time, 0x20);
 	static float get_expiry_time() {
@@ -40,7 +41,7 @@ void visuals::grenade_projectile_esp() {
 		switch (entity->client_class()->class_id) {
 			/* ------------ NADE PROJECTILES ------------ */
 			case cbasecsgrenadeprojectile: {
-				if (!math::world_to_screen(origin, w2s)) break;
+				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
 				const model_t* model = entity->model();
 				if (!model) return;
 
@@ -57,7 +58,7 @@ void visuals::grenade_projectile_esp() {
 			}
 			case cmolotovprojectile:
 			case cinferno: {
-				if (!math::world_to_screen(origin, w2s)) break;
+				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
 
 				inferno_t* inferno = reinterpret_cast<inferno_t*>(entity);
 				const auto spawn_time = inferno->get_spawn_time();
@@ -72,7 +73,7 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case csmokegrenadeprojectile: {
-				if (!math::world_to_screen(origin, w2s)) break;
+				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
 
 				smoke_t* smoke = reinterpret_cast<smoke_t*>(entity);
 				const auto spawn_time = smoke->get_spawn_time();
@@ -87,7 +88,7 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case cdecoyprojectile: {
-				if (!math::world_to_screen(origin, w2s)) break;
+				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
 
 				decoy_t* decoy = reinterpret_cast<decoy_t*>(entity);
 				const auto spawn_time = decoy->get_spawn_time();
@@ -96,7 +97,7 @@ void visuals::grenade_projectile_esp() {
 
 				if (factor > 0) {
 					render::draw_rect(w2s.x - (time_size / 2), w2s.y - 10, time_size, 7, color::black(255));
-					render::draw_filled_rect(w2s.x - (time_size / 2) + 1, w2s.y - 9, factor * (time_size - 2), 5, color::white(255));
+					render::draw_filled_rect(w2s.x - (time_size / 2) + 1, w2s.y - 9, factor * (time_size - 2), 5, color(180, 180, 180, 255));
 				}
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color::white(255));
 				break;

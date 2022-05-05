@@ -50,7 +50,7 @@ void menu::render() {
 		case 0:		// Aim
 			break;
 		case 1:	{	// Visuals
-			const int part1_items_num = 7;
+			const int part1_items_num = 8;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - Player ESP", false); {
@@ -66,8 +66,9 @@ void menu::render() {
 					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
-				// Weapon esp
 				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
+					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
+				menu_framework::check_box(item_left_pos, part1_base_item_y + (15 * 7), item_checkbox_pos,
 					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
 			}
 

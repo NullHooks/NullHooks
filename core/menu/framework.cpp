@@ -74,6 +74,7 @@ void menu_framework::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::in
 }
 
 void menu_framework::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
+	// TODO: Maybe make the setting name clickable? :)
 	GetCursorPos(&cursor);
 
 	int w = 10, h = 10;
