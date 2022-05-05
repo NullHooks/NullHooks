@@ -12,9 +12,13 @@ Based on: [Click me](REFERENCES.md)
 - Name ESP
 - Health ESP
 - Line
-<!--
 - Player info (flashed, weapons, etc.)
--->
+	- Armor (`A`)
+	- Current weapon
+	- Is flashed? (`F`)
+	- Is scoped? (`S`)
+	- Is defusing? (`D` soft)
+	- Has defuser? (`D` hard)
 
 #### Visuals - Others
 - C4 glow
@@ -54,8 +58,8 @@ Based on: [Click me](REFERENCES.md)
 	- [X] Add chicken glow
 	- [X] Add weapon glow
 - [X] Add bomb timer
+- [X] Add weapon info about player
 - [ ] Add aim stuff
-- [ ] Add weapon info about player
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
