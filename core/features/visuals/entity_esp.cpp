@@ -36,8 +36,7 @@ void visuals::grenade_projectile_esp() {
 
 		vec3_t origin = entity->origin(), w2s;
 
-		// TODO: Add fire, smoke, etc. effect timer
-		// TODO: Add weapons
+		// TODO: Entities show outside of the map (for example the bomb entity on inferno)
 		switch (entity->client_class()->class_id) {
 			/* ------------ NADE PROJECTILES ------------ */
 			case cbasecsgrenadeprojectile: {
@@ -267,7 +266,6 @@ void visuals::grenade_projectile_esp() {
 			/* ------------ MISC ------------ */
 			case cchicken:
 				if (!(math::world_to_screen(origin, w2s) && variables::chickenpride_bool)) break;
-				
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			/* ------------------------------ */
