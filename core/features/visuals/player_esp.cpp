@@ -5,6 +5,7 @@ void visuals::playeresp() {
 		|| variables::nameesp_bool
 		|| variables::skeletonesp_bool
 		|| variables::healthesp_bool
+		|| variables::playerinfo_bool
 		|| variables::lineesp_bool))
 		return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
@@ -86,6 +87,67 @@ void visuals::playeresp() {
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, variables::colors::enemy_color);
 		}
+		/* ------------- INFO ESP ------------- */
+		if (variables::playerinfo_bool) {
+			// TODO: Crashes sometimes? idk
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
+				if (pCSPlayer->armor() > 0) {
+					int armor_x = (variables::healthesp_bool) ? 6 : 0;
+					render::draw_text_string(x - 10 - armor_x, y + 5, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+				}
+
+				int item_num = 0;
+				if (pCSPlayer->is_defusing()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
+					item_num++;
+				}
+				else if (pCSPlayer->has_defuser()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					item_num++;
+				}
+
+				if (pCSPlayer->is_scoped()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					item_num++;
+				}
+				if (pCSPlayer->is_flashed()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
+					item_num++;
+				}
+
+				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
+				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name + 7, true, variables::colors::friendly_color_softer);
+			} else if (pCSPlayer->team() != csgo::local_player->team()) {
+				if (pCSPlayer->armor() > 0) {
+					int armor_x = (variables::healthesp_bool) ? 6 : 0;
+					render::draw_text_string(x - 10 - armor_x, y + 5, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+				}
+
+				int item_num = 0;
+				if (pCSPlayer->is_defusing()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
+					item_num++;
+				}
+				else if (pCSPlayer->has_defuser()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					item_num++;
+				}
+
+				if (pCSPlayer->is_scoped()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					item_num++;
+				}
+				if (pCSPlayer->is_flashed()) {
+					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
+					item_num++;
+				}
+
+				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
+				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name + 7, true, variables::colors::enemy_color_softer);
+			}
+		}
 		/* ------------- HEALTH ESP ------------- */
 		if (variables::healthesp_bool) {
 			int health = pCSPlayer->health();
@@ -107,6 +169,5 @@ void visuals::playeresp() {
 
 // ------------------------------
 
-// Remove scout black shit
 // Tracers?
 // Custom fov?

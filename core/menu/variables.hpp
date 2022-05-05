@@ -15,6 +15,7 @@ namespace variables {
 	inline bool lineesp_bool = false;
 	inline bool skeletonesp_bool = false;
 	inline bool nameesp_bool = false;
+	inline bool playerinfo_bool = false;
 	inline bool healthesp_bool = false;
 
 	// Visuals - Glow
@@ -34,8 +35,10 @@ namespace variables {
 	namespace colors {
 		inline color friendly_color = color(0, 72, 255, 255);
 		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
+		inline color friendly_color_softer = color(90, 180, 255, 255);
 		inline color enemy_color = color::red(255);
 		inline color enemy_color_soft = color(190, 25, 25, 255);
+		inline color enemy_color_softer = color(255, 75, 75, 255);
 	};
 
 	// Misc
@@ -63,7 +66,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 340, h = 360;
+		inline int w = 340, h = 400;
 	};
 
 	namespace watermark {
