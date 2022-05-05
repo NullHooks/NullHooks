@@ -20,6 +20,7 @@ namespace variables {
 	// Visuals - Glow
 	inline bool entityglow_bool = false;
 	inline bool entitytext_bool = false;
+	inline bool bombtimer_bool = true;
 	inline bool nade_esp_bool = false;
 	
 	// Visuals - Misc

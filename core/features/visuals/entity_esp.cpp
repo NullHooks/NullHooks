@@ -2,7 +2,8 @@
 
 void visuals::grenade_projectile_esp() {
 	if (!(variables::nade_esp_bool
-		|| variables::entitytext_bool)) return;
+		|| variables::entitytext_bool
+		|| variables::bombtimer_bool)) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -16,8 +17,7 @@ void visuals::grenade_projectile_esp() {
 
 		// TODO: Add fire, smoke, etc. effect timer
 		// TODO: Add weapons
-		auto class_id = entity->client_class()->class_id;
-		switch (class_id) {
+		switch (entity->client_class()->class_id) {
 			/* ------------ NADE PROJECTILES ------------ */
 			case cbasecsgrenadeprojectile: {
 				if (!math::world_to_screen(origin, w2s)) break;
@@ -54,6 +54,11 @@ void visuals::grenade_projectile_esp() {
 				break;
 			case cc4:
 				entity_info::dropped_bomb(entity);
+				break;
+			/* ------------ MISC ------------ */
+			case cchicken:
+				if (!math::world_to_screen(origin, w2s) || !variables::chickenpride_bool) break;
+				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			/* ------------------------------ */
 			default:

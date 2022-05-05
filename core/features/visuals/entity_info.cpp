@@ -1,7 +1,8 @@
 #include "../features.hpp"
 
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
-	if (!variables::entitytext_bool) return;
+	if (!(variables::entitytext_bool
+		|| variables::bombtimer_bool)) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p) return;
@@ -20,7 +21,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 		render::draw_filled_rect(screen_width / 2 - bar_w / 2 + 1, 84, (40.f - exp_time) / 40.f * bar_w, 4, color(255, 140, 0, 255));	// Assume bomb is always 40s
 		// Timer
 		custom_helpers::draw_bomb_text(exp_time);
-		if (math::world_to_screen(bomb_p->origin(), entPosScreen))
+		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entitytext_bool)
 			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
 	}
 }

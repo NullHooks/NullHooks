@@ -28,20 +28,21 @@ void visuals::glow::draw_c4() {
 				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
 				break;
 			}
-			case cc4: {		// c4 item
+			case cc4: {		// Dropped c4
 				if (!variables::entityglow_bool) break;
 				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
 				break;
 			}
 			case cchicken: {
-				// TODO: Make smooth
+				/*
 				if (!variables::chickenpride_bool) break;
+				static float rainbow;
+				rainbow += custom_helpers::rainbow_speed_f;
 
-				static int rainbow;
-				rainbow += custom_helpers::rainbow_speed_i;
-
-				color col = custom_helpers::int2color(&rainbow);
-				glowEnt.set(col.r/255, col.g/255, col.b/255, 1.f);
+				color col = custom_helpers::float2color(&rainbow);
+				glowEnt.set(col.r, col.g, col.b, 1.f);
+				*/
+				glowEnt.set(255, 0, 255, 1.f);
 				break;
 			}
 			default:

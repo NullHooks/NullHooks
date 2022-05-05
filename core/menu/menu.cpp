@@ -72,7 +72,7 @@ void menu::render() {
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 3;
+			const int part2_items_num = 4;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
@@ -80,8 +80,10 @@ void menu::render() {
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Entity glow", variables::entityglow_bool);
+					render::fonts::watermark_font, "Bomb timer", variables::bombtimer_bool);
 				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Entity glow", variables::entityglow_bool);
+				menu_framework::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Entity info", variables::entitytext_bool);
 			}
 

@@ -47,103 +47,42 @@ color custom_helpers::hsv2color(float H, float S, float V) {
     return col;
 }
 
-vec3_t custom_helpers::hsv_float2color2(float H) {
-	vec3_t col;
-	float v = 1 / 100;
-	float C = 0.1 * 0.1;
-	float X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
-	float m = v - C;
-	float r, g, b;
-	if (H >= 0 && H < 60)
-		r = C, g = X, b = 0;
-	else if (H >= 60 && H < 120)
-		r = X, g = C, b = 0;
-	else if (H >= 120 && H < 180)
-		r = 0, g = C, b = X;
-	else if (H >= 180 && H < 240)
-		r = 0, g = X, b = C;
-	else if (H >= 240 && H < 300)
-		r = X, g = 0, b = C;
+color custom_helpers::hsv2color_v2(float H, float S, float V) {
+	float fC = V * S; // Chroma
+	float fHPrime = fmod(H / 60.0, 6);
+	float fX = fC * (1 - fabs(fmod(fHPrime, 2) - 1));
+	float fM = V - fC;
+
+	if (0 <= fHPrime && fHPrime < 1)
+		return color(fC*255, fX*255, 0, 255);
+	else if (1 <= fHPrime && fHPrime < 2)
+		return color(fX*255, fC*255, 0, 255);
+	else if (2 <= fHPrime && fHPrime < 3)
+		return color(0, fC*255, fX*255, 255);
+	else if (3 <= fHPrime && fHPrime < 4)
+		return color(0, fX*255, fC*255, 255);
+	else if (4 <= fHPrime && fHPrime < 5)
+		return color(fX*255, 0, fC*255, 255);
+	else if (5 <= fHPrime && fHPrime < 6)
+		return color(fC*255, 0, fX*255, 255);
 	else
-		r = C, g = 0, b = X;
-	
-	col.x = (r + m);
-	col.y = (g + m);
-	col.z = (b + m);
-	return col;
+		return color(0, 0, 0);
 }
 
-color custom_helpers::hsv_float2color(float hue, float saturation, float brightness) {
-	float h = hue == 1.0f ? 0 : hue * 6.0f;
-	float f = h - (int)h;
-	float p = brightness * (1.0f - saturation);
-	float q = brightness * (1.0f - saturation * f);
-	float t = brightness * (1.0f - (saturation * (1.0f - f)));
-
-	if (h < 1)
-	{
-		return color(
-			(unsigned char)(brightness * 255),
-			(unsigned char)(t * 255),
-			(unsigned char)(p * 255)
-		);
-	}
-	else if (h < 2)
-	{
-		return color(
-			(unsigned char)(q * 255),
-			(unsigned char)(brightness * 255),
-			(unsigned char)(p * 255)
-		);
-	}
-	else if (h < 3)
-	{
-		return color(
-			(unsigned char)(p * 255),
-			(unsigned char)(brightness * 255),
-			(unsigned char)(t * 255)
-		);
-	}
-	else if (h < 4)
-	{
-		return color(
-			(unsigned char)(p * 255),
-			(unsigned char)(q * 255),
-			(unsigned char)(brightness * 255)
-		);
-	}
-	else if (h < 5)
-	{
-		return color(
-			(unsigned char)(t * 255),
-			(unsigned char)(p * 255),
-			(unsigned char)(brightness * 255)
-		);
-	}
-	else
-	{
-		return color(
-			(unsigned char)(brightness * 255),
-			(unsigned char)(p * 255),
-			(unsigned char)(q * 255)
-		);
-	}
-}
-
-color custom_helpers::int2color(int* id) {
-	if (*id < 100)				return color(255, 0, 0);
-	else if (*id < 200)			return color(255, 128, 0);
-	else if (*id < 300)			return color(255, 255, 0);
-	else if (*id < 400)			return color(128, 255, 0);
-	else if (*id < 500)			return color(0, 255, 0);
-	else if (*id < 600)			return color(0, 255, 128);
-	else if (*id < 700)			return color(0, 255, 255);
-	else if (*id < 800)			return color(0, 128, 255);
-	else if (*id < 900)			return color(0, 0, 255);
-	else if (*id < 1000)			return color(128, 0, 255);
-	else if (*id < 1100)		return color(255, 0, 255);
-	else if (*id < 1200)		return color(255, 0, 128);
-	else						*id = 0;
+color custom_helpers::float2color(float* id) {
+	if (*id < 1.f)				return color(255, 0, 0);
+	else if (*id < 2.f)			return color(255, 128, 0);
+	else if (*id < 3.f)			return color(255, 255, 0);
+	else if (*id < 4.f)			return color(128, 255, 0);
+	else if (*id < 5.f)			return color(0, 255, 0);
+	else if (*id < 6.f)			return color(0, 255, 128);
+	else if (*id < 7.f)			return color(0, 255, 255);
+	else if (*id < 8.f)			return color(0, 128, 255);
+	else if (*id < 9.f)			return color(0, 0, 255);
+	else if (*id < 10.f)		return color(128, 0, 255);
+	else if (*id < 11.f)		return color(255, 0, 255);
+	else if (*id < 12.f)		return color(255, 0, 128);
+	else						*id = 0.f;
 
 	return color(255, 0, 0);
 }
