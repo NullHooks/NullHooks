@@ -11,10 +11,10 @@ Based on: [Click me](REFERENCES.md)
 - Player skeleton
 - Name ESP
 - Health ESP
+- Line
 <!--
 - Player info (flashed, weapons, etc.)
 -->
-- Line
 
 #### Visuals - Others
 - C4 glow
@@ -27,7 +27,6 @@ Based on: [Click me](REFERENCES.md)
 <!-- 
 - C4 timer
 -->
-
 
 #### Misc:
 - BunnyHop
