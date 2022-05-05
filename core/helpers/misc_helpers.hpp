@@ -7,6 +7,9 @@ namespace custom_helpers {
 	void state_to_console_color(const char* tag, const char* text);
 	color hsv2color(float H, float S, float V);
 	color hsv_float2color(float hue, float saturation, float brightness);
+	vec3_t hsv_float2color2(float hue);
+	color int2color(int* id);
 
-	const float rainbow_speed = 0.001f;
+	const float rainbow_speed_f = 0.001f;
+	const int rainbow_speed_i = 1;
 };

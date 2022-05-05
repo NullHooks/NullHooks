@@ -1,7 +1,8 @@
 #include "../features.hpp"
 
 void visuals::grenade_projectile_esp() {
-	if (!variables::nade_esp_bool) return;
+	if (!(variables::nade_esp_bool
+		|| variables::drawc4_bool)) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -12,10 +13,11 @@ void visuals::grenade_projectile_esp() {
 
 		vec3_t origin = entity->origin(), w2s;
 
-		// TODO: Rainbow decoy and smoke label not showing
+		// TODO: Add fire, smoke, etc. effect timer
 		if (math::world_to_screen(origin, w2s)) {
 			auto class_id = entity->client_class()->class_id;
 			switch (class_id) {
+				/* ------------ NADE PROJECTILES ------------ */
 				case cbasecsgrenadeprojectile: {
 					const model_t* model = entity->model();
 					if (!model) return;
@@ -41,6 +43,14 @@ void visuals::grenade_projectile_esp() {
 				case cdecoyprojectile:
 					render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color::white(255));
 					break;
+				/* ------------ BOMB ------------ */
+				case cplantedc4:
+					entity_info::bomb(entity);
+					break;
+				case cc4:
+					entity_info::dropped_bomb(entity);
+					break;
+				/* ------------------------------ */
 				default:
 					break;
 			}

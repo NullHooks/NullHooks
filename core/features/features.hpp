@@ -17,6 +17,11 @@ namespace visuals {
 		void nade_predict() noexcept;
 	};
 
+	namespace entity_info {
+		void bomb(entity_t* bomb_ent);
+		void dropped_bomb(entity_t* bomb_ent);
+	};
+
 	namespace crosshair {
 		void draw_custom_crosshair(int x, int y, int outline, color cross_color);
 		void custom_crosshair();

@@ -48,6 +48,32 @@ color custom_helpers::hsv2color(float H, float S, float V) {
     return col;
 }
 
+vec3_t custom_helpers::hsv_float2color2(float H) {
+	vec3_t col;
+	float v = 1 / 100;
+	float C = 0.1 * 0.1;
+	float X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
+	float m = v - C;
+	float r, g, b;
+	if (H >= 0 && H < 60)
+		r = C, g = X, b = 0;
+	else if (H >= 60 && H < 120)
+		r = X, g = C, b = 0;
+	else if (H >= 120 && H < 180)
+		r = 0, g = C, b = X;
+	else if (H >= 180 && H < 240)
+		r = 0, g = X, b = C;
+	else if (H >= 240 && H < 300)
+		r = X, g = 0, b = C;
+	else
+		r = C, g = 0, b = X;
+	
+	col.x = (r + m);
+	col.y = (g + m);
+	col.z = (b + m);
+	return col;
+}
+
 color custom_helpers::hsv_float2color(float hue, float saturation, float brightness) {
 	float h = hue == 1.0f ? 0 : hue * 6.0f;
 	float f = h - (int)h;
@@ -103,4 +129,22 @@ color custom_helpers::hsv_float2color(float hue, float saturation, float brightn
 			(unsigned char)(q * 255)
 		);
 	}
+}
+
+color custom_helpers::int2color(int* id) {
+	if (*id < 100)				return color(255, 0, 0);
+	else if (*id < 200)			return color(255, 128, 0);
+	else if (*id < 300)			return color(255, 255, 0);
+	else if (*id < 400)			return color(128, 255, 0);
+	else if (*id < 500)			return color(0, 255, 0);
+	else if (*id < 600)			return color(0, 255, 128);
+	else if (*id < 700)			return color(0, 255, 255);
+	else if (*id < 800)			return color(0, 128, 255);
+	else if (*id < 900)			return color(0, 0, 255);
+	else if (*id < 1000)			return color(128, 0, 255);
+	else if (*id < 1100)		return color(255, 0, 255);
+	else if (*id < 1200)		return color(255, 0, 128);
+	else						*id = 0;
+
+	return color(255, 0, 0);
 }
