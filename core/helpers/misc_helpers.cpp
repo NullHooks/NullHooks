@@ -169,7 +169,7 @@ void custom_helpers::draw_bomb_text(float time) {
 	interfaces::surface->draw_text_font(render::fonts::watermark_font);
 	interfaces::surface->get_text_size(render::fonts::watermark_font, c_total.c_str(), width, height);
 	const int x_pos = screen_width / 2 - width / 2;
-	const int y_pos = 80;
+	const int y_pos = 95;
 
 	interfaces::surface->draw_text_pos(x_pos, y_pos);
 
