@@ -19,7 +19,6 @@ void custom_helpers::state_to_console_color(const char* tag, const char* text) {
 	interfaces::console->console_color_printf(color::green(255), "[NullHooks] [%s] %s\n", tag, text);
 }
 
-
 color custom_helpers::hsv2color(float H, float S, float V) {
     color col;
     float s = S / 100;
@@ -147,4 +146,36 @@ color custom_helpers::int2color(int* id) {
 	else						*id = 0;
 
 	return color(255, 0, 0);
+}
+
+void custom_helpers::draw_bomb_text(float time) {
+	char exp_time[64];
+	sprintf_s(exp_time, "%.2f", time);
+
+	const std::string exp_time_str_base = "Bomb will explode in: ";
+	const std::string exp_time_str = std::string(exp_time);
+	const std::string total = exp_time_str_base + exp_time_str;
+	const std::wstring c_exp_time_str_base = std::wstring(exp_time_str_base.begin(), exp_time_str_base.end());
+	const std::wstring c_exp_time_str = std::wstring(exp_time_str.begin(), exp_time_str.end());
+	const std::wstring c_total = std::wstring(total.begin(), total.end());
+
+	const color base_color = color(255, 130, 0, 255);
+	const color bomb_color_text_color = (time > 10.f) ? color(255, 190, 0, 255) : color::red(255);
+
+	int screen_width, screen_height;
+	interfaces::engine->get_screen_size(screen_width, screen_height);
+
+	int width, height;
+	interfaces::surface->draw_text_font(render::fonts::watermark_font);
+	interfaces::surface->get_text_size(render::fonts::watermark_font, c_total.c_str(), width, height);
+	const int x_pos = screen_width / 2 - width / 2;
+	const int y_pos = 80;
+
+	interfaces::surface->draw_text_pos(x_pos, y_pos);
+
+	interfaces::surface->set_text_color(base_color.r, base_color.g, base_color.b, base_color.a);
+	interfaces::surface->draw_render_text(c_exp_time_str_base.c_str(), wcslen(c_exp_time_str_base.c_str()));
+
+	interfaces::surface->set_text_color(bomb_color_text_color.r, bomb_color_text_color.g, bomb_color_text_color.b, bomb_color_text_color.a);
+	interfaces::surface->draw_render_text(c_exp_time_str.c_str(), wcslen(c_exp_time_str.c_str()));
 }

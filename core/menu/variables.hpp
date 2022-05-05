@@ -2,13 +2,13 @@
 
 namespace variables {
 	
-	// Legitbot
+	// Aim
 	inline bool aimbot_bool = false;
 	inline float aimbot_fov = 0.f;
 	inline float aimbot_smoothing = 2.f;
 	inline bool aimbot_isvisiblecheck = true;
 
-	// Visuals
+	// Visuals - Player ESP
 	inline bool showteamesp_bool = false;
 	inline bool playerglow_bool = false;
 	inline bool boxesp_bool = false;
@@ -17,22 +17,25 @@ namespace variables {
 	inline bool nameesp_bool = false;
 	inline bool healthesp_bool = false;
 
-	inline bool drawc4_bool = false;
+	// Visuals - Glow
+	inline bool entityglow_bool = false;
+	inline bool entitytext_bool = false;
 	inline bool nade_esp_bool = false;
+	
+	// Visuals - Misc
+	inline bool nade_predict_bool = true;
+	inline bool noflash_bool = true;
+	inline bool noscope_bool  = true;
+	inline bool crosshair_bool = false;
+	inline bool recoil_crosshair_bool = false;
 
-
+	// Colors
 	namespace colors {
 		inline color friendly_color = color(0, 72, 255, 255);
 		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
 		inline color enemy_color = color::red(255);
 		inline color enemy_color_soft = color(190, 25, 25, 255);
 	};
-
-	inline bool nade_predict_bool = true;
-	inline bool noflash_bool = true;
-	inline bool noscope_bool  = true;
-	inline bool crosshair_bool = false;
-	inline bool recoil_crosshair_bool = false;
 
 	// Misc
 	inline bool bhop_bool = true;
@@ -55,10 +58,11 @@ namespace variables {
 		inline bool rainbow_crosshair = false;
 	};
 
+	// Menu
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 340, h = 340;
+		inline int w = 340, h = 360;
 	};
 
 	namespace watermark {
