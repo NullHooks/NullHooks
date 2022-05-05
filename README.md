@@ -18,15 +18,13 @@ Based on: [Click me](REFERENCES.md)
 
 #### Visuals - Others
 - C4 glow
+- C4 timer and line
 - Nade projectile ESP
 - Grenade prediction
 - No flash
 - No scope
 - Custom crosshair
 - Recoil crosshair
-<!-- 
-- C4 timer
--->
 
 #### Misc:
 - BunnyHop
@@ -52,12 +50,12 @@ Based on: [Click me](REFERENCES.md)
 	- [X] Add player glow
 	- [X] Add chicken glow
 	- [ ] Add weapon glow
-- [ ] Add bomb timer
+- [X] Add bomb timer
+- [ ] Add aim stuff
 - [ ] Add weapon info about player
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
-- [ ] Add aim stuff
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 
 ## Screenshots
