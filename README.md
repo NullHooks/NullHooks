@@ -18,8 +18,11 @@ Based on: [Click me](REFERENCES.md)
 
 #### Visuals - Others
 - C4 glow
-- C4 timer and line
+- C4 timer and bar
+- Dropped weapons and grenades glow
+- Dropped weapons and grenades name
 - Nade projectile ESP
+- Nade prjectile duration
 - Grenade prediction
 - No flash
 - No scope
@@ -49,7 +52,7 @@ Based on: [Click me](REFERENCES.md)
 	- [X] Add bomb glow
 	- [X] Add player glow
 	- [X] Add chicken glow
-	- [ ] Add weapon glow
+	- [X] Add weapon glow
 - [X] Add bomb timer
 - [ ] Add aim stuff
 - [ ] Add weapon info about player
