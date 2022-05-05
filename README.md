@@ -60,6 +60,8 @@ Based on: [Click me](REFERENCES.md)
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
+- [ ] Fix entity names showing outside the map if they dont exist (See `entity_esp.cpp`)
+- [ ] Entity glow won't turn off on existing entities
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
