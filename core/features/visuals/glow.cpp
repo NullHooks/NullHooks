@@ -34,14 +34,7 @@ void visuals::glow::draw_c4() {
 				break;
 			}
 			case cchicken: {
-				/*
 				if (!variables::chickenpride_bool) break;
-				static float rainbow;
-				rainbow += custom_helpers::rainbow_speed_f;
-
-				color col = custom_helpers::float2color(&rainbow);
-				glowEnt.set(col.r, col.g, col.b, 1.f);
-				*/
 				glowEnt.set(255, 0, 255, 1.f);
 				break;
 			}

@@ -63,10 +63,6 @@ void visuals::playeresp() {
 		if (variables::boxesp_bool) {
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
 				render::draw_rect(x, y, w, h, variables::colors::friendly_color); // Drawing with render tools
-				/*
-				//interfaces::surface->set_drawing_color(0, 0, 255, 255);  second way of drawing it with the surface interface, we set color, blue here
-				//interfaces::surface->draw_outlined_rect(x, y, w, h);  then we draw
-				*/
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
 		}
@@ -74,18 +70,11 @@ void visuals::playeresp() {
 		if (variables::lineesp_bool) {
 			int screen_width, screen_height;
 			interfaces::engine->get_screen_size(screen_width, screen_height);
-			/*
-			// Draw from bottom
-			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_line(x + w/2, y + h, screen_width / 2, screen_height - 1, variables::colors::friendly_color);
-			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_line(x + w/2, y + h, screen_width / 2, screen_height - 1, variables::colors::enemy_color);
-			*/
 			// Draw from crosshair
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
 				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
 			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
+				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::enemy_color);
 		}
 		/* ------------- NAME ESP ------------- */
 		if (variables::nameesp_bool) {
