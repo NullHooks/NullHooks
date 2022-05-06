@@ -14,14 +14,6 @@ struct smoke_t : public entity_t {
 	}
 };
 
-// Todo: Fix
-struct decoy_t : public entity_t {
-	OFFSET(float, get_spawn_time, 0x20);
-	static float get_expiry_time() {
-		return 15.f;
-	}
-};
-
 void visuals::grenade_projectile_esp() {
 	if (!(variables::nade_esp_bool
 		|| variables::entitytext_bool
@@ -89,16 +81,6 @@ void visuals::grenade_projectile_esp() {
 			}
 			case cdecoyprojectile: {
 				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
-
-				decoy_t* decoy = reinterpret_cast<decoy_t*>(entity);
-				const auto spawn_time = decoy->get_spawn_time();
-				const auto factor = ((spawn_time + decoy_t::get_expiry_time()) - interfaces::globals->cur_time) / decoy_t::get_expiry_time();
-				const int time_size = 50;
-
-				if (factor > 0) {
-					render::draw_rect(w2s.x - (time_size / 2), w2s.y - 10, time_size, 7, color::black(255));
-					render::draw_filled_rect(w2s.x - (time_size / 2) + 1, w2s.y - 9, factor * (time_size - 2), 5, color(180, 180, 180, 255));
-				}
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color::white(255));
 				break;
 			}
