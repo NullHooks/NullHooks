@@ -15,7 +15,7 @@ bool hooks::initialize() {
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
 	const auto paint_traverse_target = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
 	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
-	//const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
+	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 
 	if (MH_Initialize() != MH_OK)
@@ -37,11 +37,9 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
 	custom_helpers::state_to_console("Hooks", "DoPostScreenSpaceEffects initialized!");
 
-	/*
 	if (MH_CreateHook(get_viewmodel_fov_target, &get_viewmodel_fov, reinterpret_cast<void**>(&get_viewmodel_fov_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
 	custom_helpers::state_to_console("Hooks", "get_viewmodel_fov initialized!");
-	*/
 
 	if (MH_CreateHook(override_view_target, &override_view, reinterpret_cast<void**>(&override_view_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
@@ -162,13 +160,13 @@ void __stdcall hooks::DoPostScreenSpaceEffects(const void* viewSetup) noexcept {
 	DoPostScreenSpaceEffectsOriginal(interfaces::clientmode, viewSetup);
 }
 
-/*
-float __fastcall get_viewmodel_fov(uintptr_t, uintptr_t) {
-	// returned value is set to player's viewmodel fov
-	// the original returns 68.f, therefore we should return the slider value here
-	return get_viewmodel_fov_original(interfaces::clientmode);
+float __fastcall hooks::get_viewmodel_fov(uintptr_t, uintptr_t) {
+	return get_viewmodel_fov_original(interfaces::clientmode) * variables::custom_vmfov_slider;
+	/*
+	 * Return original:
+	 * return get_viewmodel_fov_original(interfaces::clientmode);	// Original: 68.f
+	 */
 }
-*/
 
 void __fastcall hooks::override_view(uintptr_t, uintptr_t, view_setup_t* setup) {
 	if (csgo::local_player
