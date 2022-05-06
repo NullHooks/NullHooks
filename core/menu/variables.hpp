@@ -30,6 +30,7 @@ namespace variables {
 	inline bool noscope_bool  = true;
 	inline bool crosshair_bool = false;
 	inline bool recoil_crosshair_bool = false;
+	inline float custom_fov_slider = 90.f;
 
 	// Colors
 	namespace colors {

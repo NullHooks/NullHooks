@@ -7,7 +7,6 @@
 #include "../helpers/misc_helpers.hpp"
 #include "../../source-sdk/sdk.hpp"
 
-hooks::AllocKeyValuesMemoryFn AllocKeyValuesMemoryOriginal;
 hooks::create_move::fn create_move_original = nullptr;
 hooks::paint_traverse::fn paint_traverse_original = nullptr;
 
@@ -16,6 +15,8 @@ bool hooks::initialize() {
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
 	const auto paint_traverse_target = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
 	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
+	//const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
+	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize MH_Initialize.");
@@ -35,6 +36,16 @@ bool hooks::initialize() {
 	if (MH_CreateHook(post_screen_space_effects_target, &DoPostScreenSpaceEffects, reinterpret_cast<void**>(&DoPostScreenSpaceEffectsOriginal)) != MH_OK)
 		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
 	custom_helpers::state_to_console("Hooks", "DoPostScreenSpaceEffects initialized!");
+
+	/*
+	if (MH_CreateHook(get_viewmodel_fov_target, &get_viewmodel_fov, reinterpret_cast<void**>(&get_viewmodel_fov_original)) != MH_OK)
+		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+	custom_helpers::state_to_console("Hooks", "get_viewmodel_fov initialized!");
+	*/
+
+	if (MH_CreateHook(override_view_target, &override_view, reinterpret_cast<void**>(&override_view_original)) != MH_OK)
+		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+	custom_helpers::state_to_console("Hooks", "override_view initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
@@ -149,4 +160,21 @@ void __stdcall hooks::DoPostScreenSpaceEffects(const void* viewSetup) noexcept {
 	visuals::glow::draw_c4();
 
 	DoPostScreenSpaceEffectsOriginal(interfaces::clientmode, viewSetup);
+}
+
+/*
+float __fastcall get_viewmodel_fov(uintptr_t, uintptr_t) {
+	// returned value is set to player's viewmodel fov
+	// the original returns 68.f, therefore we should return the slider value here
+	return get_viewmodel_fov_original(interfaces::clientmode);
+}
+*/
+
+void __fastcall hooks::override_view(uintptr_t, uintptr_t, view_setup_t* setup) {
+	if (csgo::local_player
+		&& interfaces::engine->is_connected()
+		&& interfaces::engine->is_in_game()
+		&& !csgo::local_player->is_scoped())
+		setup->fov = variables::custom_fov_slider;
+	override_view_original(interfaces::clientmode, setup);
 }
