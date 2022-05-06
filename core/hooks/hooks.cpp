@@ -112,6 +112,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 		case fnv::hash("MatSystemTopPanel"):
+			if (interfaces::engine->is_taking_screenshot()) break;
+
 			watermark::draw();
 			watermark::draw_stats();
 
@@ -138,6 +140,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 			if (!csgo::local_player) break;
 			if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
 			if (!csgo::local_player->is_scoped()) break;
+			if (interfaces::engine->is_taking_screenshot()) break;
 
 			int screen_w, screen_h;
 			interfaces::engine->get_screen_size(screen_w, screen_h);
@@ -155,12 +158,15 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 }
 
 void __stdcall hooks::DoPostScreenSpaceEffects(const void* viewSetup) noexcept {
-	visuals::glow::draw_c4();
+	visuals::glow::draw_glow();
 
 	DoPostScreenSpaceEffectsOriginal(interfaces::clientmode, viewSetup);
 }
 
 float __fastcall hooks::get_viewmodel_fov(uintptr_t, uintptr_t) {
+	if (interfaces::engine->is_taking_screenshot())
+		return get_viewmodel_fov_original(interfaces::clientmode);
+
 	return get_viewmodel_fov_original(interfaces::clientmode) * variables::custom_vmfov_slider;
 	/*
 	 * Return original:
@@ -172,7 +178,9 @@ void __fastcall hooks::override_view(uintptr_t, uintptr_t, view_setup_t* setup) 
 	if (csgo::local_player
 		&& interfaces::engine->is_connected()
 		&& interfaces::engine->is_in_game()
-		&& !csgo::local_player->is_scoped())
+		&& !csgo::local_player->is_scoped()
+		&& !interfaces::engine->is_taking_screenshot())
 		setup->fov = variables::custom_fov_slider;
+
 	override_view_original(interfaces::clientmode, setup);
 }

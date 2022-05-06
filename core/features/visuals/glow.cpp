@@ -1,12 +1,13 @@
 #include "../features.hpp"
 
 // DoPostScreenSpaceEffects hook
-void visuals::glow::draw_c4() {
+void visuals::glow::draw_glow() {
 	if (!(variables::playerglow_bool
 		|| variables::entityglow_bool
 		|| variables::chickenpride_bool)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
+	if (interfaces::engine->is_taking_screenshot()) return;
 
 	for (int i = 0; i < interfaces::glow_manager->objects.size; i++) {
 		glow_manager_t::glow_object& glowEnt = interfaces::glow_manager->objects[i];
