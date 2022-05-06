@@ -13,12 +13,12 @@ Based on: [Click me](REFERENCES.md)
 - Health ESP
 - Line
 - Player info (flashed, weapons, etc.)
-	- Armor (`A`)
-	- Current weapon
-	- Is flashed? (`F`)
-	- Is scoped? (`S`)
-	- Is defusing? (`D` soft)
-	- Has defuser? (`D` hard)
+    - Current weapon
+    - `A` - Armor
+    - `F` - Is flashed
+    - `S` - Is scoped
+    - `D` - Is defusing (soft)
+    - `D` - Has defuser (hard)
 
 #### Visuals - Others
 - C4 glow
