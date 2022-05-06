@@ -46,17 +46,17 @@ std::int32_t WINAPI DllMain(const HMODULE instance [[maybe_unused]], const unsig
 	DisableThreadLibraryCalls(instance);
 
 	switch (reason) {
-	case DLL_PROCESS_ATTACH: {
-		if (auto handle = CreateThread(nullptr, NULL, initialize, instance, NULL, nullptr))
-			CloseHandle(handle);
+		case DLL_PROCESS_ATTACH: {
+			if (auto handle = CreateThread(nullptr, NULL, initialize, instance, NULL, nullptr))
+				CloseHandle(handle);
 
-		break;
-	}
+			break;
+		}
 
-	case DLL_PROCESS_DETACH: {
-		release();
-		break;
-	}
+		case DLL_PROCESS_DETACH: {
+			release();
+			break;
+		}
 	}
 
 	return true;

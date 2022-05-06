@@ -10,7 +10,7 @@ namespace visuals {
 	void noflash();
 
 	namespace glow {
-		void draw_c4();
+		void draw_glow();
 	};
 
 	namespace misc {
