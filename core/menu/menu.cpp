@@ -121,7 +121,7 @@ void menu::render() {
 			break;
 		}
 		case 2: {	// Misc
-			const int part1_items_num = 3;
+			const int part1_items_num = 4;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			menu_framework::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Misc", false); {
@@ -131,6 +131,8 @@ void menu::render() {
 					render::fonts::watermark_font, "Spectator list", variables::spectators::spectator_list_bool);
 				menu_framework::slider(item_left_pos, part1_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom FOV", variables::custom_fov_slider, 80.f, 130.f);
+				menu_framework::slider(item_left_pos, part1_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;

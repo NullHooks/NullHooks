@@ -24,11 +24,9 @@ namespace hooks {
 	inline DoPostScreenSpaceEffectsFn DoPostScreenSpaceEffectsOriginal = nullptr;
 	void __stdcall DoPostScreenSpaceEffects(const void* viewSetup) noexcept;
 
-	/*
-	using get_viewmodel_fov_fn = void(__thiscall*)(void*, uintptr_t, uintptr_t) noexcept;
-	inline get_viewmodel_fov_fn get_viewmodel_fov_original = nullptr;
+	using get_viewmodel_fov_fn = float(__thiscall*)(void*) noexcept;
+	inline get_viewmodel_fov_fn get_viewmodel_fov_original;
 	float __fastcall get_viewmodel_fov(uintptr_t, uintptr_t);
-	*/
 
 	using override_view_fn = void(__thiscall*)(void*, view_setup_t* setup);
 	inline override_view_fn override_view_original;
