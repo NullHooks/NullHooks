@@ -89,29 +89,28 @@ void visuals::playeresp() {
 		}
 		/* ------------- INFO ESP ------------- */
 		if (variables::playerinfo_bool) {
-			// TODO: Crashes sometimes? idk
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
 				if (pCSPlayer->armor() > 0) {
 					int armor_x = (variables::healthesp_bool) ? 6 : 0;
-					render::draw_text_string(x - 10 - armor_x, y + 5, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
 				}
 
 				int item_num = 0;
 				if (pCSPlayer->is_defusing()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
 				}
 				else if (pCSPlayer->has_defuser()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
 				}
 
 				if (pCSPlayer->is_scoped()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
 					item_num++;
 				}
 				if (pCSPlayer->is_flashed()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
 					item_num++;
 				}
 
@@ -121,25 +120,25 @@ void visuals::playeresp() {
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
 				if (pCSPlayer->armor() > 0) {
 					int armor_x = (variables::healthesp_bool) ? 6 : 0;
-					render::draw_text_string(x - 10 - armor_x, y + 5, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
 				}
 
 				int item_num = 0;
 				if (pCSPlayer->is_defusing()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
 				}
 				else if (pCSPlayer->has_defuser()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
 				}
 
 				if (pCSPlayer->is_scoped()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
 					item_num++;
 				}
 				if (pCSPlayer->is_flashed()) {
-					render::draw_text_string(x + w + 5, y + 5 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
 					item_num++;
 				}
 
