@@ -36,6 +36,7 @@ Based on: [Click me](REFERENCES.md)
 #### Misc:
 - BunnyHop
 - Spectator list
+- Fov changer
 - Stats watermark (*username, time, fps, speed...*)
 
 ## Todo:
