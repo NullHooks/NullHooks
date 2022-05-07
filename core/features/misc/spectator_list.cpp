@@ -13,14 +13,21 @@ void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_
 void misc::spectator_list() {
 	if (!variables::spectators::spectator_list_bool) return;
 	if ((!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) && !variables::menu::opened) return;
-	if (!csgo::local_player) return;
+	if (!csgo::local_player) {
+		// Draw only frame in main menu for example
+		variables::spectators::h = 5 + 5 + 25;
+		draw_spec_frame(variables::spectators::x, variables::spectators::y, variables::spectators::w, variables::spectators::h, 25, 5,
+			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
+		return;
+	}
+
+	int spec_count = 0;			// Will count actual spectators
+	std::string spec_arr[64 + 1];
 
 	// Get spectator from self (alive) or currently spected
 	player_t* spec_player = csgo::local_player->is_alive() ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
 	if (!spec_player) return;
 
-	int spec_count = 0;			// Will count actual spectators
-	std::string spec_arr[64 + 1];
 
 	// Clear usernames array
 	for (int i = 0; i <= 64; i++) {
