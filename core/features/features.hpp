@@ -13,6 +13,10 @@ namespace visuals {
 		void draw_glow();
 	};
 
+	namespace chams {
+		void draw_chams(const draw_model_info_t& info);
+	}
+
 	namespace misc {
 		void nade_predict() noexcept;
 	};

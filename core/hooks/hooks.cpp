@@ -17,6 +17,7 @@ bool hooks::initialize() {
 	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
 	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
+	const auto draw_model_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 29));
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize MH_Initialize.");
@@ -44,6 +45,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(override_view_target, &override_view, reinterpret_cast<void**>(&override_view_original)) != MH_OK)
 		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
 	custom_helpers::state_to_console("Hooks", "override_view initialized!");
+
+	if (MH_CreateHook(draw_model_target, &draw_model, reinterpret_cast<void**>(&draw_model_original)) != MH_OK)
+		throw std::runtime_error("failed to initialize draw_model.");
+	custom_helpers::state_to_console("Hooks", "draw_model initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
@@ -183,4 +188,8 @@ void __fastcall hooks::override_view(uintptr_t, uintptr_t, view_setup_t* setup) 
 		setup->fov = variables::custom_fov_slider;
 
 	override_view_original(interfaces::clientmode, setup);
+}
+
+void __stdcall draw_model(void* results, const draw_model_info_t& info, matrix3x4_t* bones, float* flexWeights, float* flexDelayedWeights, const vec3_t& model_origin, const std::int32_t flags) {
+	visuals::chams::draw_chams(info);
 }

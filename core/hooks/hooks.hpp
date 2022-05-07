@@ -31,4 +31,8 @@ namespace hooks {
 	using override_view_fn = void(__thiscall*)(void*, view_setup_t* setup);
 	inline override_view_fn override_view_original;
 	void __fastcall override_view(uintptr_t, uintptr_t, view_setup_t* setup);
+
+	using draw_model_fn = void(__thiscall*)(void*, void*, const draw_model_info_t&, matrix3x4_t*, float*, float*, const vec3_t&, const std::int32_t);
+	inline draw_model_fn draw_model_original = nullptr;
+	void __stdcall draw_model(void* results, const draw_model_info_t& info, matrix3x4_t* bones, float* flexWeights, float* flexDelayedWeights, const vec3_t& model_origin, const std::int32_t flags);
 }
