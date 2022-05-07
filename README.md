@@ -60,12 +60,12 @@ Based on: [Click me](REFERENCES.md)
 	- [X] Add weapon glow
 - [X] Add bomb timer
 - [X] Add weapon info about player
+- [X] Fix entity names showing outside the map if they dont exist (See `entity_esp.cpp`)
 - [ ] Add aim stuff
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
-- [ ] Fix entity names showing outside the map if they dont exist (See `entity_esp.cpp`)
 - [ ] Entity glow won't turn off on existing entities
 
 ## Screenshots
