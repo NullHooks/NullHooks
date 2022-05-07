@@ -20,5 +20,5 @@ void visuals::crosshair::recoil_crosshair() {
 
 	x = (x == screen_size.first / 2 - 1 || x == screen_size.first / 2 + 1) ? screen_size.first / 2 : x;
 	y = (y == screen_size.second / 2 - 1 || x == screen_size.second / 2 + 1) ? screen_size.second / 2 : y;
-	visuals::crosshair::draw_custom_crosshair(x, y, true, (variables::crosshair::rainbow_crosshair) ? color(rand() % 255, rand() % 255, rand() % 255) : color(255, 0, 255, 255));
+	visuals::crosshair::draw_custom_crosshair(x, y, true, color(0, 255, 0, 255));
 }
