@@ -99,11 +99,10 @@ void visuals::playeresp() {
 				if (pCSPlayer->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				}
-				else if (pCSPlayer->has_defuser()) {
+				} else if (pCSPlayer->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
-				}
+				} // TODO: Has c4
 
 				if (pCSPlayer->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
@@ -127,11 +126,10 @@ void visuals::playeresp() {
 				if (pCSPlayer->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				}
-				else if (pCSPlayer->has_defuser()) {
+				} else if (pCSPlayer->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
-				}
+				} // TODO: Has c4
 
 				if (pCSPlayer->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
