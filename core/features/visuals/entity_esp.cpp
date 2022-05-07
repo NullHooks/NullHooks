@@ -92,168 +92,116 @@ void visuals::grenade_projectile_esp() {
 				entity_info::dropped_bomb(entity);
 				break;
 			/* ------------ WEAPONS ------------ */
-			case cak47:
-				entity_info::weapon_name(entity, "ak47");
-				break;
-			case cdeagle:
-				entity_info::weapon_name(entity, "deagle");
-				break;
-			case cweaponaug:
-				entity_info::weapon_name(entity, "aug");
-				break;
-			case cweaponawp:
-				entity_info::weapon_name(entity, "awp");
-				break;
-			case cweaponbaseitem:
-				entity_info::weapon_name(entity, "baseitem");
-				break;
-			case cweaponbizon:
-				entity_info::weapon_name(entity, "bizon");
-				break;
 			/*
-			case cweaponcsbase:
-				entity_info::weapon_name(entity, "csbase");
-				break;
-			case cweaponcsbasegun:
-				entity_info::weapon_name(entity, "csbasegun");
-				break;
+			case cak47:						entity_info::weapon_name(entity, "ak47", 0);				break;
+			case cdeagle:					entity_info::weapon_name(entity, "deagle", 0);				break;
+			case cweaponaug:				entity_info::weapon_name(entity, "aug", 0);					break;
+			case cweaponawp:				entity_info::weapon_name(entity, "awp", 0);					break;
+			case cweaponbaseitem:			entity_info::weapon_name(entity, "baseitem", 0);			break;
+			case cweaponbizon:				entity_info::weapon_name(entity, "bizon", 0);				break;
+			case cweaponcycler:				entity_info::weapon_name(entity, "cycler", 0);				break;
+			case cweaponelite:				entity_info::weapon_name(entity, "berettas", 0);			break;
+			case cweaponfamas:				entity_info::weapon_name(entity, "famas", 0);				break;
+			case cweaponfiveseven:			entity_info::weapon_name(entity, "fiveseven", 0);			break;
+			case cweapong3sg1:				entity_info::weapon_name(entity, "g3sg1", 0);				break;
+			case cweapongalil:				entity_info::weapon_name(entity, "galil", 0);				break;
+			case cweapongalilar:			entity_info::weapon_name(entity, "galilar", 0);				break;
+			case cweaponglock:				entity_info::weapon_name(entity, "glock", 0);				break;
+			case cweaponhkp2000:			entity_info::weapon_name(entity, "usp", 0);					break;
+			case cweaponm249:				entity_info::weapon_name(entity, "m249", 0);				break;
+			case cweaponm3:					entity_info::weapon_name(entity, "m3", 0);					break;
+			case cweaponm4a1:				entity_info::weapon_name(entity, "m4", 0);					break;
+			case cweaponmac10:				entity_info::weapon_name(entity, "mac10", 0);				break;
+			case cweaponmag7:				entity_info::weapon_name(entity, "mag7", 0);				break;
+			case cweaponmp5navy:			entity_info::weapon_name(entity, "mp5", 0);					break;
+			case cweaponmp7:				entity_info::weapon_name(entity, "mp7", 0);					break;
+			case cweaponmp9:				entity_info::weapon_name(entity, "mp9", 0);					break;
+			case cweaponnegev:				entity_info::weapon_name(entity, "negev", 0);				break;
+			case cweaponnova:				entity_info::weapon_name(entity, "nova", 0);				break;
+			case cweaponp228:				entity_info::weapon_name(entity, "p228", 0);				break;
+			case cweaponp250:				entity_info::weapon_name(entity, "p250", 0);				break;
+			case cweaponp90:				entity_info::weapon_name(entity, "p90", 0);					break;
+			case cweaponsawedoff:			entity_info::weapon_name(entity, "sawedoff", 0);			break;
+			case cweaponscar20:				entity_info::weapon_name(entity, "scar20", 0);				break;
+			case cweaponscout:				entity_info::weapon_name(entity, "scout", 0);				break;
+			case cweaponsg550:				entity_info::weapon_name(entity, "sg550", 0);				break;
+			case cweaponsg552:				entity_info::weapon_name(entity, "sg552", 0);				break;
+			case cweaponsg556:				entity_info::weapon_name(entity, "sg556", 0);				break;
+			case cweaponshield:				entity_info::weapon_name(entity, "shield", 0);				break;
+			case cweaponssg08:				entity_info::weapon_name(entity, "ssg08", 0);				break;
+			case cweapontaser:				entity_info::weapon_name(entity, "taser", 0);				break;
+			case cweapontec9:				entity_info::weapon_name(entity, "tec9", 0);				break;
+			case cweapontmp:				entity_info::weapon_name(entity, "tmp", 0);					break;
+			case cweaponump45:				entity_info::weapon_name(entity, "ump45", 0);				break;
+			case cweaponusp:				entity_info::weapon_name(entity, "usp", 0);					break;
+			case cweaponxm1014:				entity_info::weapon_name(entity, "xm1014", 0);				break;
+			case cweaponzonerepulsor:		entity_info::weapon_name(entity, "zonerepulsor", 0);		break;
 			*/
-			case cweaponcycler:
-				entity_info::weapon_name(entity, "cycler");
-				break;
-			case cweaponelite:
-				entity_info::weapon_name(entity, "elite");
-				break;
-			case cweaponfamas:
-				entity_info::weapon_name(entity, "famas");
-				break;
-			case cweaponfiveseven:
-				entity_info::weapon_name(entity, "fiveseven");
-				break;
-			case cweapong3sg1:
-				entity_info::weapon_name(entity, "g3sg1");
-				break;
-			case cweapongalil:
-				entity_info::weapon_name(entity, "galil");
-				break;
-			case cweapongalilar:
-				entity_info::weapon_name(entity, "galilar");
-				break;
-			case cweaponglock:
-				entity_info::weapon_name(entity, "glock");
-				break;
-			case cweaponhkp2000:
-				entity_info::weapon_name(entity, "usp");
-				break;
-			case cweaponm249:
-				entity_info::weapon_name(entity, "m249");
-				break;
-			case cweaponm3:
-				entity_info::weapon_name(entity, "m3");
-				break;
-			case cweaponm4a1:
-				entity_info::weapon_name(entity, "m4");
-				break;
-			case cweaponmac10:
-				entity_info::weapon_name(entity, "mac10");
-				break;
-			case cweaponmag7:
-				entity_info::weapon_name(entity, "mag7");
-				break;
-			case cweaponmp5navy:
-				entity_info::weapon_name(entity, "mp5navy");
-				break;
-			case cweaponmp7:
-				entity_info::weapon_name(entity, "mp7");
-				break;
-			case cweaponmp9:
-				entity_info::weapon_name(entity, "mp9");
-				break;
-			case cweaponnegev:
-				entity_info::weapon_name(entity, "negev");
-				break;
-			case cweaponnova:
-				entity_info::weapon_name(entity, "nova");
-				break;
-			case cweaponp228:
-				entity_info::weapon_name(entity, "p228");
-				break;
-			case cweaponp250:
-				entity_info::weapon_name(entity, "p250");
-				break;
-			case cweaponp90:
-				entity_info::weapon_name(entity, "p90");
-				break;
-			case cweaponsawedoff:
-				entity_info::weapon_name(entity, "sawedoff");
-				break;
-			case cweaponscar20:
-				entity_info::weapon_name(entity, "scar20");
-				break;
-			case cweaponscout:
-				entity_info::weapon_name(entity, "scout");
-				break;
-			case cweaponsg550:
-				entity_info::weapon_name(entity, "sg550");
-				break;
-			case cweaponsg552:
-				entity_info::weapon_name(entity, "sg552");
-				break;
-			case cweaponsg556:
-				entity_info::weapon_name(entity, "sg556");
-				break;
-			case cweaponshield:
-				entity_info::weapon_name(entity, "shield");
-				break;
-			case cweaponssg08:
-				entity_info::weapon_name(entity, "ssg08");
-				break;
-			case cweapontaser:
-				entity_info::weapon_name(entity, "taser");
-				break;
-			case cweapontec9:
-				entity_info::weapon_name(entity, "tec9");
-				break;
-			case cweapontmp:
-				entity_info::weapon_name(entity, "tmp");
-				break;
-			case cweaponump45:
-				entity_info::weapon_name(entity, "ump45");
-				break;
-			case cweaponusp:
-				entity_info::weapon_name(entity, "usp");
-				break;
-			case cweaponxm1014:
-				entity_info::weapon_name(entity, "xm1014");
-				break;
-			case cweaponzonerepulsor:
-				entity_info::weapon_name(entity, "zonerepulsor");
-				break;
-			/* ------------ WEAPONS ------------ */
-			case cflashbang:
-				entity_info::weapon_name(entity, "flashbang");
-				break;
-			case csmokegrenade:
-				entity_info::weapon_name(entity, "smoke");
-				break;
-			case cdecoygrenade:
-				entity_info::weapon_name(entity, "decoy");
-				break;
+			case cak47:						entity_info::weapon_name(entity, "ak47", 0);				break;
+			case cdeagle:					entity_info::weapon_name(entity, "deagle", 0);				break;
+			case cweaponaug:				entity_info::weapon_name(entity, "aug", 0);					break;
+			case cweaponawp:				entity_info::weapon_name(entity, "awp", 0);					break;
+			case cweaponbaseitem:			entity_info::weapon_name(entity, "baseitem", 0);			break;
+			case cweaponbizon:				entity_info::weapon_name(entity, "bizon", 0);				break;
+			case cweaponcycler:				entity_info::weapon_name(entity, "cycler", 0);				break;
+			case cweaponelite:				entity_info::weapon_name(entity, "berettas", 0);			break;
+			case cweaponfamas:				entity_info::weapon_name(entity, "famas", 0);				break;
+			case cweaponfiveseven:			entity_info::weapon_name(entity, "fiveseven", 0);			break;
+			case cweapong3sg1:				entity_info::weapon_name(entity, "g3sg1", 0);				break;
+			case cweapongalil:				entity_info::weapon_name(entity, "galil", 0);				break;
+			case cweapongalilar:			entity_info::weapon_name(entity, "galilar", 0);				break;
+			case cweaponglock:				entity_info::weapon_name(entity, "glock", 0);				break;
+			case cweaponhkp2000:			entity_info::weapon_name(entity, "usp", 0);					break;
+			case cweaponm249:				entity_info::weapon_name(entity, "m249", 0);				break;
+			case cweaponm3:					entity_info::weapon_name(entity, "m3", 0);					break;
+			case cweaponm4a1:				entity_info::weapon_name(entity, "m4", 0);					break;
+			case cweaponmac10:				entity_info::weapon_name(entity, "mac10", 0);				break;
+			case cweaponmag7:				entity_info::weapon_name(entity, "mag7", 0);				break;
+			case cweaponmp5navy:			entity_info::weapon_name(entity, "mp5", 0);					break;
+			case cweaponmp7:				entity_info::weapon_name(entity, "mp7", 0);					break;
+			case cweaponmp9:				entity_info::weapon_name(entity, "mp9", 0);					break;
+			case cweaponnegev:				entity_info::weapon_name(entity, "negev", 0);				break;
+			case cweaponnova:				entity_info::weapon_name(entity, "nova", 0);				break;
+			case cweaponp228:				entity_info::weapon_name(entity, "p228", 0);				break;
+			case cweaponp250:				entity_info::weapon_name(entity, "p250", 0);				break;
+			case cweaponp90:				entity_info::weapon_name(entity, "p90", 0);					break;
+			case cweaponsawedoff:			entity_info::weapon_name(entity, "sawedoff", 0);			break;
+			case cweaponscar20:				entity_info::weapon_name(entity, "scar20", 0);				break;
+			case cweaponscout:				entity_info::weapon_name(entity, "scout", 0);				break;
+			case cweaponsg550:				entity_info::weapon_name(entity, "sg550", 0);				break;
+			case cweaponsg552:				entity_info::weapon_name(entity, "sg552", 0);				break;
+			case cweaponsg556:				entity_info::weapon_name(entity, "sg556", 0);				break;
+			case cweaponshield:				entity_info::weapon_name(entity, "shield", 0);				break;
+			case cweaponssg08:				entity_info::weapon_name(entity, "ssg08", 0);				break;
+			case cweapontaser:				entity_info::weapon_name(entity, "taser", 0);				break;
+			case cweapontec9:				entity_info::weapon_name(entity, "tec9", 0);				break;
+			case cweapontmp:				entity_info::weapon_name(entity, "tmp", 0);					break;
+			case cweaponump45:				entity_info::weapon_name(entity, "ump45", 0);				break;
+			case cweaponusp:				entity_info::weapon_name(entity, "usp", 0);					break;
+			case cweaponxm1014:				entity_info::weapon_name(entity, "xm1014", 0);				break;
+			case cweaponzonerepulsor:		entity_info::weapon_name(entity, "zonerepulsor", 0);		break;
+			/*
+				case cweaponcsbase:
+					entity_info::weapon_info(entity, "csbase");
+					break;
+				case cweaponcsbasegun:
+					entity_info::weapon_info(entity, "csbasegun");
+					break;
+				*/
+			/* ------------ DROPPED NADES ------------ */
+			case cflashbang:				entity_info::weapon_name(entity, "flashbang", 0);			break;
+			case csmokegrenade:				entity_info::weapon_name(entity, "smoke", 0);				break;
+			case cdecoygrenade:				entity_info::weapon_name(entity, "decoy", 0);				break;
 			case cmolotovgrenade:
-			case cincendiarygrenade:
-				entity_info::weapon_name(entity, "molotov");
-				break;
-			case chegrenade:
-				entity_info::weapon_name(entity, "frag nade");
-				break;
+			case cincendiarygrenade:		entity_info::weapon_name(entity, "molotov", 0);				break;
+			case chegrenade:				entity_info::weapon_name(entity, "frag nade", 0);			break;
 			/* ------------ MISC ------------ */
 			case cchicken:
 				if (!(math::world_to_screen(origin, w2s) && variables::chickenpride_bool)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			/* ------------------------------ */
-			default:
-				break;
+			default:	break;
 		}
 	}
 }
