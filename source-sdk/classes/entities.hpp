@@ -364,6 +364,7 @@ public:
 	NETVAR("DT_CSPlayer", "m_iHealth", health, int)
 	NETVAR("DT_CSPlayer", "m_lifeState", life_state, int)
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int)
+	NETVAR("DT_CSPlayer", "m_iPlayerC4", c4_player, int)	// It broky
 	NETVAR("DT_BasePlayer", "m_viewPunchAngle", punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_aimPunchAngle", aim_punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_vecVelocity[0]", velocity, vec3_t)
