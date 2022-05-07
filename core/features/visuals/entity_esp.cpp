@@ -81,7 +81,7 @@ void visuals::grenade_projectile_esp() {
 			}
 			case cdecoyprojectile: {
 				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
-				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color::white(255));
+				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color(150, 150, 150, 255));
 				break;
 			}
 			/* ------------ BOMB ------------ */
