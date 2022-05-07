@@ -17,7 +17,7 @@ void visuals::glow::draw_glow() {
 
 		switch (glowEnt.entity->client_class()->class_id) {
 			case ccsplayer: {
-				if (!variables::playerglow_bool) break;
+				if (!variables::playerglow_bool || glowEnt.entity == csgo::local_player) break;
 
 				if (glowEnt.entity->team() == csgo::local_player->team() && variables::showteamesp_bool)
 					glowEnt.set(0.0f, 0.3f, 1.f, 0.6f);
