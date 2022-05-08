@@ -67,6 +67,11 @@ Based on: [Click me](REFERENCES.md)
 - [ ] Add config and all that
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 - [ ] Entity glow won't turn off on existing entities
+- [ ] Remove glow on nade projectiles
+- [ ] Remove esp on spectated player
+- [ ] Reset bomb timer on new round
+- [ ] Add "defusing" to bomb timer
+- [ ] Nade projectiles outside screen?
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
