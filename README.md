@@ -62,13 +62,13 @@ Based on: [Click me](REFERENCES.md)
 - [X] Add weapon info about player
 - [X] Fix entity names showing outside the map if they dont exist (See `entity_esp.cpp`)
 - [X] Remove glow on nade projectiles
+- [X] Remove esp on spectated player
 - [ ] Add aim stuff
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 - [ ] Entity glow won't turn off on existing entities
-- [ ] Remove esp on spectated player
 - [ ] Reset bomb timer on new round
 - [ ] Add "defusing" to bomb timer
 - [ ] Nade projectiles outside screen?

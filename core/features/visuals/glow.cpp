@@ -9,7 +9,8 @@ void visuals::glow::draw_glow() {
 	if (!csgo::local_player) return;
 	if (interfaces::engine->is_taking_screenshot()) return;
 
-	player_t* player_ent = csgo::local_player;	// Todo: spectated player
+	// Will not glow the player being spectated
+	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
 
 	for (int i = 0; i < interfaces::glow_manager->objects.size; i++) {
 		glow_manager_t::glow_object& glowEnt = interfaces::glow_manager->objects[i];
@@ -19,7 +20,7 @@ void visuals::glow::draw_glow() {
 
 		switch (glowEnt.entity->client_class()->class_id) {
 			case ccsplayer: {
-				if (!variables::playerglow_bool || glowEnt.entity == player_ent) break;
+				if (!variables::playerglow_bool || glowEnt.entity == local_player_ent) break;
 
 				if (glowEnt.entity->team() == csgo::local_player->team() && variables::showteamesp_bool)
 					glowEnt.set(0.0f, 0.3f, 1.f, 0.6f);
