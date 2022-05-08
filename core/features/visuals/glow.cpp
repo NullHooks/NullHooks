@@ -9,6 +9,8 @@ void visuals::glow::draw_glow() {
 	if (!csgo::local_player) return;
 	if (interfaces::engine->is_taking_screenshot()) return;
 
+	player_t* player_ent = csgo::local_player;	// Todo: spectated player
+
 	for (int i = 0; i < interfaces::glow_manager->objects.size; i++) {
 		glow_manager_t::glow_object& glowEnt = interfaces::glow_manager->objects[i];
 
@@ -17,7 +19,7 @@ void visuals::glow::draw_glow() {
 
 		switch (glowEnt.entity->client_class()->class_id) {
 			case ccsplayer: {
-				if (!variables::playerglow_bool || glowEnt.entity == csgo::local_player) break;
+				if (!variables::playerglow_bool || glowEnt.entity == player_ent) break;
 
 				if (glowEnt.entity->team() == csgo::local_player->team() && variables::showteamesp_bool)
 					glowEnt.set(0.0f, 0.3f, 1.f, 0.6f);
@@ -38,11 +40,7 @@ void visuals::glow::draw_glow() {
 			}
 			*/
 			/* ------------ BOMB ------------ */
-			case cplantedc4: {
-				if (!variables::entityglow_bool) break;
-				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
-				break;
-			}
+			case cplantedc4: 
 			case cc4: {
 				if (!variables::entityglow_bool) break;
 				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
@@ -66,16 +64,16 @@ void visuals::glow::draw_glow() {
 				break;
 			}
 			/* ------------ WEAPONS ------------ */
+			/*
+			case cweaponcsbase:
+			case cweaponcsbasegun:
+			*/
 			case cak47:
 			case cdeagle:
 			case cweaponaug:
 			case cweaponawp:
 			case cweaponbaseitem:
 			case cweaponbizon:
-			/*
-			case cweaponcsbase:
-			case cweaponcsbasegun:
-			*/
 			case cweaponcycler:
 			case cweaponelite:
 			case cweaponfamas:
@@ -113,12 +111,11 @@ void visuals::glow::draw_glow() {
 			case cweaponusp:
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
-				if (!variables::entityglow_bool) break;
+				if (!variables::entityglow_bool) break;		// TODO: Only works if another glow is enabled
 				glowEnt.set(240, 240, 240, 0.6f);
 				break;
 			}
-			default:
-				break;
+			default: break;
 		}
 	}
 }
