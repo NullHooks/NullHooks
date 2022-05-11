@@ -145,6 +145,18 @@ void menu::render() {
 					render::fonts::watermark_font, "Chicken pride", variables::chickenpride_bool);
 			}
 
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_items_num = 2;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			menu_framework::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Misc 3", false); {
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Show watermark", variables::draw_watermark);
+				menu_framework::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Show stats", variables::draw_stats);
+			}
+
 			// Buttons (start from bottom)
 			const int buttons_con_margin_pos = variables::menu::y + variables::menu::h - container_margin;	// Bottom left corner of container
 			const int button_items_num = 1;

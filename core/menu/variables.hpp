@@ -46,6 +46,8 @@ namespace variables {
 	// Misc
 	inline bool bhop_bool = true;
 	inline bool chickenpride_bool = false;
+	inline bool draw_watermark = true;
+	inline bool draw_stats = true;
 	
 	namespace spectators {
 		inline bool spectator_list_bool = true;
