@@ -64,15 +64,15 @@ Based on: [Click me](REFERENCES.md)
 - [X] Remove glow on nade projectiles
 - [X] Remove esp on spectated player
 - [X] Nade projectiles outside screen
-- [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
+- [X] Add option for disabling watermark and stats
+- [ ] Add "defusing" to bomb timer
+- [ ] Reset bomb timer on new round
 - [ ] Add aim stuff
 - [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
+- [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
-- [ ] Reset bomb timer on new round
-- [ ] Add "defusing" to bomb timer
-- [ ] Disable watermark
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
