@@ -72,6 +72,7 @@ Based on: [Click me](REFERENCES.md)
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 - [ ] Reset bomb timer on new round
 - [ ] Add "defusing" to bomb timer
+- [ ] Disable watermark
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
