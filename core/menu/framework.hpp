@@ -8,6 +8,7 @@ namespace gui {
 	void slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value);
 	void menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
 	bool button(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string);
+	bool button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 
 	inline bool should_drag = false;
 	inline bool should_move = false; 

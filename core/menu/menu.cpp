@@ -160,15 +160,17 @@ void menu::render() {
 
 			// Buttons (start from bottom)
 			const int buttons_con_margin_pos = variables::menu::y + variables::menu::h - container_margin;	// Bottom left corner of container
-			const int button_items_num = 1;
+			const int button_items_num = 2;
 			const int button_items_h = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height
 			const int buttons_items_base_y = buttons_con_y + container_padding;		// Same as other containers
 
 			gui::group_box(container_left_pos, buttons_con_y, container_width, button_items_h, render::fonts::watermark_font, "Buttons", false); {
 				if (gui::button(item_left_pos, buttons_items_base_y + (15 * 0), item_checkbox_pos - 20,	// Bigger "checkbox" as button
-					render::fonts::watermark_font, "Autoexec (Test button)"))
+					render::fonts::watermark_font, "Autoexec (test button)"))
 					commands_features::exec_autoexec();
+				gui::button(item_left_pos, buttons_items_base_y + (15 * 1), item_checkbox_pos - 20,	// Bigger "checkbox" as button
+					render::fonts::watermark_font, "Autoexec (test 2nd impl)", commands_features::exec_autoexec);
 			}
 			break;
 		}
