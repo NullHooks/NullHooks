@@ -5,7 +5,7 @@ POINT cursor;
 POINT cursor_corrected;
 
 /*------------------------------------------------------*/
-
+// returns true if pressed
 bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	GetCursorPos(&cursor);
 
@@ -21,6 +21,28 @@ bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
 	else
 		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+
+	return GetAsyncKeyState(VK_LBUTTON) & 0x8000 != 0;
+}
+
+// second implementation for button, it pass callback function
+bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)()) {
+	GetCursorPos(&cursor);
+
+	const int w = 30, h = 10;	// Button size
+	const color c_default = color(150, 22, 22, 255);
+	const color c_hover = color(135, 21, 21, 255);
+
+	// Checkbox label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+
+	// Cursor in button and clicked
+	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h))
+		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));	// Checkbox background (Hover)
+	else
+		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 != 0) callback();
 
 	return GetAsyncKeyState(VK_LBUTTON) & 0x8000 != 0;
 }
