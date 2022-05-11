@@ -1,7 +1,24 @@
-# NullHooks
-**CS:GO cheat I made based on the famous base, and many other cheats I found.**
+<div align="center">
+    <h1>NullHooks</h1>
+    <b>CS:GO cheat I made based on designer's base, and many other cheats I found. Mainly made for learning.</b>
+    <div></div>
+</div>
 
-Based on: [Click me](REFERENCES.md)
+# Table of contents
+1. [Description](#description)
+2. [Features](#features)
+    - [Visuals - ESP](#visuals---esp)
+    - [Visuals - Misc](#visuals---misc)
+    - [Misc](#misc)
+3. [Todo](#todo)
+4. [Screenshots](#screenshots)
+
+## Description
+Edgy name but not as cool as *PissHooks™* (RIP).
+
+As I said I made this project to learn about game hacking and cpp in general, so expect some bad practises and errors, but feel free to improve them!
+
+See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making the project.
 
 ## Features
 #### Visuals - ESP
@@ -20,7 +37,7 @@ Based on: [Click me](REFERENCES.md)
     - `D` - Is defusing (soft)
     - `D` - Has defuser (hard)
 
-#### Visuals - Others
+#### Visuals - Misc
 - C4 glow
 - C4 timer and bar
 - Dropped weapons and grenades glow
