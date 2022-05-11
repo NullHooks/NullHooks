@@ -1,6 +1,5 @@
 #include "framework.hpp"
 
-
 //credits to harcuz for menu framework (https://www.unknowncheats.me/forum/members/2669363.html),
 POINT cursor;
 POINT cursor_corrected;

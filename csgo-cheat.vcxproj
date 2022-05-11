@@ -98,6 +98,12 @@
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
     <ClCompile Include="core\features\visuals\player_esp.cpp" />
+    <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp" />
+    <ClCompile Include="core\hooks\functions\create_move.cpp" />
+    <ClCompile Include="core\hooks\functions\do_post_screen_space_effects.cpp" />
+    <ClCompile Include="core\hooks\functions\get_viewmodel_fov.cpp" />
+    <ClCompile Include="core\hooks\functions\override_view.cpp" />
+    <ClCompile Include="core\hooks\functions\paint_traverse.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
