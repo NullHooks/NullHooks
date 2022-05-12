@@ -17,7 +17,7 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize MH_Initialize.");
 
 	if (MH_CreateHook(alloc_key_values_target, &alloc_key_values_memory::hook, reinterpret_cast<void**>(&alloc_key_values_memory::original)) != MH_OK)
-		throw std::runtime_error("failed to initialize AllocKeyValuesMemory.");
+		throw std::runtime_error("failed to initialize alloc_key_values_memory.");
 	custom_helpers::state_to_console("Hooks", "alloc_key_values_memory initialized!");
 	
 	if (MH_CreateHook(create_move_target, &create_move::hook, reinterpret_cast<void**>(&create_move::original)) != MH_OK)
@@ -29,15 +29,15 @@ bool hooks::initialize() {
 	custom_helpers::state_to_console("Hooks", "paint_traverse initialized!");
 
 	if (MH_CreateHook(post_screen_space_effects_target, &do_post_screen_space_effects::hook, reinterpret_cast<void**>(&do_post_screen_space_effects::original)) != MH_OK)
-		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+		throw std::runtime_error("failed to initialize do_post_screen_space_effects.");
 	custom_helpers::state_to_console("Hooks", "do_post_screen_space_effects initialized!");
 
 	if (MH_CreateHook(get_viewmodel_fov_target, &get_viewmodel_fov::hook, reinterpret_cast<void**>(&get_viewmodel_fov::original)) != MH_OK)
-		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+		throw std::runtime_error("failed to initialize get_viewmodel_fov.");
 	custom_helpers::state_to_console("Hooks", "get_viewmodel_fov initialized!");
 
 	if (MH_CreateHook(override_view_target, &override_view::hook, reinterpret_cast<void**>(&override_view::original)) != MH_OK)
-		throw std::runtime_error("failed to initialize DoPostScreenSpaceEffects.");
+		throw std::runtime_error("failed to initialize override_view.");
 	custom_helpers::state_to_console("Hooks", "override_view initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)

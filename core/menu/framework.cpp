@@ -4,9 +4,8 @@
 POINT cursor;
 POINT cursor_corrected;
 
-/*------------------------------------------------------*/
-// returns true if pressed
-bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
+// Returns true if pressed
+bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	GetCursorPos(&cursor);
 
 	const int w = 30, h = 10;	// Button size
@@ -21,17 +20,16 @@ bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
 		pressed = GetAsyncKeyState(VK_LBUTTON) & 1;
-	} else
-		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+	}
+	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Checkbox background
 
 	return pressed;
 }
 
 // second implementation for button, it pass callback function
-bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)()) {
-	bool pressed = button(x, y, butt_pos, font, label); // i think no need to copy this code
+void gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)()) {
+	const bool pressed = button_bool(x, y, butt_pos, font, label);		// Call the bool function instead of copying the code again
 	if (pressed) callback();
-	return pressed;
 }
 
 void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
