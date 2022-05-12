@@ -20,8 +20,8 @@ void menu::render() {
 	const int top_margin = 30;
 	const int tab_height = 24;
 	const int top_margin_with_tabs = top_margin + tab_height;
-	const int container_margin = 5;		// empty space between containers
-	const int container_padding = 10;	// space before and after item list (top and bottom)
+	const int container_margin = 5;		// Empty space between containers
+	const int container_padding = 10;	// Space before and after item list (top and bottom)
 
 	/* ------------------ TABS ------------------ */
 	const int tab_number = 4;
@@ -103,22 +103,8 @@ void menu::render() {
 					render::fonts::watermark_font, "No sniper scope", variables::noscope_bool);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
-				// TODO: Remove comments in future commit
-				/*
-				// In case you want the user to change the values
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom crosshair length", variables::crosshair::crosshair_len, 2.f, 20.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom crosshair width", variables::crosshair::crosshair_w, 2.f, 15.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom crosshair gap", variables::crosshair::crosshair_gap, 0.f, 5.f);
-				*/
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos,
 					render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
-				/*
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Rainbow crosshair", variables::crosshair::rainbow_crosshair);
-				*/
 			}
 			break;
 		}

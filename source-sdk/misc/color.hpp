@@ -26,7 +26,8 @@ struct color {
 	static D3DCOLOR from_color( const color col ) {
 		return D3DCOLOR_ARGB( col.a, col.r, col.g, col.b );
 	}
-
+	
+	// For comparing colors
 	bool operator != (color other) {
 		return (other.r == r && other.g == g && other.b == b && other.a == a);
 	}
