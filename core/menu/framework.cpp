@@ -63,12 +63,12 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 }
 
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
-	// TODO: Maybe make the setting name clickable? :)
 	GetCursorPos(&cursor);
 
-	int w = 10, h = 10;
+	const int w = 10, h = 10;
 
-	if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
+	// Check if in checkbox or text and clicked
+	if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
 		value = !value;
 
 	// Checkbox itself
