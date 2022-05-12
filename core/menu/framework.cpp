@@ -20,7 +20,7 @@ bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
-		pressed = GetAsyncKeyState(VK_LBUTTON) & 0x8000 != 0;
+		pressed = GetAsyncKeyState(VK_LBUTTON) & 1;
 	} else
 		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
 
