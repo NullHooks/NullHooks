@@ -27,7 +27,7 @@ struct color {
 		return D3DCOLOR_ARGB( col.a, col.r, col.g, col.b );
 	}
 
-	bool operator!=(color other) {
+	bool operator != (color other) {
 		return (other.r == r && other.g == g && other.b == b && other.a == a);
 	}
 
