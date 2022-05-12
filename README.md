@@ -82,7 +82,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Remove esp on spectated player
 - [X] Nade projectiles outside screen
 - [X] Add option for disabling watermark and stats
-- [ ] Make gui checkboxes enable by clicking the name of the feature
+- [X] Make gui checkboxes enable by clicking the name of the feature
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round
