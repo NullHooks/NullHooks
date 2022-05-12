@@ -5,13 +5,14 @@ POINT cursor;
 POINT cursor_corrected;
 
 /*------------------------------------------------------*/
-
-void custom_menu_framework::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, int function_id) {
+// returns true if pressed
+bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	GetCursorPos(&cursor);
 
 	const int w = 30, h = 10;	// Button size
 	const color c_default = color(150, 22, 22, 255);
 	const color c_hover = color(135, 21, 21, 255);
+	bool pressed = false;
 
 	// Checkbox label
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
@@ -19,30 +20,21 @@ void custom_menu_framework::button(std::int32_t x, std::int32_t y, std::int32_t 
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
-		if (GetAsyncKeyState(VK_LBUTTON) & 1) menu_button_fuctions::exec_button_function(function_id);
-	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+		pressed = GetAsyncKeyState(VK_LBUTTON) & 1;
+	} else
+		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+
+	return pressed;
 }
 
-void custom_menu_framework::unhook_button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
-	GetCursorPos(&cursor);
-
-	const int w = 30, h = 10;	// Button size
-	const color c_default = color(150, 22, 22, 255);
-	const color c_hover = color(135, 21, 21, 255);
-
-	// Checkbox label
-	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
-
-	// Cursor in button and clicked
-	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
-		if (GetAsyncKeyState(VK_LBUTTON) & 1) hooks::release();						// (*my_func) ?
-	} else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));	// Checkbox background
+// second implementation for button, it pass callback function
+bool gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)()) {
+	bool pressed = button(x, y, butt_pos, font, label); // i think no need to copy this code
+	if (pressed) callback();
+	return pressed;
 }
 
-/*------------------------------------------------------*/
-
-void menu_framework::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
+void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
 	//groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
 
@@ -54,7 +46,7 @@ void menu_framework::group_box(std::int32_t x, std::int32_t y, std::int32_t w, s
 		render::draw_text_string(x + 2, y - 12, font, string, false, color::white());
 }
 
-void menu_framework::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
+void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
 	GetCursorPos(&cursor);
 
 	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
@@ -73,7 +65,7 @@ void menu_framework::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::in
 	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + w / 2, y + h / 2 - 6, font, string, false, color::white());
 }
 
-void menu_framework::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
 	// TODO: Maybe make the setting name clickable? :)
 	GetCursorPos(&cursor);
 
@@ -97,7 +89,7 @@ float map_slider_constrain(float n, float start1, float stop1, float start2, flo
 	return std::clamp(value, start2, stop2);
 };
 
-void menu_framework::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
+void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	GetCursorPos(&cursor);
 	const int slider_y = y + 2;
 	const int slider_width = 8;
@@ -115,7 +107,7 @@ void menu_framework::slider(std::int32_t x, std::int32_t y, std::int32_t slider_
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
 }
 
-void menu_framework::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
+void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
 	GetCursorPos(&cursor);
 	
 	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
