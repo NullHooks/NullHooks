@@ -132,9 +132,9 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Spectator list", variables::spectators::spectator_list_bool);
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom FOV", variables::custom_fov_slider, 0.f, 50.f);
+					render::fonts::watermark_font, "Custom FOV", variables::custom_fov_slider, 80.f, 130.f);
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom viewmodel FOV", variables::custom_vmfov_slider, 0.f, 80.f);
+					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;

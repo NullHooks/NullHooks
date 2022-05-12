@@ -6,7 +6,7 @@ void __fastcall hooks::override_view::hook(uintptr_t, uintptr_t, view_setup_t* s
 		&& interfaces::engine->is_in_game()
 		&& !csgo::local_player->is_scoped()
 		&& !interfaces::engine->is_taking_screenshot())
-		setup->fov = setup->fov + variables::custom_fov_slider;
+		setup->fov = variables::custom_fov_slider;
 
 	original(interfaces::clientmode, setup);
 }
