@@ -1,6 +1,5 @@
 #include "framework.hpp"
 
-//credits to harcuz for menu framework (https://www.unknowncheats.me/forum/members/2669363.html),
 POINT cursor;
 POINT cursor_corrected;
 
@@ -26,20 +25,20 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	return pressed;
 }
 
-// second implementation for button, it pass callback function
+// Second implementation for button, it pass callback function
 void gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)()) {
 	const bool pressed = button_bool(x, y, butt_pos, font, label);		// Call the bool function instead of copying the code again
 	if (pressed) callback();
 }
 
 void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
-	//groupbox background
+	// Groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
 
-	//groupbox outline
+	// Groupbox outline
 	render::draw_rect(x, y, w, h, color(45, 45, 45, 255));
 
-	//groupbox label
+	// Groupbox label
 	if (show_label)
 		render::draw_text_string(x + 2, y - 12, font, string, false, color::white());
 }
