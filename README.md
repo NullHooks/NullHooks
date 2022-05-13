@@ -87,10 +87,10 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Add option for disabling watermark and stats
 - [X] Make gui checkboxes enable by clicking the name of the feature
 - [X] Add chams
+- [X] Add section columns
 </details>
 
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
-- [ ] Add section columns
 - [ ] Add hand chams
 - [ ] Add material selector to chams
 - [ ] Add color picker <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
