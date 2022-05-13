@@ -2,9 +2,6 @@
 #include "hooks.hpp"
 #include "../helpers/misc_helpers.hpp"
 
-hooks::create_move::fn create_move_original = nullptr;
-hooks::paint_traverse::fn paint_traverse_original = nullptr;
-
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
@@ -12,7 +9,7 @@ bool hooks::initialize() {
 	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
 	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
-	const auto draw_model_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 29));
+	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize MH_Initialize.");
@@ -41,12 +38,14 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize override_view.");
 	custom_helpers::state_to_console("Hooks", "override_view initialized!");
 
-	if (MH_CreateHook(draw_model_target, &draw_model, reinterpret_cast<void**>(&draw_model_original)) != MH_OK)
-		throw std::runtime_error("failed to initialize draw_model.");
-	custom_helpers::state_to_console("Hooks", "draw_model initialized!");
+	if (MH_CreateHook(draw_model_execute_target, &draw_model_execute::hook, reinterpret_cast<void**>(&draw_model_execute::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize draw_model_execute.");
+	custom_helpers::state_to_console("Hooks", "draw_model_execute initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
+
+	/* ------------------------------------------------------------------------ */
 
 	// Reset crosshair
 	if (!variables::crosshair_bool) {
