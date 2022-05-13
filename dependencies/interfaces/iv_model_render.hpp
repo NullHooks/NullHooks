@@ -18,4 +18,8 @@ class iv_model_render {
 		using fn = void( __thiscall * )( iv_model_render *, i_material *, int, int );
 		return ( *( fn ** ) this )[ 1 ]( this, material, 0, 0 );
 	}
+	bool is_forced() {
+		using fn = bool(__thiscall*)(void*);
+		return (*(fn**)this)[2](this);
+	}
 };
