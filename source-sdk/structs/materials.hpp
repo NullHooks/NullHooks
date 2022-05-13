@@ -1,5 +1,6 @@
 #pragma once
-#include "imageformats.h"
+#include "../../dependencies/interfaces/imageformats.h"
+//#include "../math/vector3d.hpp"
 
 enum material_var_flags_t {
 	material_var_debug = (1 << 0),
@@ -58,6 +59,7 @@ struct draw_model_info_t;
 class i_client_renderable;
 class data_cache_handle_t;
 class i_mat_render_context;
+class iv_studio_render;		// For chams
 struct material_lighting_state_t;
 typedef int vertex_format_t;
 typedef void* light_cache_handle_t;
@@ -66,6 +68,7 @@ typedef int material_property_types_t;
 typedef unsigned short model_instance_handle_t;
 using material_handle_t = unsigned short;
 
+class vec3_t;
 class i_material {
 public:
 	virtual const char* get_name() const = 0;
@@ -101,7 +104,7 @@ public:
 	virtual void color_modulate(float r, float g, float b) = 0;
 	virtual void set_material_var_flag(material_var_flags_t flag, bool on) = 0;
 	virtual bool get_material_var_flag(material_var_flags_t flag) const = 0;
-	virtual void get_reflectivity(vec3_t& reflect) = 0;
+	virtual void get_reflectivity(vec3_t& reflect) = 0;		// Breaks
 	virtual bool get_property_flag(material_property_types_t  type) = 0;
 	virtual bool is_two_sided() = 0;
 	virtual void set_shader(const char* shader_name) = 0;

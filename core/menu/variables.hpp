@@ -24,12 +24,16 @@ namespace variables {
 	inline bool bombtimer_bool = true;
 	inline bool nade_esp_bool = false;
 	
+	// Visuals - Chams
+	inline bool enable_chams_bool = false;
+
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;
 	inline bool noscope_bool  = true;
 	inline bool crosshair_bool = false;
 	inline bool recoil_crosshair_bool = false;
+	inline bool clean_screenshots_bool = true;
 
 	inline float custom_fov_slider = 90.f;
 	inline float custom_vmfov_slider = 1.f;

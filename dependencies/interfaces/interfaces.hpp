@@ -25,6 +25,7 @@
 #include "glow_manager.hpp"
 #include "i_player_movement.hpp"
 #include "i_weapon_system.hpp"
+#include "i_studio_render.h"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
@@ -79,6 +80,7 @@ namespace interfaces {
 	inline iv_model_info* model_info;
 	inline iv_model_render* model_render;
 	inline i_render_view* render_view;
+	inline iv_studio_render* studio_render;		// For chams
 	inline iv_debug_overlay* debug_overlay;
 	inline i_console* console;
 	inline i_localize* localize;

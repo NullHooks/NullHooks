@@ -10,6 +10,7 @@ bool interfaces::initialize() {
 	material_system = get_interface<i_material_system, interface_type::index>("materialsystem.dll", "VMaterialSystem080");
 	model_info = get_interface<iv_model_info, interface_type::index>("engine.dll", "VModelInfoClient004");
 	model_render = get_interface<iv_model_render, interface_type::index>("engine.dll", "VEngineModel016");
+	studio_render = get_interface<iv_studio_render, interface_type::index>("studiorender.dll", "VStudioRender026");		// For chams
 	render_view = get_interface<i_render_view, interface_type::index>("engine.dll", "VEngineRenderView014");
 	console = get_interface<i_console, interface_type::index>("vstdlib.dll", "VEngineCvar007");
 	localize = get_interface<i_localize, interface_type::index>("localize.dll", "Localize_001");
@@ -20,25 +21,21 @@ bool interfaces::initialize() {
 	game_movement = get_interface<player_game_movement, interface_type::index>("client.dll", "GameMovement001");
 	prediction = get_interface<player_prediction, interface_type::index>("client.dll", "VClientPrediction001");
 
-	/* Custom interfaces */
+	/* ----- Custom interfaces ----- */
 	clientmode = **reinterpret_cast<i_client_mode***>((*reinterpret_cast<uintptr_t**>(client))[10] + 5);
 	globals = **reinterpret_cast<c_global_vars_base***>((*reinterpret_cast<uintptr_t**>(client))[11] + 10);
 
 	clientstate = **reinterpret_cast<i_client_state***>(utilities::pattern_scan("engine.dll", sig_client_state) + 1);
 	directx = **reinterpret_cast<IDirect3DDevice9***>(utilities::pattern_scan("shaderapidx9.dll", sig_directx) + 1);
 	input = *reinterpret_cast<i_input**>(utilities::pattern_scan("client.dll", sig_input) + 1);
-	//glow_manager = reinterpret_cast<glow_manager_t*>(*reinterpret_cast<uintptr_t*>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3));
 	glow_manager = *reinterpret_cast<glow_manager_t**>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3);	// "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00"
 	move_helper = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
 
-	// get the exported KeyValuesSystem function
-	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))
-		// set our pointer by calling the function
-		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();
+	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))												// Get the exported KeyValuesSystem function
+		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();	// Set our pointer by calling the function
 	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine) + 3;	// FF 52 04 85 C0 74 0C 56
 	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client) + 3;	// FF 52 04 85 C0 74 0C 56
-
 
 	console->console_printf("\n-------------------------------------------\n");
 	console->console_printf("[NullHooks] [Setup] Interfaces initialized!\n");

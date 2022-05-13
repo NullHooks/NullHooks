@@ -13,6 +13,10 @@ namespace visuals {
 		void draw_glow();
 	};
 
+	namespace chams {
+		void draw_chams(i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& info, matrix_t* matrix);
+	}
+
 	namespace misc {
 		void nade_predict() noexcept;
 	};

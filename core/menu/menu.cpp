@@ -51,7 +51,7 @@ void menu::render() {
 		case 0:		// Aim
 			break;
 		case 1:	{	// Visuals
-			const int part1_items_num = 8;
+			const int part1_items_num = 9;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - Player ESP", false); {
@@ -60,16 +60,18 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Player glow", variables::playerglow_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
+					render::fonts::watermark_font, "Enable chams", variables::enable_chams_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
+					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
-					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 7), item_checkbox_pos,
+					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 8), item_checkbox_pos,
 					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
 			}
 
@@ -134,7 +136,7 @@ void menu::render() {
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;
-			const int part3_items_num = 2;
+			const int part3_items_num = 3;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
 
@@ -143,6 +145,8 @@ void menu::render() {
 					render::fonts::watermark_font, "Show watermark", variables::draw_watermark);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Show stats", variables::draw_stats);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Disable cheat on screenshots", variables::clean_screenshots_bool);
 			}
 
 			// Buttons (start from bottom)
