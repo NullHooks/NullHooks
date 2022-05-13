@@ -18,7 +18,7 @@ namespace variables {
 	inline bool playerinfo_bool = false;
 	inline bool healthesp_bool = false;
 
-	// Visuals - Glow
+	// Visuals - Entity ESP
 	inline bool entityglow_bool = false;
 	inline bool entitytext_bool = false;
 	inline bool bombtimer_bool = true;
@@ -26,6 +26,7 @@ namespace variables {
 	
 	// Visuals - Chams
 	inline bool enable_chams_bool = false;
+	inline bool only_visible_chams_bool = false;
 
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
