@@ -55,7 +55,7 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 		render::draw_filled_rect(x, y+h-1, w, 2, color(150, 22, 22, 255));
 	} else {
 		render::draw_filled_rect(x, y, w, h, color(34, 34, 34, 255));
-		render::draw_line(x, y+h, x+w, y+h, color(45, 45, 45, 255));
+		render::draw_filled_rect(x, y +h, w, 1, color(45, 45, 45, 255));
 	}
 
 	// Tab label
