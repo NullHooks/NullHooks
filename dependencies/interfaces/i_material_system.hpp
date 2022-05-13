@@ -140,10 +140,12 @@ struct i_ms_app_perf_counters_info_t {
 	float ms_total;
 };
 
+/*
 struct i_ms_app_instant_counters_info_t {
 	uint32_t cpu_activity_mask;
 	uint32_t deferred_words_allocated;
 };
+*/
 
 struct i_matsys_material_adapter_info_t {
 	char		driver_name[ MATERIAL_ADAPTER_NAME_LENGTH ];

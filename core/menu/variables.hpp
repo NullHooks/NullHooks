@@ -24,6 +24,9 @@ namespace variables {
 	inline bool bombtimer_bool = true;
 	inline bool nade_esp_bool = false;
 	
+	// Visuals - Chams
+	inline bool enable_chams_bool = false;
+
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;

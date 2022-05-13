@@ -44,4 +44,10 @@ namespace hooks {
 		inline fn original = nullptr;
 		void __stdcall hook(const void* viewSetup);
 	}
+
+	namespace draw_model_execute {
+		using fn = void(__fastcall*)(void*, int, i_mat_render_context*, const draw_model_state_t&, const model_render_info_t&, matrix_t*);
+		inline fn original = nullptr;
+		void __fastcall hook(void* _this, int edx, i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& pInfo, matrix_t* pCustomBoneToWorld);
+	}
 }
