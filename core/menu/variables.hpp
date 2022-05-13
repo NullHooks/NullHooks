@@ -31,6 +31,8 @@ namespace variables {
 	inline bool vm_arm_chams_bool = false;
 	inline bool vm_sleeve_chams_bool = false;
 
+	inline int player_chams_mat_id = 1;
+
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;
@@ -90,7 +92,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 500, h = 350;
+		inline int w = 500, h = 390;
 	};
 
 	namespace watermark {
