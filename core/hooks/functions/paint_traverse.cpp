@@ -6,7 +6,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 	case fnv::hash("MatSystemTopPanel"):
-		if (interfaces::engine->is_taking_screenshot()) break;
+		if (interfaces::engine->is_taking_screenshot() && variables::clean_screenshots_bool) break;
 
 		watermark::draw();
 		watermark::draw_stats();
