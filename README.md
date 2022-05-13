@@ -57,6 +57,9 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Stats watermark (*username, time, fps, speed...*)
 
 ## Todo:
+<details>
+    <summary>Completed items</summary>  
+    
 - [X] Clean the code
 - [X] Choose team not working (click)
 - [X] Move *NullHooks-Lite* to *NullHooks* branches
@@ -64,17 +67,17 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Add recoil crosshair
 - [X] Make spectator list movable (same as menu)
 - [X] Add active nade ESP
-	- [X] Fix smoke class id
+    - [X] Fix smoke class id
 - [X] Add nade prediction
 - [X] Add player skeleton ESP
 - [X] Bring menu tabs back (rip)
 - [X] Make spectator list width dynamic depending on name lengths
 - [X] Add line esp
 - [X] Add glows 
-	- [X] Add bomb glow
-	- [X] Add player glow
-	- [X] Add chicken glow
-	- [X] Add weapon glow
+    - [X] Add bomb glow
+    - [X] Add player glow
+    - [X] Add chicken glow
+    - [X] Add weapon glow
 - [X] Add bomb timer
 - [X] Add weapon info about player
 - [X] Fix entity names showing outside the map if they dont exist (See `entity_esp.cpp`)
@@ -83,6 +86,8 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Nade projectiles outside screen
 - [X] Add option for disabling watermark and stats
 - [X] Make gui checkboxes enable by clicking the name of the feature
+</details>
+
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round
