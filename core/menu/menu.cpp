@@ -90,7 +90,7 @@ void menu::render() {
 					render::fonts::watermark_font, "Chicken pride", variables::chickenpride_bool);
 			}
 
-			const int part3_items_num = 5;
+			const int part3_items_num = 6;
 			const int part3_y = part2_y + part2_h + container_margin;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
@@ -98,13 +98,15 @@ void menu::render() {
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Player chams", variables::player_chams_bool);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Only visible", variables::only_visible_chams_bool);
+				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos + 10, 16,	// +10 to get the top right corner
+					render::fonts::watermark_font, "Player chams material", variables::player_chams_mat_id, 1, 12);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Viewmodel weapon chams", variables::vm_weapon_chams_bool);
+					render::fonts::watermark_font, "Only visible", variables::only_visible_chams_bool);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Arms chams", variables::vm_arm_chams_bool);
+					render::fonts::watermark_font, "Viewmodel weapon chams", variables::vm_weapon_chams_bool);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos,
+					render::fonts::watermark_font, "Arms chams", variables::vm_arm_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Sleeves chams", variables::vm_sleeve_chams_bool);
 			}
 

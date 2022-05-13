@@ -31,6 +31,42 @@ void gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned
 	if (pressed) callback();
 }
 
+void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max) {
+	GetCursorPos(&cursor);
+
+	const int button_margins = 2;									// After first button and before second
+	const int bw = 11, bh = 10;										// Increase and decrease buttons
+	const int br_x = right_position - bw;							// Right button - Increase
+	const int val_cont_x = br_x - button_margins - val_cont_w;		// Value container
+	const int bl_x = val_cont_x - button_margins - bw;				// Left button - Decrease
+
+	color bl_col = color(150, 22, 22, 255);
+	color br_col = color(150, 22, 22, 255);
+
+	if ((cursor.x > bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+		bl_col = color(115, 21, 21, 255);					// Hover
+		if (GetAsyncKeyState(VK_LBUTTON) & 1)
+			target = (target == min) ? max : target - 1;	// Decrease
+	} else if ((cursor.x > br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+		br_col = color(115, 21, 21, 255);					// Hover
+		if (GetAsyncKeyState(VK_LBUTTON) & 1)
+			target = (target == max) ? min : target + 1;	// Increase
+	}
+
+	// Increase and decrease buttons
+	render::draw_filled_rect(bl_x, y, bw, bh, bl_col);										// Normal color
+	render::draw_text_string(bl_x + bw / 2  + 1, y - 1, font, "-", true, color::white());	// Button text
+	render::draw_filled_rect(br_x, y, bw, bh, br_col);										// Normal color
+	render::draw_text_string(br_x + bw / 2, y - 1, font, "+", true, color::white());		// Button text
+
+	// Value container
+	//render::draw_filled_rect(val_cont_x, y, val_cont_w, bh, color(150, 22, 22, 255));
+	render::draw_text_string(val_cont_x + val_cont_w / 2, y - 1, font, std::to_string(target), true, color::white());
+
+	// Label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+}
+
 void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
 	// Groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
