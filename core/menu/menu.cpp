@@ -19,7 +19,7 @@ void menu::render() {
 
 	const int top_margin = 30;
 	const int tab_height = 24;
-	const int top_margin_with_tabs = top_margin + tab_height;
+	const int top_margin_with_tabs = top_margin + tab_height + 1;	// See first column comment (container_width--)
 	const int container_margin = 5;		// Empty space between containers
 	const int container_padding = 10;	// Space before and after item list (top and bottom)
 
@@ -43,18 +43,17 @@ void menu::render() {
 	int container_width = variables::menu::w - container_margin*2;
 	int item_left_pos = container_left_pos + container_padding;
 	int item_checkbox_pos = variables::menu::x + container_width - container_margin - item_checkbox_length;
-	int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// top left corner of the actual slider
+	int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
 
 	const int part1_y = variables::menu::y + top_margin_with_tabs + container_margin;
-	const int part1_base_item_y = part1_y + container_padding;	// container pos + margin
+	const int part1_base_item_y = part1_y + container_padding;
 
 	switch (current_tab) {
 		case 0:		// Aim
 			break;
 		case 1:	{	// Visuals
 			const int columns = 2;
-			// We need (margin / cols * 2) to remove 25%
-			container_width = container_width / columns - (container_margin / columns);
+			container_width = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::menu::x + container_width - container_margin - item_checkbox_length;
 
 			const int part1_items_num = 7;
@@ -91,16 +90,22 @@ void menu::render() {
 					render::fonts::watermark_font, "Chicken pride", variables::chickenpride_bool);
 			}
 
-			const int part3_items_num = 2;
+			const int part3_items_num = 5;
 			const int part3_y = part2_y + part2_h + container_margin;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable chams", variables::enable_chams_bool);
+					render::fonts::watermark_font, "Player chams", variables::player_chams_bool);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Only if visible", variables::only_visible_chams_bool);
+					render::fonts::watermark_font, "Only visible", variables::only_visible_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Viewmodel weapon chams", variables::vm_weapon_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Arms chams", variables::vm_arm_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos,
+					render::fonts::watermark_font, "Sleeves chams", variables::vm_sleeve_chams_bool);
 			}
 
 			/* ----- Visuals - Second column ----- */

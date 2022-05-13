@@ -25,8 +25,11 @@ namespace variables {
 	inline bool nade_esp_bool = false;
 	
 	// Visuals - Chams
-	inline bool enable_chams_bool = false;
+	inline bool player_chams_bool = false;
 	inline bool only_visible_chams_bool = false;
+	inline bool vm_weapon_chams_bool = false;
+	inline bool vm_arm_chams_bool = false;
+	inline bool vm_sleeve_chams_bool = false;
 
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
@@ -41,12 +44,23 @@ namespace variables {
 
 	// Colors
 	namespace colors {
+		// Esp and glow
 		inline color friendly_color = color(0, 72, 255, 255);
 		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
 		inline color friendly_color_softer = color(90, 180, 255, 255);
 		inline color enemy_color = color::red(255);
 		inline color enemy_color_soft = color(190, 25, 25, 255);
 		inline color enemy_color_softer = color(255, 75, 75, 255);
+
+		// Chams
+		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
+		inline color chams_vis_enemy_c = color(230, 20, 70);
+		inline color chams_inv_friend_c = color(0, 75, 255);
+		inline color chams_vis_friend_c = color(0, 150, 255);
+
+		inline color chams_sleeve_c = color(0, 255, 255);
+		inline color chams_arms_c = color(255, 0, 255);
+		inline color chams_weapon_c = color(255, 255, 0);
 	};
 
 	// Misc
