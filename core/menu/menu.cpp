@@ -45,13 +45,13 @@ void menu::render() {
 	const int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// top left corner of the actual slider
 
 	const int part1_y = variables::menu::y + top_margin_with_tabs + container_margin;
-	const int part1_base_item_y = part1_y + container_padding;					// container pos + margin
+	const int part1_base_item_y = part1_y + container_padding;	// container pos + margin
 
 	switch (current_tab) {
 		case 0:		// Aim
 			break;
 		case 1:	{	// Visuals
-			const int part1_items_num = 9;
+			const int part1_items_num = 10;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Visuals - Player ESP", false); {
@@ -59,19 +59,21 @@ void menu::render() {
 					render::fonts::watermark_font, "Enable team ESP", variables::showteamesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Player glow", variables::playerglow_bool);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,	// TODO: Separate category and make menu wide
 					render::fonts::watermark_font, "Enable chams", variables::enable_chams_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
+					render::fonts::watermark_font, "Only if visible", variables::only_visible_chams_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
-					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
+					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 7), item_checkbox_pos,
-					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 8), item_checkbox_pos,
+					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 9), item_checkbox_pos,
 					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
 			}
 
