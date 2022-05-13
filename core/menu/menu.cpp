@@ -136,7 +136,7 @@ void menu::render() {
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;
-			const int part3_items_num = 2;
+			const int part3_items_num = 3;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
 
@@ -145,6 +145,8 @@ void menu::render() {
 					render::fonts::watermark_font, "Show watermark", variables::draw_watermark);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Show stats", variables::draw_stats);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Disable cheat on screenshots", variables::clean_screenshots_bool);
 			}
 
 			// Buttons (start from bottom)
