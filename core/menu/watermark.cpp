@@ -7,6 +7,7 @@
  */
 
 void watermark::draw() {
+    if (!variables::draw_watermark) return;
     const std::string cheat_name = "NullHooks";
     if (csgo::local_player && interfaces::engine->is_connected()) {
         player_info_t player_info;
@@ -39,6 +40,8 @@ void watermark::draw() {
 }
 
 void watermark::draw_stats() {
+    if (!variables::draw_stats) return;
+
     // Colors
     const color base_color = color(220, 5,   5,  255);
     const color color_l    = color(255, 150, 0,  255);

@@ -43,7 +43,5 @@ namespace misc {
 };
 
 namespace commands_features {
-	void disconnect();
-	void test_command();
 	void exec_autoexec();
 };

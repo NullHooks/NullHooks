@@ -23,6 +23,14 @@ void render::draw_line(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::i
 
 void render::draw_text_string(std::int32_t x, std::int32_t y, unsigned long font, std::string string, bool text_centered, color colour) {
 	const auto converted_text = std::wstring(string.begin(), string.end());
+	
+	/*
+	wchar_t buffer[128];
+	wsprintfW(buffer, L"%S", string);
+
+	if (MultiByteToWideChar(CP_UTF8, 0, string, -1, buffer, 128) > 0)
+		interfaces::surface->draw_render_text(buffer, wcslen(buffer));
+	*/
 
 	int width, height;
 	interfaces::surface->get_text_size(font, converted_text.c_str(), width, height);

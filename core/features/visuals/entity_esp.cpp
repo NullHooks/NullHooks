@@ -29,11 +29,10 @@ void visuals::grenade_projectile_esp() {
 
 		vec3_t origin = entity->origin(), w2s;
 
-		// TODO: Entities show outside of the map (for example the bomb entity on inferno)
 		switch (entity->client_class()->class_id) {
 			/* ------------ NADE PROJECTILES ------------ */
 			case cbasecsgrenadeprojectile: {
-				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
 				const model_t* model = entity->model();
 				if (!model) return;
 
@@ -50,7 +49,7 @@ void visuals::grenade_projectile_esp() {
 			}
 			case cmolotovprojectile:
 			case cinferno: {
-				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
 
 				inferno_t* inferno = reinterpret_cast<inferno_t*>(entity);
 				const auto spawn_time = inferno->get_spawn_time();
@@ -65,7 +64,7 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case csmokegrenadeprojectile: {
-				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
 
 				smoke_t* smoke = reinterpret_cast<smoke_t*>(entity);
 				const auto spawn_time = smoke->get_spawn_time();
@@ -80,7 +79,7 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case cdecoyprojectile: {
-				if (!(math::world_to_screen(origin, w2s) || variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color(150, 150, 150, 255));
 				break;
 			}
