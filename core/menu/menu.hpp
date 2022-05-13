@@ -17,7 +17,7 @@ namespace watermark {
 	void draw_stats_string(std::string ts, color tscolor, std::string fps, color fpscolor, std::string speed, color speedcolor, bool draw_speed);
 
 	namespace helpers {
-		int  get_fps() noexcept;
+		int get_fps() noexcept;
 		std::string get_timestamp_string() noexcept;
 	};
 };

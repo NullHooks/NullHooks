@@ -26,6 +26,11 @@ struct color {
 	static D3DCOLOR from_color( const color col ) {
 		return D3DCOLOR_ARGB( col.a, col.r, col.g, col.b );
 	}
+	
+	// For comparing colors
+	bool operator != (color other) {
+		return (other.r == r && other.g == g && other.b == b && other.a == a);
+	}
 
 	static color black( const int a = 255 ) { return { 0, 0, 0, a }; }
 	static color white( const int a = 255 ) { return { 255, 255, 255, a }; }

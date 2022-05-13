@@ -11,11 +11,14 @@ void visuals::playeresp() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
+	// Will ignore ESP if the player being spectated
+	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+
 	for (int iPlayer = 0; iPlayer < 64; iPlayer++)
 	{
 		player_t* pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
 		if (!pCSPlayer) continue;
-		if (pCSPlayer == csgo::local_player) continue;
+		if (pCSPlayer == local_player_ent) continue;
 		if (pCSPlayer->dormant()) continue;
 		if (!(pCSPlayer->is_alive() && pCSPlayer->health() > 0)) continue;
 

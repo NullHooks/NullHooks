@@ -15,6 +15,7 @@
     <ProjectGuid>{AF041675-F00D-4A72-B40F-78D0C4BB72D9}</ProjectGuid>
     <RootNamespace>csgo-cheat</RootNamespace>
     <ProjectName>csgo-cheat</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -49,7 +50,7 @@
     <IntDir>.\intermediates\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>.\output\debug\</OutDir>
+    <OutDir>.\output\release\</OutDir>
     <IntDir>.\intermediates\</IntDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <IncludePath>$(IncludePath)</IncludePath>
@@ -98,11 +99,16 @@
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
     <ClCompile Include="core\features\visuals\player_esp.cpp" />
+    <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp" />
+    <ClCompile Include="core\hooks\functions\create_move.cpp" />
+    <ClCompile Include="core\hooks\functions\do_post_screen_space_effects.cpp" />
+    <ClCompile Include="core\hooks\functions\get_viewmodel_fov.cpp" />
+    <ClCompile Include="core\hooks\functions\override_view.cpp" />
+    <ClCompile Include="core\hooks\functions\paint_traverse.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
     <ClCompile Include="core\helpers\misc_helpers.cpp" />
-    <ClCompile Include="core\menu\menu_button_functions.cpp" />
     <ClCompile Include="core\menu\watermark.cpp" />
     <ClCompile Include="dependencies\minhook\buffer.c" />
     <ClCompile Include="dependencies\minhook\hde\hde32.c" />
