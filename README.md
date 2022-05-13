@@ -86,13 +86,17 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Nade projectiles outside screen
 - [X] Add option for disabling watermark and stats
 - [X] Make gui checkboxes enable by clicking the name of the feature
+- [X] Add chams
 </details>
 
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
+- [ ] Add section columns
+- [ ] Add hand chams
+- [ ] Add material selector to chams
+- [ ] Add color picker <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round
 - [ ] Add aim stuff
-- [ ] Add chams
 - [ ] Add bullet tracers :(
 - [ ] Add config and all that
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
