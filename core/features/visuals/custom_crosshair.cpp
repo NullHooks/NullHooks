@@ -45,23 +45,21 @@ void visuals::crosshair::custom_crosshair() {
 		return;
 	}
 
-	if (!interfaces::engine->is_in_game()) return;
+	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
+	if (csgo::local_player->is_scoped()) return;
 
-	if (interfaces::engine->is_connected()) {
-		if (csgo::local_player->is_scoped()) return;
-		int screen_w, screen_h;
-		interfaces::engine->get_screen_size(screen_w, screen_h);
+	int screen_w, screen_h;
+	interfaces::engine->get_screen_size(screen_w, screen_h);
 
-		const int mid_x = screen_w / 2;
-		const int mid_y = screen_h / 2;
+	const int mid_x = screen_w / 2;
+	const int mid_y = screen_h / 2;
 
-		if (variables::crosshair::only_engine_crosshair && variables::crosshair::using_cs_crosshair) {
-			variables::crosshair::using_cs_crosshair = false;
-			interfaces::engine->execute_cmd("crosshair 0");
-			custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
-		}
-
-		visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, (variables::crosshair::rainbow_crosshair) ? color(rand() % 255, rand() % 255, rand() % 255) : color::white(255));
+	if (variables::crosshair::only_engine_crosshair && variables::crosshair::using_cs_crosshair) {
+		variables::crosshair::using_cs_crosshair = false;
+		interfaces::engine->execute_cmd("crosshair 0");
+		custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
 	}
+
+	visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, (variables::crosshair::rainbow_crosshair) ? color(rand() % 255, rand() % 255, rand() % 255) : color::white(255));
 }
