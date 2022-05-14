@@ -17,7 +17,7 @@ void __fastcall hooks::draw_model_execute::hook(void* _this, int edx, i_mat_rend
 		visuals::chams::draw_chams(ctx, state, info, matrix);
 		original(_this, edx, ctx, state, info, matrix);
 		interfaces::model_render->override_material(nullptr);
-	} else if (!interfaces::model_render->is_forced() && !is_player) {
+	} else if (/*!interfaces::model_render->is_forced() &&*/ !is_player) {	// Part commented to enable skin overwrite too
 		visuals::chams::draw_chams(ctx, state, info, matrix);
 		original(_this, edx, ctx, state, info, matrix);
 		interfaces::model_render->override_material(nullptr);
