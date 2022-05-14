@@ -32,6 +32,7 @@ namespace render {
 	void draw_textured_polygon(std::int32_t vertices_count, vertex_t* vertices, color color);
 	void draw_circle(std::int32_t x, std::int32_t y, std::int32_t radius, std::int32_t segments, color color);
 	vec2_t get_text_size(unsigned long font, std::string text);
+	void draw_fade(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, color color1, color color2, bool horizontal);
 
 	namespace fonts {
 		extern unsigned long watermark_font;

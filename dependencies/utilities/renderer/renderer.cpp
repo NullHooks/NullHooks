@@ -91,3 +91,11 @@ vec2_t render::get_text_size(unsigned long font, std::string text) {
 	interfaces::surface->get_text_size(font, wstr, w, h);
 	return { static_cast<float>(w), static_cast<float>(h) };
 }
+
+void render::draw_fade(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, color color1, color color2, bool horizontal) {
+	interfaces::surface->set_drawing_color(color1.r, color1.g, color1.b, color1.a);
+	interfaces::surface->draw_filled_rect_fade(x, y, x + width, y + height, 255, 0, horizontal);
+
+	interfaces::surface->set_drawing_color(color2.r, color2.g, color2.b, color2.a);
+	interfaces::surface->draw_filled_rect_fade(x, y, x + width, y + height, 0, 255, horizontal);
+}
