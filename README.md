@@ -7,9 +7,12 @@
 # Table of contents
 1. [Description](#description)
 2. [Features](#features)
-    - [Visuals - ESP](#visuals---esp)
-    - [Visuals - Misc](#visuals---misc)
-    - [Misc](#misc)
+    - [Visuals](#visuals)
+        - [Player ESP](#player-esp)
+        - [Glow](#glow)
+        - [Chams](#chams)
+        - [Misc](#misc)
+    - [Misc](#misc-1)
 3. [Todo](#todo)
 4. [Screenshots](#screenshots)
 
@@ -21,9 +24,9 @@ As I said I made this project to learn about game hacking and cpp in general, so
 See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making the project.
 
 ## Features
-#### Visuals - ESP
+### Visuals
+#### Player ESP
 - Enable/disable team ESP
-- Player glow
 - Box ESP
 - Player skeleton
 - Name ESP
@@ -37,20 +40,31 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
     - `D` - Is defusing (soft)
     - `D` - Has defuser (hard)
 
-#### Visuals - Misc
+#### Glow
+- Player glow
 - C4 glow
-- C4 timer and bar
 - Dropped weapons and grenades glow
+- Chicken glow
+
+#### Chams
+- Player chams
+- Hand chams
+- Sleeve chams
+- Weapon chams (viewmodel)
+- Change individual materials for the chams
+
+#### Misc
+- C4 timer and bar
 - Dropped weapons and grenades name
 - Nade projectile ESP
-- Nade prjectile duration
+- Nade projectile duration
 - Grenade prediction
 - No flash
 - No scope
 - Custom crosshair
 - Recoil crosshair
 
-#### Misc:
+### Misc:
 - BunnyHop
 - Spectator list
 - Fov changer
@@ -88,11 +102,11 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Make gui checkboxes enable by clicking the name of the feature
 - [X] Add chams
 - [X] Add section columns
+- [X] Add hand chams
+- [X] Add material selector to chams
 </details>
 
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
-- [ ] Add hand chams
-- [ ] Add material selector to chams
 - [ ] Add color picker <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round
