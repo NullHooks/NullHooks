@@ -1,6 +1,7 @@
 #include "../features.hpp"
 
-const char* materials[14] = {	// Probaly not the best way
+const char* materials[13] = {	// Probaly not the best way
+	"vgui/screens/transparent",
 	"debug/debugambientcube",
 	"debug/debugdrawflat",
 	"models/player/ct_fbi/ct_fbi_glass",
@@ -9,11 +10,10 @@ const char* materials[14] = {	// Probaly not the best way
 	"models/inventory_items/trophy_majors/gold",
 	"models/gibs/glass/glass",
 	"models/inventory_items/trophy_majors/gloss",
-	//"vgui/achievements/glow",
 	"models/inventory_items/wildfire_gold/wildfire_gold_detail",
 	"models/inventory_items/trophy_majors/crystal_blue",
 	"models/inventory_items/trophy_majors/velvet",
-	"models/inventory_items/dogtags/dogtags_outline",
+	"models/inventory_items/dogtags/dogtags_outline"
 	//"models/props_interiors/tvebtest"	// Kinda broky
 };
 
@@ -63,8 +63,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 		if (player->has_gun_game_immunity()) {
 			override_material(false, false, color(255, 255, 255, 100), materials[variables::player_chams_mat_id]);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-		}
-		else {
+		} else {
 			if (player->index() == csgo::local_player->index()) {
 				/*
 				// Remove until thirdperson is implemented
@@ -92,8 +91,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				}
 				override_material(false, false, variables::colors::chams_vis_enemy_c, materials[variables::player_chams_mat_id]);			// Visible - Enemy
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			}
-			else if (variables::showteamesp_bool) {
+			} else if (variables::showteamesp_bool) {
 				if (!variables::only_visible_chams_bool) {
 					override_material(true, false, variables::colors::chams_inv_friend_c, materials[variables::player_chams_mat_id]);		// Not visible - Friendly
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
