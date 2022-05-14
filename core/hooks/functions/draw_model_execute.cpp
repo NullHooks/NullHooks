@@ -11,15 +11,10 @@ void __fastcall hooks::draw_model_execute::hook(void* _this, int edx, i_mat_rend
 	const auto mdl = info.model;
 	if (!mdl) return;
 
-	bool is_player = strstr(mdl->name, "models/player") != nullptr;
+	// Exclude weapons because we need to overwrite skins even if is_forced()
+	if (!strstr(mdl->name, "models/weapons/v") && interfaces::model_render->is_forced()) return original(_this, edx, ctx, state, info, matrix);
 
-	if (!interfaces::studio_render->is_forced() && is_player) {
-		visuals::chams::draw_chams(ctx, state, info, matrix);
-		original(_this, edx, ctx, state, info, matrix);
-		interfaces::model_render->override_material(nullptr);
-	} else if (/*!interfaces::model_render->is_forced() &&*/ !is_player) {	// Part commented to enable skin overwrite too
-		visuals::chams::draw_chams(ctx, state, info, matrix);
-		original(_this, edx, ctx, state, info, matrix);
-		interfaces::model_render->override_material(nullptr);
-	} else original(_this, edx, ctx, state, info, matrix);
+	visuals::chams::draw_chams(ctx, state, info, matrix);
+	original(_this, edx, ctx, state, info, matrix);
+	interfaces::model_render->override_material(nullptr);
 }
