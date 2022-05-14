@@ -6,3 +6,4 @@
 - [notbemji/templehook](https://github.com/notbemji/templehook)
 - [notbemji/5shekelcheats](https://github.com/notbemji/5shekelcheats) 
 - [cazzwastaken/based](https://github.com/cazzwastaken/based)
+- cazz's discord server <!-- <3 -->
