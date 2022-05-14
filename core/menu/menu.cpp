@@ -61,7 +61,7 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Player ESP", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable team ESP", variables::showteamesp_bool);
+					render::fonts::watermark_font, "Enable team ESP (global)", variables::showteamesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
