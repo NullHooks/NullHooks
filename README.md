@@ -123,3 +123,4 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ![Screenshot 8](screenshots/screenshot8.png)
 ![Screenshot 9](screenshots/screenshot9.png)
 ![Screenshot 11](screenshots/screenshot11.png)
+![Screenshot 12](screenshots/screenshot12.png)
