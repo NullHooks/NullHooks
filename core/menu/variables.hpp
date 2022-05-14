@@ -31,7 +31,10 @@ namespace variables {
 	inline bool vm_arm_chams_bool = false;
 	inline bool vm_sleeve_chams_bool = false;
 
-	inline int player_chams_mat_id = 1;
+	inline int player_chams_mat_id = 0;
+	inline int sleeve_chams_mat_id = 7;
+	inline int arm_chams_mat_id = 9;
+	inline int weapon_chams_mat_id = 8;
 
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
@@ -60,7 +63,7 @@ namespace variables {
 		inline color chams_inv_friend_c = color(0, 75, 255);
 		inline color chams_vis_friend_c = color(0, 150, 255);
 
-		inline color chams_sleeve_c = color(200, 0, 200, 200);
+		inline color chams_sleeve_c = color(200, 0, 200, 255);	// Old: color(200, 0, 200, 200)
 		inline color chams_arms_c = color(255, 0, 255, 255);
 		inline color chams_weapon_c = color(255, 150, 255, 255);
 	};
@@ -92,7 +95,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 500, h = 390;
+		inline int w = 500, h = 430;
 	};
 
 	namespace watermark {
