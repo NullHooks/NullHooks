@@ -134,14 +134,6 @@ void visuals::grenade_projectile_esp() {
 			case cweaponusp:				entity_info::weapon_name(entity, "usp", 0);					break;
 			case cweaponxm1014:				entity_info::weapon_name(entity, "xm1014", 0);				break;
 			case cweaponzonerepulsor:		entity_info::weapon_name(entity, "zonerepulsor", 0);		break;
-			/*
-				case cweaponcsbase:
-					entity_info::weapon_info(entity, "csbase");
-					break;
-				case cweaponcsbasegun:
-					entity_info::weapon_info(entity, "csbasegun");
-					break;
-				*/
 			/* ------------ DROPPED NADES ------------ */
 			case cflashbang:				entity_info::weapon_name(entity, "flashbang", 0);			break;
 			case csmokegrenade:				entity_info::weapon_name(entity, "smoke", 0);				break;
