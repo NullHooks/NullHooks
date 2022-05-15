@@ -61,15 +61,22 @@ void visuals::playeresp() {
 		}
 		/* ------------- BOX ESP ------------- */
 		if (variables::boxesp_bool) {
-			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_rect(x, y, w, h, variables::colors::friendly_color); // Drawing with render tools
-			else if (pCSPlayer->team() != csgo::local_player->team())
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
+				// Draw box outline
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
+				render::draw_rect(x, y, w, h, variables::colors::friendly_color);	// Drawing with render tools
+			} else if (pCSPlayer->team() != csgo::local_player->team()) {
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
+			}
 		}
 		/* ------------- LINE ESP ------------- */
 		if (variables::lineesp_bool) {
 			int screen_width, screen_height;
 			interfaces::engine->get_screen_size(screen_width, screen_height);
+			
 			// Draw from crosshair
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
 				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
@@ -148,16 +155,18 @@ void visuals::playeresp() {
 		if (variables::healthesp_bool) {
 			int health = pCSPlayer->health();
 			const int health_h = (h * health) / 100;
-			const int health_w = 3;
+			const int health_w = 4;
 			const int health_y = y + (h - health_h);
 			const int health_x = x - 6;
 			//render::draw_text_string(10, 20, render::fonts::watermark_font, std::to_string(h), true, color::red());
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
-				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, y, health_w, h, color::red());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+				render::draw_rect(health_x, y, health_w, h, color::black(180));
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
-				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, y, health_w, h, color::red());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+				render::draw_rect(health_x, y, health_w, h, color::black(180));
 			}
 		}
 	}
