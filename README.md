@@ -107,12 +107,14 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 </details>
 
 - [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
-- [ ] Add color picker <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
+- [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
 - [ ] Add "defusing" to bomb timer
-- [ ] Reset bomb timer on new round
+- [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff
-- [ ] Add bullet tracers :(
-- [ ] Add config and all that
+- [ ] Add event listeners (or `FireEvent` hook, etc.)
+    - [ ] Add bullet tracers
+    - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
+- [ ] Add config and all that (json or whatever)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 
