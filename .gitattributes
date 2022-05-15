@@ -1,5 +1,7 @@
 dependencies/** linguist-vendored
 source-sdk/** linguist-vendored
+src/dependencies/** linguist-vendored
+src/source-sdk/** linguist-vendored
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
