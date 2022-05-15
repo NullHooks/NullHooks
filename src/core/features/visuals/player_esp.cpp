@@ -153,16 +153,18 @@ void visuals::playeresp() {
 		if (variables::healthesp_bool) {
 			int health = pCSPlayer->health();
 			const int health_h = (h * health) / 100;
-			const int health_w = 3;
+			const int health_w = 4;
 			const int health_y = y + (h - health_h);
 			const int health_x = x - 6;
 			//render::draw_text_string(10, 20, render::fonts::watermark_font, std::to_string(h), true, color::red());
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
-				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, y, health_w, h, color::red());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+				render::draw_rect(health_x, y, health_w, h, color::black(180));
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
-				render::draw_rect(health_x, y, health_w, h, color::black());
+				render::draw_filled_rect(health_x, y, health_w, h, color::red());
 				render::draw_filled_rect(health_x, health_y, health_w, health_h, color::green());
+				render::draw_rect(health_x, y, health_w, h, color::black(180));
 			}
 		}
 	}
