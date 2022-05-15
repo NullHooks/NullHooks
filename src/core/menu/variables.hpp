@@ -32,9 +32,9 @@ namespace variables {
 	inline bool vm_sleeve_chams_bool = false;
 
 	inline int player_chams_mat_id = 1;
-	inline int sleeve_chams_mat_id = 11;
-	inline int arm_chams_mat_id = 6;
-	inline int weapon_chams_mat_id = 10;
+	inline int sleeve_chams_mat_id = 8;
+	inline int arm_chams_mat_id = 5;
+	inline int weapon_chams_mat_id = 9;
 
 	// Visuals - Misc
 	inline bool nade_predict_bool = true;
