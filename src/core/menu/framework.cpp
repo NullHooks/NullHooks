@@ -108,17 +108,66 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		value = !value;
 
 	// Checkbox itself
-	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));  //color(52, 134, 235, 255)
+	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));
 
 	// Checkbox label
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
-// Thanks to https://github.com/bobloxmonke
-float map_slider_constrain(float n, float start1, float stop1, float start2, float stop2)
-{
-	float value = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+// Checkbox with color picker
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
+	check_box(x, y, position, font, string, value);		// Call normal checkbox then add color
+	
+	const int margin = 5;
+	const int w = 20, h = 10;
+	const int color_x = position - margin - w;
 
+	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1) {
+		toggle_color = !toggle_color;
+	}
+
+	render::draw_filled_rect(color_x, y, w, h, setting_color);					// Color itself
+	render::draw_rect(color_x - 1, y - 1, w + 2, h + 2, color::black(255));		// Color outline
+
+	if (toggle_color) {
+		color_picker_popup(color_x, y + h + margin, setting_color, toggle_color);
+	}
+}
+
+// Actual popup for the color picker hue and all that
+void gui::color_picker_popup(std::int32_t x, std::int32_t y, color& target, bool& toggle_color) {
+	const int slider_w = 100, slider_h = 15;
+	const int win_margin = 5;
+	const int win_w = slider_w + win_margin * 2;
+	const int win_h = slider_h * 2 + win_margin * 3;	// +1 slider and margin for alpha slider
+
+	// Close popup if user clicks outside
+	if (!( (cursor.x > x) && (cursor.x < x + win_w) && (cursor.y > y) && (cursor.y < y + win_h) ) && GetAsyncKeyState(VK_LBUTTON) & 1) {
+		toggle_color = false;
+	}
+
+	render::draw_filled_rect(x, y, win_w, win_h, color(36, 36, 36, 255));
+	render::draw_rect(x, y, win_w, win_h, color::black(255));
+
+	/*
+	for (auto i = 0; i < 6; ++i)
+	{
+		const SRect tmpHueRect =
+		{
+			rcHueBar.left,
+			int(rcHueBar.top + i * (float(rcPicker.Height()) / 6.f)),
+			rcHueBar.right,
+			int(rcHueBar.top + (i + 1) * (float(rcPicker.Height()) / 6.f))
+		};
+
+		g_Render.RectFilledGradient(tmpHueRect, hueColors[i], hueColors[i + 1], GradientType::GRADIENT_VERTICAL);
+	}
+	*/
+}
+
+// Thanks to https://github.com/bobloxmonke
+float map_slider_constrain(float n, float start1, float stop1, float start2, float stop2) {
+	float value = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
 	return std::clamp(value, start2, stop2);
 };
 
