@@ -61,14 +61,16 @@ void visuals::playeresp() {
 		}
 		/* ------------- BOX ESP ------------- */
 		if (variables::boxesp_bool) {
-			// Draw box outline
-			render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
-			render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
-
-			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
+			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool) {
+				// Draw box outline
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
 				render::draw_rect(x, y, w, h, variables::colors::friendly_color);	// Drawing with render tools
-			else if (pCSPlayer->team() != csgo::local_player->team())
+			} else if (pCSPlayer->team() != csgo::local_player->team()) {
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
+			}
 		}
 		/* ------------- LINE ESP ------------- */
 		if (variables::lineesp_bool) {
