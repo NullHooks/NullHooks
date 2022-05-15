@@ -49,8 +49,10 @@ void menu::render() {
 	const int part1_base_item_y = part1_y + container_padding;
 
 	switch (current_tab) {
-		case 0:		// Aim
+	case 0: {	// Aim
+			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
 			break;
+		}
 		case 1:	{	// Visuals
 			const int columns = 2;
 			container_width = (container_width / columns) - (container_margin / columns);
@@ -201,6 +203,7 @@ void menu::render() {
 			break;
 		}
 		case 3: {	// Config
+			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
 			break;
 		}
 	}
