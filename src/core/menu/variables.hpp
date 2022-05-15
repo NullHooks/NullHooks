@@ -63,9 +63,12 @@ namespace variables {
 		inline color chams_inv_friend_c = color(0, 75, 255);
 		inline color chams_vis_friend_c = color(0, 150, 255);
 
-		inline color chams_sleeve_c = color(200, 0, 200, 255);	// Old: color(200, 0, 200, 200)
+		inline color chams_sleeve_c = color(200, 0, 200, 255);
+		inline bool col_t_chams_sleeve = false;
 		inline color chams_arms_c = color(255, 0, 255, 255);
+		inline bool col_t_chams_arm = false;
 		inline color chams_weapon_c = color(255, 150, 255, 255);
+		inline bool col_t_chams_weapon = false;
 	};
 
 	// Misc
