@@ -22,7 +22,7 @@ Edgy name but not as cool as *PissHooks™* (RIP).
 
 As I said I made this project to learn about game hacking and cpp in general, so expect some bad practises and errors, but feel free to improve them!
 
-See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making the project.
+See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
 ## Features
 ### Visuals
