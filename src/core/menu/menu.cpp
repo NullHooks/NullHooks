@@ -105,7 +105,7 @@ void menu::render() {
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos + 10, 16,			// +10 to get the top right corner
 					render::fonts::watermark_font, "Player chams material", variables::player_chams_mat_id, 0, 12);	// min, max
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
-					"Viewmodel weapon chams", variables::vm_weapon_chams_bool, variables::colors::chams_weapon_c, variables::colors::col_t_chams_sleeve);
+					"Viewmodel weapon chams", variables::vm_weapon_chams_bool, variables::colors::chams_weapon_c, variables::colors::col_t_chams_weapon);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + 10, 16,
 					render::fonts::watermark_font, "Weapon chams material", variables::weapon_chams_mat_id, 0, 12);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
