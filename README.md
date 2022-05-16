@@ -127,7 +127,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add section columns
 - [X] Add hand chams
 - [X] Add material selector to chams
-- [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
+- [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
 </details>
 
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
