@@ -127,9 +127,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add section columns
 - [X] Add hand chams
 - [X] Add material selector to chams
+- [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
 </details>
 
-- [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
