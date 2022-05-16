@@ -98,14 +98,31 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + w / 2, y + h / 2 - 6, font, string, false, color::white());
 }
 
-void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, int click_area_id) {
 	GetCursorPos(&cursor);
 
 	const int w = 10, h = 10;
 
-	// Check if in checkbox or text and clicked
-	if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
-		value = !value;
+	switch (click_area_id) {
+		default:
+		case 0: {	// Only checkbox
+			if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
+				value = !value;		// If in checkbox and clicked
+			break;
+		}
+		case 1: {	// Name and checkbox, not color
+			if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
+				|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5)
+				&& GetAsyncKeyState(VK_LBUTTON) & 1)
+				value = !value;
+			break;
+		}
+		case 2: {	// All width from name to checkbox
+			if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
+				value = !value;		// If in checkbox or text and clicked
+			break;
+		}
+	}
 
 	// Checkbox itself
 	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));
@@ -116,7 +133,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 // Checkbox with color picker
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
-	check_box(x, y, position, font, string, value);		// Call normal checkbox then add color
+	check_box(x, y, position, font, string, value, 1);		// Call normal checkbox with no button toggle on color region
 	
 	const int margin = 5;
 	const int w = 20, h = 10;
