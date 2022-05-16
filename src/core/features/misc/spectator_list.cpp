@@ -22,7 +22,7 @@ void misc::spectator_list() {
 	}
 
 	int spec_count = 0;			// Will count actual spectators
-	std::string spec_arr[64 + 1];
+	const wchar_t* spec_arr[64 + 1];
 
 	// Get spectator from self (alive) or currently spected
 	player_t* spec_player = csgo::local_player->is_alive() ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
@@ -31,7 +31,7 @@ void misc::spectator_list() {
 
 	// Clear usernames array
 	for (int i = 0; i <= 64; i++) {
-		spec_arr[i] = "";
+		spec_arr[i] = L"";
 	}
 
 	// Get usernames from spectators
@@ -52,20 +52,20 @@ void misc::spectator_list() {
 		player_t* spec = (player_t*)interfaces::entity_list->get_client_entity_handle(obs);
 		if (!spec) continue;
 
-		char buf[255];
-		sprintf(buf, "%s", pinfo.name);
+		wchar_t w_player_name[255];
+		if (MultiByteToWideChar(CP_UTF8, 0, pinfo.name, -1, w_player_name, 128) < 0) continue;
 
-		if (strstr(buf, "GOTV")) continue;
+		if (strstr(pinfo.name, "GOTV")) continue;	// Compare .name cuz we cant wchar
 
 		if (!csgo::local_player || !spec) continue;
 		if (spec->index() == spec_player->index()) {
-			spec_arr[spec_count] = buf;
+			spec_arr[spec_count] = w_player_name;
 			spec_count++;
 		}
 	}
 
 	// Only render if there are spectators or the menu is open
-	if (spec_arr[0] != "" || variables::menu::opened) {
+	if (spec_arr[0] != L"" || variables::menu::opened) {
 		int cur_name_w = variables::spectators::w;
 		int cur_name_h;
 
@@ -77,15 +77,14 @@ void misc::spectator_list() {
 			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 
 		// Print each username
-		std::string username = "";
+		const wchar_t* username;
 		for (int i = 0; i < spec_count; i++) {
 			username = spec_arr[i];
-			if (username != "") {
-				const std::wstring converted_str = std::wstring(username.begin(), username.end());
-				interfaces::surface->get_text_size(render::fonts::watermark_font, converted_str.c_str(), cur_name_w, cur_name_h);
+			if (username != L"") {
+				interfaces::surface->get_text_size(render::fonts::watermark_font, username, cur_name_w, cur_name_h);
 				if (cur_name_w > variables::spectators::w - 20)
 					variables::spectators::w = 10 + cur_name_w + 10;
-				render::draw_text_string(variables::spectators::x + 10, (variables::spectators::y + wname_h + 5 + (15 * i)),
+				render::draw_text_wchar(variables::spectators::x + 10, (variables::spectators::y + wname_h + 5 + (15 * i)),
 					render::fonts::watermark_font, username, false, color(255, 255, 255));
 			}
 		}
