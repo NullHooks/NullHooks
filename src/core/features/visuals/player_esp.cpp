@@ -87,11 +87,13 @@ void visuals::playeresp() {
 		if (variables::nameesp_bool) {
 			player_info_t playerinfo;
 			interfaces::engine->get_player_info(iPlayer, &playerinfo);
+			wchar_t w_player_name[128];
+			if (MultiByteToWideChar(CP_UTF8, 0, playerinfo.name, -1, w_player_name, 128) < 0) continue;
 
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::showteamesp_bool)
-				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, variables::colors::friendly_color_soft);
+				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::friendly_color_soft);
 			else if (pCSPlayer->team() != csgo::local_player->team())
-				render::draw_text_string(x + w/2, y + h + 2, render::fonts::watermark_font, playerinfo.name, true, variables::colors::enemy_color);
+				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::enemy_color);
 		}
 		/* ------------- INFO ESP ------------- */
 		if (variables::playerinfo_bool) {
@@ -121,7 +123,8 @@ void visuals::playeresp() {
 
 				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
 				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name + 7, true, variables::colors::friendly_color_softer);
+				if (strstr(weapon_name, "weapon_")) weapon_name += 7;	// Remove "weapon_"
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name, true, variables::colors::friendly_color_softer);
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
 				if (pCSPlayer->armor() > 0) {
 					int armor_x = (variables::healthesp_bool) ? 6 : 0;
@@ -148,7 +151,8 @@ void visuals::playeresp() {
 
 				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
 				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name + 7, true, variables::colors::enemy_color_softer);
+				if (strstr(weapon_name, "weapon_")) weapon_name += 7;	// Remove "weapon_"
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name, true, variables::colors::enemy_color_softer);
 			}
 		}
 		/* ------------- HEALTH ESP ------------- */

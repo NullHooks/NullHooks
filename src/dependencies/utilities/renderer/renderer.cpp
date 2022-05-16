@@ -2,16 +2,24 @@
 
 unsigned long render::fonts::watermark_font;
 unsigned long render::fonts::watermark_font_ns;		// No shadow
+unsigned long render::fonts::playername_font;		// wchar support
 unsigned long render::fonts::weapon_icon_font;		// No worky
+unsigned long render::fonts::dina_font;				// Love it 2 much
 
 void render::initialize() {
 	render::fonts::watermark_font = interfaces::surface->font_create();
 	render::fonts::watermark_font_ns = interfaces::surface->font_create();
+	render::fonts::playername_font = interfaces::surface->font_create();
 	render::fonts::weapon_icon_font = interfaces::surface->font_create();
+	render::fonts::dina_font = interfaces::surface->font_create();
 
 	interfaces::surface->set_font_glyph(render::fonts::watermark_font, "Tahoma", 12, 500, 0, 0, font_flags::fontflag_dropshadow);
 	interfaces::surface->set_font_glyph(render::fonts::watermark_font_ns, "Tahoma", 12, 500, 0, 0, 0);
+	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Lucida Console", 12, 500, 0, 0, 0);
+
 	interfaces::surface->set_font_glyph(render::fonts::weapon_icon_font, "csgo_icons", 30, 300, 0, 0, 0x210);			// No worky
+	// A personal favourite https://www.dcmembers.com/jibsen/download/61/
+	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Dina", 12, 500, 0, 0, 0);
 
 	console::log("[setup] render initialized!\n");
 }
@@ -23,25 +31,30 @@ void render::draw_line(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::i
 
 void render::draw_text_string(std::int32_t x, std::int32_t y, unsigned long font, std::string string, bool text_centered, color colour) {
 	const auto converted_text = std::wstring(string.begin(), string.end());
-	
-	/*
-	wchar_t buffer[128];
-	wsprintfW(buffer, L"%S", string);
-
-	if (MultiByteToWideChar(CP_UTF8, 0, string, -1, buffer, 128) > 0)
-		interfaces::surface->draw_render_text(buffer, wcslen(buffer));
-	*/
 
 	int width, height;
 	interfaces::surface->get_text_size(font, converted_text.c_str(), width, height);
 
 	interfaces::surface->set_text_color(colour.r, colour.g, colour.b, colour.a);
 	interfaces::surface->draw_text_font(font);
-	if (text_centered)
-		interfaces::surface->draw_text_pos(x - (width / 2), y);
-	else
-		interfaces::surface->draw_text_pos(x, y);
+	
+	if (text_centered) interfaces::surface->draw_text_pos(x - (width / 2), y);
+	else interfaces::surface->draw_text_pos(x, y);
+	
 	interfaces::surface->draw_render_text(converted_text.c_str(), wcslen(converted_text.c_str()));
+}
+
+void render::draw_text_wchar(std::int32_t x, std::int32_t y, unsigned long font, const wchar_t* string, bool text_centered, color colour) {
+	int width, height;
+	interfaces::surface->get_text_size(font, string, width, height);
+
+	interfaces::surface->set_text_color(colour.r, colour.g, colour.b, colour.a);
+	interfaces::surface->draw_text_font(font);
+	
+	if (text_centered) interfaces::surface->draw_text_pos(x - (width / 2), y);
+	else interfaces::surface->draw_text_pos(x, y);
+
+	interfaces::surface->draw_render_text(string, wcslen(string));
 }
 
 void render::draw_rect(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, color color) {

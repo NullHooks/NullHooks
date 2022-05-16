@@ -13,8 +13,9 @@
         - [Chams](#chams)
         - [Misc](#misc)
     - [Misc](#misc-1)
-3. [Todo](#todo)
-4. [Screenshots](#screenshots)
+3. [Installing](#installing)
+4. [Todo](#todo)
+5. [Screenshots](#screenshots)
 
 ## Description
 Edgy name but not as cool as *PissHooks™* (RIP).
@@ -64,13 +65,35 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Custom crosshair
 - Recoil crosshair
 
-### Misc:
+### Misc
 - BunnyHop
 - Spectator list
 - Fov changer
 - Stats watermark (*username, time, fps, speed...*)
 
-## Todo:
+## Installing
+### Compiling from source (Recommended)
+I recommend using Visual Studio 2022.
+
+1. Install Microsoft Visual Studio 2022 from [this link](https://visualstudio.microsoft.com/vs/community/)
+2. [Clone](https://www.git-scm.com/docs/git-clone) or [download](https://github.com/r4v10l1/NullHooks/archive/refs/heads/main.zip) the project to your computer
+3. Open the file `src/csgo-cheat.sln` with Visual Studio 2022
+4. If an alert pops up, click `Ok` or `Update`, if it doesn't make sure the project is updated by clicking `Project > Retarget solution` in the window bar
+5. Make sure you are compiling the project in `Release | x86` in the top bar
+6. Click `Build > Build solution` in the window bar (You can also press `Ctrl+Shift+B`)
+7. The final `.dll` file path should be in the output window of Visual Studio (Usually `src/output/release/csgo-cheat.dll`)
+8. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
+
+*Note: If you have problems, make sure you follow the steps above and verify the integrity of your game files.*
+
+### Downloading the `.dll` from releases
+This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
+
+1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
+2. Download the file `csgo-cheat.dll` under "Assets"
+3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
+
+## Todo
 <details>
     <summary>Completed items</summary>  
     
@@ -104,9 +127,9 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - [X] Add section columns
 - [X] Add hand chams
 - [X] Add material selector to chams
+- [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
 </details>
 
-- [ ] Support wchar strings in renderer (Russian characers for example, see comment in renderer)
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
