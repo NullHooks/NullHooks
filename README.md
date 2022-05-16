@@ -131,6 +131,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 </details>
 
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
+    - [ ] Add popup system that renders after the menu so other elements don't render over the window
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff
