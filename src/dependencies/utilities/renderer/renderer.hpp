@@ -22,8 +22,8 @@ namespace render {
 	void initialize();
 
 	void draw_line(std::int32_t from_x, std::int32_t from_y, std::int32_t to_x, std::int32_t to_y, color color);
-	void draw_text_wchar(int x, int y, unsigned long font, const wchar_t* string, color colour);
-	void draw_text_string(int x, int y, unsigned long font, std::string string, bool text_centered, color colour);
+	void draw_text_wchar(std::int32_t x, std::int32_t y, unsigned long font, const wchar_t* string, bool text_centered, color colour);
+	void draw_text_string(std::int32_t x, std::int32_t y, unsigned long font, std::string string, bool text_centered, color colour);
 	//void text(std::int32_t x, std::int32_t y, unsigned long font, const wchar_t *text, bool centered, color color);
 	//void text(std::int32_t x, std::int32_t y, unsigned long font, std::string text, bool centered, color color);
 	void draw_rect(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, color color);
@@ -36,6 +36,8 @@ namespace render {
 	namespace fonts {
 		extern unsigned long watermark_font;
 		extern unsigned long watermark_font_ns;		// No shadow
+		extern unsigned long playername_font;		// wchar support
 		extern unsigned long weapon_icon_font;		// No worky
+		extern unsigned long dina_font;				// A personal favourite https://www.dcmembers.com/jibsen/download/61/
 	};
 }
