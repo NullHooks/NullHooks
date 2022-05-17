@@ -22,7 +22,7 @@ Edgy name but not as cool as *PissHooks™* (RIP).
 
 As I said I made this project to learn about game hacking and cpp in general, so expect some bad practises and errors, but feel free to improve them!
 
-See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making the project.
+See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
 ## Features
 ### Visuals
@@ -130,8 +130,13 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
 </details>
 
+- [ ] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
     - [ ] Add popup system that renders after the menu so other elements don't render over the window
+<<<<<<< HEAD
+=======
+- [ ] Add chicken chams <!-- Rainbow? -->
+>>>>>>> main
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff
