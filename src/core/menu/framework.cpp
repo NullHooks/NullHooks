@@ -103,24 +103,26 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	const int w = 10, h = 10;
 
-	switch (click_area_id) {
-		default:
-		case 0: {	// Only checkbox
-			if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
-				value = !value;		// If in checkbox and clicked
-			break;
-		}
-		case 1: {	// Name and checkbox, not color
-			if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
-				|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5)
-				&& GetAsyncKeyState(VK_LBUTTON) & 1)
-				value = !value;
-			break;
-		}
-		case 2: {	// All width from name to checkbox
-			if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
-				value = !value;		// If in checkbox or text and clicked
-			break;
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+		switch (click_area_id) {
+			default:
+			case 0: {	// Only checkbox
+				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
+					value = !value;		// If in checkbox and clicked
+				break;
+			}
+			case 1: {	// Name and checkbox, not color
+				if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
+					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5)
+					&& GetAsyncKeyState(VK_LBUTTON) & 1)
+					value = !value;
+				break;
+			}
+			case 2: {	// All width from name to checkbox
+				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
+					value = !value;		// If in checkbox or text and clicked
+				break;
+			}
 		}
 	}
 
@@ -133,7 +135,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 // Checkbox with color picker
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
-	check_box(x, y, position, font, string, value, 1);		// Call normal checkbox with no button toggle on color region
+	check_box(x, y, position, font, string, value, 1);		// Call normal checkbox with no button toggle and color region
 	
 	const int margin = 5;
 	const int w = 20, h = 10;
@@ -141,45 +143,15 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
 		toggle_color = !toggle_color;
+	else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)) && GetAsyncKeyState(VK_LBUTTON) & 1)
+		toggle_color = false;		// Close popup if user clicks outside
 
 	render::draw_filled_rect(color_x, y, w, h, setting_color);					// Color itself
 	render::draw_rect(color_x - 1, y - 1, w + 2, h + 2, color::black(255));		// Color outline
 
+	// Push to vector to render after menu
 	if (toggle_color)
-		color_picker_popup(color_x, y + h + margin, setting_color, toggle_color);
-}
-
-// Actual popup for the color picker hue and all that
-void gui::color_picker_popup(std::int32_t x, std::int32_t y, color& target, bool& toggle_color) {
-	const int win_padding = 10;
-	const int slider_x = x + win_padding, slider_y = y + win_padding;
-	const int slider_w = 120, slider_h = 15;		// w has to be divisible by 6 in order for the fade to be clean
-	const int win_w = slider_w + win_padding * 2;
-	const int win_h = slider_h * 2 + win_padding * 3;	// +1 slider and margin for alpha slider
-
-	// Close popup if user clicks outside
-	if (!( (cursor.x > x) && (cursor.x < x + win_w) && (cursor.y > y) && (cursor.y < y + win_h) ) && GetAsyncKeyState(VK_LBUTTON) & 1)
-		toggle_color = false;
-
-	render::draw_filled_rect(x, y, win_w, win_h, color(36, 36, 36, 255));
-	render::draw_rect(x, y, win_w, win_h, color::black(255));
-
-	static color hueColors[7] = {
-		{ 255, 0, 0   },
-		{ 255, 255, 0 },
-		{ 0, 255, 0   },
-		{ 0, 255, 255 },
-		{ 0, 0, 255   },
-		{ 255, 0, 255 },
-		{ 255, 0, 0   }
-	};
-
-	for (auto n = 0; n < 6; n++) {
-		const int fade_w = slider_w / 6;
-		const int fade_x = slider_x + (fade_w * n);
-
-		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
-	}
+		popup_system::active_color_popups.push_back({ color_x, y + h + margin, setting_color, toggle_color });
 }
 
 // Thanks to https://github.com/bobloxmonke
@@ -251,5 +223,58 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 	if (GetAsyncKeyState(VK_LBUTTON) == 0) {
 		should_drag = false;
 		should_move = false;
+	}
+}
+
+// Will call each check_popups()
+void popup_system::render_popups() {	
+	check_color_popups();
+}
+
+bool popup_system::mouse_in_popup(int x, int y) {
+	// Color popups
+	for (const color_popup_info& pinfo : active_color_popups)
+		if ((x > pinfo.x) && (x < pinfo.x + popup_system::win_w) && (y > pinfo.y) && (y < pinfo.y + popup_system::win_h))
+			return true;
+
+	return false;
+}
+
+// Will check for popups in the active_color_popups vector
+void popup_system::check_color_popups() {
+	// Render each active popup
+	while (!active_color_popups.empty()) {
+		color_picker_popup(active_color_popups.back());
+		active_color_popups.pop_back();
+	}
+}
+
+// Actual popup for the color picker hue and all that
+void popup_system::color_picker_popup(color_popup_info col_p) {
+	if (!col_p.toggle_color) return;
+	
+	GetCursorPos(&cursor);
+
+	const int slider_x = col_p.x + win_padding;
+	const int slider_y = col_p.y + win_padding;
+
+	render::draw_filled_rect(col_p.x, col_p.y, win_w, win_h, color(36, 36, 36, 255));
+	render::draw_rect(col_p.x, col_p.y, win_w, win_h, color::black(255));
+
+	static color hueColors[7] = {
+		{ 255, 0, 0   },
+		{ 255, 255, 0 },
+		{ 0, 255, 0   },
+		{ 0, 255, 255 },
+		{ 0, 0, 255   },
+		{ 255, 0, 255 },
+		{ 255, 0, 0   }
+	};
+
+	for (auto n = 0; n < 6; n++) {
+		const int fade_w = slider_w / 6;
+		const int fade_x = slider_x + (fade_w * n);
+
+		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
 }

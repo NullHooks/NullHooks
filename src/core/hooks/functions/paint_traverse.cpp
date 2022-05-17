@@ -23,6 +23,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		menu::toggle();
 		menu::render();
+		popup_system::render_popups();		// Check for popups and render them on top
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):
