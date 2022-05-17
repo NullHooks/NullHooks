@@ -128,15 +128,12 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add hand chams
 - [X] Add material selector to chams
 - [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
+    - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 </details>
 
-- [ ] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
     - [ ] Add popup system that renders after the menu so other elements don't render over the window
-<<<<<<< HEAD
-=======
 - [ ] Add chicken chams <!-- Rainbow? -->
->>>>>>> main
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff

@@ -22,7 +22,7 @@ void misc::spectator_list() {
 	}
 
 	int spec_count = 0;			// Will count actual spectators
-	const wchar_t* spec_arr[64 + 1];
+	std::wstring spec_arr[64 + 1];
 
 	// Get spectator from self (alive) or currently spected
 	player_t* spec_player = csgo::local_player->is_alive() ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
@@ -55,7 +55,7 @@ void misc::spectator_list() {
 		wchar_t w_player_name[255];
 		if (MultiByteToWideChar(CP_UTF8, 0, pinfo.name, -1, w_player_name, 128) < 0) continue;
 
-		if (strstr(pinfo.name, "GOTV")) continue;	// Compare .name cuz we cant wchar
+		if (strstr(pinfo.name, "GOTV")) continue;	// Compare .name cuz we cant wstring
 
 		if (!csgo::local_player || !spec) continue;
 		if (spec->index() == spec_player->index()) {
@@ -77,15 +77,15 @@ void misc::spectator_list() {
 			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 
 		// Print each username
-		const wchar_t* username;
+		std::wstring username;
 		for (int i = 0; i < spec_count; i++) {
 			username = spec_arr[i];
 			if (username != L"") {
-				interfaces::surface->get_text_size(render::fonts::watermark_font, username, cur_name_w, cur_name_h);
+				interfaces::surface->get_text_size(render::fonts::watermark_font, username.c_str(), cur_name_w, cur_name_h);
 				if (cur_name_w > variables::spectators::w - 20)
 					variables::spectators::w = 10 + cur_name_w + 10;
 				render::draw_text_wchar(variables::spectators::x + 10, (variables::spectators::y + wname_h + 5 + (15 * i)),
-					render::fonts::watermark_font, username, false, color(255, 255, 255));
+					render::fonts::watermark_font, username.c_str(), false, color(255, 255, 255));
 			}
 		}
 	}
