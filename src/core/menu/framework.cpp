@@ -43,11 +43,13 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	color bl_col = color(150, 22, 22, 255);
 	color br_col = color(150, 22, 22, 255);
 
-	if ((cursor.x > bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+	if ((cursor.x >= bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
 		bl_col = color(115, 21, 21, 255);					// Hover
 		if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			target = (target == min) ? max : target - 1;	// Decrease
-	} else if ((cursor.x > br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+	}
+	
+	if ((cursor.x >= br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
 		br_col = color(115, 21, 21, 255);					// Hover
 		if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			target = (target == max) ? min : target + 1;	// Increase
