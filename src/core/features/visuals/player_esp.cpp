@@ -12,8 +12,11 @@ void visuals::playeresp() {
 	if (!csgo::local_player) return;
 
 	// Will ignore ESP if the player being spectated
-	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+	player_t* local_player_ent = (csgo::local_player->is_alive())
+		? csgo::local_player
+		: reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
 
+	/* interfaces::globals->max_clients */
 	for (int iPlayer = 0; iPlayer < 64; iPlayer++)
 	{
 		player_t* pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
@@ -122,9 +125,11 @@ void visuals::playeresp() {
 				}
 
 				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
-				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
-				if (strstr(weapon_name, "weapon_")) weapon_name += 7;	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name, true, variables::colors::friendly_color_softer);
+				char* ch_weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
+				std::string s_weapon_name(ch_weapon_name);
+				if (strstr(ch_weapon_name, "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
+				
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer);
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
 				if (pCSPlayer->armor() > 0) {
 					int armor_x = (variables::healthesp_bool) ? 6 : 0;
@@ -150,9 +155,10 @@ void visuals::playeresp() {
 				}
 
 				int y_weapon = (variables::nameesp_bool) ? 12 : 0;
-				char* weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
-				if (strstr(weapon_name, "weapon_")) weapon_name += 7;	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, weapon_name, true, variables::colors::enemy_color_softer);
+				char* ch_weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
+				std::string s_weapon_name(ch_weapon_name);
+				if (strstr(ch_weapon_name, "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer);
 			}
 		}
 		/* ------------- HEALTH ESP ------------- */
@@ -175,8 +181,3 @@ void visuals::playeresp() {
 		}
 	}
 }
-
-// ------------------------------
-
-// Tracers?
-// Custom fov?
