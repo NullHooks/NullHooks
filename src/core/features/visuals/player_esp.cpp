@@ -181,8 +181,3 @@ void visuals::playeresp() {
 		}
 	}
 }
-
-// ------------------------------
-
-// Tracers?
-// Custom fov?
