@@ -18,25 +18,6 @@ const char* materials[13] = {	// Probaly not the best way
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
-	/*
-	 * debug/debugambientcube
-	 * debug/debugdrawflat
-	 * 
-	 * models/player/ct_fbi/ct_fbi_glass - platinum
-     * models/inventory_items/cologne_prediction/cologne_prediction_glass - glass
-     * models/inventory_items/trophy_majors/crystal_clear - crystal
-     * models/inventory_items/trophy_majors/gold - gold
-     * models/gibs/glass/glass - dark chrome
-     * models/inventory_items/trophy_majors/gloss - plastic/glass
-     * vgui/achievements/glow - glow
-	 * 
-	 * models/inventory_items/wildfire_gold/wildfire_gold_detail
-     * models/inventory_items/trophy_majors/crystal_blue
-	 * models/inventory_items/trophy_majors/velvet
-	 * 
-	 * models/inventory_items/dogtags/dogtags_outline
-	 * models/props_interiors/tvebtest
-	 */
 	auto material = interfaces::material_system->find_material(mat_name, TEXTURE_GROUP_MODEL);
 	material->set_material_var_flag(material_var_ignorez, ignorez);
 	material->set_material_var_flag(material_var_wireframe, wireframe);
