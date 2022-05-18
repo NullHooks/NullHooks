@@ -132,7 +132,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 </details>
 
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png))
-    - [ ] Add popup system that renders after the menu so other elements don't render over the window
+    - [X] Add popup system that renders after the menu so other elements don't render over the window
+    - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
 - [ ] Fix chams on custom playermodels
 - [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
