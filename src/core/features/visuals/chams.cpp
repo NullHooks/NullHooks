@@ -1,6 +1,6 @@
 #include "../features.hpp"
 
-const char* materials[13] = {	// Probaly not the best way
+const char* materials[14] = {	// Probaly not the best way
 	"vgui/screens/transparent",
 	"debug/debugambientcube",
 	"debug/debugdrawflat",
@@ -13,8 +13,8 @@ const char* materials[13] = {	// Probaly not the best way
 	"models/inventory_items/wildfire_gold/wildfire_gold_detail",
 	"models/inventory_items/trophy_majors/crystal_blue",
 	"models/inventory_items/trophy_majors/velvet",
-	"models/inventory_items/dogtags/dogtags_outline"
-	//"models/props_interiors/tvebtest"	// Kinda broky
+	"models/inventory_items/dogtags/dogtags_outline",
+	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur"
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
