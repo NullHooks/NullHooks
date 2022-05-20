@@ -14,11 +14,16 @@ const char* materials[14] = {	// Probaly not the best way
 	"models/inventory_items/trophy_majors/crystal_blue",
 	"models/inventory_items/trophy_majors/velvet",
 	"models/inventory_items/dogtags/dogtags_outline",
-	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur"
+	"dev/glow_rim3d"
+	//"models/inventory_items/music_kit/darude_01/mp3_detail"
+	//"models/inventory_items/dreamhack_trophies/dreamhack_star_blur"
+
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
 	auto material = interfaces::material_system->find_material(mat_name, TEXTURE_GROUP_MODEL);
+	
+	interfaces::render_view->set_blend(1.f);
 	material->set_material_var_flag(material_var_ignorez, ignorez);
 	material->set_material_var_flag(material_var_wireframe, wireframe);
 	material->alpha_modulate(rgba.a / 255.f);
@@ -96,6 +101,35 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 		}
 	} else if (strstr(mdl->name, "models/weapons/v")) {
 		if (variables::vm_weapon_chams_bool && !csgo::local_player->is_scoped()) {
+			// Animated material
+			if (variables::draw_chams_on_top) {
+				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
+				/*
+				auto material = interfaces::material_system->find_material(materials[variables::weapon_chams_mat_id], TEXTURE_GROUP_MODEL);
+				const color chams_col = variables::colors::chams_weapon_c;
+
+				bool mat_ignorez = material->get_material_var_flag(material_var_ignorez);
+				bool mat_wireframe = material->get_material_var_flag(material_var_wireframe);
+
+				material->set_material_var_flag(material_var_ignorez, true);
+				material->set_material_var_flag(material_var_wireframe, false);
+
+				interfaces::render_view->set_blend(1.f);
+				material->alpha_modulate(chams_col.a / 255.f);
+				material->color_modulate(chams_col.r / 255.f, chams_col.g / 255.f, chams_col.b / 255.f);
+				interfaces::model_render->override_material(material);
+				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
+
+				interfaces::model_render->override_material(nullptr);
+
+				material->color_modulate(1.f, 1.f, 1.f);
+
+				material->set_material_var_flag(material_var_ignorez, mat_ignorez);
+				material->set_material_var_flag(material_var_wireframe, mat_wireframe);
+
+				return;
+				*/
+			}
 			override_material(false, false, variables::colors::chams_weapon_c, materials[variables::weapon_chams_mat_id]);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}

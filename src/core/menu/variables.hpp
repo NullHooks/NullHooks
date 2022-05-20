@@ -25,8 +25,9 @@ namespace variables {
 	inline bool nade_esp_bool = false;
 	
 	// Visuals - Chams
-	inline bool player_chams_bool = false;
 	inline bool only_visible_chams_bool = false;
+	inline bool draw_chams_on_top = false;
+	inline bool player_chams_bool = false;
 	inline bool vm_weapon_chams_bool = false;
 	inline bool vm_arm_chams_bool = false;
 	inline bool vm_sleeve_chams_bool = false;
