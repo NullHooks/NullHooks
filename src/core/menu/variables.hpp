@@ -27,6 +27,7 @@ namespace variables {
 	// Visuals - Chams
 	inline bool only_visible_chams_bool = false;
 	inline bool draw_chams_on_top = false;
+	inline bool wireframe_chams_bool = false;
 	inline bool player_chams_bool = false;
 	inline bool vm_weapon_chams_bool = false;
 	inline bool vm_arm_chams_bool = false;
