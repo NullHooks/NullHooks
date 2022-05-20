@@ -137,6 +137,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Fix chams on custom playermodels
 - [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
+- [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff
