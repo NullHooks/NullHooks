@@ -16,7 +16,7 @@ const char* materials[16] = {	// Probaly not the best way
 	"dev/glow_rim3d",
 	"models/inventory_items/music_kit/darude_01/mp3_detail",
 	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur",
-	"models\inventory_items\dreamhack_trophies\dreamhack_pickem_glow_gold"
+	"models/inventory_items/dreamhack_trophies/dreamhack_pickem_glow_gold"
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
@@ -71,17 +71,17 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				}
 				*/
 				if (!variables::only_visible_chams_bool) {
-					override_material(true, false, variables::colors::chams_inv_enemy_c, materials[variables::player_chams_mat_id]);		// Not visible - Enemy
+					override_material(true, variables::wireframe_chams_bool, variables::colors::chams_inv_enemy_c, materials[variables::player_chams_mat_id]);		// Not visible - Enemy
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				}
-				override_material(false, false, variables::colors::chams_vis_enemy_c, materials[variables::player_chams_mat_id]);			// Visible - Enemy
+				override_material(false, variables::wireframe_chams_bool, variables::colors::chams_vis_enemy_c, materials[variables::player_chams_mat_id]);			// Visible - Enemy
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			} else if (variables::showteamesp_bool) {
 				if (!variables::only_visible_chams_bool) {
-					override_material(true, false, variables::colors::chams_inv_friend_c, materials[variables::player_chams_mat_id]);		// Not visible - Friendly
+					override_material(true, variables::wireframe_chams_bool, variables::colors::chams_inv_friend_c, materials[variables::player_chams_mat_id]);		// Not visible - Friendly
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				}
-				override_material(false, false, variables::colors::chams_vis_friend_c, materials[variables::player_chams_mat_id]);			// Visible - Friendly
+				override_material(false, variables::wireframe_chams_bool, variables::colors::chams_vis_friend_c, materials[variables::player_chams_mat_id]);			// Visible - Friendly
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			}
 		}
@@ -91,19 +91,19 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 	if (strstr(mdl->name, "sleeve")) {
 		if (variables::vm_sleeve_chams_bool) {
 			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, false, variables::colors::chams_sleeve_c, materials[variables::sleeve_chams_mat_id]);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_sleeve_c, materials[variables::sleeve_chams_mat_id]);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name + 17, "arms")) {
 		if (variables::vm_arm_chams_bool) {
 			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, false, variables::colors::chams_arms_c, materials[variables::arm_chams_mat_id]);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_arms_c, materials[variables::arm_chams_mat_id]);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name, "models/weapons/v")) {
 		if (variables::vm_weapon_chams_bool && !csgo::local_player->is_scoped()) {
 			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, false, variables::colors::chams_weapon_c, materials[variables::weapon_chams_mat_id]);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_weapon_c, materials[variables::weapon_chams_mat_id]);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	}

@@ -100,6 +100,8 @@ void menu::render() {
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Only visible chams", variables::only_visible_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Wireframe chams", variables::wireframe_chams_bool);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw on top", variables::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
