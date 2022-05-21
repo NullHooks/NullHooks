@@ -129,18 +129,19 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add material selector to chams
 - [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
     - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
+- [X] Fix chams on custom playermodels
 </details>
 
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png))
     - [X] Add popup system that renders after the menu so other elements don't render over the window
     - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
-- [ ] Fix chams on custom playermodels
 - [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff
+    - [ ] Triggerbot
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
