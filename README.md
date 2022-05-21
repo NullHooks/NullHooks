@@ -131,10 +131,13 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 </details>
 
-- [ ] Add color picker ([example](screenshots/color-picker-edit.png)) <!-- https://www.unknowncheats.me/forum/d3d-tutorials-and-source/272147-looking-color-picker.html -->
-    - [ ] Add popup system that renders after the menu so other elements don't render over the window
+- [ ] Add color picker ([example](screenshots/color-picker-edit.png))
+    - [X] Add popup system that renders after the menu so other elements don't render over the window
+    - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
 - [ ] Fix chams on custom playermodels
+- [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
+- [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Add aim stuff

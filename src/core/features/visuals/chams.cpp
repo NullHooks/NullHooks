@@ -1,6 +1,6 @@
 #include "../features.hpp"
 
-const char* materials[13] = {	// Probaly not the best way
+ std::vector<const char*> materials = {
 	"vgui/screens/transparent",
 	"debug/debugambientcube",
 	"debug/debugdrawflat",
@@ -12,32 +12,18 @@ const char* materials[13] = {	// Probaly not the best way
 	"models/inventory_items/trophy_majors/gloss",
 	"models/inventory_items/wildfire_gold/wildfire_gold_detail",
 	"models/inventory_items/trophy_majors/crystal_blue",
-	"models/inventory_items/trophy_majors/velvet",
-	"models/inventory_items/dogtags/dogtags_outline"
-	//"models/props_interiors/tvebtest"	// Kinda broky
+	"models/inventory_items/dogtags/dogtags_outline",
+	"dev/glow_rim3d",
+	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur",
+	"models/inventory_items/dreamhack_trophies/dreamhack_pickem_glow_gold",
+	"models/inventory_items/music_kit/darude_01/mp3_detail",
+	"models/inventory_items/dogtags/dogtags_lightray"
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
-	/*
-	 * debug/debugambientcube
-	 * debug/debugdrawflat
-	 * 
-	 * models/player/ct_fbi/ct_fbi_glass - platinum
-     * models/inventory_items/cologne_prediction/cologne_prediction_glass - glass
-     * models/inventory_items/trophy_majors/crystal_clear - crystal
-     * models/inventory_items/trophy_majors/gold - gold
-     * models/gibs/glass/glass - dark chrome
-     * models/inventory_items/trophy_majors/gloss - plastic/glass
-     * vgui/achievements/glow - glow
-	 * 
-	 * models/inventory_items/wildfire_gold/wildfire_gold_detail
-     * models/inventory_items/trophy_majors/crystal_blue
-	 * models/inventory_items/trophy_majors/velvet
-	 * 
-	 * models/inventory_items/dogtags/dogtags_outline
-	 * models/props_interiors/tvebtest
-	 */
 	auto material = interfaces::material_system->find_material(mat_name, TEXTURE_GROUP_MODEL);
+	
+	interfaces::render_view->set_blend(1.f);
 	material->set_material_var_flag(material_var_ignorez, ignorez);
 	material->set_material_var_flag(material_var_wireframe, wireframe);
 	material->alpha_modulate(rgba.a / 255.f);
@@ -57,11 +43,13 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 
 	// Players
 	if (strstr(mdl->name, "models/player") && variables::player_chams_bool) {
+		const char* player_material = (variables::player_chams_mat_id < materials.size()) ? materials.at(variables::player_chams_mat_id) : materials.at(materials.size() - 1);
+
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(info.entity_index));
 		if (!player || !player->is_alive() || player->dormant()) return;
 
 		if (player->has_gun_game_immunity()) {
-			override_material(false, false, color(255, 255, 255, 100), materials[variables::player_chams_mat_id]);
+			override_material(false, false, color(255, 255, 255, 100), player_material);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
 			if (player->index() == csgo::local_player->index()) {
@@ -86,17 +74,17 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				}
 				*/
 				if (!variables::only_visible_chams_bool) {
-					override_material(true, false, variables::colors::chams_inv_enemy_c, materials[variables::player_chams_mat_id]);		// Not visible - Enemy
+					override_material(true, variables::wireframe_chams_bool, variables::colors::chams_inv_enemy_c, player_material);		// Not visible - Enemy
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				}
-				override_material(false, false, variables::colors::chams_vis_enemy_c, materials[variables::player_chams_mat_id]);			// Visible - Enemy
+				override_material(false, variables::wireframe_chams_bool, variables::colors::chams_vis_enemy_c, player_material);			// Visible - Enemy
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			} else if (variables::showteamesp_bool) {
 				if (!variables::only_visible_chams_bool) {
-					override_material(true, false, variables::colors::chams_inv_friend_c, materials[variables::player_chams_mat_id]);		// Not visible - Friendly
+					override_material(true, variables::wireframe_chams_bool, variables::colors::chams_inv_friend_c, player_material);		// Not visible - Friendly
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				}
-				override_material(false, false, variables::colors::chams_vis_friend_c, materials[variables::player_chams_mat_id]);			// Visible - Friendly
+				override_material(false, variables::wireframe_chams_bool, variables::colors::chams_vis_friend_c, player_material);			// Visible - Friendly
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			}
 		}
@@ -105,17 +93,20 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 	// Viewmodel
 	if (strstr(mdl->name, "sleeve")) {
 		if (variables::vm_sleeve_chams_bool) {
-			override_material(false, false, variables::colors::chams_sleeve_c, materials[variables::sleeve_chams_mat_id]);
+			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_sleeve_c, materials.at(variables::sleeve_chams_mat_id));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name + 17, "arms")) {
 		if (variables::vm_arm_chams_bool) {
-			override_material(false, false, variables::colors::chams_arms_c, materials[variables::arm_chams_mat_id]);
+			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_arms_c, materials.at(variables::arm_chams_mat_id));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name, "models/weapons/v")) {
 		if (variables::vm_weapon_chams_bool && !csgo::local_player->is_scoped()) {
-			override_material(false, false, variables::colors::chams_weapon_c, materials[variables::weapon_chams_mat_id]);
+			if (variables::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
+			override_material(false, variables::wireframe_chams_bool, variables::colors::chams_weapon_c, materials.at(variables::weapon_chams_mat_id));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	}
