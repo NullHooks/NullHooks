@@ -25,8 +25,10 @@ namespace variables {
 	inline bool nade_esp_bool = false;
 	
 	// Visuals - Chams
-	inline bool player_chams_bool = false;
 	inline bool only_visible_chams_bool = false;
+	inline bool draw_chams_on_top = false;
+	inline bool wireframe_chams_bool = false;
+	inline bool player_chams_bool = false;
 	inline bool vm_weapon_chams_bool = false;
 	inline bool vm_arm_chams_bool = false;
 	inline bool vm_sleeve_chams_bool = false;
@@ -98,7 +100,7 @@ namespace variables {
 	namespace menu {
 		inline bool opened = false;
 		inline int x = 300, y = 200;
-		inline int w = 500, h = 430;
+		inline int w = 500, h = 450;
 	};
 
 	namespace watermark {
