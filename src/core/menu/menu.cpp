@@ -108,16 +108,16 @@ void menu::render() {
 					render::fonts::watermark_font, "Player chams", variables::player_chams_bool);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + 10, 16,			// +10 to get the top right corner
 					render::fonts::watermark_font, "Player chams material", variables::player_chams_mat_id, 0, 16);	// min, max
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Viewmodel weapon chams", variables::vm_weapon_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
+					"Viewmodel weapon chams", variables::vm_weapon_chams_bool, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + 10, 16,
 					render::fonts::watermark_font, "Weapon chams material", variables::weapon_chams_mat_id, 0, 16);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos,
-					render::fonts::watermark_font, "Arms chams", variables::vm_arm_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
+					"Arms chams", variables::vm_arm_chams_bool, variables::colors::chams_arms_c, variables::colors::chams_arms_c_tog);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + 10, 16,
 					render::fonts::watermark_font, "Arms chams material", variables::arm_chams_mat_id, 0, 16);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos,
-					render::fonts::watermark_font, "Sleeve chams", variables::vm_sleeve_chams_bool);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
+					"Sleeve chams", variables::vm_sleeve_chams_bool, variables::colors::chams_sleeve_c, variables::colors::chams_sleeve_c_tog);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + 10, 16,
 					render::fonts::watermark_font, "Sleeve chams material", variables::sleeve_chams_mat_id, 0, 16);
 			}
