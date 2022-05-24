@@ -2,12 +2,12 @@
 
 // DoPostScreenSpaceEffects hook
 void visuals::glow::draw_glow() {
-	if (!(variables::playerglow_bool
-		|| variables::entityglow_bool
-		|| variables::chickenpride_bool)) return;
+	if (!(variables::player_visuals::playerglow
+		|| variables::entity_visuals::entityglow
+		|| variables::misc_visuals::chickenpride)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (interfaces::engine->is_taking_screenshot() && variables::clean_screenshots_bool) return;
+	if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) return;
 
 	// Will not glow the player being spectated
 	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
@@ -21,12 +21,12 @@ void visuals::glow::draw_glow() {
 
 		switch (glowEnt->client_class()->class_id) {
 			case ccsplayer: {
-				if (!variables::playerglow_bool || glowEnt == local_player_ent) break;
+				if (!variables::player_visuals::playerglow || glowEnt == local_player_ent) break;
 				
 				if (glowEnt->has_gun_game_immunity()) {		// TODO: White glow if gun inmunity (same as chams)
 					glowObj.set(0.9f, 0.9f, 0.9f, 0.8f);	// Does not work
 				} else {
-					if (glowEnt->team() == csgo::local_player->team() && variables::showteamesp_bool)
+					if (glowEnt->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
 						glowObj.set(0.0f, 0.3f, 1.f, 0.8f);
 					else if (glowEnt->team() != csgo::local_player->team())
 						glowObj.set(0.9f, 0.0f, 0.0f, 0.8f);
@@ -37,13 +37,13 @@ void visuals::glow::draw_glow() {
 			/* ------------ BOMB ------------ */
 			case cplantedc4: 
 			case cc4: {
-				if (!variables::entityglow_bool) break;
+				if (!variables::entity_visuals::entityglow) break;
 				glowObj.set(1.f, 0.5f, 0.0f, 0.8f);
 				break;
 			}
 			/* ------------ MISC ------------ */
 			case cchicken: {
-				if (!variables::chickenpride_bool) break;
+				if (!variables::misc_visuals::chickenpride) break;
 				glowObj.set(1.f, 0.f, 1.f, 0.9f);
 				break;
 			}
@@ -54,7 +54,7 @@ void visuals::glow::draw_glow() {
 			case cmolotovgrenade:
 			case cincendiarygrenade:
 			case chegrenade: {
-				if (!variables::entityglow_bool) break;
+				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
 				glowObj.set(0.95f, 0.95f, 0.85f, 0.8f);
 				break;
 			}
@@ -106,7 +106,7 @@ void visuals::glow::draw_glow() {
 			case cweaponusp:
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
-				if (!variables::entityglow_bool) break;		// TODO: Only works if another glow is enabled
+				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
 				glowObj.set(0.95f, 0.95f, 0.95f, 0.8f);
 				break;
 			}

@@ -1,7 +1,7 @@
 #include "../features.hpp"
 
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
-	if (!(variables::entitytext_bool || variables::bombtimer_bool) || !bomb_ent) return;
+	if (!(variables::entity_visuals::entitytext || variables::entity_visuals::bombtimer) || !bomb_ent) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p) return;
@@ -12,7 +12,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	float exp_time = flblow - (csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick);
 	
 	if (exp_time > 0 && !bomb_p->m_bBombDefused()) {
-		if (variables::bombtimer_bool) {
+		if (variables::entity_visuals::bombtimer) {
 			const int bar_w = 600;
 			int screen_width, screen_height;
 			interfaces::engine->get_screen_size(screen_width, screen_height);
@@ -23,13 +23,13 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 			custom_helpers::draw_bomb_text(exp_time);
 		}
 
-		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entitytext_bool)
+		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entitytext)
 			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
 	}
 }
 
 void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
-	if (!variables::entitytext_bool || !bomb_ent) return;
+	if (!variables::entity_visuals::entitytext || !bomb_ent) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p || bomb_p->dormant() || bomb_p->owner_handle() > -1) return;
@@ -43,7 +43,7 @@ void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 }
 
 void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y_ofset) {
-	if (!variables::entitytext_bool || !entity) return;
+	if (!variables::entity_visuals::entitytext || !entity) return;
 
 	player_t* entity_p = reinterpret_cast<player_t*>(entity);
 	if (!entity_p || entity_p->dormant() || entity_p->owner_handle() > -1) return;

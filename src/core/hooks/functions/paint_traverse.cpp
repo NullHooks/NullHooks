@@ -6,7 +6,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 	case fnv::hash("MatSystemTopPanel"):
-		if (interfaces::engine->is_taking_screenshot() && variables::clean_screenshots_bool) break;
+		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
 
 		watermark::draw();
 		watermark::draw_stats();
@@ -27,10 +27,10 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		break;
 	case fnv::hash("FocusOverlayPanel"):
 		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
-		interfaces::panel->set_mouse_input_enabled(panel, variables::menu::opened);
+		interfaces::panel->set_mouse_input_enabled(panel, variables::ui::menu::opened);
 		break;
 	case fnv::hash("HudZoom"):	// No sniper scope
-		if (!variables::noscope_bool) break;
+		if (!variables::misc_visuals::noscope) break;
 		if (!csgo::local_player) break;
 		if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
 		if (!csgo::local_player->is_scoped()) break;
