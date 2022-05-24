@@ -10,21 +10,6 @@ void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color 
 	const int left = x - len - gap;
 	const int right = x + len + gap;
 
-	/*
-	// Draw outline
-	if (outline) {
-		render::draw_rect(x - 1, top - 1, 3, len + 2, color::black(255));
-		render::draw_rect(x - 1, y + gap, 3, len + 2, color::black(255));
-		render::draw_rect(left - 1, y - 1, len + 2, 3, color::black(255));
-		render::draw_rect(x + gap, y - 1, len + 2, 3, color::black(255));
-	}
-	// Draw 1px crosshair
-	render::draw_line(x, top, x, y - gap, cross_color);
-	render::draw_line(x, bottom, x, y + gap, cross_color);
-	render::draw_line(left, y, x - gap, y, cross_color);
-	render::draw_line(right, y, x + gap, y, cross_color);
-	*/
-
 	// Draw outline
 	if (outline) {
 		render::draw_rect(x - 1, top - 1, 3, (len + gap)*2 + 3, color::black(255));
