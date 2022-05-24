@@ -11,12 +11,12 @@ void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_
 };
 
 void misc::spectator_list() {
-	if (!variables::spectators::spectator_list_bool) return;
-	if ((!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) && !variables::menu::opened) return;
+	if (!variables::ui::spectators::spectator_list) return;
+	if ((!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) && !variables::ui::menu::opened) return;
 	if (!csgo::local_player) {
 		// Draw only frame in main menu for example
-		variables::spectators::h = 5 + 5 + 25;
-		draw_spec_frame(variables::spectators::x, variables::spectators::y, variables::spectators::w, variables::spectators::h, 25, 5,
+		variables::ui::spectators::h = 5 + 5 + 25;
+		draw_spec_frame(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h, 25, 5,
 			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 		return;
 	}
@@ -65,15 +65,15 @@ void misc::spectator_list() {
 	}
 
 	// Only render if there are spectators or the menu is open
-	if (spec_arr[0] != L"" || variables::menu::opened) {
-		int cur_name_w = variables::spectators::w;
+	if (spec_arr[0] != L"" || variables::ui::menu::opened) {
+		int cur_name_w = variables::ui::spectators::w;
 		int cur_name_h;
 
 		const int wname_h = 25;
-		variables::spectators::w = 100;
-		variables::spectators::h = 5 + (15 * spec_count) + 5 + wname_h;
+		variables::ui::spectators::w = 100;
+		variables::ui::spectators::h = 5 + (15 * spec_count) + 5 + wname_h;
 			
-		draw_spec_frame(variables::spectators::x, variables::spectators::y, cur_name_w, variables::spectators::h, wname_h, 5,
+		draw_spec_frame(variables::ui::spectators::x, variables::ui::spectators::y, cur_name_w, variables::ui::spectators::h, wname_h, 5,
 			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 
 		// Print each username
@@ -82,9 +82,9 @@ void misc::spectator_list() {
 			username = spec_arr[i];
 			if (username != L"") {
 				interfaces::surface->get_text_size(render::fonts::watermark_font, username.c_str(), cur_name_w, cur_name_h);
-				if (cur_name_w > variables::spectators::w - 20)
-					variables::spectators::w = 10 + cur_name_w + 10;
-				render::draw_text_wchar(variables::spectators::x + 10, (variables::spectators::y + wname_h + 5 + (15 * i)),
+				if (cur_name_w > variables::ui::spectators::w - 20)
+					variables::ui::spectators::w = 10 + cur_name_w + 10;
+				render::draw_text_wchar(variables::ui::spectators::x + 10, (variables::ui::spectators::y + wname_h + 5 + (15 * i)),
 					render::fonts::watermark_font, username.c_str(), false, color(255, 255, 255));
 			}
 		}

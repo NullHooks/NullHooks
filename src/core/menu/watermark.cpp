@@ -7,7 +7,7 @@
  */
 
 void watermark::draw() {
-    if (!variables::draw_watermark) return;
+    if (!variables::misc::draw_watermark) return;
     const std::string cheat_name = "NullHooks";
     if (csgo::local_player && interfaces::engine->is_connected()) {
         player_info_t player_info;
@@ -23,7 +23,7 @@ void watermark::draw() {
 
         int width, height;
         interfaces::surface->draw_text_font(render::fonts::watermark_font);
-        interfaces::surface->draw_text_pos(variables::watermark::x, variables::watermark::y);
+        interfaces::surface->draw_text_pos(variables::ui::watermark::x, variables::ui::watermark::y);
         interfaces::surface->get_text_size(render::fonts::watermark_font, converted_name.c_str(), width, height);
 
         interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
@@ -35,12 +35,12 @@ void watermark::draw() {
         interfaces::surface->set_text_color(watermark_color.r, watermark_color.g, watermark_color.b, watermark_color.a);
         interfaces::surface->draw_render_text(converted_cn.c_str(), wcslen(converted_cn.c_str()));
     } else {
-        render::draw_text_string(variables::watermark::x, variables::watermark::y, render::fonts::watermark_font, cheat_name, false, color::red(255));
+        render::draw_text_string(variables::ui::watermark::x, variables::ui::watermark::y, render::fonts::watermark_font, cheat_name, false, color::red(255));
     }
 }
 
 void watermark::draw_stats() {
-    if (!variables::draw_stats) return;
+    if (!variables::misc::draw_stats) return;
 
     // Colors
     const color base_color = color(220, 5,   5,  255);
@@ -84,8 +84,8 @@ std::string watermark::helpers::get_timestamp_string() noexcept {
 }
 
 void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps, color fpscolor, std::string speed, color speedcolor, bool draw_speed) {
-    const int x = variables::watermark::x;
-    const int y = variables::watermark::y + 12;
+    const int x = variables::ui::watermark::x;
+    const int y = variables::ui::watermark::y + 12;
     const unsigned long font = render::fonts::watermark_font;
     const int margin = 40;
 
