@@ -19,14 +19,19 @@ void visuals::glow::draw_glow() {
 		player_t* glowEnt = glowObj.entity;
 		if (!glowEnt) continue;
 
-		switch (glowObj.entity->client_class()->class_id) {
+		switch (glowEnt->client_class()->class_id) {
 			case ccsplayer: {
 				if (!variables::playerglow_bool || glowEnt == local_player_ent) break;
+				
+				if (glowEnt->has_gun_game_immunity()) {		// TODO: White glow if gun inmunity (same as chams)
+					glowObj.set(0.9f, 0.9f, 0.9f, 0.8f);	// Does not work
+				} else {
+					if (glowEnt->team() == csgo::local_player->team() && variables::showteamesp_bool)
+						glowObj.set(0.0f, 0.3f, 1.f, 0.8f);
+					else if (glowEnt->team() != csgo::local_player->team())
+						glowObj.set(0.9f, 0.0f, 0.0f, 0.8f);
+				}
 
-				if (glowEnt->team() == csgo::local_player->team() && variables::showteamesp_bool)
-					glowObj.set(0.0f, 0.3f, 1.f, 0.6f);
-				else if (glowEnt->team() != csgo::local_player->team())
-					glowObj.set(0.9f, 0.0f, 0.0f, 0.6f);
 				break;
 			}
 			/* ------------ NADE PROJECTILES ------------ */
@@ -45,13 +50,13 @@ void visuals::glow::draw_glow() {
 			case cplantedc4: 
 			case cc4: {
 				if (!variables::entityglow_bool) break;
-				glowObj.set(1.f, 0.5f, 0.0f, 1.0f);
+				glowObj.set(1.f, 0.5f, 0.0f, 0.8f);
 				break;
 			}
 			/* ------------ MISC ------------ */
 			case cchicken: {
 				if (!variables::chickenpride_bool) break;
-				glowObj.set(255, 0, 255, 1.f);
+				glowObj.set(1.f, 0.f, 1.f, 0.9f);
 				break;
 			}
 			/* ------------ NADES ------------ */
@@ -62,7 +67,7 @@ void visuals::glow::draw_glow() {
 			case cincendiarygrenade:
 			case chegrenade: {
 				if (!variables::entityglow_bool) break;
-				glowObj.set(240, 240, 220, 0.6f);
+				glowObj.set(0.95f, 0.95f, 0.85f, 0.8f);
 				break;
 			}
 			/* ------------ WEAPONS ------------ */
@@ -114,7 +119,7 @@ void visuals::glow::draw_glow() {
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
 				if (!variables::entityglow_bool) break;		// TODO: Only works if another glow is enabled
-				glowObj.set(240, 240, 240, 0.6f);
+				glowObj.set(0.95f, 0.95f, 0.95f, 0.8f);
 				break;
 			}
 			default: break;
