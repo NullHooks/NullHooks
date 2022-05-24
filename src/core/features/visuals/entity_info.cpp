@@ -1,7 +1,7 @@
 #include "../features.hpp"
 
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
-	if (!(variables::entitytext_bool || variables::bombtimer_bool)) return;
+	if (!(variables::entitytext_bool || variables::bombtimer_bool) || !bomb_ent) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p) return;
@@ -22,6 +22,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 			// Timer
 			custom_helpers::draw_bomb_text(exp_time);
 		}
+
 		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entitytext_bool)
 			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
 	}
@@ -34,7 +35,7 @@ void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 	if (!bomb_p || bomb_p->dormant() || bomb_p->owner_handle() > -1) return;
 
 	vec3_t origin = bomb_p->origin();
-	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;
+	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;		// Check if the position is [0,0,0] (To avoid bug)
 
 	vec3_t entPosScreen;
 	if (math::world_to_screen(origin, entPosScreen))
@@ -48,7 +49,7 @@ void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y
 	if (!entity_p || entity_p->dormant() || entity_p->owner_handle() > -1) return;
 
 	vec3_t origin = entity_p->origin();
-	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;
+	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;		// Check if the position is [0,0,0] (To avoid bug)
 
 	vec3_t entPosScreen;
 	if (math::world_to_screen(origin, entPosScreen))

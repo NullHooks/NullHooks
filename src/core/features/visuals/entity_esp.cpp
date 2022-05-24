@@ -17,7 +17,8 @@ struct smoke_t : public entity_t {
 void visuals::grenade_projectile_esp() {
 	if (!(variables::nade_esp_bool
 		|| variables::entitytext_bool
-		|| variables::bombtimer_bool)) return;
+		|| variables::bombtimer_bool
+		|| variables::chickenpride_bool)) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -84,12 +85,8 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			/* ------------ BOMB ------------ */
-			case cplantedc4:
-				entity_info::bomb(entity);
-				break;
-			case cc4:
-				entity_info::dropped_bomb(entity);
-				break;
+			case cplantedc4:				entity_info::bomb(entity);									break;
+			case cc4:						entity_info::dropped_bomb(entity);							break;
 			/* ------------ WEAPONS ------------ */
 			case cak47:						entity_info::weapon_name(entity, "ak47", 0);				break;
 			case cdeagle:					entity_info::weapon_name(entity, "deagle", 0);				break;
@@ -143,11 +140,11 @@ void visuals::grenade_projectile_esp() {
 			case chegrenade:				entity_info::weapon_name(entity, "frag nade", 0);			break;
 			/* ------------ MISC ------------ */
 			case cchicken:
-				if (!(math::world_to_screen(origin, w2s) && variables::chickenpride_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::chickenpride_bool && variables::entitytext_bool)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			/* ------------------------------ */
-			default:	break;
+			default: break;
 		}
 	}
 }
