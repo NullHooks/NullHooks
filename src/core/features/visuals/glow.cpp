@@ -13,19 +13,20 @@ void visuals::glow::draw_glow() {
 	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
 
 	for (int i = 0; i < interfaces::glow_manager->objects.size; i++) {
-		glow_manager_t::glow_object& glowEnt = interfaces::glow_manager->objects[i];
+		glow_manager_t::glow_object& glowObj = interfaces::glow_manager->objects[i];
+		if (glowObj.unused()) continue;
 
-		if (glowEnt.unused()) continue;
-		if (!glowEnt.entity) continue;
+		player_t* glowEnt = glowObj.entity;
+		if (!glowEnt) continue;
 
-		switch (glowEnt.entity->client_class()->class_id) {
+		switch (glowObj.entity->client_class()->class_id) {
 			case ccsplayer: {
-				if (!variables::playerglow_bool || glowEnt.entity == local_player_ent) break;
+				if (!variables::playerglow_bool || glowEnt == local_player_ent) break;
 
-				if (glowEnt.entity->team() == csgo::local_player->team() && variables::showteamesp_bool)
-					glowEnt.set(0.0f, 0.3f, 1.f, 0.6f);
-				else if (glowEnt.entity->team() != csgo::local_player->team())
-					glowEnt.set(0.9f, 0.0f, 0.0f, 0.6f);
+				if (glowEnt->team() == csgo::local_player->team() && variables::showteamesp_bool)
+					glowObj.set(0.0f, 0.3f, 1.f, 0.6f);
+				else if (glowEnt->team() != csgo::local_player->team())
+					glowObj.set(0.9f, 0.0f, 0.0f, 0.6f);
 				break;
 			}
 			/* ------------ NADE PROJECTILES ------------ */
@@ -44,13 +45,13 @@ void visuals::glow::draw_glow() {
 			case cplantedc4: 
 			case cc4: {
 				if (!variables::entityglow_bool) break;
-				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
+				glowObj.set(1.f, 0.5f, 0.0f, 1.0f);
 				break;
 			}
 			/* ------------ MISC ------------ */
 			case cchicken: {
 				if (!variables::chickenpride_bool) break;
-				glowEnt.set(255, 0, 255, 1.f);
+				glowObj.set(255, 0, 255, 1.f);
 				break;
 			}
 			/* ------------ NADES ------------ */
@@ -61,7 +62,7 @@ void visuals::glow::draw_glow() {
 			case cincendiarygrenade:
 			case chegrenade: {
 				if (!variables::entityglow_bool) break;
-				glowEnt.set(240, 240, 220, 0.6f);
+				glowObj.set(240, 240, 220, 0.6f);
 				break;
 			}
 			/* ------------ WEAPONS ------------ */
@@ -113,7 +114,7 @@ void visuals::glow::draw_glow() {
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
 				if (!variables::entityglow_bool) break;		// TODO: Only works if another glow is enabled
-				glowEnt.set(240, 240, 240, 0.6f);
+				glowObj.set(240, 240, 240, 0.6f);
 				break;
 			}
 			default: break;
