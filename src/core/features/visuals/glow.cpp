@@ -34,18 +34,6 @@ void visuals::glow::draw_glow() {
 
 				break;
 			}
-			/* ------------ NADE PROJECTILES ------------ */
-			/*
-			case cbasecsgrenadeprojectile:
-			case cmolotovprojectile:
-			case cinferno:
-			case csmokegrenadeprojectile:
-			case cdecoyprojectile: {
-				if (!variables::entityglow_bool) break;
-				glowEnt.set(1.f, 0.5f, 0.0f, 1.0f);
-				break;
-			}
-			*/
 			/* ------------ BOMB ------------ */
 			case cplantedc4: 
 			case cc4: {
