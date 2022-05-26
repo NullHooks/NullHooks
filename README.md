@@ -135,7 +135,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png))
     - [X] Add popup system that renders after the menu so other elements don't render over the window
     - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
-- [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
