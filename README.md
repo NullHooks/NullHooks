@@ -70,6 +70,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Spectator list
 - Fov changer
 - Stats watermark (*username, time, fps, speed...*)
+- Hide cheat on screenshots
 
 ## Installing
 ### Compiling from source (Recommended)
