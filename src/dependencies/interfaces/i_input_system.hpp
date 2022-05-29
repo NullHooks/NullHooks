@@ -7,7 +7,7 @@ enum analog_code_t {
 	ANALOG_CODE_LAST = 10,
 };
 
-enum button_code_t{ 
+enum button_code_t { 
 	BUTTON_CODE_INVALID = -1,
 	BUTTON_CODE_NONE = 0,
 
@@ -137,11 +137,10 @@ enum button_code_t{
 
 	MOUSE_LAST = MOUSE_WHEEL_DOWN,
 	MOUSE_COUNT = MOUSE_LAST - MOUSE_FIRST + 1,
-
 };
 
 
-class i_inputsytem {
+class i_input_system {
 public:
 	void enable_input(bool bEnable) {
 		using original_fn = void(__thiscall*)(void*, bool);
@@ -161,7 +160,6 @@ public:
 	int get_analog_value(analog_code_t code) {
 		using original_fn = int(__thiscall*)(void*, analog_code_t);
 		return (*(original_fn * *)this)[18](this, code);
-
 	}
 
 	int get_analog_delta(analog_code_t code) {
@@ -173,5 +171,4 @@ public:
 		using original_fn = const char* (__thiscall*)(void*, int);
 		return (*(original_fn * *)this)[40](this, code);
 	}
-
 };
