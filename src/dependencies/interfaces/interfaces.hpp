@@ -85,7 +85,7 @@ namespace interfaces {
 	inline i_console* console;
 	inline i_localize* localize;
 	inline i_game_event_manager2* event_manager;
-	inline i_input_system* inputsystem;
+	inline i_input_system* input_system;
 	inline IDirect3DDevice9* directx;
 	inline trace* trace_ray;
 	inline glow_manager_t* glow_manager;
