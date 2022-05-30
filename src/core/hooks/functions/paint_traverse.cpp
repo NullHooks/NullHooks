@@ -26,6 +26,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):
+		// interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::editing_text);
 		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
 		interfaces::panel->set_mouse_input_enabled(panel, variables::ui::menu::opened);
 		break;
@@ -34,7 +35,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		if (!csgo::local_player) break;
 		if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
 		if (!csgo::local_player->is_scoped()) break;
-		if (interfaces::engine->is_taking_screenshot()) break;
+		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
 
 		int screen_w, screen_h;
 		interfaces::engine->get_screen_size(screen_w, screen_h);
