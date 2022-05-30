@@ -7,7 +7,6 @@ void visuals::glow::draw_glow() {
 		|| variables::misc_visuals::chickenpride)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) return;
 
 	// Will not glow the player being spectated
 	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
