@@ -71,7 +71,7 @@ namespace interfaces {
 	inline i_input* input;
 	inline i_client_entity_list* entity_list;
 	inline iv_engine_client* engine;
-	inline i_client_mode* clientmode = nullptr;
+	inline i_client_mode* clientmode;
 	inline i_client_state* clientstate;
 	inline i_panel* panel;
 	inline i_surface* surface;
@@ -85,7 +85,7 @@ namespace interfaces {
 	inline i_console* console;
 	inline i_localize* localize;
 	inline i_game_event_manager2* event_manager;
-	inline i_inputsytem* inputsystem;
+	inline i_input_system* input_system;
 	inline IDirect3DDevice9* directx;
 	inline trace* trace_ray;
 	inline glow_manager_t* glow_manager;
