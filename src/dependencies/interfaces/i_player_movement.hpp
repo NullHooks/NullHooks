@@ -65,15 +65,15 @@ public:
 class virtual_game_movement {
 
 public:
-	virtual				~virtual_game_movement( void ) {}
+	virtual					~virtual_game_movement( void ) {}
 	virtual void			process_movement( player_t *player, player_move_data *move ) = 0;
 	virtual void			reset( void ) = 0;
 	virtual void			start_track_prediction_errors( player_t *player ) = 0;
 	virtual void			finish_track_prediction_errors( player_t *player ) = 0;
 	virtual void			diff_print( char const *fmt, ... ) = 0;
-	virtual vec3_t const		&get_player_mins( bool ducked ) const = 0;
-	virtual vec3_t const		&get_player_maxs( bool ducked ) const = 0;
-	virtual vec3_t const		&get_player_view_offset( bool ducked ) const = 0;
+	virtual vec3_t const	&get_player_mins( bool ducked ) const = 0;
+	virtual vec3_t const	&get_player_maxs( bool ducked ) const = 0;
+	virtual vec3_t const	&get_player_view_offset( bool ducked ) const = 0;
 	virtual bool			is_moving_player_stuck( void ) const = 0;
 	virtual player_t		*get_moving_player( void ) const = 0;
 	virtual void			unblock_posher( player_t *player, player_t *pusher ) = 0;
