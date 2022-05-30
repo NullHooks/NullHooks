@@ -88,22 +88,22 @@ public:
 class player_prediction {
 public:
 	bool in_prediction() {
-		using original_fn = bool(__thiscall)(void*);
+		using original_fn = bool(__thiscall*)(void*);
 		return (*(original_fn**)this)[14](this);
 	}
 
 	void run_command(player_t* player, c_usercmd* cmd, player_move_helper* helper) {
-		using original_fn = void(__thiscall)(void*, player_t*, c_usercmd*, player_move_helper*);
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*);
 		return (*(original_fn**)this)[19](this, player, cmd, helper);
 	}
 
 	void setup_move(player_t* player, c_usercmd* cmd, player_move_helper* helper, void* data) {
-		using original_fn = void(__thiscall)(void*, player_t*, c_usercmd*, player_move_helper*, void*);
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*, void*);
 		return (*(original_fn**)this)[20](this, player, cmd, helper, data);
 	}
 
 	void finish_move(player_t* player, c_usercmd* cmd, void* data) {
-		using original_fn = void(__thiscall)(void*, player_t*, c_usercmd*, void*);
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, void*);
 		return (*(original_fn**)this)[21](this, player, cmd, data);
 	}
 };
