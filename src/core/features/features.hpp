@@ -3,6 +3,10 @@
 #include "../helpers/misc_helpers.hpp"
 #include "../menu/variables.hpp"
 
+namespace aim {
+	void run_aimbot(c_usercmd* cmd);
+}
+
 namespace visuals {
 	void playeresp();
 	void grenade_projectile_esp();

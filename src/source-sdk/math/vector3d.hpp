@@ -2,6 +2,7 @@
 #pragma warning( disable : 26451 )
 #include <limits>
 #include <algorithm>
+#include <numbers>
 
 inline float bits_to_float(std::uint32_t i) {
 	union convertor_t { float f; unsigned long ul;
@@ -41,6 +42,7 @@ public:
 	vec3_t& operator-=(const vec3_t& v) {
 		x -= v.x; y -= v.y; z -= v.z; return *this;
 	}
+	// Basically https://github.com/cazzwastaken/based/blob/2c7c8f3035313ab5db2f64646a95b1e75925a259/src/valve/cvector.h#L29
 	vec3_t& operator*=(float v) {
 		x *= v; y *= v; z *= v; return *this;
 	}
@@ -94,6 +96,14 @@ public:
 		cross_p.x = (v1.y * v2.z) - (v1.z * v2.y); //i
 		cross_p.y = -((v1.x * v2.z) - (v1.z * v2.x)); //j
 		cross_p.z = (v1.x * v2.y) - (v1.y * v2.x); //k
+	}
+
+	inline vec3_t to_angle() const noexcept {
+		return {
+			std::atan2(-z, std::hypot(x, y)) * (180.0f / std::numbers::pi_v<float>),
+			std::atan2(y, x) * (180.0f / std::numbers::pi_v<float>),
+			0.0f
+		};
 	}
 
 	vec3_t cross(const vec3_t & other) const {
