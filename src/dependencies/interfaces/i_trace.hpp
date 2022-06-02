@@ -223,6 +223,8 @@ public:
 
 class trace_filter : public i_trace_filter {
 public:
+	trace_filter(player_t* entity) noexcept : skip(entity) { }
+	
 	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
 		return (pEntityHandle != skip);
 	}
@@ -330,5 +332,5 @@ public:
 	virtual int get_point_contents_collideable(collideable_t* collide, const vec3_t& pos) = 0;
 	virtual void clip_ray_to_entity(const ray_t& ray, unsigned int mask, player_t* ent, trace_t* trace) = 0;
 	virtual void clip_ray_to_collideable(const ray_t& ray, unsigned int mask, collideable_t* collide, trace_t* trace) = 0;
-	virtual void trace_ray(const ray_t& ray, unsigned int mask, i_trace_filter* filter, trace_t* trace) = 0;
+	virtual void trace_ray(const ray_t& ray, unsigned int mask, trace_filter* filter, trace_t* trace) = 0;
 };

@@ -49,8 +49,21 @@ void menu::render() {
 	const int part1_base_item_y = part1_y + container_padding;
 
 	switch (current_tab) {
-	case 0: {	// Aim
-			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
+		case 0: {	// Aim
+			const int part1_items_num = 4;
+			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Interface", false); {
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable aimbot", variables::aim::aimbot);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 100.f);
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
+			}
+
 			break;
 		}
 		case 1:	{	// Visuals
