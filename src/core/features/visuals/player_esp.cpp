@@ -121,11 +121,13 @@ void visuals::playeresp() {
 					item_num++;
 				}
 
-				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
-				char* ch_weapon_name = pCSPlayer->active_weapon()->get_weapon_data()->weapon_name_alt;
-				std::string s_weapon_name(ch_weapon_name);
-				if (strstr(ch_weapon_name, "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
+				auto current_weapon = pCSPlayer->active_weapon();
+				if (!current_weapon) continue;
+
+				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name_alt;
 				
+				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
+				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
 				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer);
 			} else if (pCSPlayer->team() != csgo::local_player->team()) {
 				if (pCSPlayer->armor() > 0) {
@@ -151,7 +153,6 @@ void visuals::playeresp() {
 					item_num++;
 				}
 
-				
 				auto current_weapon = pCSPlayer->active_weapon();
 				if (!current_weapon) continue;
 
