@@ -3,6 +3,7 @@
 #include <limits>
 #include <algorithm>
 #include <numbers>
+#include <cmath>
 
 inline float bits_to_float(std::uint32_t i) {
 	union convertor_t { float f; unsigned long ul;

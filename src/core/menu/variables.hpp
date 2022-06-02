@@ -4,8 +4,8 @@ namespace variables {
 	
 	namespace aim {
 		inline bool aimbot = false;
-		inline float aimbot_fov = 0.f;
-		inline float aimbot_smoothing = 2.f;
+		inline float aimbot_fov = 20.f;
+		inline float aimbot_smoothing = 0.5f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool aimbot_noscope = true;
 	}

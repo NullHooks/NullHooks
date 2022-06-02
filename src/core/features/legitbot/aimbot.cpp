@@ -40,7 +40,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 			|| cur_player->team() == csgo::local_player->team()) continue;
 
 		matrix_t bones[128];
-		if (!cur_player->setup_bones(bones, 128, 256, interfaces::globals->cur_time)) continue;
+		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
 
 		vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 		switch (weapon_type) {
@@ -58,10 +58,10 @@ void aim::run_aimbot(c_usercmd* cmd) {
 
 		trace_filter filter(csgo::local_player);
 
-		trace_t* trace;
-		interfaces::trace_ray->trace_ray(ray, MASK_SHOT, &filter, trace);
+		trace_t trace;
+		interfaces::trace_ray->trace_ray(ray, MASK_SHOT, &filter, &trace);
 
-		if (!trace->entity || trace->flFraction < 0.97) return;
+		if (!trace.entity || trace.flFraction < 0.97f) return;
 
 		vec3_t enemy_angle{ (cur_player_head - local_eye_pos).to_angle() - (cmd->viewangles + local_aim_punch) };
 
@@ -72,5 +72,5 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		}
 	}
 
-	cmd->viewangles += best_angle * variables::aim::aimbot_smoothing;
+	cmd->viewangles = cmd->viewangles + best_angle * variables::aim::aimbot_smoothing;
 }

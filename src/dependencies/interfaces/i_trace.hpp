@@ -192,6 +192,7 @@ struct trace_t {
 	csurface_t surface;
 	int hitGroup;
 	short physicsBone;
+	std::uint16_t worldSurfaceIndex;	// Thx cazz
 	player_t* entity;
 	int hitbox;
 
@@ -223,6 +224,7 @@ public:
 
 class trace_filter : public i_trace_filter {
 public:
+	trace_filter() = default;
 	trace_filter(player_t* entity) noexcept : skip(entity) { }
 	
 	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
@@ -233,7 +235,7 @@ public:
 		return TRACE_EVERYTHING;
 	}
 
-	void* skip;
+	const void* skip;
 };
 
 class trace_filter_one_entity : public i_trace_filter {
