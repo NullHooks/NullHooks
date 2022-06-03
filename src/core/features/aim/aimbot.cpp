@@ -12,6 +12,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	switch (weapon_type) {										// Only aimbot on weapons that shoot
 		case WEAPONTYPE_MACHINEGUN:
 		case WEAPONTYPE_RIFLE:
+		case WEAPONTYPE_SUBMACHINEGUN:
 		case WEAPONTYPE_SHOTGUN:
 		case WEAPONTYPE_SNIPER_RIFLE:
 		case WEAPONTYPE_PISTOL: {
@@ -26,7 +27,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		default: return;
 	}
 
-	// We reached here without return so we are good
+	// (We reached here without return so we are good to use aimbot)
 
 	vec3_t best_angle{};
 	float best_fov{ variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
@@ -34,8 +35,8 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	for (int n = 1; n <= interfaces::globals->max_clients; n++) {
 		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
 		if (!cur_player
+			|| !cur_player->is_alive()
 			|| cur_player->dormant()
-			|| cur_player->is_alive()
 			|| cur_player->has_gun_game_immunity()
 			|| cur_player->team() == csgo::local_player->team()) continue;
 
@@ -50,27 +51,21 @@ void aim::run_aimbot(c_usercmd* cmd) {
 				local_aim_punch = csgo::local_player->aim_punch_angle();
 		}
 
-		vec3_t local_eye_pos = csgo::local_player->get_eye_pos();
+		auto local_eye_pos = csgo::local_player->get_eye_pos();				// Get eye pos from origin player_t
+		
+		// Try to trace ray to taget player (check visible)
 		vec3_t cur_player_head = bones[8].get_origin();
-
-		ray_t ray;
-		ray.initialize(local_eye_pos, cur_player_head);	// We need to initialize the ray like this
-
-		trace_filter filter(csgo::local_player);
-
-		trace_t trace;
-		interfaces::trace_ray->trace_ray(ray, MASK_SHOT, &filter, &trace);
-
-		if (!trace.entity || trace.flFraction < 0.97f) return;
+		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;	// Should be continue?????
 
 		vec3_t enemy_angle{ (cur_player_head - local_eye_pos).to_angle() - (cmd->viewangles + local_aim_punch) };
 
+		// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
 		const float fov = std::hypot(enemy_angle.x, enemy_angle.y);
-		if (fov < best_fov) {	// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
+		if (fov < best_fov) {
 			best_fov = fov;
 			best_angle = enemy_angle;
 		}
 	}
 
-	cmd->viewangles = cmd->viewangles + best_angle * variables::aim::aimbot_smoothing;
+	cmd->viewangles += best_angle * (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing
 }
