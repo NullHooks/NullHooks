@@ -1,33 +1,41 @@
 #include "../features.hpp"
 
-void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(cmd->buttons & cmd_buttons::in_attack)) return;		// User not attacking
-	if (!variables::aim::aimbot) return;
-	if (csgo::local_player->is_defusing()) return;
+// Checks if the current weapon can shoot and all that
+bool aimbot_weapon_check() {
+	if (csgo::local_player->is_defusing()) return false;
 
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
-	if (!active_weapon) return;
+	if (!active_weapon) return false;
 
 	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
 	switch (weapon_type) {										// Only aimbot on weapons that shoot
-		case WEAPONTYPE_MACHINEGUN:
-		case WEAPONTYPE_RIFLE:
-		case WEAPONTYPE_SUBMACHINEGUN:
-		case WEAPONTYPE_SHOTGUN:
-		case WEAPONTYPE_SNIPER_RIFLE:
-		case WEAPONTYPE_PISTOL: {
-			if (!active_weapon->clip1_count()) return;			// No ammo so don't aimbot
+	case WEAPONTYPE_MACHINEGUN:
+	case WEAPONTYPE_RIFLE:
+	case WEAPONTYPE_SUBMACHINEGUN:
+	case WEAPONTYPE_SHOTGUN:
+	case WEAPONTYPE_SNIPER_RIFLE:
+	case WEAPONTYPE_PISTOL: {
+		if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
 
-			if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
-				&& csgo::local_player->is_scoped()
-				&& !variables::aim::aimbot_noscope) return;		// We are not scoped and have the noscope option disabled
+		if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
+			&& csgo::local_player->is_scoped()
+			&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
 
-			break;
-		}
-		default: return;
+		break;
+	}
+	default: return false;
 	}
 
 	// (We reached here without return so we are good to use aimbot)
+	return true;
+}
+
+void aim::run_aimbot(c_usercmd* cmd) {
+	if (!(cmd->buttons & cmd_buttons::in_attack)) return;		// User not attacking
+	if (!variables::aim::aimbot) return;
+	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
+	if (!csgo::local_player) return;
+	if (!aimbot_weapon_check()) return;
 
 	vec3_t best_angle{};
 	float best_fov{ variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
@@ -42,6 +50,11 @@ void aim::run_aimbot(c_usercmd* cmd) {
 
 		matrix_t bones[128];
 		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
+
+		// We need to get weapon_type for aim_punch anyway so
+		weapon_t* active_weapon = csgo::local_player->active_weapon();
+		if (!active_weapon) return;
+		const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
 
 		vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 		switch (weapon_type) {
@@ -68,4 +81,22 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	}
 
 	cmd->viewangles += best_angle * (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing
+}
+
+// https://www.unknowncheats.me/forum/counterstrike-global-offensive/129068-draw-aimbot-fov.html
+// Needs fix
+void aim::draw_fov() {
+	if (!variables::aim::draw_fov) return;
+	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
+	if (!csgo::local_player) return;
+	if (!aimbot_weapon_check()) return;
+	
+	// Screen width and height
+	int sw, sh;
+	interfaces::engine->get_screen_size(sw, sh);
+	const int x_mid = sw / 2, y_mid = sh / 2;
+
+	float rad = tanf((DEG2RAD(variables::aim::aimbot_fov)) / 6) / tanf(97)*x_mid;
+	
+	render::draw_circle(x_mid, y_mid, rad, 255, color::white());
 }

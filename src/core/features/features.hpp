@@ -5,6 +5,7 @@
 
 namespace aim {
 	void run_aimbot(c_usercmd* cmd);
+	void draw_fov();
 }
 
 namespace visuals {

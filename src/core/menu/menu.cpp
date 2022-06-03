@@ -59,7 +59,9 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 100.f);
+					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
+				/*gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Draw fov", variables::aim::draw_fov);*/
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
