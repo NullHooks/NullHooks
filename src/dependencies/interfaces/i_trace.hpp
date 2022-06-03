@@ -168,7 +168,7 @@ private:
 struct csurface_t {
 	const char* name;
 	short surfaceProps;
-	unsigned short flags;
+	std::uint16_t flags;
 };
 
 struct cplane_t {
@@ -185,7 +185,7 @@ struct trace_t {
 	cplane_t plane;
 	float flFraction;
 	int contents;
-	unsigned short dispFlags;
+	std::uint16_t dispFlags;
 	bool allsolid;
 	bool startSolid;
 	float fractionLeftSolid;
@@ -196,6 +196,7 @@ struct trace_t {
 	player_t* entity;
 	int hitbox;
 
+	/*
 	bool did_hit() const {
 		return flFraction < 1.f;
 	}
@@ -207,6 +208,7 @@ struct trace_t {
 	bool did_hit_non_world_entity() const {
 		return entity != NULL && !did_hit_world();
 	}
+	*/
 };
 
 enum TraceType_t {
@@ -224,9 +226,6 @@ public:
 
 class trace_filter : public i_trace_filter {
 public:
-	trace_filter() = default;
-	trace_filter(player_t* entity) noexcept : skip(entity) { }
-	
 	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
 		return (pEntityHandle != skip);
 	}
@@ -334,5 +333,5 @@ public:
 	virtual int get_point_contents_collideable(collideable_t* collide, const vec3_t& pos) = 0;
 	virtual void clip_ray_to_entity(const ray_t& ray, unsigned int mask, player_t* ent, trace_t* trace) = 0;
 	virtual void clip_ray_to_collideable(const ray_t& ray, unsigned int mask, collideable_t* collide, trace_t* trace) = 0;
-	virtual void trace_ray(const ray_t& ray, unsigned int mask, trace_filter* filter, trace_t* trace) = 0;
+	virtual void trace_ray(const ray_t& ray, unsigned int mask, i_trace_filter* filter, trace_t* trace) = 0;
 };
