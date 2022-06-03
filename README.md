@@ -140,7 +140,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
-- [ ] Add aim stuff
+- [ ] Add aim stuff ([`experimental-aim`](https://github.com/r4v10l1/NullHooks/tree/experimental-aim))
     - [ ] Triggerbot
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
