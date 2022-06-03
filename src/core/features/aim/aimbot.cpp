@@ -18,7 +18,7 @@ bool aimbot_weapon_check() {
 		if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
 
 		if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
-			&& csgo::local_player->is_scoped()
+			&& !csgo::local_player->is_scoped()
 			&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
 
 		break;
@@ -64,13 +64,14 @@ void aim::run_aimbot(c_usercmd* cmd) {
 				local_aim_punch = csgo::local_player->aim_punch_angle();
 		}
 
-		auto local_eye_pos = csgo::local_player->get_eye_pos();				// Get eye pos from origin player_t
+		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 		
 		// Try to trace ray to taget player (check visible)
 		vec3_t cur_player_head = bones[8].get_origin();
-		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;	// Should be continue?????
+		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
 
-		vec3_t enemy_angle{ (cur_player_head - local_eye_pos).to_angle() - (cmd->viewangles + local_aim_punch) };
+		//static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->float_value;	// Does not work :(
+		vec3_t enemy_angle{ ((cur_player_head - local_eye_pos).to_angle() - cmd->viewangles) - local_aim_punch * 2.f };
 
 		// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
 		const float fov = std::hypot(enemy_angle.x, enemy_angle.y);

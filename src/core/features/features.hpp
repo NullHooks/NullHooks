@@ -30,7 +30,7 @@ namespace visuals {
 		void bomb(entity_t* bomb_ent);
 		void dropped_bomb(entity_t* bomb_ent);
 		void weapon_name(entity_t* entity, const char* text, int y_offset);
-		void weapon_icon(entity_t* entity, int class_id);
+		//void weapon_icon(entity_t* entity, int class_id);
 	};
 
 	namespace crosshair {
