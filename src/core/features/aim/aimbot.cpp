@@ -45,8 +45,8 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		if (!cur_player
 			|| !cur_player->is_alive()
 			|| cur_player->dormant()
-			|| cur_player->has_gun_game_immunity()
-			|| cur_player->team() == csgo::local_player->team()) continue;
+			|| cur_player->has_gun_game_immunity()) continue;
+		if (cur_player->team() == csgo::local_player->team() && !variables::aim::target_friends) continue;
 
 		matrix_t bones[128];
 		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
