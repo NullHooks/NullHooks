@@ -153,6 +153,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Add popup system that renders after the menu so other elements don't render over the window
     - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
 - [ ] Add chicken chams <!-- Rainbow? -->
+- [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
