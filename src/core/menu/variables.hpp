@@ -59,41 +59,6 @@ namespace variables {
 		inline float custom_vmfov_slider = 1.f;
 	}
 
-	// Colors
-	namespace colors {
-		// Esp and glow
-		inline color friendly_color = color(0, 72, 255, 255);
-		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
-		inline color friendly_color_softer = color(90, 180, 255, 255);
-		inline color enemy_color = color::red(255);
-		inline color enemy_color_soft = color(190, 25, 25, 255);
-		inline color enemy_color_softer = color(255, 75, 75, 255);
-
-		// Chams
-		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
-		inline color chams_vis_enemy_c = color(230, 20, 70);
-		inline color chams_inv_friend_c = color(0, 75, 255);
-		inline color chams_vis_friend_c = color(0, 150, 255);
-
-		inline color chams_sleeve_c = color(200, 0, 200, 255);
-		inline bool chams_sleeve_c_tog = false;
-		inline color chams_arms_c = color(255, 0, 255, 255);
-		inline bool chams_arms_c_tog = false;
-		inline color chams_weapon_c = color(255, 150, 255, 255);
-		inline bool chams_weapon_c_tog = false;
-	};
-
-	// Misc
-	inline bool bhop_bool = true;
-	inline bool chickenpride_bool = false;
-	inline bool draw_watermark = true;
-	inline bool draw_stats = true;
-	
-	namespace spectators {
-		inline bool spectator_list_bool = true;
-		inline int x = 10, y = 560;
-		inline int w = 100, h = 10;
-	};
 	namespace misc {
 		inline bool bhop = true;
 		inline bool draw_watermark = true;
@@ -131,11 +96,11 @@ namespace variables {
 
 		inline bool rainbow_crosshair = false;
 	}
-	
+
 	namespace colors {
 		// Esp and glow
 		inline color friendly_color = color(0, 72, 255, 255);
-		inline color friendly_color_soft = color(0, 150, 255, 255);
+		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
 		inline color friendly_color_softer = color(90, 180, 255, 255);
 		inline color enemy_color = color::red(255);
 		inline color enemy_color_soft = color(190, 25, 25, 255);
@@ -148,8 +113,11 @@ namespace variables {
 		inline color chams_vis_friend_c = color(0, 150, 255);
 
 		inline color chams_sleeve_c = color(200, 0, 200, 255);
+		inline bool chams_sleeve_c_tog = false;
 		inline color chams_arms_c = color(255, 0, 255, 255);
+		inline bool chams_arms_c_tog = false;
 		inline color chams_weapon_c = color(255, 150, 255, 255);
-	}
+		inline bool chams_weapon_c_tog = false;
+	};
 
 }
