@@ -50,7 +50,7 @@ void menu::render() {
 
 	switch (current_tab) {
 		case 0: {	// Aim
-			const int part1_items_num = 5;
+			const int part1_items_num = 6;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Interface", false); {
@@ -60,11 +60,13 @@ void menu::render() {
 					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
-				gui::slider(item_left_pos, part1_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
 				/*gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw fov", variables::aim::draw_fov);*/
-				gui::slider(item_left_pos, part1_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
