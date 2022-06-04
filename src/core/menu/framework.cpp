@@ -105,10 +105,8 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + w / 2, y + h / 2 - 6, font, string, false, color::white());
 }
 
-void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
-	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, int click_area_id) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int w = 10, h = 10;
 
