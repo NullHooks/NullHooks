@@ -168,7 +168,7 @@ private:
 struct csurface_t {
 	const char* name;
 	short surfaceProps;
-	unsigned short flags;
+	std::uint16_t flags;
 };
 
 struct cplane_t {
@@ -185,16 +185,18 @@ struct trace_t {
 	cplane_t plane;
 	float flFraction;
 	int contents;
-	unsigned short dispFlags;
+	std::uint16_t dispFlags;
 	bool allsolid;
 	bool startSolid;
 	float fractionLeftSolid;
 	csurface_t surface;
 	int hitGroup;
 	short physicsBone;
+	std::uint16_t worldSurfaceIndex;	// Thx cazz
 	player_t* entity;
 	int hitbox;
 
+	/*
 	bool did_hit() const {
 		return flFraction < 1.f;
 	}
@@ -206,6 +208,7 @@ struct trace_t {
 	bool did_hit_non_world_entity() const {
 		return entity != NULL && !did_hit_world();
 	}
+	*/
 };
 
 enum TraceType_t {
@@ -231,7 +234,7 @@ public:
 		return TRACE_EVERYTHING;
 	}
 
-	void* skip;
+	const void* skip;
 };
 
 class trace_filter_one_entity : public i_trace_filter {

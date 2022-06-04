@@ -25,6 +25,14 @@ As I said I made this project to learn about game hacking and cpp in general, so
 See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
 ## Features
+### Aim
+- Aimbot
+    - Silent
+- Aimbot fov
+- Aimbot smoothness
+- Only if scoped
+- Aimpunch only on rifles (Looks more legit)
+
 ### Visuals
 #### Player ESP
 - Enable/disable team ESP
@@ -70,6 +78,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Spectator list
 - Fov changer
 - Stats watermark (*username, time, fps, speed...*)
+- Hide cheat on screenshots
 
 ## Installing
 ### Compiling from source (Recommended)
@@ -129,24 +138,32 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add material selector to chams
 - [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
     - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
+- [X] Fix chams on custom playermodels
+- [X] Fix cursor position being relative to screen instead of game window
 </details>
 
+- [X] Add aim stuff
+    - [ ] Triggerbot
+    - [X] Aimbot
+        - [X] Silent
+        - [ ] Snappy
+    - [ ] Aimbot fov circle (or square)
+- [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add color picker ([example](screenshots/color-picker-edit.png))
     - [X] Add popup system that renders after the menu so other elements don't render over the window
     - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
-- [ ] Fix chams on custom playermodels
-- [ ] Make a lot of settings variables static
 - [ ] Add chicken chams <!-- Rainbow? -->
+- [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
-- [ ] Add aim stuff
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Add config and all that (json or whatever)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
+- [ ] Port to linux <!-- <3 -->
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  

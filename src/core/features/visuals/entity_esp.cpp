@@ -15,9 +15,10 @@ struct smoke_t : public entity_t {
 };
 
 void visuals::grenade_projectile_esp() {
-	if (!(variables::nade_esp_bool
-		|| variables::entitytext_bool
-		|| variables::bombtimer_bool)) return;
+	if (!(variables::entity_visuals::nade_esp
+		|| variables::entity_visuals::entitytext
+		|| variables::entity_visuals::bombtimer
+		|| variables::misc_visuals::chickenpride)) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -32,7 +33,7 @@ void visuals::grenade_projectile_esp() {
 		switch (entity->client_class()->class_id) {
 			/* ------------ NADE PROJECTILES ------------ */
 			case cbasecsgrenadeprojectile: {
-				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::entity_visuals::nade_esp)) break;
 				const model_t* model = entity->model();
 				if (!model) return;
 
@@ -49,7 +50,7 @@ void visuals::grenade_projectile_esp() {
 			}
 			case cmolotovprojectile:
 			case cinferno: {
-				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::entity_visuals::nade_esp)) break;
 
 				inferno_t* inferno = reinterpret_cast<inferno_t*>(entity);
 				const auto spawn_time = inferno->get_spawn_time();
@@ -64,7 +65,7 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case csmokegrenadeprojectile: {
-				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::entity_visuals::nade_esp)) break;
 
 				smoke_t* smoke = reinterpret_cast<smoke_t*>(entity);
 				const auto spawn_time = smoke->get_spawn_time();
@@ -79,17 +80,13 @@ void visuals::grenade_projectile_esp() {
 				break;
 			}
 			case cdecoyprojectile: {
-				if (!(math::world_to_screen(origin, w2s) && variables::nade_esp_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::entity_visuals::nade_esp)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color(150, 150, 150, 255));
 				break;
 			}
 			/* ------------ BOMB ------------ */
-			case cplantedc4:
-				entity_info::bomb(entity);
-				break;
-			case cc4:
-				entity_info::dropped_bomb(entity);
-				break;
+			case cplantedc4:				entity_info::bomb(entity);									break;
+			case cc4:						entity_info::dropped_bomb(entity);							break;
 			/* ------------ WEAPONS ------------ */
 			case cak47:						entity_info::weapon_name(entity, "ak47", 0);				break;
 			case cdeagle:					entity_info::weapon_name(entity, "deagle", 0);				break;
@@ -143,11 +140,67 @@ void visuals::grenade_projectile_esp() {
 			case chegrenade:				entity_info::weapon_name(entity, "frag nade", 0);			break;
 			/* ------------ MISC ------------ */
 			case cchicken:
-				if (!(math::world_to_screen(origin, w2s) && variables::chickenpride_bool)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::misc_visuals::chickenpride && variables::entity_visuals::entitytext)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			/* ------------------------------ */
-			default:	break;
+			default: break;
 		}
 	}
+}
+
+void visuals::entity_info::bomb(entity_t* bomb_ent) {
+	if (!(variables::entity_visuals::entitytext || variables::entity_visuals::bombtimer) || !bomb_ent) return;
+
+	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
+	if (!bomb_p) return;
+
+	vec3_t entPosScreen;
+
+	float flblow = bomb_p->m_flC4Blow();
+	float exp_time = flblow - (csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick);
+
+	if (exp_time > 0 && !bomb_p->m_bBombDefused()) {
+		if (variables::entity_visuals::bombtimer) {
+			const int bar_w = 600;
+			int screen_width, screen_height;
+			interfaces::engine->get_screen_size(screen_width, screen_height);
+			// Bar
+			render::draw_rect(screen_width / 2 - bar_w / 2, 85, bar_w, 4, color::black(255));
+			render::draw_filled_rect(screen_width / 2 - bar_w / 2 + 1, 84, (40.f - exp_time) / 40.f * bar_w, 4, color(255, 140, 0, 255));	// Assume bomb is always 40s
+			// Timer
+			custom_helpers::draw_bomb_text(exp_time);
+		}
+
+		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entitytext)
+			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
+	}
+}
+
+void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
+	if (!variables::entity_visuals::entitytext || !bomb_ent) return;
+
+	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
+	if (!bomb_p || bomb_p->dormant() || bomb_p->owner_handle() > -1) return;
+
+	vec3_t origin = bomb_p->origin();
+	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;		// Check if the position is [0,0,0] (To avoid bug)
+
+	vec3_t entPosScreen;
+	if (math::world_to_screen(origin, entPosScreen))
+		render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Dropped bomb", true, color(255, 140, 0, 255));
+}
+
+void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y_ofset) {
+	if (!variables::entity_visuals::entitytext || !entity) return;
+
+	player_t* entity_p = reinterpret_cast<player_t*>(entity);
+	if (!entity_p || entity_p->dormant() || entity_p->owner_handle() > -1) return;
+
+	vec3_t origin = entity_p->origin();
+	if (origin.x == 0.0f && origin.y == 0.0f && origin.z == 0.0f) return;		// Check if the position is [0,0,0] (To avoid bug)
+
+	vec3_t entPosScreen;
+	if (math::world_to_screen(origin, entPosScreen))
+		render::draw_text_string(entPosScreen.x, entPosScreen.y + y_ofset, render::fonts::watermark_font, text, true, color::white(255));
 }

@@ -3,22 +3,23 @@
 void visuals::crosshair::recoil_crosshair() {
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
-	if (!variables::recoil_crosshair_bool) return;
+	if (!variables::misc_visuals::recoil_crosshair) return;
 	if (csgo::local_player->is_scoped()) return;
 
-	std::pair<int, int> screen_size;
-
-	interfaces::surface->get_screen_size(screen_size.first, screen_size.second);
-	int x = screen_size.first / 2;
-	int y = screen_size.second / 2;
+	int screen_w, screen_h;
+	interfaces::surface->get_screen_size(screen_w, screen_h);
+	int x = screen_w / 2;
+	int y = screen_h / 2;
 
 	vec3_t punch = csgo::local_player->aim_punch_angle();
 
 	// Subtract the punch from the position
-	x -= (screen_size.first / variables::custom_fov_slider) * punch.y;
-	y += (screen_size.second / variables::custom_fov_slider) * punch.x;
+	x -= (screen_w / variables::misc_visuals::custom_fov_slider) * punch.y;
+	y += (screen_h / variables::misc_visuals::custom_fov_slider) * punch.x;
 
-	x = (x == screen_size.first / 2 - 1 || x == screen_size.first / 2 + 1) ? screen_size.first / 2 : x;
-	y = (y == screen_size.second / 2 - 1 || x == screen_size.second / 2 + 1) ? screen_size.second / 2 : y;
+	// Give a margin of 1px up, down, left and right
+	x = (x == screen_w / 2 - 1 || x == screen_w / 2 + 1) ? screen_w / 2 : x;
+	y = (y == screen_h / 2 - 1 || x == screen_h / 2 + 1) ? screen_h / 2 : y;
+
 	visuals::crosshair::draw_custom_crosshair(x, y, true, color(0, 255, 0, 255));
 }
