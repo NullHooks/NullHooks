@@ -3,6 +3,11 @@
 #include "../helpers/misc_helpers.hpp"
 #include "../menu/variables.hpp"
 
+namespace aim {
+	void run_aimbot(c_usercmd* cmd);
+	void draw_fov();
+}
+
 namespace visuals {
 	void playeresp();
 	void grenade_projectile_esp();
@@ -25,7 +30,7 @@ namespace visuals {
 		void bomb(entity_t* bomb_ent);
 		void dropped_bomb(entity_t* bomb_ent);
 		void weapon_name(entity_t* entity, const char* text, int y_offset);
-		void weapon_icon(entity_t* entity, int class_id);
+		//void weapon_icon(entity_t* entity, int class_id);
 	};
 
 	namespace crosshair {

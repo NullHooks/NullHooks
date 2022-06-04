@@ -85,12 +85,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\features\legitbot\triggerbot.cpp" />
+    <ClCompile Include="core\features\aim\aimbot.cpp" />
+    <ClCompile Include="core\features\aim\triggerbot.cpp" />
     <ClCompile Include="core\features\misc\commands.cpp" />
     <ClCompile Include="core\features\misc\engine_prediction.cpp" />
     <ClCompile Include="core\features\misc\bhop.cpp" />
     <ClCompile Include="core\features\visuals\chams.cpp" />
-    <ClCompile Include="core\features\visuals\entity_info.cpp" />
     <ClCompile Include="core\features\visuals\custom_crosshair.cpp" />
     <ClCompile Include="core\features\visuals\glow.cpp" />
     <ClCompile Include="core\features\visuals\entity_esp.cpp" />

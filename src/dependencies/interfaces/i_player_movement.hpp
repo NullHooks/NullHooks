@@ -65,7 +65,7 @@ public:
 class virtual_game_movement {
 
 public:
-	virtual				~virtual_game_movement( void ) {}
+	virtual					~virtual_game_movement( void ) {}
 	virtual void			process_movement( player_t *player, player_move_data *move ) = 0;
 	virtual void			reset( void ) = 0;
 	virtual void			start_track_prediction_errors( player_t *player ) = 0;
@@ -88,22 +88,22 @@ public:
 class player_prediction {
 public:
 	bool in_prediction() {
-		typedef bool( __thiscall *o_in_prediction )( void * );
-		return utilities::call_virtual<o_in_prediction>( this, 14 )( this );
+		using original_fn = bool(__thiscall*)(void*);
+		return (*(original_fn**)this)[14](this);
 	}
 
-	void run_command( player_t *player, c_usercmd *cmd, player_move_helper *helper ) {
-		typedef void( __thiscall *o_run_command )( void *, player_t *, c_usercmd *, player_move_helper * );
-		return utilities::call_virtual<o_run_command>( this, 19 )( this, player, cmd, helper );
+	void run_command(player_t* player, c_usercmd* cmd, player_move_helper* helper) {
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*);
+		return (*(original_fn**)this)[19](this, player, cmd, helper);
 	}
 
-	void setup_move( player_t *player, c_usercmd *cmd, player_move_helper *helper, void *data ) {
-		typedef void( __thiscall *o_setup_move )( void *, player_t *, c_usercmd *, player_move_helper *, void * );
-		return utilities::call_virtual<o_setup_move>( this, 20 )( this, player, cmd, helper, data );
+	void setup_move(player_t* player, c_usercmd* cmd, player_move_helper* helper, void* data) {
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*, void*);
+		return (*(original_fn**)this)[20](this, player, cmd, helper, data);
 	}
 
-	void finish_move( player_t *player, c_usercmd *cmd, void *data ) {
-		typedef void( __thiscall *o_finish_move )( void *, player_t *, c_usercmd *, void * );
-		return utilities::call_virtual<o_finish_move>( this, 21 )( this, player, cmd, data );
+	void finish_move(player_t* player, c_usercmd* cmd, void* data) {
+		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, void*);
+		return (*(original_fn**)this)[21](this, player, cmd, data);
 	}
 };

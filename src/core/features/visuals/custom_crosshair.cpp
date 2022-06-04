@@ -2,28 +2,12 @@
 
 void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color cross_color) {
 	const int gap = (int)variables::crosshair::crosshair_gap;
-	//const int width = (int)variables::crosshair::crosshair_w;
 	const int len = (int)variables::crosshair::crosshair_len;
 
 	const int top = y - len - gap;
 	const int bottom = y + len + gap;
 	const int left = x - len - gap;
 	const int right = x + len + gap;
-
-	/*
-	// Draw outline
-	if (outline) {
-		render::draw_rect(x - 1, top - 1, 3, len + 2, color::black(255));
-		render::draw_rect(x - 1, y + gap, 3, len + 2, color::black(255));
-		render::draw_rect(left - 1, y - 1, len + 2, 3, color::black(255));
-		render::draw_rect(x + gap, y - 1, len + 2, 3, color::black(255));
-	}
-	// Draw 1px crosshair
-	render::draw_line(x, top, x, y - gap, cross_color);
-	render::draw_line(x, bottom, x, y + gap, cross_color);
-	render::draw_line(left, y, x - gap, y, cross_color);
-	render::draw_line(right, y, x + gap, y, cross_color);
-	*/
 
 	// Draw outline
 	if (outline) {
@@ -36,7 +20,7 @@ void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color 
 }
 
 void visuals::crosshair::custom_crosshair() {
-	if (!variables::crosshair_bool) {
+	if (!variables::misc_visuals::crosshair) {
 		if (variables::crosshair::only_engine_crosshair && !variables::crosshair::using_cs_crosshair) {
 			variables::crosshair::using_cs_crosshair = true;
 			interfaces::engine->execute_cmd("crosshair 1");

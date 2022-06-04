@@ -48,7 +48,7 @@ bool hooks::initialize() {
 	/* ------------------------------------------------------------------------ */
 
 	// Reset crosshair
-	if (!variables::crosshair_bool) {
+	if (!variables::misc_visuals::crosshair) {
 		interfaces::engine->execute_cmd("crosshair 1");
 		custom_helpers::state_to_console("Crosshair", "Crosshair reset!");
 	}

@@ -398,19 +398,20 @@ public:
 		return *reinterpret_cast<anim_state * *>(this + 0x3914);
 	}
 
-	bool can_see_player_pos(player_t * player, const vec3_t & pos) {
-		trace_t tr;
+	bool can_see_player_pos(player_t* player, const vec3_t& pos) {
+		trace_filter filter;					// trace_filter derived from i_trace_filter
+		filter.skip = this;						// Add the origin player_t to skip filter
+
+		auto start = get_eye_pos();				// Get eye pos from origin player_t
+		auto dir = (pos - start).normalized();	// idk
+
 		ray_t ray;
-		trace_filter filter;
-		filter.skip = this;
-
-		auto start = get_eye_pos();
-		auto dir = (pos - start).normalized();
-
-		ray.initialize(start, pos);
+		ray.initialize(start, pos);				// Initialize ray like this
+		
+		trace_t tr;
 		interfaces::trace_ray->trace_ray(ray, MASK_SHOT | CONTENTS_GRATE, &filter, &tr);
 
-		return tr.entity == player || tr.flFraction > 0.97f;
+		return tr.entity == player || tr.flFraction > 0.97f;	// We found the entity and the fraction is long enough to not collide with shit
 	}
 
 	vec3_t get_bone_position(int bone) {

@@ -16,7 +16,7 @@ bool interfaces::initialize() {
 	localize = get_interface<i_localize, interface_type::index>("localize.dll", "Localize_001");
 	event_manager = get_interface<i_game_event_manager2, interface_type::index>("engine.dll", "GAMEEVENTSMANAGER002");
 	debug_overlay = get_interface<iv_debug_overlay, interface_type::index>("engine.dll", "VDebugOverlay004");
-	inputsystem = get_interface<i_inputsytem, interface_type::index>("inputsystem.dll", "InputSystemVersion001");
+	input_system = get_interface<i_input_system, interface_type::index>("inputsystem.dll", "InputSystemVersion001");
 	trace_ray = get_interface<trace, interface_type::index>("engine.dll", "EngineTraceClient004");
 	game_movement = get_interface<player_game_movement, interface_type::index>("client.dll", "GameMovement001");
 	prediction = get_interface<player_prediction, interface_type::index>("client.dll", "VClientPrediction001");

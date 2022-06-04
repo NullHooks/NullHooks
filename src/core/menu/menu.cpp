@@ -11,10 +11,10 @@ auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 };
 
 void menu::render() {
-	if (!variables::menu::opened) return;
+	if (!variables::ui::menu::opened) return;
 
 	// Menu title and all that
-	do_frame(variables::menu::x, variables::menu::y, variables::menu::w, variables::menu::h,
+	do_frame(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, variables::ui::menu::h,
 		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks");
 
 	const int top_margin = 30;
@@ -25,57 +25,76 @@ void menu::render() {
 
 	/* ------------------ TABS ------------------ */
 	const int tab_number = 4;
-	const int tab_size = variables::menu::w / tab_number;
+	const int tab_size = variables::ui::menu::w / tab_number;
 
-	gui::tab(variables::menu::x + (tab_size * 0), variables::menu::y + top_margin, tab_size, tab_height,
+	gui::tab(variables::ui::menu::x + (tab_size * 0), variables::ui::menu::y + top_margin, tab_size, tab_height,
 		render::fonts::watermark_font, "Aim", menu::current_tab, 0);
-	gui::tab(variables::menu::x + (tab_size * 1), variables::menu::y + top_margin, tab_size, tab_height,
+	gui::tab(variables::ui::menu::x + (tab_size * 1), variables::ui::menu::y + top_margin, tab_size, tab_height,
 		render::fonts::watermark_font, "Visuals", menu::current_tab, 1);
-	gui::tab(variables::menu::x + (tab_size * 2), variables::menu::y + top_margin, tab_size, tab_height,
+	gui::tab(variables::ui::menu::x + (tab_size * 2), variables::ui::menu::y + top_margin, tab_size, tab_height,
 		render::fonts::watermark_font, "Misc", menu::current_tab, 2);
-	gui::tab(variables::menu::x + (tab_size * 3), variables::menu::y + top_margin, tab_size, tab_height,
+	gui::tab(variables::ui::menu::x + (tab_size * 3), variables::ui::menu::y + top_margin, tab_size, tab_height,
 		render::fonts::watermark_font, "Config", menu::current_tab, 3);
 
 	/* ------------------ CONTAINERS ------------------ */
 	const int item_slider_length = 80;
 	const int item_checkbox_length = 10;
-	int container_left_pos = variables::menu::x + container_margin;	// Not const because we can have more than one col
-	int container_width = variables::menu::w - container_margin*2;
+	int container_left_pos = variables::ui::menu::x + container_margin;	// Not const because we can have more than one col
+	int container_width = variables::ui::menu::w - container_margin*2;
 	int item_left_pos = container_left_pos + container_padding;
-	int item_checkbox_pos = variables::menu::x + container_width - container_margin - item_checkbox_length;
-	int item_slider_pos = variables::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
+	int item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+	int item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
 
-	const int part1_y = variables::menu::y + top_margin_with_tabs + container_margin;
+	const int part1_y = variables::ui::menu::y + top_margin_with_tabs + container_margin;
 	const int part1_base_item_y = part1_y + container_padding;
 
 	switch (current_tab) {
-	case 0: {	// Aim
-			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
+		case 0: {	// Aim
+			const int part1_items_num = 6;
+			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Interface", false); {
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable aimbot", variables::aim::aimbot);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
+				/*gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Draw fov", variables::aim::draw_fov);*/
+				gui::slider(item_left_pos, part1_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
+			}
+
 			break;
 		}
 		case 1:	{	// Visuals
 			const int columns = 2;
 			container_width = (container_width / columns) - (container_margin / columns);
-			item_checkbox_pos = variables::menu::x + container_width - container_margin - item_checkbox_length;
+			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 
 			const int part1_items_num = 7;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Player ESP", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable team ESP (global)", variables::showteamesp_bool);
+					render::fonts::watermark_font, "Enable team ESP (global)", variables::player_visuals::showteamesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::boxesp_bool);
+					render::fonts::watermark_font, "Box ESP", variables::player_visuals::boxesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::skeletonesp_bool);
+					render::fonts::watermark_font, "Skeleton ESP", variables::player_visuals::skeletonesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Name ESP", variables::nameesp_bool);
+					render::fonts::watermark_font, "Name ESP", variables::player_visuals::nameesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Player info", variables::playerinfo_bool);
+					render::fonts::watermark_font, "Player info", variables::player_visuals::playerinfo);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
-					render::fonts::watermark_font, "Health ESP", variables::healthesp_bool);
+					render::fonts::watermark_font, "Health ESP", variables::player_visuals::healthesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
-					render::fonts::watermark_font, "Line ESP", variables::lineesp_bool);
+					render::fonts::watermark_font, "Line ESP", variables::player_visuals::lineesp);
 			}
 
 			const int part2_items_num = 3;
@@ -85,11 +104,11 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Glow", false); {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Player glow", variables::playerglow_bool);
+					render::fonts::watermark_font, "Player glow", variables::player_visuals::playerglow);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Entity glow", variables::entityglow_bool);
+					render::fonts::watermark_font, "Entity glow", variables::entity_visuals::entityglow);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Chicken pride", variables::chickenpride_bool);
+					render::fonts::watermark_font, "Chicken pride", variables::misc_visuals::chickenpride);
 			}
 
 			const int part3_items_num = 11;
@@ -99,13 +118,13 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Only visible chams", variables::only_visible_chams_bool);
+					render::fonts::watermark_font, "Only visible chams", variables::chams::only_visible_chams);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Wireframe chams", variables::wireframe_chams_bool);
+					render::fonts::watermark_font, "Wireframe chams", variables::chams::wireframe_chams);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw on top", variables::draw_chams_on_top);
+					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Player chams", variables::player_chams_bool);
+					render::fonts::watermark_font, "Player chams", variables::chams::player_chams);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + 10, 16,			// +10 to get the top right corner
 					render::fonts::watermark_font, "Player chams material", variables::player_chams_mat_id, 0, 16);	// min, max
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
@@ -119,7 +138,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
 					"Sleeve chams", variables::vm_sleeve_chams_bool, variables::colors::chams_sleeve_c, variables::colors::chams_sleeve_c_tog);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + 10, 16,
-					render::fonts::watermark_font, "Sleeve chams material", variables::sleeve_chams_mat_id, 0, 16);
+					render::fonts::watermark_font, "Sleeve chams material", variables::chams::sleeve_chams_mat_id, 0, 16);
 			}
 
 			/* ----- Visuals - Second column ----- */
@@ -138,11 +157,11 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part4_y, container_width, part4_h, render::fonts::watermark_font, "Other ESP", false); {
 				gui::check_box(item_left_pos, part4_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Bomb timer", variables::bombtimer_bool);
+					render::fonts::watermark_font, "Bomb timer", variables::entity_visuals::bombtimer);
 				gui::check_box(item_left_pos, part4_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Nade projectile ESP", variables::nade_esp_bool);
+					render::fonts::watermark_font, "Nade projectile ESP", variables::entity_visuals::nade_esp);
 				gui::check_box(item_left_pos, part4_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Entity info", variables::entitytext_bool);
+					render::fonts::watermark_font, "Entity info", variables::entity_visuals::entitytext);
 			}
 
 			const int part5_items_num = 5;
@@ -152,15 +171,15 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part5_y, container_width, part5_h, render::fonts::watermark_font, "Misc", false); {
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Nade prediction", variables::nade_predict_bool);
+					render::fonts::watermark_font, "Nade prediction", variables::misc_visuals::nade_predict);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "No flash", variables::noflash_bool);
+					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "No sniper scope", variables::noscope_bool);
+					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Custom crosshair", variables::crosshair_bool);
+					render::fonts::watermark_font, "Custom crosshair", variables::misc_visuals::crosshair);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Recoil crosshair", variables::recoil_crosshair_bool);
+					render::fonts::watermark_font, "Recoil crosshair", variables::misc_visuals::recoil_crosshair);
 			}
 			break;
 		}
@@ -170,13 +189,13 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Interface", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Disable cheat on screenshots", variables::clean_screenshots_bool);
+					render::fonts::watermark_font, "Disable cheat on screenshots", variables::misc::clean_screenshots);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Show watermark", variables::draw_watermark);
+					render::fonts::watermark_font, "Show watermark", variables::misc::draw_watermark);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Show stats", variables::draw_stats);
+					render::fonts::watermark_font, "Show stats", variables::misc::draw_stats);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Spectator list", variables::spectators::spectator_list_bool);
+					render::fonts::watermark_font, "Spectator list", variables::ui::spectators::spectator_list);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
@@ -186,15 +205,15 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Misc", false); {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Bhop", variables::bhop_bool);
+					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
 				gui::slider(item_left_pos,    part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom FOV", variables::custom_fov_slider, 80.f, 130.f);
+					render::fonts::watermark_font, "Custom FOV", variables::misc_visuals::custom_fov_slider, 80.f, 130.f);
 				gui::slider(item_left_pos,    part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::custom_vmfov_slider, 0.5f, 2.f);
+					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
 			// Buttons (start from bottom)
-			const int buttons_con_margin_pos = variables::menu::y + variables::menu::h - container_margin;	// Bottom left corner of container
+			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container
 			const int button_items_num = 1;
 			const int button_items_h = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height
@@ -212,11 +231,11 @@ void menu::render() {
 		}
 	}
 	// TODO: If the 2 dragable zones are in top of each other, they both get dragged
-	spectator_framework::spec_list_movement(variables::spectators::x, variables::spectators::y, variables::spectators::w, variables::spectators::h);
-	gui::menu_movement(variables::menu::x, variables::menu::y, variables::menu::w, 30);
+	spectator_framework::spec_list_movement(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h);
+	gui::menu_movement(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, 30);
 }
 
 void menu::toggle() {
 	if (GetAsyncKeyState(VK_INSERT) & 1)
-		variables::menu::opened = !variables::menu::opened;
+		variables::ui::menu::opened = !variables::ui::menu::opened;
 }

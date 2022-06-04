@@ -1,11 +1,16 @@
 #include "framework.hpp"
 
-POINT cursor;
-POINT cursor_corrected;
+typedef struct CursorCoords {
+	int x;
+	int y;
+} cursor_coords;
+
+cursor_coords cursor;
+cursor_coords cursor_corrected;
 
 // Returns true if pressed
 bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int w = 30, h = 10;	// Button size
 	const color c_default = color(150, 22, 22, 255);
@@ -32,7 +37,7 @@ void gui::button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned
 }
 
 void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int button_margins = 2;									// After first button and before second
 	const int bw = 11, bh = 10;										// Increase and decrease buttons
@@ -82,7 +87,7 @@ void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 }
 
 void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
 		tab = count;
@@ -100,6 +105,8 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	render::draw_text_string(x - render::get_text_size(font, string).x / 2 + w / 2, y + h / 2 - 6, font, string, false, color::white());
 }
 
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, int click_area_id) {
 	GetCursorPos(&cursor);
 
@@ -163,7 +170,7 @@ float map_slider_constrain(float n, float start1, float stop1, float start2, flo
 };
 
 void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	const int slider_y = y + 2;
 	const int slider_width = 8;
 	
@@ -181,8 +188,8 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 }
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
-	GetCursorPos(&cursor);
-	
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
 	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
 		should_drag = true;
 
@@ -205,7 +212,7 @@ void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::i
 }
 
 void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
 		should_drag = true;
