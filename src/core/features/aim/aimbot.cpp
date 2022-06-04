@@ -9,21 +9,21 @@ bool aimbot_weapon_check() {
 
 	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
 	switch (weapon_type) {										// Only aimbot on weapons that shoot
-	case WEAPONTYPE_MACHINEGUN:
-	case WEAPONTYPE_RIFLE:
-	case WEAPONTYPE_SUBMACHINEGUN:
-	case WEAPONTYPE_SHOTGUN:
-	case WEAPONTYPE_SNIPER_RIFLE:
-	case WEAPONTYPE_PISTOL: {
-		if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
+		case WEAPONTYPE_MACHINEGUN:
+		case WEAPONTYPE_RIFLE:
+		case WEAPONTYPE_SUBMACHINEGUN:
+		case WEAPONTYPE_SHOTGUN:
+		case WEAPONTYPE_SNIPER_RIFLE:
+		case WEAPONTYPE_PISTOL: {
+			if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
 
-		if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
-			&& !csgo::local_player->is_scoped()
-			&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
+			if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
+				&& !csgo::local_player->is_scoped()
+				&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
 
-		break;
-	}
-	default: return false;
+			break;
+		}
+		default: return false;
 	}
 
 	// (We reached here without return so we are good to use aimbot)
