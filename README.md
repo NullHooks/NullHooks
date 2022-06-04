@@ -160,6 +160,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add config and all that (json or whatever)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
+- [ ] Port to linux <!-- <3 -->
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
