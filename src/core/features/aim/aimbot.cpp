@@ -57,11 +57,14 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
 
 		vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
-		switch (weapon_type) {
-			case WEAPONTYPE_RIFLE:
-			case WEAPONTYPE_SUBMACHINEGUN:
-			case WEAPONTYPE_MACHINEGUN:
-				local_aim_punch = csgo::local_player->aim_punch_angle();
+		if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
+		else {
+			switch (weapon_type) {
+				case WEAPONTYPE_RIFLE:
+				case WEAPONTYPE_SUBMACHINEGUN:
+				case WEAPONTYPE_MACHINEGUN:
+					local_aim_punch = csgo::local_player->aim_punch_angle();
+			}
 		}
 
 		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
