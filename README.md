@@ -31,6 +31,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Aimbot fov
 - Aimbot smoothness
 - Only if scoped
+- Aimpunch only on rifles (Looks more legit)
 
 ### Visuals
 #### Player ESP
@@ -138,6 +139,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Support wchar strings in renderer (Russian characers for example, see comment in renderer) (See [this](http://cpp.sh/8dubg))
     - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 - [X] Fix chams on custom playermodels
+- [X] Fix cursor position being relative to screen instead of game window
 </details>
 
 - [X] Add aim stuff
