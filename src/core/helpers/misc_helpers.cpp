@@ -19,36 +19,6 @@ void custom_helpers::state_to_console_color(const char* tag, const char* text) {
 	interfaces::console->console_color_printf(color::green(255), "[NullHooks] [%s] %s\n", tag, text);
 }
 
-/*
-color custom_helpers::hsv2color(float H, float S, float V) {
-    color col;
-    float s = S / 100;
-    float v = V / 100;
-    float C = s * v;
-    float X = C * (1 - abs(fmod(H / 60.0, 2) - 1));
-    float m = v - C;
-    float r, g, b;
-    if (H >= 0 && H < 60) {
-        r = C, g = X, b = 0;
-    } else if (H >= 60 && H < 120) {
-        r = X, g = C, b = 0;
-    } else if (H >= 120 && H < 180) {
-        r = 0, g = C, b = X;
-    } else if (H >= 180 && H < 240) {
-        r = 0, g = X, b = C;
-    } else if (H >= 240 && H < 300) {
-        r = X, g = 0, b = C;
-    } else {
-        r = C, g = 0, b = X;
-    }
-    col.r = (r + m) * 255;
-    col.g = (g + m) * 255;
-    col.b = (b + m) * 255;
-    col.a = 255;
-    return col;
-}
-*/
-
 /* hsv2color(int_hsv): Returns color from hsv. Hue in 360 format. */
 color custom_helpers::hsv2color(int_hsv hsv) {
 	float fC = hsv.v * hsv.s;							// Chroma
