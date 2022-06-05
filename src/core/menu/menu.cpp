@@ -73,6 +73,8 @@ void menu::render() {
 			break;
 		}
 		case 1:	{	// Visuals
+			// TODO: Render checkbox on the right side before rendering the color picker checkboxes
+
 			const int columns = 2;
 			container_width = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;

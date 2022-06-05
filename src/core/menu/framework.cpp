@@ -110,27 +110,36 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	const int w = 10, h = 10;
 
+	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		switch (click_area_id) {
 			default:
 			case 0: {	// Only checkbox
-				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
+				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 0x8000))
 					value = !value;		// If in checkbox and clicked
 				break;
 			}
 			case 1: {	// Name and checkbox, not color
 				if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
-					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5)
-					&& GetAsyncKeyState(VK_LBUTTON) & 1)
+					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
+					&& (GetAsyncKeyState(VK_LBUTTON) & 0x8000))
 					value = !value;
 				break;
 			}
 			case 2: {	// All width from name to checkbox
-				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1 )
-					value = !value;		// If in checkbox or text and clicked
+				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1)) {
+					if ((GetAsyncKeyState(VK_LBUTTON) & 1)) {
+						value = !value;		// If in checkbox or text and clicked
+					}
+				}
+
+				// For debugging hitboxes
+				render::draw_filled_rect(x, y, position - x + w, h, color(0, 255, 0, 40));
 				break;
 			}
 		}
+	} else {	// Else is for debugging when in popup
+		printf("In popup.\r");
 	}
 
 	// Checkbox itself
@@ -150,7 +159,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 		toggle_color = !toggle_color;
-	else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
+	else if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && (GetAsyncKeyState(VK_LBUTTON) & 1))
 		toggle_color = false;		// Close popup if user clicks outside
 
 	render::draw_filled_rect(color_x, y, w, h, setting_color);					// Color itself
@@ -158,7 +167,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	// Push to vector to render after menu
 	if (toggle_color)
-		popup_system::active_color_popups.push_back({ color_x, y + h + margin, setting_color, toggle_color });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + h + margin, setting_color, toggle_color });
 }
 
 // Thanks to https://github.com/bobloxmonke
@@ -238,18 +247,20 @@ void popup_system::render_popups() {
 	check_color_popups();
 }
 
+// Checks if the mouse is in an active popup
 bool popup_system::mouse_in_popup(int x, int y) {
-	// Color popups
-	for (const color_popup_info& pinfo : active_color_popups)
-		if ((x > pinfo.x) && (x < pinfo.x + popup_system::win_w) && (y > pinfo.y) && (y < pinfo.y + popup_system::win_h))
+	// For each color popup in the active_color_popups vector
+	for (const color_popup_info& pinfo : active_color_popups) {
+		if ( pinfo.toggle_color && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
 			return true;
+	}
 
 	return false;
 }
 
 // Will check for popups in the active_color_popups vector
 void popup_system::check_color_popups() {
-	// Render each active popup
+	// Render each active popup and pop from vector until there are no popups left
 	while (!active_color_popups.empty()) {
 		color_picker_popup(active_color_popups.back());
 		active_color_popups.pop_back();
