@@ -19,6 +19,7 @@ void custom_helpers::state_to_console_color(const char* tag, const char* text) {
 	interfaces::console->console_color_printf(color::green(255), "[NullHooks] [%s] %s\n", tag, text);
 }
 
+/*
 color custom_helpers::hsv2color(float H, float S, float V) {
     color col;
     float s = S / 100;
@@ -46,12 +47,14 @@ color custom_helpers::hsv2color(float H, float S, float V) {
     col.a = 255;
     return col;
 }
+*/
 
-color custom_helpers::hsv2color_v2(float H, float S, float V) {
-	float fC = V * S; // Chroma
-	float fHPrime = fmod(H / 60.0, 6);
+/* hsv2color(int_hsv): Returns color from hsv. Hue in 360 format. */
+color custom_helpers::hsv2color(int_hsv hsv) {
+	float fC = hsv.v * hsv.s;							// Chroma
+	float fHPrime = fmod(hsv.h / 60.0, 6);
 	float fX = fC * (1 - fabs(fmod(fHPrime, 2) - 1));
-	float fM = V - fC;
+	float fM = hsv.v - fC;
 
 	if (0 <= fHPrime && fHPrime < 1)
 		return color(fC*255, fX*255, 0, 255);
@@ -67,6 +70,63 @@ color custom_helpers::hsv2color_v2(float H, float S, float V) {
 		return color(fC*255, 0, fX*255, 255);
 	else
 		return color(0, 0, 0);
+}
+
+/* hsv2color(float_hsv): Returns color from hsv. Hue in 1.f format. */
+color custom_helpers::hsv2color(float_hsv hsv) {
+	int_hsv converted = {
+		hsv.h * 360.f,		// So its in 1.f format
+		hsv.s,
+		hsv.v
+	};
+
+	return hsv2color(converted);
+}
+
+/*
+ * See: https://gist.github.com/r4v10l1/5f559419bb1f27eb22ea5b9da0343b1b
+ * Returns hsv from color. Hue in 360 format.
+ */
+int_hsv custom_helpers::color2hsv(color col) {
+	int_hsv result;
+
+	float fCMax = max(max(col.r, col.g), col.b);
+	float fCMin = min(min(col.r, col.g), col.b);
+	float fDelta = fCMax - fCMin;
+
+	if (fDelta > 0) {
+		if (fCMax == col.r)
+			result.h = 60 * (fmod(((col.g - col.b) / fDelta), 6));
+		else if (fCMax == col.g)
+			result.h = 60 * (((col.b - col.r) / fDelta) + 2);
+		else if (fCMax == col.b)
+			result.h = 60 * (((col.r - col.g) / fDelta) + 4);
+
+		if (fCMax > 0) result.s = fDelta / fCMax;
+		else result.s = 0;
+
+		result.v = fCMax;
+	} else {
+		result.h = 0;
+		result.s = 0;
+		result.v = fCMax;
+	}
+
+	if (result.h < 0) result.h = 360 + result.h;	// Revert if too small
+	
+	return result;
+}
+
+/* Returns hsv from color. Hue in 1.f format. */
+float_hsv custom_helpers::color2hsv_float(color col) {
+	int_hsv int_result = color2hsv(col);
+	float_hsv result = { 
+		int_result.h / 360.f,		// So its in 1.f format
+		int_result.s,
+		int_result.v
+	};
+
+	return result;
 }
 
 color custom_helpers::float2color(float* id) {

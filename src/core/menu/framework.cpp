@@ -23,7 +23,7 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
-		pressed = GetAsyncKeyState(VK_LBUTTON) & 1;
+		pressed = (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y);
 	}
 	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Checkbox background
 
@@ -50,13 +50,13 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 
 	if ((cursor.x >= bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
 		bl_col = color(115, 21, 21, 255);					// Hover
-		if (GetAsyncKeyState(VK_LBUTTON) & 1)
+		if ((GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 			target = (target == min) ? max : target - 1;	// Decrease
 	}
 	
 	if ((cursor.x >= br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
 		br_col = color(115, 21, 21, 255);					// Hover
-		if (GetAsyncKeyState(VK_LBUTTON) & 1)
+		if ((GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 			target = (target == max) ? min : target + 1;	// Increase
 	}
 
@@ -89,7 +89,7 @@ void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
+	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 		tab = count;
 	
 	// Tab background and line
@@ -126,7 +126,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 				break;
 			}
 			case 2: {	// All width from name to checkbox
-				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1)
+				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1) && GetAsyncKeyState(VK_LBUTTON) & 1 )
 					value = !value;		// If in checkbox or text and clicked
 				break;
 			}
@@ -148,9 +148,9 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	const int w = 20, h = 10;
 	const int color_x = position - margin - w;
 
-	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && GetAsyncKeyState(VK_LBUTTON) & 1)
+	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 		toggle_color = !toggle_color;
-	else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)) && GetAsyncKeyState(VK_LBUTTON) & 1)
+	else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 		toggle_color = false;		// Close popup if user clicks outside
 
 	render::draw_filled_rect(color_x, y, w, h, setting_color);					// Color itself
@@ -170,16 +170,16 @@ float map_slider_constrain(float n, float start1, float stop1, float start2, flo
 void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	const int slider_y = y + 2;
-	const int slider_width = 8;
+	const int slider_height = 8;
 	
 	// Get value from cursor and assign it
-	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_width) && (GetAsyncKeyState(VK_LBUTTON)))
+	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_height) && (GetAsyncKeyState(VK_LBUTTON)) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
 		value = map_slider_constrain((cursor.x - slider_pos_x), 0.0f, float(slider_len), float(min_value), float(max_value));
 
 	// Slider background and value display
 	const float reverse_map = map_slider_constrain(value, float(min_value), float(max_value), 0.0f, float(slider_len));
-	render::draw_filled_rect(slider_pos_x, slider_y, slider_len, slider_width, color(36, 36, 36, 255));
-	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_width, color(150, 22, 22, 255));
+	render::draw_filled_rect(slider_pos_x, slider_y, slider_len, slider_height, color(36, 36, 36, 255));
+	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_height, color(150, 22, 22, 255));
 
 	// Slider label
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
@@ -260,7 +260,7 @@ void popup_system::check_color_popups() {
 void popup_system::color_picker_popup(color_popup_info col_p) {
 	if (!col_p.toggle_color) return;
 	
-	GetCursorPos(&cursor);
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int slider_x = col_p.x + win_padding;
 	const int slider_y = col_p.y + win_padding;
@@ -278,10 +278,21 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		{ 255, 0, 0   }
 	};
 
+	// Draw hsv fade
 	for (auto n = 0; n < 6; n++) {
 		const int fade_w = slider_w / 6;
 		const int fade_x = slider_x + (fade_w * n);
 
 		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
+
+	// Check selected hue
+	if ((cursor.x > slider_x) && (cursor.x < slider_x + slider_w) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_h) && (GetAsyncKeyState(VK_LBUTTON))) {
+		float input_hue = float(cursor.x - slider_x) / float(slider_w);
+		col_p.target = custom_helpers::hsv2color(float_hsv{ input_hue, 1.f, 1.f });
+	}
+
+	// Render color selector depenging on the color's hue
+	float color_hue = custom_helpers::color2hsv_float(col_p.target).h;
+	render::draw_rect(slider_x + slider_w * color_hue - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
 }
