@@ -9,6 +9,12 @@ namespace hooks {
 
 	inline unsigned int get_virtual(void* _class, unsigned int index) { return static_cast<unsigned int>((*static_cast<int**>(_class))[index]); }
 
+	namespace alloc_key_values_memory {
+		using fn = void* (__thiscall*)(void*, const std::int32_t);
+		inline fn original;
+		void* __stdcall hook(const std::int32_t size);
+	}
+
 	namespace create_move {
 		using fn = bool(__stdcall*)(float, c_usercmd*);
 		inline fn original;
@@ -21,6 +27,12 @@ namespace hooks {
 		void __stdcall hook(unsigned int panel, bool force_repaint, bool allow_force);
 	}
 
+	namespace do_post_screen_space_effects {
+		using fn = void(__thiscall*)(void*, const void*);
+		inline fn original = nullptr;
+		void __stdcall hook(const void* viewSetup);
+	}
+
 	namespace get_viewmodel_fov {
 		using fn = float(__thiscall*)(void*);
 		inline fn original;
@@ -31,18 +43,6 @@ namespace hooks {
 		using fn = void(__thiscall*)(void*, view_setup_t* setup);
 		inline fn original;
 		void __fastcall hook(uintptr_t, uintptr_t, view_setup_t* setup);
-	}
-
-	namespace alloc_key_values_memory {
-		using fn = void* (__thiscall*)(void*, const std::int32_t);
-		inline fn original;
-		void* __stdcall hook(const std::int32_t size);
-	}
-
-	namespace do_post_screen_space_effects {
-		using fn = void(__thiscall*)(void*, const void*);
-		inline fn original = nullptr;
-		void __stdcall hook(const void* viewSetup);
 	}
 
 	namespace draw_model_execute {
