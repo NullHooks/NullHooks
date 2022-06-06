@@ -1,5 +1,6 @@
 #pragma once
 #include "../../dependencies/utilities/csgo.hpp"
+#include "global_input.hpp"
 
 namespace gui {
 	void group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
