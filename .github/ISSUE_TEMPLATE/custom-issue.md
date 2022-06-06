@@ -1,5 +1,5 @@
 ---
-name: Custom issue template
+name: Custom issue
 about: Use a blank template
 title: "[misc]"
 labels: ''

@@ -1,7 +1,7 @@
 ---
 name: Bug
 about: Report a bug or unwanted behaviour
-title: "[BUG] "
+title: "[bug] "
 labels: bug
 assignees: r4v10l1
 
