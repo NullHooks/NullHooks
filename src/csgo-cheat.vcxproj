@@ -108,6 +108,7 @@
     <ClCompile Include="core\hooks\functions\paint_traverse.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
+    <ClCompile Include="core\menu\global_input.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
     <ClCompile Include="core\helpers\misc_helpers.cpp" />
     <ClCompile Include="core\menu\watermark.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="core\helpers\misc_helpers.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\framework.hpp" />
+    <ClInclude Include="core\menu\global_input.hpp" />
     <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="core\menu\variables.hpp" />
     <ClInclude Include="dependencies\interfaces\i_weapon_system.hpp" />
