@@ -20,37 +20,37 @@ void custom_helpers::state_to_console_color(const char* tag, const char* text) {
 }
 
 /* hsv2color(int_hsv): Returns color from hsv. Hue in 360 format. */
-color custom_helpers::hsv2color(int_hsv hsv) {
+color custom_helpers::hsv2color(int_hsv hsv, int alpha) {
 	float fC = hsv.v * hsv.s;							// Chroma
 	float fHPrime = fmod(hsv.h / 60.0, 6);
 	float fX = fC * (1 - fabs(fmod(fHPrime, 2) - 1));
 	float fM = hsv.v - fC;
 
 	if (0 <= fHPrime && fHPrime < 1)
-		return color(fC*255, fX*255, 0, 255);
+		return color(fC*255, fX*255, 0, alpha);
 	else if (1 <= fHPrime && fHPrime < 2)
-		return color(fX*255, fC*255, 0, 255);
+		return color(fX*255, fC*255, 0, alpha);
 	else if (2 <= fHPrime && fHPrime < 3)
-		return color(0, fC*255, fX*255, 255);
+		return color(0, fC*255, fX*255, alpha);
 	else if (3 <= fHPrime && fHPrime < 4)
-		return color(0, fX*255, fC*255, 255);
+		return color(0, fX*255, fC*255, alpha);
 	else if (4 <= fHPrime && fHPrime < 5)
-		return color(fX*255, 0, fC*255, 255);
+		return color(fX*255, 0, fC*255, alpha);
 	else if (5 <= fHPrime && fHPrime < 6)
-		return color(fC*255, 0, fX*255, 255);
+		return color(fC*255, 0, fX*255, alpha);
 	else
-		return color(0, 0, 0);
+		return color(0, 0, 0, alpha);
 }
 
 /* hsv2color(float_hsv): Returns color from hsv. Hue in 1.f format. */
-color custom_helpers::hsv2color(float_hsv hsv) {
+color custom_helpers::hsv2color(float_hsv hsv, int alpha) {
 	int_hsv converted = {
 		hsv.h * 360.f,		// So its in 1.f format
 		hsv.s,
 		hsv.v
 	};
 
-	return hsv2color(converted);
+	return hsv2color(converted, alpha);
 }
 
 /*
