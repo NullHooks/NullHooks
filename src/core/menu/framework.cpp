@@ -115,20 +115,20 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		switch (click_area_id) {
 			default:
 			case 0: {	// Only checkbox
-				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 0x8000))
+				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
 					value = !value;		// If in checkbox and clicked
 				break;
 			}
 			case 1: {	// Name and checkbox, not color
 				if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
 					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
-					&& (GetAsyncKeyState(VK_LBUTTON) & 0x8000))
+					&& (GetAsyncKeyState(VK_LBUTTON) & 1))
 					value = !value;
 				break;
 			}
 			case 2: {	// All width from name to checkbox
 				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1)) {
-					if ((GetAsyncKeyState(VK_LBUTTON) & 1)) {
+					if ((GetAsyncKeyState(VK_LBUTTON) & 1)) {	// Separate ifs just for debugging
 						value = !value;		// If in checkbox or text and clicked
 					}
 				}
