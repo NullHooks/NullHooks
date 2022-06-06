@@ -142,8 +142,10 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Fix cursor position being relative to screen instead of game window
 - [X] Add color picker ([example](screenshots/color-picker-edit.png))
     - [X] Add popup system that renders after the menu so other elements don't render over the window
-    - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
+    - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5) 
+#
 </details>
+
 - [X] Add aim stuff
     - [ ] Triggerbot
     - [X] Aimbot
