@@ -23,7 +23,7 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	// Cursor in button and clicked
 	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
-		pressed = (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y);
+		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON));
 	}
 	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Checkbox background
 
@@ -48,16 +48,18 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	color bl_col = color(150, 22, 22, 255);
 	color br_col = color(150, 22, 22, 255);
 
-	if ((cursor.x >= bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
-		bl_col = color(115, 21, 21, 255);					// Hover
-		if ((GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
-			target = (target == min) ? max : target - 1;	// Decrease
-	}
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+		if ((cursor.x >= bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+			bl_col = color(115, 21, 21, 255);					// Hover
+			if (input::gobal_input.IsPressed(VK_LBUTTON))
+				target = (target == min) ? max : target - 1;	// Decrease
+		}
 	
-	if ((cursor.x >= br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
-		br_col = color(115, 21, 21, 255);					// Hover
-		if ((GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
-			target = (target == max) ? min : target + 1;	// Increase
+		if ((cursor.x >= br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+			br_col = color(115, 21, 21, 255);					// Hover
+			if (input::gobal_input.IsPressed(VK_LBUTTON))
+				target = (target == max) ? min : target + 1;	// Increase
+		}
 	}
 
 	// Increase and decrease buttons
@@ -89,7 +91,7 @@ void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
+	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
 		tab = count;
 	
 	// Tab background and line
@@ -115,31 +117,26 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		switch (click_area_id) {
 			default:
 			case 0: {	// Only checkbox
-				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1))
+				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
 					value = !value;		// If in checkbox and clicked
 				break;
 			}
 			case 1: {	// Name and checkbox, not color
 				if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
 					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
-					&& (GetAsyncKeyState(VK_LBUTTON) & 1))
+					&& input::gobal_input.IsPressed(VK_LBUTTON))
 					value = !value;
 				break;
 			}
 			case 2: {	// All width from name to checkbox
 				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1)) {
-					if ((GetAsyncKeyState(VK_LBUTTON) & 1)) {	// Separate ifs just for debugging
-						value = !value;		// If in checkbox or text and clicked
+					if (input::gobal_input.IsPressed(VK_LBUTTON)) {		// Separate ifs just for debugging
+						value = !value;									// If in checkbox or text and clicked
 					}
 				}
-
-				// For debugging hitboxes
-				render::draw_filled_rect(x, y, position - x + w, h, color(0, 255, 0, 40));
 				break;
 			}
 		}
-	} else {	// Else is for debugging when in popup
-		printf("In popup.\r");
 	}
 
 	// Checkbox itself
@@ -157,13 +154,16 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	const int col_w = 20, col_h = 10;					// Color "button" size
 	const int color_x = position - margin - col_w;		// Color "button" position
 
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && (GetAsyncKeyState(VK_LBUTTON) & 1)) {			// Check click and all that once so it doesn't freak out
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {	// Check click and all that once so it doesn't freak out
 		if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h))	// Checkbox
 			|| ((cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
 			value = !value;
+		
+		// Not else if because we want to check if the cursor is in the toggle color button (open popup) or outside (close popup)
 		if ((cursor.x > color_x) && (cursor.x < color_x + col_w) && (cursor.y > y) && (cursor.y < y + col_h))	// Toggle the "active popup" bool
 			toggle_color = !toggle_color;
-		else
+		// We need to check like this instead of using mouse_in_popup because the first check will be on a popup that is not yet in the active_color_popups vector (see bottom of this func)
+		else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)))
 			toggle_color = false;		// Close popup if user clicks outside
 	}
 
@@ -190,7 +190,8 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 	const int slider_height = 8;
 	
 	// Get value from cursor and assign it
-	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_height) && (GetAsyncKeyState(VK_LBUTTON)) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
+	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_height)
+		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsHeld(VK_LBUTTON))
 		value = map_slider_constrain((cursor.x - slider_pos_x), 0.0f, float(slider_len), float(min_value), float(max_value));
 
 	// Slider background and value display
@@ -297,7 +298,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		{ 255, 0, 0   }
 	};
 
-	// Draw hsv fade
+	// Draw hsv fades (6 segments)
 	for (auto n = 0; n < 6; n++) {
 		const int fade_w = slider_w / 6;
 		const int fade_x = slider_x + (fade_w * n);
@@ -305,8 +306,8 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
 
-	// Check selected hue
-	if ((cursor.x > slider_x) && (cursor.x < slider_x + slider_w) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_h) && (GetAsyncKeyState(VK_LBUTTON))) {
+	// Check selected hue (mouse in slider)
+	if ((cursor.x > slider_x) && (cursor.x < slider_x + slider_w) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_hue = float(cursor.x - slider_x) / float(slider_w);
 		col_p.target = custom_helpers::hsv2color(float_hsv{ input_hue, 1.f, 1.f });
 	}

@@ -77,10 +77,6 @@ void menu::render() {
 			container_width = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 
-			// Debugging checkbox error with color popups
-			gui::check_box(item_left_pos + container_width + container_margin, part1_base_item_y + (15 * 11), item_checkbox_pos + container_width + container_margin,
-				render::fonts::watermark_font, "Debug checkbox (Rendered before popups)", variables::entity_visuals::bombtimer);
-
 			const int part1_items_num = 7;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
@@ -240,6 +236,6 @@ void menu::render() {
 }
 
 void menu::toggle() {
-	if (GetAsyncKeyState(VK_INSERT) & 1)
+	if (input::gobal_input.IsPressed(VK_INSERT))
 		variables::ui::menu::opened = !variables::ui::menu::opened;
 }
