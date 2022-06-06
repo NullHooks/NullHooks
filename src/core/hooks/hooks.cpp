@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "hooks.hpp"
 #include "../helpers/misc_helpers.hpp"
 
@@ -12,7 +12,7 @@ bool hooks::initialize() {
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 
 	if (MH_Initialize() != MH_OK)
-		throw std::runtime_error("failed to initialize MH_Initialize.");
+		throw std::runtime_error("failed to initialize minhook.");
 
 	if (MH_CreateHook(alloc_key_values_target, &alloc_key_values_memory::hook, reinterpret_cast<void**>(&alloc_key_values_memory::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize alloc_key_values_memory.");
