@@ -149,32 +149,40 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
-// Checkbox with color picker
+// Checkbox with color picker and custom region
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
-	check_box(x, y, position, font, string, value, 1);		// Call normal checkbox with no button toggle and color region
-	
-	const int margin = 5;
-	const int w = 20, h = 10;
-	const int color_x = position - margin - w;
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+	const int w = 10, h = 10;							// For checkbox
+	const int margin = 5;								// Color "button" margin
+	const int col_w = 20, col_h = 10;					// Color "button" size
+	const int color_x = position - margin - col_w;		// Color "button" position
 
-	if ((cursor.x > color_x) && (cursor.x < color_x + w) && (cursor.y > y) && (cursor.y < y + h) && (GetAsyncKeyState(VK_LBUTTON) & 1) && !popup_system::mouse_in_popup(cursor.x, cursor.y))
-		toggle_color = !toggle_color;
-	else if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && (GetAsyncKeyState(VK_LBUTTON) & 1))
-		toggle_color = false;		// Close popup if user clicks outside
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && (GetAsyncKeyState(VK_LBUTTON) & 1)) {			// Check click and all that once so it doesn't freak out
+		if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h))	// Checkbox
+			|| ((cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
+			value = !value;
+		if ((cursor.x > color_x) && (cursor.x < color_x + col_w) && (cursor.y > y) && (cursor.y < y + col_h))	// Toggle the "active popup" bool
+			toggle_color = !toggle_color;
+		else
+			toggle_color = false;		// Close popup if user clicks outside
+	}
 
-	render::draw_filled_rect(color_x, y, w, h, setting_color);					// Color itself
-	render::draw_rect(color_x - 1, y - 1, w + 2, h + 2, color::black(255));		// Color outline
+	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));		// Checkbox itself
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
+
+	render::draw_filled_rect(color_x, y, col_w, col_h, setting_color);					// Color itself
+	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color::black(255));		// Color outline
 
 	// Push to vector to render after menu
 	if (toggle_color)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + h + margin, setting_color, toggle_color });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, setting_color, toggle_color });
 }
 
 // Thanks to https://github.com/bobloxmonke
 float map_slider_constrain(float n, float start1, float stop1, float start2, float stop2) {
 	float value = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
 	return std::clamp(value, start2, stop2);
-};
+}
 
 void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
