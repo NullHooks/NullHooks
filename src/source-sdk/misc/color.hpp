@@ -23,6 +23,11 @@ struct color {
 		return color( uint );
 	}
 
+	// Returns the same color but with custom alpha. Used to do the color picker alpha fade.
+	color get_custom_alpha(const int alpha) {
+		return color{this->r, this->g, this->b, alpha};
+	}
+
 	static D3DCOLOR from_color( const color col ) {
 		return D3DCOLOR_ARGB( col.a, col.r, col.g, col.b );
 	}
