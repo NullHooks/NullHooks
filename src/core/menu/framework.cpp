@@ -307,7 +307,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
 	// Check selected hue (mouse in slider)
-	if ((cursor.x > slider_x) && (cursor.x < slider_x + slider_w) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_hue = float(cursor.x - slider_x) / float(slider_w);
 		col_p.target = custom_helpers::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
 	}
@@ -319,7 +319,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	slider_y += win_padding + slider_h;
 	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.target.get_custom_alpha(0), col_p.target.get_custom_alpha(255), true);
 	// Check selected hue (mouse in slider)
-	if ((cursor.x > slider_x) && (cursor.x < slider_x + slider_w) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_alpha = float(cursor.x - slider_x) / float(slider_w);
 		col_p.target.a = input_alpha * 255.f;
 	}

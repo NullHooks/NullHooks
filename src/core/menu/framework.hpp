@@ -32,7 +32,7 @@ typedef struct ColorPopup {
 namespace popup_system {
 	/* ------------ Variables ------------ */
 	const int win_padding = 10;
-	const int slider_w = 120, slider_h = 15;		// w has to be divisible by 6 in order for the fade to be clean
+	const int slider_w = 127, slider_h = 15;		// w has to be divisible by 6 in order for the fade to be clean
 	const int win_w = slider_w + win_padding * 2;
 	const int win_h = slider_h * 2 + win_padding * 3;	// +1 slider and margin for alpha slider
 
