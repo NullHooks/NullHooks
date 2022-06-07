@@ -21,7 +21,7 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
 
 	// Cursor in button and clicked
-	if ((cursor.x > butt_pos) && (cursor.x < butt_pos + w) && (cursor.y > y) && (cursor.y < y + h)) {
+	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
 		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON));
 	}
@@ -49,13 +49,13 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	color br_col = color(150, 22, 22, 255);
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
-		if ((cursor.x >= bl_x) && (cursor.x < bl_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+		if ((cursor.x >= bl_x) && (cursor.x <= bl_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
 			bl_col = color(115, 21, 21, 255);					// Hover
 			if (input::gobal_input.IsPressed(VK_LBUTTON))
 				target = (target == min) ? max : target - 1;	// Decrease
 		}
 	
-		if ((cursor.x >= br_x) && (cursor.x < br_x + bw) && (cursor.y > y) && (cursor.y < y + bh)) {
+		if ((cursor.x >= br_x) && (cursor.x <= br_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
 			br_col = color(115, 21, 21, 255);					// Hover
 			if (input::gobal_input.IsPressed(VK_LBUTTON))
 				target = (target == max) ? min : target + 1;	// Increase
@@ -68,8 +68,7 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	render::draw_filled_rect(br_x, y, bw, bh, br_col);										// Normal color
 	render::draw_text_string(br_x + bw / 2, y - 1, font, "+", true, color::white());		// Button text
 
-	// Value container
-	//render::draw_filled_rect(val_cont_x, y, val_cont_w, bh, color(150, 22, 22, 255));
+	// Value itself
 	render::draw_text_string(val_cont_x + val_cont_w / 2, y - 1, font, std::to_string(target), true, color::white());
 
 	// Label
@@ -91,7 +90,8 @@ void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h) && !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
+	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h)
+		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
 		tab = count;
 	
 	// Tab background and line
@@ -117,22 +117,20 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		switch (click_area_id) {
 			default:
 			case 0: {	// Only checkbox
-				if ((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
+				if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
 					value = !value;		// If in checkbox and clicked
 				break;
 			}
 			case 1: {	// Name and checkbox, not color
-				if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h)		// Checkbox
-					|| (cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
+				if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h)		// Checkbox
+					|| (cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
 					&& input::gobal_input.IsPressed(VK_LBUTTON))
-					value = !value;
+					value = !value;		// If in checkbox or text, but not color picker and clicked
 				break;
 			}
 			case 2: {	// All width from name to checkbox
-				if ((cursor.x > x) && (cursor.x < position + w) && (cursor.y > y - 1) && (cursor.y < y + h + 1)) {
-					if (input::gobal_input.IsPressed(VK_LBUTTON)) {		// Separate ifs just for debugging
-						value = !value;									// If in checkbox or text and clicked
-					}
+				if ((cursor.x >= x) && (cursor.x <= position + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+					value = !value;		// If in checkbox or text and clicked
 				}
 				break;
 			}
@@ -154,24 +152,24 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	const int col_w = 20, col_h = 10;					// Color "button" size
 	const int color_x = position - margin - col_w;		// Color "button" position
 
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {	// Check click and all that once so it doesn't freak out
-		if (((cursor.x > position) && (cursor.x < position + w) && (cursor.y > y) && (cursor.y < y + h))	// Checkbox
-			|| ((cursor.x > x) && (cursor.x < position - 55) && (cursor.y > y) && (cursor.y < y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
+		if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))	// Checkbox
+			|| ((cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
 			value = !value;
 		
 		// Not else if because we want to check if the cursor is in the toggle color button (open popup) or outside (close popup)
-		if ((cursor.x > color_x) && (cursor.x < color_x + col_w) && (cursor.y > y) && (cursor.y < y + col_h))	// Toggle the "active popup" bool
-			toggle_color = !toggle_color;
+		if ((cursor.x >= color_x) && (cursor.x <= color_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
+			toggle_color = !toggle_color;	// Toggle the "active popup" bool
 		// We need to check like this instead of using mouse_in_popup because the first check will be on a popup that is not yet in the active_color_popups vector (see bottom of this func)
-		else if (!((cursor.x > color_x) && (cursor.x < color_x + popup_system::win_w) && (cursor.y > y + h + margin) && (cursor.y < y + h + margin + popup_system::win_h)))
-			toggle_color = false;		// Close popup if user clicks outside
+		else if (!((cursor.x >= color_x) && (cursor.x <= color_x + popup_system::win_w) && (cursor.y >= y + h + margin) && (cursor.y <= y + h + margin + popup_system::win_h)))
+			toggle_color = false;			// Close popup if user clicks outside
 	}
 
 	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));		// Checkbox itself
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
 
-	render::draw_filled_rect(color_x, y, col_w, col_h, setting_color);					// Color itself
-	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color::black(255));		// Color outline
+	render::draw_filled_rect(color_x, y, col_w, col_h, setting_color);											// Color itself
+	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color::black(255));								// Color outline
 
 	// Push to vector to render after menu
 	if (toggle_color)
@@ -190,7 +188,7 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 	const int slider_height = 8;
 	
 	// Get value from cursor and assign it
-	if ((cursor.x > slider_pos_x) && (cursor.x < slider_pos_x + slider_len) && (cursor.y > slider_y) && (cursor.y < slider_y + slider_height)
+	if ((cursor.x >= slider_pos_x) && (cursor.x <= slider_pos_x + slider_len) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_height)
 		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsHeld(VK_LBUTTON))
 		value = map_slider_constrain((cursor.x - slider_pos_x), 0.0f, float(slider_len), float(min_value), float(max_value));
 
