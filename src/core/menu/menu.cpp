@@ -236,7 +236,7 @@ void menu::render() {
 }
 
 // Toggle using IsPressed (GetAsyncKeyState)
-void menu::toggle() {
+void menu::check_toggle() {
 	if (input::gobal_input.IsPressed(VK_INSERT))
 		variables::ui::menu::opened = !variables::ui::menu::opened;
 }

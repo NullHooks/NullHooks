@@ -12,14 +12,13 @@ void GlobalInput::Update() {
 
 void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
     switch (msg) {
-        case WM_SYSKEYDOWN:
-        case WM_KEYDOWN: {
-            if (wparam == VK_INSERT)    // Toggle menu
-                variables::ui::menu::opened = !variables::ui::menu::opened;
-
+        case WM_LBUTTONDOWN:    // Clicks, etc.
+        case WM_SYSKEYDOWN:     // Alt + Key
+        case WM_KEYDOWN: {      // Rest of the keys
             key_states[wparam].pressed = true;
             break;
         }
+        case WM_LBUTTONUP:
         case WM_SYSKEYUP:
         case WM_KEYUP: {
             key_states[wparam].pressed = false;
