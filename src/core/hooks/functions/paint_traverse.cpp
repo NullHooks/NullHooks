@@ -6,9 +6,6 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 	case fnv::hash("MatSystemTopPanel"):
-		// First get inputs from user
-		input::gobal_input.Update();
-		
 		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
 
 		watermark::draw();
@@ -24,7 +21,6 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		misc::spectator_list();
 
-		menu::toggle();
 		menu::render();
 		popup_system::render_popups();		// Check for popups and render them on top
 

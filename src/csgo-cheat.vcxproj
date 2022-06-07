@@ -106,6 +106,7 @@
     <ClCompile Include="core\hooks\functions\get_viewmodel_fov.cpp" />
     <ClCompile Include="core\hooks\functions\override_view.cpp" />
     <ClCompile Include="core\hooks\functions\paint_traverse.cpp" />
+    <ClCompile Include="core\hooks\functions\WndProc_hook.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\global_input.cpp" />

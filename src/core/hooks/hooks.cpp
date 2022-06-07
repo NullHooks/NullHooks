@@ -1,6 +1,5 @@
 #pragma once
 #include "hooks.hpp"
-#include "../helpers/misc_helpers.hpp"
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
@@ -10,6 +9,11 @@ bool hooks::initialize() {
 	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
+	
+	// WndProc
+	WndProc_hook::csgo_window = FindWindowW(L"Valve001", nullptr);		// Get window for SetWindowLongPtrW()
+	WndProc_hook::original = WNDPROC(SetWindowLongPtrW(WndProc_hook::csgo_window, GWLP_WNDPROC, LONG_PTR(WndProc_hook::WndProc)));	// Replace wnproc with our own, call original later
+	custom_helpers::state_to_console("Hooks", "WndProc initialized!");
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize minhook.");
@@ -60,6 +64,9 @@ bool hooks::initialize() {
 }
 
 void hooks::release() {
+	// Restore old WndProc
+	SetWindowLongPtrW(WndProc_hook::csgo_window, GWLP_WNDPROC, LONG_PTR(WndProc_hook::original));
+
 	MH_DisableHook(MH_ALL_HOOKS);
 	MH_RemoveHook(MH_ALL_HOOKS);
 	MH_Uninitialize();
