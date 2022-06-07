@@ -15,6 +15,7 @@ typedef struct KeyStateInfo {
 class GlobalInput {
 public:
     void Update();
+    void WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam);
 
 public:
     bool IsPressed(const int vKey) const;
@@ -24,4 +25,6 @@ private:
     key_state_info_t key_states[256];
 };
 
-namespace input { inline GlobalInput gobal_input; }
+namespace input {
+    inline GlobalInput gobal_input;
+}
