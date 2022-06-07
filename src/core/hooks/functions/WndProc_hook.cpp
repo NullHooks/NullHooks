@@ -5,10 +5,7 @@ LRESULT __stdcall hooks::WndProc_hook::WndProc(HWND hwnd, UINT msg, WPARAM wpara
 	// Get inputs from user and store them. Same as we did in paint_traverse
 	input::gobal_input.WndProcUpdate(msg, wparam, lparam);
 
-	/*
-	if (variables::ui::menu::opened)
-		return true;	// Disable input while in menu
-	*/
+	menu::check_toggle();		// Checks if the insert key was pressed
 
 	return CallWindowProcW(original, hwnd, msg, wparam, lparam);
 }

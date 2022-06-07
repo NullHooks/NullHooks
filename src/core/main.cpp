@@ -20,7 +20,7 @@ unsigned long WINAPI initialize(void* instance) {
 		FreeLibraryAndExitThread(static_cast<HMODULE>(instance), 0);
 	}
 
-	while (!GetAsyncKeyState(VK_END))
+	while (!input::gobal_input.IsPressed(VK_END))
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	
 	//close menu so input is restored to user in the hooks::paint_traverse::hook hook.

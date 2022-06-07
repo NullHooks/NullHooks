@@ -8,7 +8,7 @@ namespace menu {
 	inline int current_tab {1};
 
 	void render();
-	void toggle();
+	void check_toggle();
 };
 
 namespace watermark {
