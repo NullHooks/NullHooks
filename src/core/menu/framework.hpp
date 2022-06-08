@@ -22,12 +22,12 @@ namespace spectator_framework {
 	inline bool should_move = false;
 }
 
-typedef struct ColorPopup {
+struct color_popup_info {
 	std::int32_t x;
 	std::int32_t y;
 	color& target;
 	bool& toggle_color;
-} color_popup_info;
+};
 
 namespace popup_system {
 	/* ------------ Variables ------------ */
