@@ -140,6 +140,10 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Spectator list repeating name again (*const*'s fault?) <!-- 3c95dc7877eaad7ec734da2ab29606cd346fcea3 | interfaces::globals->max_clients -->
 - [X] Fix chams on custom playermodels
 - [X] Fix cursor position being relative to screen instead of game window
+- [X] Add color picker ([example](screenshots/color-picker-edit.png))
+    - [X] Add popup system that renders after the menu so other elements don't render over the window
+    - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5) 
+#
 </details>
 
 - [X] Add aim stuff
@@ -148,10 +152,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [X] Silent
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
+    - [ ] Custom aimbot key (Add keybind to framework)
+- [ ] Add combobox and multi-combobox
 - [ ] Add autoscope for snipers (independent of aimbot)
-- [ ] Add color picker ([example](screenshots/color-picker-edit.png))
-    - [X] Add popup system that renders after the menu so other elements don't render over the window
-    - [ ] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
 - [ ] Add custom radar with renderer, why not
