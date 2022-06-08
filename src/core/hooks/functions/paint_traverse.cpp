@@ -21,6 +21,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		misc::spectator_list();
 
+		menu::check_toggle();				// Checks if the insert key was pressed
 		menu::render();
 		popup_system::render_popups();		// Check for popups and render them on top
 
