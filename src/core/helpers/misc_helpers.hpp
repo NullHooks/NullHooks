@@ -16,9 +16,8 @@ typedef struct FHSV {
 } float_hsv;
 
 namespace custom_helpers {
-	void print_to_console(const char* text);
 	void state_to_console(const char* tag, const char* text);
-	void state_to_console_color(const char* tag, const char* text);
+	void state_to_console_color(const valve_color_t col, const char* tag, const char* text);
 	color hsv2color(int_hsv, int alpha = 255);
 	color hsv2color(float_hsv, int alpha = 255);
 	int_hsv color2hsv(color col);
