@@ -35,8 +35,8 @@ public:
 	virtual void			call_global_change_callbacks( convar *var, const char *old_str, float old_val ) = 0;
 	virtual void			install_console_display_func( i_console_display_func *func ) = 0;
 	virtual void			remove_console_display_func( i_console_display_func *func ) = 0;
-	virtual void			console_color_printf( const color &clr, const char *format, ... ) const = 0;
-	virtual void			console_printf( const char *format, ... ) const = 0;
+	virtual void			color_printf( const valve_color_t &clr, const char *format, ... ) const = 0;
+	virtual void			printf( const char *format, ... ) const = 0;
 	virtual void			dconsole_dprintf( const char *format, ... ) const = 0;
 	virtual void			rever_flagged_convars( int flag ) = 0;
 };

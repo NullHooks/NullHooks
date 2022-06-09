@@ -2,6 +2,17 @@
 #include <cstdint>
 #include <d3d9.h>
 
+/*
+ * Thank you designer :
+ *   https://www.unknowncheats.me/forum/counterstrike-global-offensive/385547-printing-console.html
+ */
+struct valve_color_t {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+};
+
 struct color {
 	int a, r, g, b;
 	color( ) = default;
