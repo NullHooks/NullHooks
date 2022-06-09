@@ -23,7 +23,7 @@ namespace visuals {
 	}
 
 	namespace models {
-		void draw_models(const char* path);
+		void draw_models(std::string &path);
 		// TODO: Make a models::init() that checks for file model paths and stores them in static bools (or downloads them)
 		//       Call on top of hooks.cpp
 	}
