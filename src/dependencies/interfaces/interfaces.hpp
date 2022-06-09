@@ -92,6 +92,7 @@ namespace interfaces {
 	inline player_game_movement* game_movement;
 	inline player_prediction* prediction;
 	inline player_move_helper* move_helper;
+	inline mdlcache* mdl_cache;
 	inline i_weapon_system* weapon_system;
 	
 	// https://github.com/cazzwastaken/based/search?q=keyValuesSystem
