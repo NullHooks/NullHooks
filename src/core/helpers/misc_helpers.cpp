@@ -4,8 +4,12 @@ void custom_helpers::state_to_console(const char* tag,  const char* text) {
 	interfaces::console->printf("[NullHooks] [%s] %s\n", tag, text);
 }
 
-void custom_helpers::state_to_console_color(const valve_color_t col, const char* tag, const char* text) {
-	interfaces::console->color_printf(col, "[NullHooks] [%s] %s\n", tag, text);
+void custom_helpers::state_to_console_color(const char* tag, const char* text) {
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "[");
+	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "NullHooks");
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] [");
+	interfaces::console->color_printf(valve_color_t{   0, 165, 230, 255 }, tag);
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] %s\n", text);
 }
 
 /* hsv2color(int_hsv): Returns color from hsv. Hue in 360 format. */

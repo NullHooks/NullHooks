@@ -6,6 +6,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 	switch (panel_to_draw) {
 	case fnv::hash("MatSystemTopPanel"):
+		input::gobal_input.UpdatePressed();		// Updates the "pressed" (not held) keys. See global_input.cpp
+
 		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
 
 		watermark::draw();
@@ -27,7 +29,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):
-		// interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::editing_text);
+		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::editing_text);
 		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
 		interfaces::panel->set_mouse_input_enabled(panel, variables::ui::menu::opened);
 		break;

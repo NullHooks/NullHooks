@@ -7,22 +7,40 @@
  *   https://pastebin.com/KLuSQ5Tz
  */
 
-typedef struct KeyStateInfo {
+struct KeyStateInfo {
+    /*
+     * .pressed will store:
+     *   true when keydown and it was not held before (1st time),
+     *   false when keyup or when keydown + being held
+     * .held will store:
+     *   true if the key is currently being held down
+     *   false if the key is released
+     */
     bool pressed;
     bool held;
-} key_state_info_t;
+};
 
 class GlobalInput {
 public:
-    void Update();
+    void Init();
+    void UpdateGetKeyState();
+    void UpdatePressed();
     void WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam);
 
 public:
-    bool IsPressed(const int vKey) const;
-    bool IsHeld(const int vKey) const;
+    // Only the first time is pressed
+    inline bool IsPressed(const int vKey) const {
+        return key_states[vKey].pressed;       // See comment on GlobalInput::WndProcUpdate()
+    }
+
+    // While key is down
+    inline bool IsHeld(const int vKey) const {
+        return key_states[vKey].held;
+    }
 
 private:
-    key_state_info_t key_states[256];
+    KeyStateInfo key_states[256];       // Will be updated by WndProc
+    KeyStateInfo key_states_old[256];   // Will be updated every paint_traverse iteration with the old key_states[]
 };
 
 namespace input {
