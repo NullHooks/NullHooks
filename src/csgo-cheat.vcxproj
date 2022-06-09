@@ -95,6 +95,7 @@
     <ClCompile Include="core\features\visuals\glow.cpp" />
     <ClCompile Include="core\features\visuals\entity_esp.cpp" />
     <ClCompile Include="core\features\visuals\misc_visuals.cpp" />
+    <ClCompile Include="core\features\visuals\models.cpp" />
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
