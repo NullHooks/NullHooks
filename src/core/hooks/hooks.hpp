@@ -35,6 +35,12 @@ namespace hooks {
 		void __stdcall hook(unsigned int panel, bool force_repaint, bool allow_force);
 	}
 
+	namespace findmdl {
+		using fn = unsigned long(__thiscall*)(void*, const char*);
+		inline fn original;
+		unsigned long __stdcall hook(const char* path) noexcept;
+	}
+	
 	namespace do_post_screen_space_effects {
 		using fn = void(__thiscall*)(void*, const void*);
 		inline fn original = nullptr;
