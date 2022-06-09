@@ -62,6 +62,9 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Weapon chams (viewmodel)
 - Change individual materials for the chams
 
+#### Model changer
+- Model changer
+
 #### Misc
 - C4 timer and bar
 - Dropped weapons and grenades name
@@ -154,6 +157,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
     - [ ] Custom aimbot key (Add keybind to framework)
+- [X] Add custom models
+    - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
+    - [ ] Menu options
 - [ ] Add combobox and multi-combobox
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
