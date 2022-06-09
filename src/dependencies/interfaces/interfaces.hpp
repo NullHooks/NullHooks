@@ -26,6 +26,7 @@
 #include "i_player_movement.hpp"
 #include "i_weapon_system.hpp"
 #include "i_studio_render.h"
+#include "i_mdlcache.hpp"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
