@@ -9,7 +9,8 @@ bool hooks::initialize() {
 	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
-	
+	const auto findmdl_target = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
+
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Input", "Global input initialized!");
 
@@ -23,12 +24,12 @@ bool hooks::initialize() {
 
 	if (MH_CreateHook(alloc_key_values_target, &alloc_key_values_memory::hook, reinterpret_cast<void**>(&alloc_key_values_memory::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize alloc_key_values_memory.");
-	custom_helpers::state_to_console_color("Hooks", "alloc_key_values_memory initialized!");
-	
+ 	custom_helpers::state_to_console_color("Hooks", "alloc_key_values_memory initialized!");
+
 	if (MH_CreateHook(create_move_target, &create_move::hook, reinterpret_cast<void**>(&create_move::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize create_move. (outdated index?)");
 	custom_helpers::state_to_console_color("Hooks", "create_move initialized!");
-	
+
 	if (MH_CreateHook(paint_traverse_target, &paint_traverse::hook, reinterpret_cast<void**>(&paint_traverse::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize paint_traverse. (outdated index?)");
 	custom_helpers::state_to_console_color("Hooks", "paint_traverse initialized!");
@@ -40,6 +41,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(get_viewmodel_fov_target, &get_viewmodel_fov::hook, reinterpret_cast<void**>(&get_viewmodel_fov::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize get_viewmodel_fov.");
 	custom_helpers::state_to_console_color("Hooks", "get_viewmodel_fov initialized!");
+
+	if (MH_CreateHook(findmdl_target, &findmdl::hook, reinterpret_cast<void**>(&findmdl::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize findmdl.");
+	custom_helpers::state_to_console_color("Hooks", "findmdl initialized!");
 
 	if (MH_CreateHook(override_view_target, &override_view::hook, reinterpret_cast<void**>(&override_view::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize override_view.");
@@ -58,7 +63,7 @@ bool hooks::initialize() {
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "--------------- ");
 	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "Welcome to NullHooks");
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, " ---------------\n\n");
-	
+
 	// Reset crosshair
 	if (!variables::misc_visuals::crosshair) {
 		interfaces::engine->execute_cmd("crosshair 1");
@@ -78,3 +83,4 @@ void hooks::release() {
 	MH_RemoveHook(MH_ALL_HOOKS);
 	MH_Uninitialize();
 }
+

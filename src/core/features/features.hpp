@@ -22,6 +22,12 @@ namespace visuals {
 		void draw_chams(i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& info, matrix_t* matrix);
 	}
 
+	namespace models {
+		void draw_models(const char* path);
+		// TODO: Make a models::init() that checks for file model paths and stores them in static bools (or downloads them)
+		//       Call on top of hooks.cpp
+	}
+
 	namespace misc {
 		void nade_predict() noexcept;
 	}
