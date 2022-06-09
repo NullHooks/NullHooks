@@ -31,6 +31,7 @@ bool interfaces::initialize() {
 	glow_manager = *reinterpret_cast<glow_manager_t**>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3);	// "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00"
 	move_helper = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
+	mdl_cache = get_interface<mdlcache, interface_type::index>("datacache.dll", "MDLCache004");
 
 	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))												// Get the exported KeyValuesSystem function
 		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();	// Set our pointer by calling the function
