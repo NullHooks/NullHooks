@@ -46,6 +46,17 @@ namespace variables {
 		inline int weapon_chams_mat_id = 9;
 	}
 
+	namespace models {
+		// v_*_path -> view model path
+		// w_*_path -> world model path
+		inline const char* v_knife_path = NULL; // "models/weapons/v_minecraft_pickaxe.mdl"
+		inline const char* w_knife_path = NULL; // "models/weapons/w_minecraft_pickaxe.mdl"
+		inline const char* v_ak_path = NULL;
+		inline const char* w_ak_path = NULL;
+		inline const char* player_path = NULL;
+		inline const char* arms_path = NULL;
+	}
+
 	namespace misc_visuals {
 		inline bool nade_predict = true;
 		inline bool noflash = true;

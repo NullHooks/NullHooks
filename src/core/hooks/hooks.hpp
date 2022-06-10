@@ -36,9 +36,9 @@ namespace hooks {
 	}
 
 	namespace findmdl {
-		using fn = unsigned long(__thiscall*)(void*, const char*);
+		using fn = unsigned long(__thiscall*)(void*, char*);
 		inline fn original;
-		unsigned long __stdcall hook(const char* path) noexcept;
+		unsigned long __stdcall hook(char* path) noexcept;
 	}
 	
 	namespace do_post_screen_space_effects {
