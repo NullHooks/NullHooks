@@ -38,7 +38,7 @@ void menu::render() {
 
 	/* ------------------ CONTAINERS ------------------ */
 	const int item_slider_length = 80;
-	const int item_checkbox_length = 10;
+	const int item_checkbox_length = 11;
 	int container_left_pos = variables::ui::menu::x + container_margin;	// Not const because we can have more than one col
 	int container_width = variables::ui::menu::w - container_margin*2;
 	int item_left_pos = container_left_pos + container_padding;
