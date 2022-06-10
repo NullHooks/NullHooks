@@ -110,7 +110,7 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, int click_area_id) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	const int w = 10, h = 10;
+	const int w = 11, h = 11;
 
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
