@@ -12,14 +12,14 @@ namespace gui {
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);
-	inline bool should_drag = false;
-	inline bool should_move = false; 
+	inline bool user_dragging_menu = false;		// Used to know if the user is holding the menu window area
+	inline bool should_move_menu = false;		// Used to know when to check the new menu positions
 }
 
 namespace spectator_framework {
 	void spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
-	inline bool should_drag = false;
-	inline bool should_move = false;
+	inline bool user_dragging_spec = false;		// Used to know if the user is holding the spectator list window area
+	inline bool should_move_spec = false;		// Used to know when to check the new spectator list positions
 }
 
 struct color_popup_info {
@@ -32,13 +32,13 @@ struct color_popup_info {
 namespace popup_system {
 	/* ------------ Variables ------------ */
 	const int win_padding = 10;
-	const int slider_w = 127, slider_h = 15;		// w has to be divisible by 6 in order for the fade to be clean
+	const int slider_w = 127, slider_h = 15;			// w has to be divisible by 6 in order for the fade to be clean
 	const int win_w = slider_w + win_padding * 2;
 	const int win_h = slider_h * 2 + win_padding * 3;	// +1 slider and margin for alpha slider
 
 	/* ------------ Functions ------------ */
-	void render_popups();				// Will call each check_*_popups()
-	bool mouse_in_popup(int x, int y);	// Will check if x:y is in a popup
+	void render_popups();					// Will call each check_*_popups()
+	bool mouse_in_popup(int x, int y);		// Will check if x:y is in a popup
 
 	// Menu buttons will store here information about the popup that will be rendered
 	inline std::vector<color_popup_info> active_color_popups;
