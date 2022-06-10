@@ -57,18 +57,19 @@ bool hooks::initialize() {
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
 
-	/* ------------------------------------------------------------------------ */
-
 	custom_helpers::state_to_console_color("Hooks", "Hooks initialized!");
-	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "--------------- ");
-	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "Welcome to NullHooks");
-	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, " ---------------\n\n");
+	
+	/* ------------------------------------------------------------------------ */
 
 	// Reset crosshair
 	if (!variables::misc_visuals::crosshair) {
 		interfaces::engine->execute_cmd("crosshair 1");
 		custom_helpers::state_to_console_color("Crosshair", "Crosshair reset!");
 	}
+
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "--------------- ");
+	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "Welcome to NullHooks");
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, " ---------------\n\n");
 
 	return true;
 }
