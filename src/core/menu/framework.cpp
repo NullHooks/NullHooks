@@ -12,7 +12,7 @@ cursor_coords cursor_corrected;
 bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	const int w = 30, h = 10;	// Button size
+	const int w = 30, h = 11;	// Button size
 	const color c_default = color(150, 22, 22, 255);
 	const color c_hover = color(135, 21, 21, 255);
 	bool pressed = false;
@@ -40,7 +40,7 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int button_margins = 2;									// After first button and before second
-	const int bw = 11, bh = 10;										// Increase and decrease buttons
+	const int bw = 11, bh = 11;										// Increase and decrease buttons
 	const int br_x = right_position - bw;							// Right button - Increase
 	const int val_cont_x = br_x - button_margins - val_cont_w;		// Value container
 	const int bl_x = val_cont_x - button_margins - bw;				// Left button - Decrease
@@ -147,7 +147,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 // Checkbox with color picker and custom region
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
-	const int w = 10, h = 10;							// For checkbox
+	const int w = 11, h = 11;							// For checkbox
 	const int margin = 5;								// Color "button" margin
 	const int col_w = 20, col_h = 10;					// Color "button" size
 	const int color_x = position - margin - col_w;		// Color "button" position
@@ -184,8 +184,8 @@ float map_slider_constrain(float n, float start1, float stop1, float start2, flo
 
 void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
-	const int slider_y = y + 2;
-	const int slider_height = 8;
+	const int slider_y = y + 1;
+	const int slider_height = 9;
 	
 	// Get value from cursor and assign it
 	if ((cursor.x >= slider_pos_x) && (cursor.x <= slider_pos_x + slider_len) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_height)
