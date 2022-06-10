@@ -9,7 +9,7 @@
  *   - Pickaxe: https://gamebanana.com/mods/171920
  */
 
-void visuals::models::draw_models(char* path) {
+void visuals::models::replace_model(char* path) {
     if (strstr(path, "v_")) {
         if (strstr(path, "knife_default_ct.mdl") || strstr(path, "knife_default_t.mdl")) {          // What model are wen changing
             if (variables::models::v_knife_path != NULL) {
