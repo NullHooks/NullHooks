@@ -202,50 +202,54 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 }
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
+	if (spectator_framework::user_dragging_spec) return;	// Avoid overlapping
+
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
-		should_drag = true;
+	if (input::gobal_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
+		user_dragging_menu = true;
 
-		if (!should_move) {
+		if (!should_move_menu) {
 			cursor_corrected.x = cursor.x - x;
 			cursor_corrected.y = cursor.y - y;
-			should_move = true;
+			should_move_menu = true;
 		}
 	}
 	
-	if (should_drag) {
+	if (user_dragging_menu) {
 		x = cursor.x - cursor_corrected.x;
 		y = cursor.y - cursor_corrected.y;
 	}
 	
-	if (GetAsyncKeyState(VK_LBUTTON) == 0) {
-		should_drag = false;
-		should_move = false;
+	if (!input::gobal_input.IsHeld(VK_LBUTTON)) {
+		user_dragging_menu = false;
+		should_move_menu = false;
 	}
 }
 
 void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
+	if (gui::user_dragging_menu) return;		// Avoid overlapping
+	
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if (GetAsyncKeyState(VK_LBUTTON) < 0 && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
-		should_drag = true;
+	if (input::gobal_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
+		user_dragging_spec = true;
 
-		if (!should_move) {
+		if (!should_move_spec) {
 			cursor_corrected.x = cursor.x - x;
 			cursor_corrected.y = cursor.y - y;
-			should_move = true;
+			should_move_spec = true;
 		}
 	}
 
-	if (should_drag) {
+	if (user_dragging_spec) {
 		x = cursor.x - cursor_corrected.x;
 		y = cursor.y - cursor_corrected.y;
 	}
 
-	if (GetAsyncKeyState(VK_LBUTTON) == 0) {
-		should_drag = false;
-		should_move = false;
+	if (!input::gobal_input.IsHeld(VK_LBUTTON)) {
+		user_dragging_spec = false;
+		should_move_spec = false;
 	}
 }
 
