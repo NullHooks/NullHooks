@@ -149,7 +149,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	const int w = 11, h = 11;							// For checkbox
 	const int margin = 5;								// Color "button" margin
-	const int col_w = 20, col_h = 10;					// Color "button" size
+	const int col_w = 20, col_h = 11;					// Color "button" size
 	const int color_x = position - margin - col_w;		// Color "button" position
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
@@ -311,6 +311,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	// Check selected hue (mouse in slider)
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_hue = float(cursor.x - slider_x) / float(slider_w);
+		input_hue = (input_hue == 1.f) ? 0.99 : input_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
 		col_p.target = custom_helpers::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
 	}
 	// Render color selector depenging on the color's hue
@@ -328,5 +329,4 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	// Render color selector depenging on the color's hue
 	float color_alpha = col_p.target.a / 255.f;
 	render::draw_rect(slider_x + slider_w * color_alpha - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
-	
 }
