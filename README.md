@@ -148,6 +148,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Add popup system that renders after the menu so other elements don't render over the window
     - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5) 
     - [X] Add great global input system
+- [X] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 #
 </details>
 
@@ -171,9 +172,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
-- [ ] Add config and all that (json or whatever)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
-- [ ] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
+- [ ] Add config and all that (json or whatever)
 - [ ] Port to linux <!-- <3 -->
 
 ## Screenshots
