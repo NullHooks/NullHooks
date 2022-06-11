@@ -32,6 +32,27 @@ namespace variables {
 	}
 
 	namespace chams {
+		inline std::vector<std::string> materials = {
+			"transparent",
+			"textured",
+			"flat",
+			"ct_fbi_glass",
+			"etc",
+			"crystal_clear",
+			"gold",
+			"glass",
+			"gloss",
+			"asasdasdasd",
+			"crystal_blue",
+			"dogtags_outline",
+			"glow_rim3d",
+			"asadsad",
+			"asdasd",
+			"mp3_detail",
+			"asdadsasdadsasd"
+		};
+
+		// Enabled options
 		inline bool only_visible_chams = false;
 		inline bool draw_chams_on_top = false;
 		inline bool wireframe_chams = false;
@@ -40,10 +61,17 @@ namespace variables {
 		inline bool vm_arm_chams = false;
 		inline bool vm_sleeve_chams = false;
 
+		// Selected material for each setting
 		inline int player_chams_mat_id = 1;
 		inline int sleeve_chams_mat_id = 10;
 		inline int arm_chams_mat_id = 5;
 		inline int weapon_chams_mat_id = 9;
+
+		// Used for togling popups
+		inline bool player_chams_popup_tog = false;
+		inline bool sleeve_chams_popup_tog = false;
+		inline bool arm_chams_popup_tog = false;
+		inline bool weapon_chams_popup_tog = false;
 	}
 
 	namespace models {

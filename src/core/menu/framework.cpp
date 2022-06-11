@@ -184,7 +184,7 @@ float map_slider_constrain(float n, float start1, float stop1, float start2, flo
 
 void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
-	const int slider_y = y + 1;
+	const int slider_y = y + 1;			// The actual text starts 2px down from the y parameter, so +1 is actually -1 from real text
 	const int slider_height = 9;
 	
 	// Get value from cursor and assign it
@@ -199,6 +199,52 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 
 	// Slider label
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
+}
+
+/*
+ * combobox: Will render a combobox with the strings in opt_vec as options, and change& target_idx to the selected item's index in the vector
+ * combo_right_pos: top right corner of the selected option indicator.
+ * popup_toggle: for deciding if the popup is open or not.
+ */ 
+void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<std::string>& opt_vec, int &target_idx, bool& popup_toggle) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+	
+	const int x_margin = 4;
+	const int h = 11;
+	const int arrow_w = 7, arrow_h = 4;
+	const int arrow_x = combo_right_pos - x_margin - arrow_w, arrow_y = y + 4;	// h/2 is not reliable
+	int item_w = render::get_text_size(render::fonts::watermark_font, opt_vec.at(target_idx)).x;
+	if (popup_toggle) {			// Stores the px width of the biggest text in the vector if active
+		for (std::string item : opt_vec) {
+			if (render::get_text_size(render::fonts::watermark_font, item).x > item_w)
+				item_w = render::get_text_size(render::fonts::watermark_font, item).x;
+		}
+	}
+	const int w = x_margin + item_w + x_margin + arrow_w + x_margin;
+	const int position = combo_right_pos - w;		// Get top left corner of current item
+
+	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+			if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
+				popup_toggle = !popup_toggle;		// If in checkbox and clicked
+	}
+
+	// Combobox "button"
+	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
+	render::draw_rect(position, y - 2, w, h + 4, color(30, 30, 30, 255));
+	render::draw_text_string(position + x_margin, y - 2, render::fonts::watermark_font, opt_vec.at(target_idx), false, color::white());
+	
+	// Draw arrow
+	for (int n = 0; n < arrow_h; n++) {
+		render::draw_filled_rect(arrow_x + n, arrow_y + n, arrow_w - n * 2, 1, color::white());
+	}
+
+	// Combobox label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+
+	// Push to vector to render after menu
+	if (popup_toggle)
+		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, opt_vec, target_idx, popup_toggle});
 }
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
@@ -256,6 +302,7 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 // Will call each check_popups()
 void popup_system::render_popups() {	
 	check_color_popups();
+	check_combo_popups();
 }
 
 // Checks if the mouse is in an active popup
@@ -273,8 +320,17 @@ bool popup_system::mouse_in_popup(int x, int y) {
 void popup_system::check_color_popups() {
 	// Render each active popup and pop from vector until there are no popups left
 	while (!active_color_popups.empty()) {
-		color_picker_popup(active_color_popups.back());
-		active_color_popups.pop_back();
+		color_picker_popup(active_color_popups.back());		// Render
+		active_color_popups.pop_back();						// Remove
+	}
+}
+
+// Will check for popups in the active_combo_popups vector
+void popup_system::check_combo_popups() {
+	// Render each active popup and pop from vector until there are no popups left
+	while (!active_combo_popups.empty()) {
+		combobox_popup(active_combo_popups.back());			// Render
+		active_combo_popups.pop_back();						// Remove
 	}
 }
 
@@ -329,4 +385,22 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	// Render color selector depenging on the color's hue
 	float color_alpha = col_p.target.a / 255.f;
 	render::draw_rect(slider_x + slider_w * color_alpha - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+}
+
+void popup_system::combobox_popup(combo_popup_info combo_p) {
+	if (!combo_p.popup_toggle) return;
+
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	const int popup_h = 15 * combo_p.opt_vec.size();
+	// Loop through the vector to get the largest size
+	int popup_w = 0;
+	// TODO: If the (actual item + margin + arrow) is greater than the longest text size, use that, if not use the other thing. Same in function itself
+	for (std::string item : combo_p.opt_vec) {
+		if (render::get_text_size(render::fonts::watermark_font, item).x > popup_w)
+			popup_w = render::get_text_size(render::fonts::watermark_font, item).x;
+	}
+
+	render::draw_filled_rect(combo_p.x, combo_p.y, popup_w, popup_h, color(36, 36, 36, 255));
+	render::draw_rect(combo_p.x, combo_p.y, popup_w, popup_h, color::black(255));
 }
