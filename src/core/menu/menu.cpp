@@ -81,12 +81,12 @@ void menu::render() {
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Player ESP", false); {
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable team ESP (global)", variables::player_visuals::showteamesp);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::player_visuals::boxesp);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::player_visuals::skeletonesp);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Enable team ESP (global)", variables::player_visuals::showteamesp, variables::colors::friendly_color, variables::colors::friendly_color_tog);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Box ESP", variables::player_visuals::boxesp, variables::colors::enemy_color, variables::colors::enemy_color_tog);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"Skeleton ESP", variables::player_visuals::skeletonesp, variables::colors::enemy_color_soft, variables::colors::enemy_color_soft_tog);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Name ESP", variables::player_visuals::nameesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
@@ -123,22 +123,22 @@ void menu::render() {
 					render::fonts::watermark_font, "Wireframe chams", variables::chams::wireframe_chams);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Player chams", variables::chams::player_chams);
-				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length, 16,	// +item_checkbox_length to get the top right corner
-					render::fonts::watermark_font, "Player chams material", variables::chams::player_chams_mat_id, 0, 16);	// min, max
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length,
+					render::fonts::watermark_font, "Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
-				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length, 16,
-					render::fonts::watermark_font, "Weapon chams material", variables::chams::weapon_chams_mat_id, 0, 16);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length,
+					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
 					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c, variables::colors::chams_arms_c_tog);
-				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + item_checkbox_length, 16,
-					render::fonts::watermark_font, "Arms chams material", variables::chams::arm_chams_mat_id, 0, 16);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + item_checkbox_length,
+					render::fonts::watermark_font, "Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
 					"Sleeve chams", variables::chams::vm_sleeve_chams, variables::colors::chams_sleeve_c, variables::colors::chams_sleeve_c_tog);
-				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + item_checkbox_length, 16,
-					render::fonts::watermark_font, "Sleeve chams material", variables::chams::sleeve_chams_mat_id, 0, 16);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + item_checkbox_length,
+					render::fonts::watermark_font, "Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
 			}
 
 			/* ----- Visuals - Second column ----- */
@@ -176,10 +176,10 @@ void menu::render() {
 					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
-				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Custom crosshair", variables::misc_visuals::crosshair);
-				gui::check_box(item_left_pos, part5_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Recoil crosshair", variables::misc_visuals::recoil_crosshair);
+				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c, variables::colors::crosshair_c_tog);
+				gui::check_box(item_left_pos, part5_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
+					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c, variables::colors::recoil_crosshair_c_tog);
 			}
 			break;
 		}
