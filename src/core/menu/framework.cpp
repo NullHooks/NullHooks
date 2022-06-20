@@ -356,13 +356,13 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	render::draw_rect(col_p.x, col_p.y, win_w, win_h, color::black(255));
 
 	static color hueColors[7] = {
-		{ 255, 0, 0   },
-		{ 255, 255, 0 },
-		{ 0, 255, 0   },
-		{ 0, 255, 255 },
-		{ 0, 0, 255   },
-		{ 255, 0, 255 },
-		{ 255, 0, 0   }
+		{ 255, 0,   0   },
+		{ 255, 255, 0   },
+		{ 0,   255, 0   },
+		{ 0,   255, 255 },
+		{ 0,   0,   255 },
+		{ 255, 0,   255 },
+		{ 255, 0,   0   }
 	};
 
 	/* --------------- HUE BAR --------------- */
@@ -402,8 +402,7 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	
 	// We get the largest item width when rendering the button, and we pass it to the combo_p, so we just use that
-	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(36, 36, 36, 255));
-	render::draw_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
+	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
 
 	int item_n = 0;
 	for (std::string item : combo_p.opt_vec) {
