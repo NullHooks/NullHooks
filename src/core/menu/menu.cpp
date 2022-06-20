@@ -81,12 +81,12 @@ void menu::render() {
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Player ESP", false); {
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable team ESP (global)", variables::player_visuals::showteamesp);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Box ESP", variables::player_visuals::boxesp);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Skeleton ESP", variables::player_visuals::skeletonesp);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Enable team ESP (global)", variables::player_visuals::showteamesp, variables::colors::friendly_color, variables::colors::friendly_color_tog);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Box ESP", variables::player_visuals::boxesp, variables::colors::enemy_color, variables::colors::enemy_color_tog);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"Skeleton ESP", variables::player_visuals::skeletonesp, variables::colors::enemy_color_soft, variables::colors::enemy_color_soft_tog);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Name ESP", variables::player_visuals::nameesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
@@ -123,10 +123,10 @@ void menu::render() {
 					render::fonts::watermark_font, "Wireframe chams", variables::chams::wireframe_chams);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Player chams", variables::chams::player_chams);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
 				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
+					render::fonts::watermark_font, "Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
 				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length,
