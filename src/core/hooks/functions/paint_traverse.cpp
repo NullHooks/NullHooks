@@ -45,8 +45,10 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		const int mid_x = screen_w / 2;
 		const int mid_y = screen_h / 2;
 
-		render::draw_line(0, mid_y, screen_w, mid_y, color::black(255));	// X
-		render::draw_line(mid_x, 0, mid_x, screen_h, color::black(255));	// Y
+		if (csgo::local_player->active_weapon()->get_weapon_data()->weapon_type == WEAPONTYPE_SNIPER_RIFLE) {
+			render::draw_line(0, mid_y, screen_w, mid_y, color::black(255));	// X
+			render::draw_line(mid_x, 0, mid_x, screen_h, color::black(255));	// Y
+		}
 
 		return;
 		break;
