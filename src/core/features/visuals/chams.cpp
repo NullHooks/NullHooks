@@ -1,23 +1,23 @@
 #include "../features.hpp"
 
  std::vector<const char*> materials = {
-	"vgui/screens/transparent",
-	"debug/debugambientcube",
-	"debug/debugdrawflat",
-	"models/player/ct_fbi/ct_fbi_glass",
-	"models/inventory_items/cologne_prediction/cologne_prediction_glass",
-	"models/inventory_items/trophy_majors/crystal_clear",
-	"models/inventory_items/trophy_majors/gold",
-	"models/gibs/glass/glass",
-	"models/inventory_items/trophy_majors/gloss",
-	"models/inventory_items/wildfire_gold/wildfire_gold_detail",
-	"models/inventory_items/trophy_majors/crystal_blue",
-	"models/inventory_items/dogtags/dogtags_outline",
-	"dev/glow_rim3d",
-	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur",
-	"models/inventory_items/dreamhack_trophies/dreamhack_pickem_glow_gold",
-	"models/inventory_items/music_kit/darude_01/mp3_detail",
-	"models/inventory_items/dogtags/dogtags_lightray"
+	"vgui/screens/transparent",														 // "Transparent"
+	"debug/debugambientcube",														 // "Textured"
+	"debug/debugdrawflat",															 // "Flat"
+	"models/inventory_items/cologne_prediction/cologne_prediction_glass",			 // "Ghost"
+	"models/inventory_items/trophy_majors/gold",									 // "Gold 1"
+	"models/inventory_items/wildfire_gold/wildfire_gold_detail",					 // "Gold 2"
+	"models/inventory_items/trophy_majors/crystal_blue",							 // "Amethyst"
+	"models/inventory_items/trophy_majors/crystal_clear",							 // "Silver"
+	"models/player/ct_fbi/ct_fbi_glass",											 // "Steel"
+	"models/gibs/glass/glass",														 // "Dark steel"
+	"models/inventory_items/trophy_majors/gloss",									 // "Plastic"
+	"dev/glow_rim3d",																 // "Red glow"
+	"models/inventory_items/dreamhack_trophies/dreamhack_star_blur",				 // "Effect 1"
+	"models/inventory_items/dreamhack_trophies/dreamhack_pickem_glow_gold",			 // "Effect 2"
+	"models/inventory_items/dogtags/dogtags_lightray",								 // "Effect 3"
+	"models/inventory_items/dogtags/dogtags_outline",								 // "Animated blink"
+	"models/inventory_items/music_kit/darude_01/mp3_detail"						 // "Animated stripes"
 };
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {

@@ -33,23 +33,23 @@ namespace variables {
 
 	namespace chams {
 		inline std::vector<std::string> materials = {
-			"transparent",
-			"textured",
-			"flat",
-			"ct_fbi_glass",
-			"etc",
-			"crystal_clear",
-			"gold",
-			"glass",
-			"gloss",
-			"asasdasdasd",
-			"crystal_blue",
-			"dogtags_outline",
-			"glow_rim3d",
-			"asadsad",
-			"asdasd",
-			"mp3_detail",
-			"asdadsasdadsasd"
+			"Transparent",
+			"Textured",
+			"Flat",
+			"Ghost",
+			"Gold 1",
+			"Gold 2",
+			"Amethyst",
+			"Silver",
+			"Steel",
+			"Dark steel",
+			"Plastic",
+			"Red glow",
+			"Effect 1",
+			"Effect 2",
+			"Effect 3",
+			"Animated blink",
+			"Animated stripes"
 		};
 
 		// Enabled options
@@ -77,7 +77,7 @@ namespace variables {
 	namespace models {
 		// v_*_path -> view model path
 		// w_*_path -> world model path
-		inline const char* v_knife_path	= "models/weapons/v_minecraft_pickaxe.mdl";		// "models/weapons/v_minecraft_pickaxe.mdl"
+		inline const char* v_knife_path	= NULL;		// "models/weapons/v_minecraft_pickaxe.mdl"
 		inline const char* w_knife_path	= NULL;		// "models/weapons/w_minecraft_pickaxe.mdl"
 		inline const char* v_ak_path	= NULL;
 		inline const char* w_ak_path	= NULL;

@@ -33,6 +33,8 @@ struct color_popup_info {
 struct combo_popup_info {
 	std::int32_t x;
 	std::int32_t y;
+	std::int32_t w;
+	std::uint32_t h;
 	std::vector<std::string>& opt_vec;
 	int& target_idx;
 	bool& popup_toggle;
@@ -47,15 +49,17 @@ namespace popup_system {
 
 	/* -------------- Color -------------- */
 	const int win_padding = 10;
-	const int slider_w = 127, slider_h = 15;			// w has to be divisible by 6 in order for the fade to be clean
+	const int slider_w = 127, slider_h = 15;					// w has to be divisible by 6 in order for the fade to be clean
 	const int win_w = slider_w + win_padding * 2;
-	const int win_h = slider_h * 2 + win_padding * 3;	// +1 slider and margin for alpha slider
+	const int win_h = slider_h * 2 + win_padding * 3;			// +1 slider and margin for alpha slider
 
 	inline std::vector<color_popup_info> active_color_popups;	// Menu buttons will store here information about the popup that will be rendered
 	void check_color_popups();									// Will check for popups in the active_color_popups vector
 	void color_picker_popup(color_popup_info color_popup);		// Will render the actual popup
 	
 	/* ------------- Combobox ------------ */
+	const int combo_win_padding = 4;
+
 	inline std::vector<combo_popup_info> active_combo_popups;	// Menu combobox buttons will store here information about the popup that will be rendered
 	void check_combo_popups();									// Will check for popups in the active_color_popups vector
 	void combobox_popup(combo_popup_info combo_popup);			// Will render the actual popup

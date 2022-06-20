@@ -130,7 +130,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
 				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::player_chams_popup_tog);
+					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
 					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c, variables::colors::chams_arms_c_tog);
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + item_checkbox_length, 16,

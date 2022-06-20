@@ -209,25 +209,29 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<std::string>& opt_vec, int &target_idx, bool& popup_toggle) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	
-	const int x_margin = 4;
+	const int x_margin = popup_system::combo_win_padding;
 	const int h = 11;
 	const int arrow_w = 7, arrow_h = 4;
 	const int arrow_x = combo_right_pos - x_margin - arrow_w, arrow_y = y + 4;	// h/2 is not reliable
-	int item_w = render::get_text_size(render::fonts::watermark_font, opt_vec.at(target_idx)).x;
+	const int item_w = render::get_text_size(render::fonts::watermark_font_ns, opt_vec.at(target_idx)).x;
+	int w = x_margin + item_w + x_margin + arrow_w + x_margin;
 	// Stores the px width of the biggest text in the vector if popup is active
 	if (popup_toggle) {
 		for (std::string item : opt_vec) {
-			if (render::get_text_size(render::fonts::watermark_font, item).x > item_w)
-				item_w = render::get_text_size(render::fonts::watermark_font, item).x;
+			int text_w = render::get_text_size(render::fonts::watermark_font_ns, item).x + x_margin * 2;
+			if (text_w > w)
+				w = text_w;
 		}
 	}
-	const int w = x_margin + item_w + x_margin + arrow_w + x_margin;
 	const int position = combo_right_pos - w;		// Get top left corner of current item
 
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
-		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
 			popup_toggle = !popup_toggle;			// If in checkbox and clicked
+		// See color picker comment
+		else if ( !((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h + opt_vec.size() * 15)) )
+			popup_toggle = false;			// Close popup if user clicks outside
 	}
 
 	// Combobox "button"
@@ -244,7 +248,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 
 	// Push to vector to render after menu
 	if (popup_toggle)
-		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, opt_vec, target_idx, popup_toggle});
+		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target_idx, popup_toggle});
 }
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
@@ -310,6 +314,11 @@ bool popup_system::mouse_in_popup(int x, int y) {
 	// For each color popup in the active_color_popups vector
 	for (const color_popup_info& pinfo : active_color_popups) {
 		if ( pinfo.toggle_color && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
+			return true;
+	}
+
+	for (const combo_popup_info& pinfo : active_combo_popups) {
+		if ( pinfo.popup_toggle && (x >= pinfo.x) && (x <= pinfo.x + pinfo.w) && (y >= pinfo.y) && (y <= pinfo.y + pinfo.h) )
 			return true;
 	}
 
@@ -391,16 +400,18 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 	if (!combo_p.popup_toggle) return;
 
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+	
+	// We get the largest item width when rendering the button, and we pass it to the combo_p, so we just use that
+	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(36, 36, 36, 255));
+	render::draw_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
 
-	const int popup_h = 15 * combo_p.opt_vec.size();
-	// Loop through the vector to get the largest size
-	int popup_w = 0;
-	// TODO: If the (actual item + margin + arrow) is greater than the longest text size, use that, if not use the other thing. Same in function itself
+	int item_n = 0;
 	for (std::string item : combo_p.opt_vec) {
-		if (render::get_text_size(render::fonts::watermark_font, item).x > popup_w)
-			popup_w = render::get_text_size(render::fonts::watermark_font, item).x;
+		render::draw_text_string(combo_p.x + combo_win_padding, combo_p.y + (15 * item_n), render::fonts::watermark_font_ns, item, false, color::white());
+		item_n++;
 	}
 
-	render::draw_filled_rect(combo_p.x, combo_p.y, popup_w, popup_h, color(36, 36, 36, 255));
-	render::draw_rect(combo_p.x, combo_p.y, popup_w, popup_h, color::black(255));
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y <= combo_p.y + combo_p.h) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+		combo_p.target_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
+	}
 }
