@@ -214,7 +214,8 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	const int arrow_w = 7, arrow_h = 4;
 	const int arrow_x = combo_right_pos - x_margin - arrow_w, arrow_y = y + 4;	// h/2 is not reliable
 	int item_w = render::get_text_size(render::fonts::watermark_font, opt_vec.at(target_idx)).x;
-	if (popup_toggle) {			// Stores the px width of the biggest text in the vector if active
+	// Stores the px width of the biggest text in the vector if popup is active
+	if (popup_toggle) {
 		for (std::string item : opt_vec) {
 			if (render::get_text_size(render::fonts::watermark_font, item).x > item_w)
 				item_w = render::get_text_size(render::fonts::watermark_font, item).x;
@@ -225,8 +226,8 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
-			if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
-				popup_toggle = !popup_toggle;		// If in checkbox and clicked
+		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
+			popup_toggle = !popup_toggle;			// If in checkbox and clicked
 	}
 
 	// Combobox "button"
