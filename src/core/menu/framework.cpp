@@ -231,8 +231,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 
 	// Combobox "button"
 	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
-	render::draw_rect(position, y - 2, w, h + 4, color(30, 30, 30, 255));
-	render::draw_text_string(position + x_margin, y - 2, render::fonts::watermark_font, opt_vec.at(target_idx), false, color::white());
+	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, opt_vec.at(target_idx), false, color::white());
 	
 	// Draw arrow
 	for (int n = 0; n < arrow_h; n++) {
