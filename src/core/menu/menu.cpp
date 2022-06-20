@@ -176,10 +176,10 @@ void menu::render() {
 					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
-				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Custom crosshair", variables::misc_visuals::crosshair);
-				gui::check_box(item_left_pos, part5_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Recoil crosshair", variables::misc_visuals::recoil_crosshair);
+				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c, variables::colors::crosshair_c_tog);
+				gui::check_box(item_left_pos, part5_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
+					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c, variables::colors::recoil_crosshair_c_tog);
 			}
 			break;
 		}

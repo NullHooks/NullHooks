@@ -161,6 +161,12 @@ namespace variables {
 		inline bool chams_arms_c_tog = false;
 		inline color chams_weapon_c = color(255, 150, 255, 255);
 		inline bool chams_weapon_c_tog = false;
+
+		// Misc
+		inline color crosshair_c = color::white();
+		inline bool crosshair_c_tog = false;
+		inline color recoil_crosshair_c = color(0, 255, 0, 255);
+		inline bool recoil_crosshair_c_tog = false;
 	};
 
 }
