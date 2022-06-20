@@ -32,6 +32,27 @@ namespace variables {
 	}
 
 	namespace chams {
+		inline std::vector<std::string> materials = {
+			"Transparent",
+			"Textured",
+			"Flat",
+			"Ghost",
+			"Gold 1",
+			"Gold 2",
+			"Amethyst",
+			"Silver",
+			"Steel",
+			"Dark steel",
+			"Plastic",
+			"Red glow",
+			"Effect 1",
+			"Effect 2",
+			"Effect 3",
+			"Animated blink",
+			"Animated stripes"
+		};
+
+		// Enabled options
 		inline bool only_visible_chams = false;
 		inline bool draw_chams_on_top = false;
 		inline bool wireframe_chams = false;
@@ -40,10 +61,17 @@ namespace variables {
 		inline bool vm_arm_chams = false;
 		inline bool vm_sleeve_chams = false;
 
+		// Selected material for each setting
 		inline int player_chams_mat_id = 1;
-		inline int sleeve_chams_mat_id = 10;
-		inline int arm_chams_mat_id = 5;
-		inline int weapon_chams_mat_id = 9;
+		inline int sleeve_chams_mat_id = 6;
+		inline int arm_chams_mat_id = 7;
+		inline int weapon_chams_mat_id = 5;
+
+		// Used for togling popups
+		inline bool player_chams_popup_tog = false;
+		inline bool sleeve_chams_popup_tog = false;
+		inline bool arm_chams_popup_tog = false;
+		inline bool weapon_chams_popup_tog = false;
 	}
 
 	namespace models {
@@ -110,18 +138,22 @@ namespace variables {
 
 	namespace colors {
 		// Esp and glow
-		inline color friendly_color = color(0, 72, 255, 255);
-		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
+		inline color friendly_color = color(0, 90, 255, 255);
+		inline bool friendly_color_tog = false;
+		inline color friendly_color_soft = color(0, 150, 255, 255);
 		inline color friendly_color_softer = color(90, 180, 255, 255);
 		inline color enemy_color = color::red(255);
+		inline bool enemy_color_tog = false;
 		inline color enemy_color_soft = color(190, 25, 25, 255);
+		inline bool enemy_color_soft_tog = false;
 		inline color enemy_color_softer = color(255, 75, 75, 255);
 
 		// Chams
-		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
 		inline color chams_vis_enemy_c = color(230, 20, 70);
-		inline color chams_inv_friend_c = color(0, 75, 255);
+		inline bool chams_vis_enemy_tog = false;
+		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
 		inline color chams_vis_friend_c = color(0, 150, 255);
+		inline color chams_inv_friend_c = color(0, 75, 255);
 
 		inline color chams_sleeve_c = color(200, 0, 200, 255);
 		inline bool chams_sleeve_c_tog = false;
@@ -129,6 +161,12 @@ namespace variables {
 		inline bool chams_arms_c_tog = false;
 		inline color chams_weapon_c = color(255, 150, 255, 255);
 		inline bool chams_weapon_c_tog = false;
+
+		// Misc
+		inline color crosshair_c = color::white();
+		inline bool crosshair_c_tog = false;
+		inline color recoil_crosshair_c = color(0, 255, 0, 255);
+		inline bool recoil_crosshair_c_tog = false;
 	};
 
 }

@@ -15,8 +15,8 @@ void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color 
 		render::draw_rect(left - 1, y - 1, (len + gap)*2 + 3, 3, color::black(255));
 	}
 	// Draw 1px crosshair
-	render::draw_line(x, top, x, bottom, cross_color);
-	render::draw_line(left, y, right, y, cross_color);
+	render::draw_filled_rect(x, top, 1, bottom - top + 1, cross_color);
+	render::draw_filled_rect(left, y, right - left + 1, 1, cross_color);
 }
 
 void visuals::crosshair::custom_crosshair() {
@@ -45,5 +45,5 @@ void visuals::crosshair::custom_crosshair() {
 		custom_helpers::state_to_console("Crosshair", "Using engine crosshair...");
 	}
 
-	visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, (variables::crosshair::rainbow_crosshair) ? color(rand() % 255, rand() % 255, rand() % 255) : color::white(255));
+	visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, variables::colors::crosshair_c);
 }
