@@ -1142,6 +1142,7 @@ ImGuiIO::ImGuiIO()
     FontDefault = NULL;
     FontAllowUserScaling = false;
     DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+    RenderDrawListsFn = NULL;
 
     // Miscellaneous options
     MouseDrawCursor = false;

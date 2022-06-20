@@ -21,7 +21,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -44,16 +44,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);C:\Microsoft DirectX SDK (June 2010)\Include</IncludePath>
+    <LibraryPath>$(LibraryPath);C:\Microsoft DirectX SDK (June 2010)\Lib\x86</LibraryPath>
     <OutDir>.\output\debug\</OutDir>
     <IntDir>.\intermediates\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\output\release\</OutDir>
     <IntDir>.\intermediates\</IntDir>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Microsoft DirectX SDK (June 2010)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Microsoft DirectX SDK (June 2010)\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,7 +61,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;/std:c++latest;debug_build;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;debug_build;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -112,6 +112,11 @@
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\global_input.cpp" />
+    <ClCompile Include="core\menu\imgui\dx9\imgui_impl_dx9.cpp" />
+    <ClCompile Include="core\menu\imgui\imgui.cpp" />
+    <ClCompile Include="core\menu\imgui\imgui_draw.cpp" />
+    <ClCompile Include="core\menu\imgui\imgui_tables.cpp" />
+    <ClCompile Include="core\menu\imgui\imgui_widgets.cpp" />
     <ClCompile Include="core\menu\menu.cpp" />
     <ClCompile Include="core\helpers\misc_helpers.cpp" />
     <ClCompile Include="core\menu\watermark.cpp" />
@@ -139,6 +144,13 @@
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\framework.hpp" />
     <ClInclude Include="core\menu\global_input.hpp" />
+    <ClInclude Include="core\menu\imgui\dx9\imgui_impl_dx9.h" />
+    <ClInclude Include="core\menu\imgui\imconfig.h" />
+    <ClInclude Include="core\menu\imgui\imgui.h" />
+    <ClInclude Include="core\menu\imgui\imgui_internal.h" />
+    <ClInclude Include="core\menu\imgui\imstb_rectpack.h" />
+    <ClInclude Include="core\menu\imgui\imstb_textedit.h" />
+    <ClInclude Include="core\menu\imgui\imstb_truetype.h" />
     <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="core\menu\variables.hpp" />
     <ClInclude Include="dependencies\interfaces\i_mdlcache.hpp" />

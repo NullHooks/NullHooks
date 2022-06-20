@@ -64,4 +64,21 @@ namespace hooks {
 		inline fn original = nullptr;
 		void __fastcall hook(void* _this, int edx, i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& pInfo, matrix_t* pCustomBoneToWorld);
 	}
+
+	namespace reset { //16
+		using fn = long(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
+		inline fn original = nullptr;
+		long __stdcall hook(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* present_parameters);
+	}
+
+	namespace present { //17
+		using fn = long(__stdcall*)(IDirect3DDevice9*, RECT*, RECT*, HWND, RGNDATA*);
+		inline fn original = nullptr;
+		long __stdcall hook(IDirect3DDevice9* device, RECT* source_rect, RECT* dest_rect, HWND dest_window_override, RGNDATA* dirty_region);
+	}
+
+	LRESULT  __stdcall					  WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+	extern HWND                           hCSGOWindow; // CSGO window handle
+	extern WNDPROC                        pOriginalWNDProc; // Original CSGO window proc
 }

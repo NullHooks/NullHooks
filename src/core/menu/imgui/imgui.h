@@ -1950,6 +1950,8 @@ struct ImGuiIO
     void*       BackendRendererUserData;        // = NULL           // User data for renderer backend
     void*       BackendLanguageUserData;        // = NULL           // User data for non C++ programming language backend
 
+    void(*RenderDrawListsFn)(ImDrawData* data);
+
     // Optional: Access OS clipboard
     // (default to use native Win32 clipboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)
     const char* (*GetClipboardTextFn)(void* user_data);

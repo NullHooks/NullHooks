@@ -1,7 +1,20 @@
 #include "menu.hpp"
 #include "../features/features.hpp"
 
-auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
+IDirect3DStateBlock9* state_block;
+
+void Menu::render() {
+	if (!menu_opened)
+		return;
+
+	ImGui::Begin("Nullhooks", &menu.menu_opened);
+	{
+		ImGui::Text("Hello Nullhooks :)");
+		ImGui::End();
+	}
+}
+
+/*auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
 	// Background
 	render::draw_filled_rect(x, y, w, h, bg);
 	// Header title
@@ -10,11 +23,11 @@ auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t
 	render::draw_text_string(x + 10, y + 8, render::fonts::watermark_font, name, false, color::white(255));
 };
 
-void menu::render() {
-	if (!variables::ui::menu::opened) return;
+void menu.render() {
+	if (!variables::ui::menu.opened) return;
 
 	// Menu title and all that
-	do_frame(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, variables::ui::menu::h,
+	do_frame(variables::ui::menu.x, variables::ui::menu.y, variables::ui::menu.w, variables::ui::menu.h,
 		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks");
 
 	const int top_margin = 30;
@@ -23,29 +36,27 @@ void menu::render() {
 	const int container_margin = 5;		// Empty space between containers
 	const int container_padding = 10;	// Space before and after item list (top and bottom)
 
-	/* ------------------ TABS ------------------ */
 	const int tab_number = 4;
-	const int tab_size = variables::ui::menu::w / tab_number;
+	const int tab_size = variables::ui::menu.w / tab_number;
 
-	gui::tab(variables::ui::menu::x + (tab_size * 0), variables::ui::menu::y + top_margin, tab_size, tab_height,
-		render::fonts::watermark_font, "Aim", menu::current_tab, 0);
-	gui::tab(variables::ui::menu::x + (tab_size * 1), variables::ui::menu::y + top_margin, tab_size, tab_height,
-		render::fonts::watermark_font, "Visuals", menu::current_tab, 1);
-	gui::tab(variables::ui::menu::x + (tab_size * 2), variables::ui::menu::y + top_margin, tab_size, tab_height,
-		render::fonts::watermark_font, "Misc", menu::current_tab, 2);
-	gui::tab(variables::ui::menu::x + (tab_size * 3), variables::ui::menu::y + top_margin, tab_size, tab_height,
-		render::fonts::watermark_font, "Config", menu::current_tab, 3);
+	gui::tab(variables::ui::menu.x + (tab_size * 0), variables::ui::menu.y + top_margin, tab_size, tab_height,
+		render::fonts::watermark_font, "Aim", menu.current_tab, 0);
+	gui::tab(variables::ui::menu.x + (tab_size * 1), variables::ui::menu.y + top_margin, tab_size, tab_height,
+		render::fonts::watermark_font, "Visuals", menu.current_tab, 1);
+	gui::tab(variables::ui::menu.x + (tab_size * 2), variables::ui::menu.y + top_margin, tab_size, tab_height,
+		render::fonts::watermark_font, "Misc", menu.current_tab, 2);
+	gui::tab(variables::ui::menu.x + (tab_size * 3), variables::ui::menu.y + top_margin, tab_size, tab_height,
+		render::fonts::watermark_font, "Config", menu.current_tab, 3);
 
-	/* ------------------ CONTAINERS ------------------ */
 	const int item_slider_length = 80;
 	const int item_checkbox_length = 11;
-	int container_left_pos = variables::ui::menu::x + container_margin;	// Not const because we can have more than one col
-	int container_width = variables::ui::menu::w - container_margin*2;
+	int container_left_pos = variables::ui::menu.x + container_margin;	// Not const because we can have more than one col
+	int container_width = variables::ui::menu.w - container_margin*2;
 	int item_left_pos = container_left_pos + container_padding;
-	int item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
-	int item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
+	int item_checkbox_pos = variables::ui::menu.x + container_width - container_margin - item_checkbox_length;
+	int item_slider_pos = variables::ui::menu.x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
 
-	const int part1_y = variables::ui::menu::y + top_margin_with_tabs + container_margin;
+	const int part1_y = variables::ui::menu.y + top_margin_with_tabs + container_margin;
 	const int part1_base_item_y = part1_y + container_padding;
 
 	switch (current_tab) {
@@ -65,7 +76,7 @@ void menu::render() {
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
 				/*gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw fov", variables::aim::draw_fov);*/
+					render::fonts::watermark_font, "Draw fov", variables::aim::draw_fov);
 				gui::slider(item_left_pos, part1_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
@@ -75,7 +86,7 @@ void menu::render() {
 		case 1:	{	// Visuals
 			const int columns = 2;
 			container_width = (container_width / columns) - (container_margin / columns);
-			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+			item_checkbox_pos = variables::ui::menu.x + container_width - container_margin - item_checkbox_length;
 
 			const int part1_items_num = 7;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
@@ -140,8 +151,6 @@ void menu::render() {
 				gui::id_changer(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + item_checkbox_length, 16,
 					render::fonts::watermark_font, "Sleeve chams material", variables::chams::sleeve_chams_mat_id, 0, 16);
 			}
-
-			/* ----- Visuals - Second column ----- */
 
 			int column_number = 1;
 			container_width--;	// Not the best way to do it, but the margin on the right was always smaller because of (5/2=2)
@@ -213,7 +222,7 @@ void menu::render() {
 			}
 
 			// Buttons (start from bottom)
-			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container
+			const int buttons_con_margin_pos = variables::ui::menu.y + variables::ui::menu.h - container_margin;	// Bottom left corner of container
 			const int button_items_num = 1;
 			const int button_items_h = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height
@@ -232,11 +241,11 @@ void menu::render() {
 	}
 	// TODO: If the 2 dragable zones are in top of each other, they both get dragged
 	spectator_framework::spec_list_movement(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h);
-	gui::menu_movement(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, 30);
+	gui::menu_movement(variables::ui::menu.x, variables::ui::menu.y, variables::ui::menu.w, 30);
 }
 
 // Toggle using IsPressed (GetAsyncKeyState)
-void menu::check_toggle() {
+void menu.check_toggle() {
 	if (input::gobal_input.IsPressed(VK_INSERT))
-		variables::ui::menu::opened = !variables::ui::menu::opened;
-}
+		variables::ui::menu.opened = !variables::ui::menu.opened;
+}*/

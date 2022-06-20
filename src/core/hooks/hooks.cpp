@@ -1,5 +1,19 @@
 #pragma once
 #include "hooks.hpp"
+#include "../menu/menu.hpp"
+
+HWND						hooks::hCSGOWindow = nullptr;
+WNDPROC						hooks::pOriginalWNDProc = nullptr;
+
+extern LRESULT ImGui_ImplDX9_WndProcHandler(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
+
+void InitImGui(LPDIRECT3DDEVICE9 pDevice)
+{
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	menu.apply_fonts();
+	ImGui_ImplDX9_Init(hooks::hCSGOWindow, pDevice);
+}
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
@@ -10,14 +24,26 @@ bool hooks::initialize() {
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 	const auto findmdl_target = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
+	const auto present = reinterpret_cast<void*>(get_virtual(interfaces::directx, 17));
+	const auto reset = reinterpret_cast<void*>(get_virtual(interfaces::directx, 16));
+
+	// Get window handle
+	while (!(hooks::hCSGOWindow = FindWindowA("Valve001", nullptr)))
+	{
+		using namespace std::literals::chrono_literals;
+		std::this_thread::sleep_for(50ms);
+	}
+
+	if (hooks::hCSGOWindow)        // Hook WNDProc to capture mouse / keyboard input
+		hooks::pOriginalWNDProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hooks::hCSGOWindow, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hooks::WndProc)));
+	else
+	{
+		throw std::runtime_error("failed to hook wndproc.");
+		return false;
+	}
 
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Input", "Global input initialized!");
-
-	// WndProc
-	WndProc_hook::csgo_window = FindWindowW(L"Valve001", nullptr);		// Get window for SetWindowLongPtrW()
-	WndProc_hook::original = WNDPROC(SetWindowLongPtrW(WndProc_hook::csgo_window, GWLP_WNDPROC, LONG_PTR(WndProc_hook::WndProc)));	// Replace wnproc with our own, call original later
-	custom_helpers::state_to_console_color("Hooks", "WndProc initialized!");
 
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize minhook.");
@@ -79,9 +105,59 @@ void hooks::release() {
 
 	// Restore old WndProc
 	SetWindowLongPtrW(WndProc_hook::csgo_window, GWLP_WNDPROC, LONG_PTR(WndProc_hook::original));
+	menu.menu_opened = false;
 
 	MH_DisableHook(MH_ALL_HOOKS);
 	MH_RemoveHook(MH_ALL_HOOKS);
 	MH_Uninitialize();
 }
 
+bool init = false;
+
+long __stdcall hooks::present::hook(IDirect3DDevice9* device, RECT* source_rect, RECT* dest_rect, HWND dest_window_override, RGNDATA* dirty_region)
+{
+	if (!init)
+	{
+		menu.apply_fonts();
+		menu.setup_resent(device);
+		init = true;
+	}
+	if (init) {
+		menu.pre_render(device);
+		menu.post_render();
+
+		//menu.run_popup();
+		menu.render();
+		menu.end_present(device);
+	}
+
+	return present::original(device, source_rect, dest_rect, dest_window_override, dirty_region);
+}
+
+long __stdcall hooks::reset::hook(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* present_parameters)
+{
+	if (!init)
+		reset::original(device, present_parameters);
+
+	menu.invalidate_objects();
+	long hr = reset::original(device, present_parameters);
+	menu.create_objects(device);
+
+	return hr;
+}
+
+LRESULT __stdcall hooks::WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+{
+	if (GetAsyncKeyState(0x2D) & 1)
+		menu.menu_opened = !menu.menu_opened;
+
+	if (menu.menu_opened)
+		interfaces::input_system->enable_input(false);
+	else if (!menu.menu_opened)
+		interfaces::input_system->enable_input(true);
+
+	if (menu.menu_opened && ImGui_ImplDX9_WndProcHandler(hwnd, message, wparam, lparam))
+		return true;
+
+	return CallWindowProcA(hooks::pOriginalWNDProc, hwnd, message, wparam, lparam);
+}

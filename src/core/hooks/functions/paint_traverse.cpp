@@ -23,14 +23,14 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		misc::spectator_list();
 
-		menu::check_toggle();				// Checks if the insert key was pressed
-		menu::render();
+		//menu.check_toggle();				// Checks if the insert key was pressed
+		//menu.render();
 		popup_system::render_popups();		// Check for popups and render them on top
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):
-		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::editing_text);
-		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::opened);	// Let em use the keyboard, why the fuck not
+		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu.editing_text);
+		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu.opened);	// Let em use the keyboard, why the fuck not
 		interfaces::panel->set_mouse_input_enabled(panel, variables::ui::menu::opened);
 		break;
 	case fnv::hash("HudZoom"):	// No sniper scope
