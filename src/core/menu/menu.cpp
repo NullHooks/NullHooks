@@ -18,6 +18,7 @@ void Menu::render() {
 		ImGui::SetWindowSize(ImVec2(ImFloor(x * dpi_scale), ImFloor(y * dpi_scale)));
 
 		ImGui::Text("Hello Nullhooks");
+		ImGui::Checkbox("Bhop checkbox", &variables::misc::bhop);
 		ImGui::End();
 	}
 }
