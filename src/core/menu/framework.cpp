@@ -403,6 +403,7 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 	
 	// We get the largest item width when rendering the button, and we pass it to the combo_p, so we just use that
 	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
+	// TODO: Render darker rect to indicate selected item
 
 	int item_n = 0;
 	for (std::string item : combo_p.opt_vec) {

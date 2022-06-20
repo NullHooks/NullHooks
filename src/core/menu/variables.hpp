@@ -77,7 +77,7 @@ namespace variables {
 	namespace models {
 		// v_*_path -> view model path
 		// w_*_path -> world model path
-		inline const char* v_knife_path	= NULL;		// "models/weapons/v_minecraft_pickaxe.mdl"
+		inline const char* v_knife_path	= "models/weapons/v_minecraft_pickaxe.mdl";		// "models/weapons/v_minecraft_pickaxe.mdl"
 		inline const char* w_knife_path	= NULL;		// "models/weapons/w_minecraft_pickaxe.mdl"
 		inline const char* v_ak_path	= NULL;
 		inline const char* w_ak_path	= NULL;
@@ -138,18 +138,22 @@ namespace variables {
 
 	namespace colors {
 		// Esp and glow
-		inline color friendly_color = color(0, 72, 255, 255);
-		inline color friendly_color_soft = color(0, 150, 255, 255);	// color(85, 235, 255, 255)
+		inline color friendly_color = color(0, 90, 255, 255);
+		inline bool friendly_color_tog = false;
+		inline color friendly_color_soft = color(0, 150, 255, 255);
 		inline color friendly_color_softer = color(90, 180, 255, 255);
 		inline color enemy_color = color::red(255);
+		inline bool enemy_color_tog = false;
 		inline color enemy_color_soft = color(190, 25, 25, 255);
+		inline bool enemy_color_soft_tog = false;
 		inline color enemy_color_softer = color(255, 75, 75, 255);
 
 		// Chams
-		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
 		inline color chams_vis_enemy_c = color(230, 20, 70);
-		inline color chams_inv_friend_c = color(0, 75, 255);
+		inline bool chams_vis_enemy_tog = false;
+		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
 		inline color chams_vis_friend_c = color(0, 150, 255);
+		inline color chams_inv_friend_c = color(0, 75, 255);
 
 		inline color chams_sleeve_c = color(200, 0, 200, 255);
 		inline bool chams_sleeve_c_tog = false;

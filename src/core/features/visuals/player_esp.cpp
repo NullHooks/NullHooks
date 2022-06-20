@@ -91,7 +91,7 @@ void visuals::playeresp() {
 			if (MultiByteToWideChar(CP_UTF8, 0, playerinfo.name, -1, w_player_name, 128) < 0) continue;
 
 			if (pCSPlayer->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
-				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::friendly_color_soft);
+				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::friendly_color);
 			else if (pCSPlayer->team() != csgo::local_player->team())
 				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::enemy_color);
 		}
