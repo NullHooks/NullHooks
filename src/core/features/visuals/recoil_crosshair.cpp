@@ -45,5 +45,5 @@ void visuals::crosshair::recoil_crosshair() {
 	x = (x == screen_w / 2 - 1 || x == screen_w / 2 + 1) ? screen_w / 2 : x;
 	y = (y == screen_h / 2 - 1 || x == screen_h / 2 + 1) ? screen_h / 2 : y;
 
-	visuals::crosshair::draw_custom_crosshair(x, y, true, color(0, 255, 0, 255));
+	visuals::crosshair::draw_custom_crosshair(x, y, true, variables::colors::recoil_crosshair_c);
 }
