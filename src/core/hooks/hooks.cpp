@@ -7,13 +7,6 @@ WNDPROC                     hooks::pOriginalWNDProc = nullptr;
 
 extern LRESULT ImGui_ImplDX9_WndProcHandler(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 
-void InitImGui(LPDIRECT3DDEVICE9 pDevice) {
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	menu.apply_fonts();
-	ImGui_ImplDX9_Init(hooks::hCSGOWindow, pDevice);
-}
-
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
