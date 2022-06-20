@@ -11,12 +11,6 @@ namespace hooks {
 
 	inline unsigned int get_virtual(void* _class, unsigned int index) { return static_cast<unsigned int>((*static_cast<int**>(_class))[index]); }
 
-	namespace WndProc_hook {
-		inline HWND csgo_window;
-		inline WNDPROC original;
-		long __stdcall WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-	}
-
 	namespace alloc_key_values_memory {
 		using fn = void* (__thiscall*)(void*, const std::int32_t);
 		inline fn original;

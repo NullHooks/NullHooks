@@ -3,13 +3,21 @@
 
 IDirect3DStateBlock9* state_block;
 
+Menu menu;
+
+float dpi_scale = 1.f;
+
+static int x = 600 * dpi_scale, y = 700 * dpi_scale;
+
 void Menu::render() {
 	if (!menu_opened)
 		return;
 
-	ImGui::Begin("Nullhooks", &menu.menu_opened);
+	ImGui::Begin("Nullhooks", &menu.menu_opened, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar);
 	{
-		ImGui::Text("Hello Nullhooks :)");
+		ImGui::SetWindowSize(ImVec2(ImFloor(x * dpi_scale), ImFloor(y * dpi_scale)));
+
+		ImGui::Text("Hello Nullhooks");
 		ImGui::End();
 	}
 }
