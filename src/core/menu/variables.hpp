@@ -63,9 +63,9 @@ namespace variables {
 
 		// Selected material for each setting
 		inline int player_chams_mat_id = 1;
-		inline int sleeve_chams_mat_id = 10;
-		inline int arm_chams_mat_id = 5;
-		inline int weapon_chams_mat_id = 9;
+		inline int sleeve_chams_mat_id = 6;
+		inline int arm_chams_mat_id = 7;
+		inline int weapon_chams_mat_id = 5;
 
 		// Used for togling popups
 		inline bool player_chams_popup_tog = false;
