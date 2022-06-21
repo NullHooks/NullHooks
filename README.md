@@ -149,6 +149,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5) 
     - [X] Add great global input system
 - [X] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
+- [X] Add combobox (Will add multi-combobox when needed)
+    - [X] Make selected item highlighted in the popup
 #
 </details>
 
@@ -162,8 +164,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
     - [ ] Menu options
-- [X] Add combobox (Will add multi-combobox when needed)
-    - [ ] Make selected item highlighted in the popup
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
