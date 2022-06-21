@@ -403,7 +403,7 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 	
 	// We get the largest item width when rendering the button, and we pass it to the combo_p, so we just use that
 	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
-	// TODO: Render darker rect to indicate selected item
+	render::draw_filled_rect(combo_p.x, combo_p.y + combo_p.target_idx * 15 - 1, combo_p.w, 15, color(20, 20, 20, 255));
 
 	int item_n = 0;
 	for (std::string item : combo_p.opt_vec) {
@@ -411,7 +411,7 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 		item_n++;
 	}
 
-	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y <= combo_p.y + combo_p.h) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y <= combo_p.y + combo_p.h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		combo_p.target_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
 	}
 }
