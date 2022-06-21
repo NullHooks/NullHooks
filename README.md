@@ -90,11 +90,11 @@ I recommend using Visual Studio 2022.
 
 1. Install Microsoft Visual Studio 2022 from [this link](https://visualstudio.microsoft.com/vs/community/)
 2. [Clone](https://www.git-scm.com/docs/git-clone) or [download](https://github.com/r4v10l1/NullHooks/archive/refs/heads/main.zip) the project to your computer
-3. Open the file `src/csgo-cheat.sln` with Visual Studio 2022
+3. Open the file `src/NullHooks.sln` with Visual Studio 2022
 4. If an alert pops up, click `Ok` or `Update`, if it doesn't make sure the project is updated by clicking `Project > Retarget solution` in the window bar
 5. Make sure you are compiling the project in `Release | x86` in the top bar
 6. Click `Build > Build solution` in the window bar (You can also press `Ctrl+Shift+B`)
-7. The final `.dll` file path should be in the output window of Visual Studio (Usually `src/output/release/csgo-cheat.dll`)
+7. The final `.dll` file path should be in the output window of Visual Studio (Usually `src/output/release/NullHooks.dll`)
 8. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
 *Note: If you have problems, make sure you follow the steps above and verify the integrity of your game files.*
@@ -103,7 +103,7 @@ I recommend using Visual Studio 2022.
 This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
 
 1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
-2. Download the file `csgo-cheat.dll` under "Assets"
+2. Download the file `NulHooks.dll` under "Assets"
 3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
 ## Todo
