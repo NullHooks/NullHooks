@@ -166,6 +166,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Menu options
 - [ ] Add second color picker
     - [ ] Add color picker for friendly player chams
+- [ ] Replace noflash toggle with slider for opacity
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
