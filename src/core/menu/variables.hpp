@@ -77,7 +77,7 @@ namespace variables {
 	namespace models {
 		// v_*_path -> view model path
 		// w_*_path -> world model path
-		inline const char* v_knife_path	= NULL;		// "models/weapons/v_minecraft_pickaxe.mdl"
+		inline const char* v_knife_path	= "models/weapons/v_minecraft_pickaxe.mdl";		// "models/weapons/v_minecraft_pickaxe.mdl"
 		inline const char* w_knife_path	= NULL;		// "models/weapons/w_minecraft_pickaxe.mdl"
 		inline const char* v_ak_path	= NULL;
 		inline const char* w_ak_path	= NULL;
@@ -87,7 +87,7 @@ namespace variables {
 
 	namespace misc_visuals {
 		inline bool nade_predict = true;
-		inline bool noflash = true;
+		inline float noflash_alpha = 0.f;
 		inline bool noscope  = true;
 		inline bool crosshair = false;
 		inline bool recoil_crosshair = false;

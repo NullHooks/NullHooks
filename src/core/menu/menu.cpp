@@ -76,6 +76,7 @@ void menu::render() {
 			const int columns = 2;
 			container_width = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+			item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;
 
 			const int part1_items_num = 7;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;	// top and bottom - 4 necesary because of the items mult
@@ -172,8 +173,8 @@ void menu::render() {
 			gui::group_box(container_left_pos, part5_y, container_width, part5_h, render::fonts::watermark_font, "Misc", false); {
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Nade prediction", variables::misc_visuals::nade_predict);
-				gui::check_box(item_left_pos, part5_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash);
+				gui::slider(item_left_pos, part5_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash_alpha, 0.f, 1.f);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
 				gui::check_box(item_left_pos, part5_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
@@ -206,9 +207,9 @@ void menu::render() {
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Misc", false); {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
-				gui::slider(item_left_pos,    part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom FOV", variables::misc_visuals::custom_fov_slider, 80.f, 130.f);
-				gui::slider(item_left_pos,    part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
