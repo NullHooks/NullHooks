@@ -30,6 +30,43 @@ bool aimbot_weapon_check() {
 	return true;
 }
 
+player_t* get_best_target(c_usercmd* cmd) {
+	vec3_t best_angle{};
+	float best_fov{ 180.f * variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
+	player_t* final_player = nullptr;
+
+	for (int n = 1; n <= 64; n++) {
+		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
+		if (!cur_player
+			|| cur_player == csgo::local_player
+			|| !cur_player->is_alive()
+			|| cur_player->dormant()
+			|| cur_player->has_gun_game_immunity()) continue;
+		if (cur_player->team() == csgo::local_player->team() && !variables::aim::target_friends) continue;
+	
+		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
+
+		matrix_t bones[128];
+		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
+		vec3_t cur_player_head = bones[8].get_origin();
+
+		// Try to trace ray to taget player (check visible)
+		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
+
+		vec3_t aim_angle = math::calculate_angle(local_eye_pos, cur_player_head);
+		aim_angle.clamp();
+
+		// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
+		const float fov = cmd->viewangles.distance_to(aim_angle);
+		if (fov < best_fov) {
+			best_fov = fov;
+			final_player = cur_player;
+		}
+	}
+
+	return final_player;
+}
+
 void aim::run_aimbot(c_usercmd* cmd) {
 	if (!(cmd->buttons & cmd_buttons::in_attack)) return;		// User not attacking
 	if (!variables::aim::aimbot) return;
@@ -37,54 +74,39 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (!csgo::local_player) return;
 	if (!aimbot_weapon_check()) return;
 
-	vec3_t best_angle{};
-	float best_fov{ variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
+	player_t* target = get_best_target(cmd);
+	if (!target) return;
 
-	for (int n = 1; n <= interfaces::globals->max_clients; n++) {
-		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
-		if (!cur_player
-			|| !cur_player->is_alive()
-			|| cur_player->dormant()
-			|| cur_player->has_gun_game_immunity()) continue;
-		if (cur_player->team() == csgo::local_player->team() && !variables::aim::target_friends) continue;
+	auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
-		matrix_t bones[128];
-		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
+	matrix_t bones[128];
+	if (!target->setup_bones(bones, 128, 256, 0)) return;
+	vec3_t cur_player_head = bones[8].get_origin();
 
-		// We need to get weapon_type for aim_punch anyway so
-		weapon_t* active_weapon = csgo::local_player->active_weapon();
-		if (!active_weapon) return;
-		const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
+	vec3_t aim_angle = math::calculate_angle(local_eye_pos, cur_player_head);
+	aim_angle.clamp();
 
-		vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
-		if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
-		else {
-			switch (weapon_type) {
-				case WEAPONTYPE_RIFLE:
-				case WEAPONTYPE_SUBMACHINEGUN:
-				case WEAPONTYPE_MACHINEGUN:
-					local_aim_punch = csgo::local_player->aim_punch_angle();
-			}
-		}
+	// We need to get weapon_type for aim_punch anyway so
+	weapon_t* active_weapon = csgo::local_player->active_weapon();
+	if (!active_weapon) return;
+	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
 
-		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
-		
-		// Try to trace ray to taget player (check visible)
-		vec3_t cur_player_head = bones[8].get_origin();
-		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
-
-		//static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->float_value;	// Does not work :(
-		vec3_t enemy_angle{ ((cur_player_head - local_eye_pos).to_angle() - cmd->viewangles) - local_aim_punch * 2.f };
-
-		// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
-		const float fov = std::hypot(enemy_angle.x, enemy_angle.y);
-		if (fov < best_fov) {
-			best_fov = fov;
-			best_angle = enemy_angle;
+	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
+	if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
+	else {
+		switch (weapon_type) {
+			case WEAPONTYPE_RIFLE:
+			case WEAPONTYPE_SUBMACHINEGUN:
+			case WEAPONTYPE_MACHINEGUN:
+				local_aim_punch = csgo::local_player->aim_punch_angle();
 		}
 	}
 
-	cmd->viewangles += best_angle * (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing
+	//static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->float_value;	// Does not work :(
+	vec3_t enemy_angle = (aim_angle - (local_aim_punch * 2.f)) - cmd->viewangles;
+	enemy_angle.clamp();
+
+	cmd->viewangles += enemy_angle * (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing
 }
 
 // https://www.unknowncheats.me/forum/counterstrike-global-offensive/129068-draw-aimbot-fov.html
