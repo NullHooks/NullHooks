@@ -155,6 +155,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Replace noflash toggle with slider for opacity
 - [X] Add speedgraph
 - [X] Fix combobox crash when holding outside area
+- [X] Add second color picker
+    - [X] Add color picker for friendly player chams
 #
 </details>
 
@@ -168,8 +170,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
     - [ ] Menu options
-- [ ] Add second color picker
-    - [ ] Add color picker for friendly player chams
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
