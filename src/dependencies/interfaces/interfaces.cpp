@@ -35,8 +35,8 @@ bool interfaces::initialize() {
 
 	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))												// Get the exported KeyValuesSystem function
 		key_values_system = reinterpret_cast<void* (__cdecl*)()>(GetProcAddress(handle, "KeyValuesSystem"))();	// Set our pointer by calling the function
-	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine) + 3;	// FF 52 04 85 C0 74 0C 56
-	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client) + 3;	// FF 52 04 85 C0 74 0C 56
+	key_values_engine = utilities::pattern_scan("engine.dll", sig_key_values_engine);
+	key_values_client = utilities::pattern_scan("client.dll", sig_key_values_client);
 
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "\n----------------------------------------------------\n");
 	custom_helpers::state_to_console_color("Setup", "Interfaces initialized!");

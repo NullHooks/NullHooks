@@ -2,7 +2,7 @@
 #include "hooks.hpp"
 
 bool hooks::initialize() {
-	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 1));
+	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
 	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
 	const auto paint_traverse_target = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
 	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
