@@ -153,7 +153,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add combobox (Will add multi-combobox when needed)
     - [X] Make selected item highlighted in the popup
 - [X] Replace noflash toggle with slider for opacity
-- [ ] Add speedgraph
+- [X] Add speedgraph
+- [X] Fix combobox crash when holding outside area
 #
 </details>
 
@@ -167,7 +168,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
     - [ ] Menu options
-- [ ] Fix combobox crash when holding outside area
 - [ ] Add second color picker
     - [ ] Add color picker for friendly player chams
 - [ ] Add autoscope for snipers (independent of aimbot)
