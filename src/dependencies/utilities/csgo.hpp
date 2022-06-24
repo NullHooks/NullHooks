@@ -40,8 +40,8 @@
 #define sig_prediction_random_seed "8B 0D ? ? ? ? BA ? ? ? ? E8 ? ? ? ? 83 C4 04"
 
 // custom for the hooks
-#define sig_key_values_engine "FF 52 04 85 C0 74 0C 56"
-#define sig_key_values_client "FF 52 04 85 C0 74 0C 56"
+#define sig_key_values_engine "85 C0 74 ? 51 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
+#define sig_key_values_client "85 C0 74 ? 6A ? 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 
 namespace csgo {
 	extern player_t* local_player;
