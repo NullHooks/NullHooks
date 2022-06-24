@@ -169,11 +169,61 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
 
 	render::draw_filled_rect(color_x, y, col_w, col_h, setting_color);											// Color itself
-	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color::black(255));								// Color outline
+	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));						// Color outline
 
 	// Push to vector to render after menu
 	if (toggle_color)
 		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, setting_color, toggle_color });
+}
+
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color1, bool& toggle_color1, color& setting_color2, bool& toggle_color2) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+	const int w = 11, h = 11;							// For checkbox
+	const int margin = 5;								// Color "button" margin
+	const int col_w = 20, col_h = 11;					// Color "button" size
+	const int color_r_x = position - margin - col_w;	// Right color (2) "button" position
+	const int color_l_x = color_r_x - margin - col_w;	// Left color (1) "button" position
+
+	// Comments in other function
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
+		// Checkbox
+		if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
+			|| ((cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
+			value = !value;
+		
+		// Clicked outside popups. We need to check like this so both popups can't be open at the same time
+		if (!((cursor.x >= color_l_x) && (cursor.x <= color_r_x + popup_system::win_w) && (cursor.y >= y + h + margin) && (cursor.y <= y + h + margin + popup_system::win_h))) {
+			// Check if we clicked left button, then toggle. If not just turn it off
+			if ((cursor.x >= color_l_x) && (cursor.x <= color_l_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
+				toggle_color1 = !toggle_color1;
+			else
+				toggle_color1 = false;
+
+			// Check if we clicked right button, then toggle. If not just turn it off
+			if ((cursor.x >= color_r_x) && (cursor.x <= color_r_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
+				toggle_color2 = !toggle_color2;
+			else
+				toggle_color2 = false;
+		}
+	}
+
+	// Checkbox
+	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
+
+	// Left color
+	render::draw_filled_rect(color_l_x, y, col_w, col_h, setting_color1);
+	render::draw_rect(color_l_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
+
+	// Right color
+	render::draw_filled_rect(color_r_x, y, col_w, col_h, setting_color2);
+	render::draw_rect(color_r_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
+
+	// Push to vector to render after menu
+	if (toggle_color1)
+		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, setting_color1, toggle_color1 });
+	if (toggle_color2)
+		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, setting_color2, toggle_color2 });
 }
 
 // Thanks to https://github.com/bobloxmonke
