@@ -125,7 +125,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
-					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
+					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_friend_tog, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
 				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length,
 					render::fonts::watermark_font, "Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,

@@ -155,6 +155,7 @@ namespace variables {
 		inline bool chams_vis_enemy_tog = false;
 		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
 		inline color chams_vis_friend_c = color(0, 150, 255);
+		inline bool chams_vis_friend_tog = false;
 		inline color chams_inv_friend_c = color(0, 75, 255);
 
 		inline color chams_sleeve_c = color(200, 0, 200, 255);
