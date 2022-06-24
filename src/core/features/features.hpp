@@ -51,6 +51,7 @@ namespace misc {
 		void bunny_hop(c_usercmd* cmd);
 	}
 	void spectator_list();
+	void speed_graph();
 }
 
 namespace commands_features {
