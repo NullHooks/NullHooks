@@ -411,7 +411,6 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 		item_n++;
 	}
 
-	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsHeld(VK_LBUTTON))
 		combo_p.target_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
-	}
 }
