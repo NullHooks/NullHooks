@@ -101,6 +101,8 @@ namespace variables {
 	namespace misc {
 		inline bool bhop = true;
 		inline bool draw_watermark = true;
+		inline bool draw_speedgraph = false;
+		inline bool use_speedgraph_color = false;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
 	}

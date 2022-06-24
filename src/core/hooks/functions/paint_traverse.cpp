@@ -21,6 +21,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		visuals::crosshair::custom_crosshair();
 		visuals::crosshair::recoil_crosshair();
 
+		misc::speed_graph();
 		misc::spectator_list();
 
 		menu::check_toggle();				// Checks if the insert key was pressed
