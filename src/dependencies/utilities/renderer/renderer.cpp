@@ -1,6 +1,7 @@
 #include "renderer.hpp"
 
 unsigned long render::fonts::watermark_font;
+unsigned long render::fonts::watermark_font_m;		// Medium size
 unsigned long render::fonts::watermark_font_ns;		// No shadow
 unsigned long render::fonts::playername_font;		// wchar support
 unsigned long render::fonts::weapon_icon_font;		// No worky
@@ -8,12 +9,14 @@ unsigned long render::fonts::dina_font;				// Love it 2 much
 
 void render::initialize() {
 	render::fonts::watermark_font = interfaces::surface->font_create();
+	render::fonts::watermark_font_m = interfaces::surface->font_create();
 	render::fonts::watermark_font_ns = interfaces::surface->font_create();
 	render::fonts::playername_font = interfaces::surface->font_create();
 	render::fonts::weapon_icon_font = interfaces::surface->font_create();
 	render::fonts::dina_font = interfaces::surface->font_create();
 
 	interfaces::surface->set_font_glyph(render::fonts::watermark_font, "Tahoma", 12, 500, 0, 0, font_flags::fontflag_dropshadow);
+	interfaces::surface->set_font_glyph(render::fonts::watermark_font_m, "Tahoma", 14, 500, 0, 0, font_flags::fontflag_dropshadow);
 	interfaces::surface->set_font_glyph(render::fonts::watermark_font_ns, "Tahoma", 12, 500, 0, 0, 0);
 	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Lucida Console", 12, 500, 0, 0, 0);
 

@@ -52,6 +52,5 @@ void misc::speed_graph() {
 
 	// Speed text
 	color speed_col = speed2color(cur_speed);
-
-	render::draw_text_string(screen_w/2, screen_h * 0.9 + 20, render::fonts::watermark_font, std::to_string(cur_speed), true, speed_col);
+	render::draw_text_string(screen_w/2, screen_h * 0.9 + 20, render::fonts::watermark_font_m, std::to_string(cur_speed), true, speed_col);
 }
