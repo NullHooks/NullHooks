@@ -50,5 +50,5 @@ void misc::speed_graph() {
 	else if (cur_speed < 135) speed_col = color(255, 255, 0, 255);
 	else if (cur_speed < 260) speed_col = color(0, 255, 10, 255);
 	else speed_col = color(0, 210, 230, 255);
-	render::draw_text_string(screen_w/2, screen_h * 0.9 + 20, render::fonts::watermark_font, std::to_string(cur_speed), true, speed_col);
+	render::draw_text_string(screen_w/2, screen_h * 0.9 + 20, render::fonts::watermark_font_m, std::to_string(cur_speed), true, speed_col);
 }
