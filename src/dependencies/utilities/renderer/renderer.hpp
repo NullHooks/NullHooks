@@ -36,6 +36,7 @@ namespace render {
 
 	namespace fonts {
 		extern unsigned long watermark_font;
+		extern unsigned long watermark_font_m;
 		extern unsigned long watermark_font_ns;		// No shadow
 		extern unsigned long playername_font;		// wchar support
 		extern unsigned long weapon_icon_font;		// No worky
