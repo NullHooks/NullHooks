@@ -23,7 +23,13 @@ void misc::speed_graph() {
 	if (csgo::local_player->is_scoped()) return;		// We don't want to draw speed graph when scoped
 
 	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
-	shift_and_append(cur_speed);
+
+	static int old_tick_count = interfaces::globals->tick_count;
+
+	if(interfaces::globals->tick_count != old_tick_count) {
+		shift_and_append(cur_speed);
+		old_tick_count = interfaces::globals->tick_count;
+	}
 
 	// Render graph
 	int screen_w, screen_h;
