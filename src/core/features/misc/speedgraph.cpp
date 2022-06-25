@@ -14,6 +14,7 @@ color speed2color(int speed) {
 	float_hsv hue = { speed / 600.0f, 1.0f, 1.0f };
 	return custom_helpers::hsv2color(hue, 255);
 }
+
 void misc::speed_graph() {
 	if (!variables::misc::draw_speedgraph) return;
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
