@@ -12,6 +12,7 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	auto old_forwardmove = cmd->forwardmove;
 	auto old_sidemove = cmd->sidemove;
 
+	misc::speedgraph::update();
 	misc::movement::bunny_hop(cmd);
 	aim::run_aimbot(cmd);
 
