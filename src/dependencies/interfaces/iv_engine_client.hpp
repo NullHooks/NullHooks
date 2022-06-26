@@ -31,6 +31,11 @@ public:
 		using original_fn = i_net_channel*(__thiscall*)(iv_engine_client*);
 		return (*(original_fn**)this)[78](this);
 	}
+
+	void* get_bsp_tree_query() {
+		using original_fn = void *(__thiscall *)(iv_engine_client *);
+		return (*(original_fn **)this)[43](this);
+	}
 	
 	int get_local_player() {
 		using original_fn = int(__thiscall*)(iv_engine_client*);
