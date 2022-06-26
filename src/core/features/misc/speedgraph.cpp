@@ -1,6 +1,6 @@
 #include "../features.hpp"
 
-const int speed_graph_width = 420;
+const int speed_graph_width = 420;                          // Width in px, each px will be a speed value
 static std::vector<int> speeds_vec(speed_graph_width, 0);	// Initialize vec of size graph_width with values as 0. Will store all the speed values
 
 void shift_and_append(int new_val) {
@@ -31,9 +31,9 @@ void misc::speedgraph::draw() {
 	int screen_w, screen_h;
 	interfaces::surface->get_screen_size(screen_w, screen_h);
 
-	for (int n = 0; n < speeds_vec.size() - 1; n++) { // -1 to skip last item
-		int cur_speed  = speeds_vec.at(n);
-		int next_speed = speeds_vec.at(n + 1);
+	for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
+        int cur_speed  = speeds_vec.at(n);
+		int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
 
 		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
 		int next_x = cur_x + 1;
@@ -47,9 +47,8 @@ void misc::speedgraph::draw() {
 		render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
 	}
 
-	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
-
 	// Speed text
+	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 	color speed_col = speed2color(cur_speed);
 	render::draw_text_string(screen_w/2, screen_h * 0.9 + 20, render::fonts::watermark_font_m, std::to_string(cur_speed), true, speed_col);
 }
