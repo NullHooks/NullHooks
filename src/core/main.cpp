@@ -16,7 +16,7 @@ unsigned long WINAPI initialize(void* instance) {
 	}
 
 	catch (const std::runtime_error & error) {
-		MessageBoxA(nullptr, error.what(), "csgo-cheat error!", MB_OK | MB_ICONERROR);
+		MessageBoxA(nullptr, error.what(), "NullHooks error!", MB_OK | MB_ICONERROR);
 		FreeLibraryAndExitThread(static_cast<HMODULE>(instance), 0);
 	}
 
@@ -35,11 +35,9 @@ unsigned long WINAPI initialize(void* instance) {
 
 unsigned long WINAPI release() {
 	hooks::release();
-
 #ifdef _DEBUG
 	console::release();
 #endif
-
 	return TRUE;
 }
 
@@ -50,7 +48,6 @@ std::int32_t WINAPI DllMain(const HMODULE instance [[maybe_unused]], const unsig
 		case DLL_PROCESS_ATTACH: {
 			if (auto handle = CreateThread(nullptr, NULL, initialize, instance, NULL, nullptr))
 				CloseHandle(handle);
-
 			break;
 		}
 
