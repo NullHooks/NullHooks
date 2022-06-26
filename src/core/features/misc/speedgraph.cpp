@@ -32,7 +32,7 @@ void misc::speedgraph::draw() {
 	interfaces::surface->get_screen_size(screen_w, screen_h);
 
 	for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
-        int cur_speed  = speeds_vec.at(n);
+		int cur_speed  = speeds_vec.at(n);
 		int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
 
 		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
