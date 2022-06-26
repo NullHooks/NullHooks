@@ -107,6 +107,7 @@
     <ClCompile Include="core\hooks\functions\draw_model_execute.cpp" />
     <ClCompile Include="core\hooks\functions\find_mdl.cpp" />
     <ClCompile Include="core\hooks\functions\get_viewmodel_fov.cpp" />
+    <ClCompile Include="core\hooks\functions\list_leaves_in_box.cpp" />
     <ClCompile Include="core\hooks\functions\override_view.cpp" />
     <ClCompile Include="core\hooks\functions\paint_traverse.cpp" />
     <ClCompile Include="core\hooks\functions\WndProc_hook.cpp" />
