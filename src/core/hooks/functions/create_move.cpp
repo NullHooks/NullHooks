@@ -1,3 +1,5 @@
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
 #include "core/hooks/hooks.hpp"
 
 bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd* cmd) {

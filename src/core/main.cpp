@@ -1,4 +1,5 @@
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 unsigned long WINAPI initialize(void* instance) {
 	while (!GetModuleHandleA("serverbrowser.dll"))

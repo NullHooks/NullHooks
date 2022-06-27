@@ -1,4 +1,6 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 // DoPostScreenSpaceEffects hook
 void visuals::glow::draw_glow() {

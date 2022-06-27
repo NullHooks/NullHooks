@@ -1,3 +1,4 @@
+#include "core/features/features.hpp"
 #include "core/hooks/hooks.hpp"
 #include "core/menu/menu.hpp"
 

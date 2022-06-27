@@ -1,9 +1,9 @@
 #pragma once
-#include "dependencies/math/math.hpp"
 #include <array>
-#include "source-sdk/classes/collideable.hpp"
-#include "source-sdk/classes/client_class.hpp"
+#include "dependencies/math/math.hpp"
+#include "dependencies/interfaces/interfaces.hpp"
 #include "source-sdk/structs/animstate.hpp"
+#include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
 
 enum data_update_type_t {
