@@ -81,7 +81,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - BunnyHop
 - Spectator list
 - Fov changer
-- Stats watermark (*username, time, fps, speed...*)
+- Stats watermark (*username, time, fps, ping...*)
 - Speed graph (*With color option*)
 - Hide cheat on screenshots
 
@@ -157,6 +157,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Fix combobox crash when holding outside area
 - [X] Add second color picker
     - [X] Add color picker for friendly player chams
+- [X] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html)) (#18)
 #
 </details>
 
@@ -172,7 +173,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Menu options
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
-- [ ] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html))
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
 - [ ] Reset bomb timer on new round (sometimes?)
