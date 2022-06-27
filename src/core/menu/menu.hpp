@@ -1,5 +1,4 @@
 #pragma once
-#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/framework.hpp"
 #include "core/menu/variables.hpp"

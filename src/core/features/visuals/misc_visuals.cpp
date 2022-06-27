@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 void visuals::misc::nade_predict() noexcept {
     // TODO: https://www.unknowncheats.me/forum/counterstrike-global-offensive/452030-hijacking-games-nade-prediction.html

@@ -79,6 +79,8 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>dependencies/utilities/csgo.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -86,22 +88,58 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\features\aim\aimbot.cpp" />
-    <ClCompile Include="core\features\aim\triggerbot.cpp" />
-    <ClCompile Include="core\features\misc\commands.cpp" />
-    <ClCompile Include="core\features\misc\engine_prediction.cpp" />
-    <ClCompile Include="core\features\misc\bhop.cpp" />
-    <ClCompile Include="core\features\misc\speedgraph.cpp" />
-    <ClCompile Include="core\features\visuals\chams.cpp" />
-    <ClCompile Include="core\features\visuals\custom_crosshair.cpp" />
-    <ClCompile Include="core\features\visuals\glow.cpp" />
-    <ClCompile Include="core\features\visuals\entity_esp.cpp" />
-    <ClCompile Include="core\features\visuals\misc_visuals.cpp" />
-    <ClCompile Include="core\features\visuals\models.cpp" />
-    <ClCompile Include="core\features\visuals\no_flash.cpp" />
-    <ClCompile Include="core\features\misc\spectator_list.cpp" />
-    <ClCompile Include="core\features\visuals\recoil_crosshair.cpp" />
-    <ClCompile Include="core\features\visuals\player_esp.cpp" />
+    <ClCompile Include="core\features\aim\aimbot.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\aim\triggerbot.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\features.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\misc\commands.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\misc\engine_prediction.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\misc\bhop.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\misc\speedgraph.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\chams.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\custom_crosshair.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\glow.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\entity_esp.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\misc_visuals.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\models.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\no_flash.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\misc\spectator_list.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\recoil_crosshair.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="core\features\visuals\player_esp.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp" />
     <ClCompile Include="core\hooks\functions\create_move.cpp" />
     <ClCompile Include="core\hooks\functions\do_post_screen_space_effects.cpp" />
@@ -115,10 +153,14 @@
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\framework.cpp" />
     <ClCompile Include="core\menu\global_input.cpp" />
-    <ClCompile Include="core\menu\menu.cpp" />
+    <ClCompile Include="core\menu\menu.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="core\helpers\misc_helpers.cpp" />
     <ClCompile Include="core\menu\watermark.cpp" />
-    <ClCompile Include="dependencies\interfaces\i_studio_render.h" />
+    <ClCompile Include="dependencies\interfaces\i_studio_render.h">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="dependencies\minhook\buffer.c" />
     <ClCompile Include="dependencies\minhook\hde\hde32.c" />
     <ClCompile Include="dependencies\minhook\hde\hde64.c" />
@@ -127,13 +169,23 @@
     <ClCompile Include="dependencies\interfaces\interfaces.cpp" />
     <ClCompile Include="dependencies\math\math.cpp" />
     <ClCompile Include="dependencies\utilities\console\console.cpp" />
-    <ClCompile Include="dependencies\utilities\csgo.cpp" />
-    <ClCompile Include="dependencies\utilities\netvars\netvars.cpp" />
+    <ClCompile Include="dependencies\utilities\csgo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\utilities\netvars\netvars.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="dependencies\utilities\renderer\renderer.cpp" />
     <ClCompile Include="dependencies\utilities\utilities.cpp" />
-    <ClCompile Include="core\main.cpp" />
-    <ClCompile Include="source-sdk\math\vector3d.cpp" />
-    <ClCompile Include="source-sdk\math\view_matrix.cpp" />
+    <ClCompile Include="core\main.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">core/features/features.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="source-sdk\math\vector3d.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source-sdk\math\view_matrix.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\features\features.hpp" />
