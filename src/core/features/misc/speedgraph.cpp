@@ -1,4 +1,6 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 const int speed_graph_width = 420;                          // Width in px, each px will be a speed value
 static std::vector<int> speeds_vec(speed_graph_width, 0);	// Initialize vec of size graph_width with values as 0. Will store all the speed values

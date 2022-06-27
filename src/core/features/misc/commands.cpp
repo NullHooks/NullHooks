@@ -1,3 +1,4 @@
+#include "core/helpers/misc_helpers.hpp"
 #include "core/features/features.hpp"
 
 void commands_features::exec_autoexec() {

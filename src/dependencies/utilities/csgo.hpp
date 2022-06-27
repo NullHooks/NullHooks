@@ -23,7 +23,6 @@
 #include "dependencies/math/math.hpp"
 #include "dependencies/utilities/renderer/renderer.hpp"
 #include "dependencies/utilities/console/console.hpp"
-#include "dependencies/utilities/csgo.hpp" //lol
 
 //interfaces
 #define sig_client_state "A1 ? ? ? ? 8B 80 ? ? ? ? C3"

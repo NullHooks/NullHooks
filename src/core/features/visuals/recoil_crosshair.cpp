@@ -1,4 +1,6 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 // Same as aimbot but for recoil crosshair
 bool recoil_crosshair_weapon_check() {
