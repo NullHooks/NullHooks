@@ -1,4 +1,4 @@
-#include "console.hpp"
+#include "dependencies/utilities/csgo.hpp"
 
 void console::initialize(const char* title) {
 	AllocConsole();

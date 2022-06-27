@@ -1,4 +1,6 @@
-#include "../features.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color cross_color) {
 	const int gap = (int)variables::crosshair::crosshair_gap;

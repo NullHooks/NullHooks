@@ -1,4 +1,4 @@
-#include "global_input.hpp"
+#include "core/menu/global_input.hpp"
 
 // Initialize the arrays and what not
 void GlobalInput::Init() {

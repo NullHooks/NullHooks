@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/structs/materials.hpp"
+#include "source-sdk/structs/materials.hpp"
 
 struct draw_model_state_t {
 public:

@@ -1,7 +1,5 @@
 #pragma once
-#include "../../dependencies/utilities/csgo.hpp"
-#include "../helpers/misc_helpers.hpp"
-#include "../menu/variables.hpp"
+#include "source-sdk/sdk.hpp"
 
 namespace aim {
 	void run_aimbot(c_usercmd* cmd);
@@ -56,6 +54,16 @@ namespace misc {
 		void draw();
 	}
 }
+
+namespace prediction {
+	void start(c_usercmd *cmd);
+	void end();
+
+	inline player_move_data data;
+	inline float old_cur_time;
+	inline float old_frame_time;
+	inline int *prediction_random_seed;
+};
 
 namespace commands_features {
 	void exec_autoexec();

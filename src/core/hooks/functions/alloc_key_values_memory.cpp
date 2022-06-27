@@ -1,4 +1,4 @@
-#include "../hooks.hpp"
+#include "core/hooks/hooks.hpp"
 
 void* __stdcall hooks::alloc_key_values_memory::hook(const std::int32_t size) {
 	// If function is returning to speficied addresses, return nullptr to "bypass"

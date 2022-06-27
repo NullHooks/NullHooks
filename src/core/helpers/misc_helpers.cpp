@@ -1,4 +1,4 @@
-#include "misc_helpers.hpp"
+#include "core/helpers/misc_helpers.hpp"
 
 void custom_helpers::state_to_console(const char* tag,  const char* text) {
 	interfaces::console->printf("[NullHooks] [%s] %s\n", tag, text);

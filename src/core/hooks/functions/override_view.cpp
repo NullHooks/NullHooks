@@ -1,4 +1,6 @@
-#include "../hooks.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
+#include "core/hooks/hooks.hpp"
 
 void __fastcall hooks::override_view::hook(uintptr_t, uintptr_t, view_setup_t* setup) {
 	if (csgo::local_player

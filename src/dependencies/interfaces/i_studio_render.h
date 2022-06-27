@@ -1,7 +1,7 @@
 #pragma once
-#include "i_material_system.hpp"
 #include <cstddef>
 #include <string_view>
+#include "dependencies/interfaces/i_material_system.hpp"
 
 // https://github.com/notbemji/5shekelcheats/blob/master/dependencies/interfaces/i_studio_render.h
 

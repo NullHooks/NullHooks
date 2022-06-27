@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/misc/color.hpp"
+#include "source-sdk/misc/color.hpp"
 
 class i_render_view {
 private:

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../utilities/csgo.hpp"
+#include "dependencies/utilities/csgo.hpp"
 
 enum font_flags {
 	fontflag_none,
