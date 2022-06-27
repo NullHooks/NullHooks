@@ -1,4 +1,5 @@
-#include "engine_prediction.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
 
 void prediction::start(c_usercmd* cmd) {
 	if (!csgo::local_player) return;

@@ -1,4 +1,6 @@
-#include "../features.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 void visuals::playeresp() {
 	if (!(variables::player_visuals::boxesp

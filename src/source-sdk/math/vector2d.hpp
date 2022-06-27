@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector3d.hpp"
+#include "source-sdk/math/vector2d.hpp"
 class vec2_t {
 public:
 	float x, y;

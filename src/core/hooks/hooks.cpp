@@ -1,5 +1,6 @@
-#pragma once
-#include "hooks.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
+#include "core/hooks/hooks.hpp"
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));

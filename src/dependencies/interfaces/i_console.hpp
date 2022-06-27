@@ -1,7 +1,7 @@
 #pragma once
-#include "../../source-sdk/classes/convar.hpp"
-#include "../../source-sdk/misc/color.hpp"
-#include "i_app_system.hpp"
+#include "source-sdk/classes/convar.hpp"
+#include "source-sdk/misc/color.hpp"
+#include "dependencies/interfaces/i_app_system.hpp"
 
 class i_console;
 class convar;

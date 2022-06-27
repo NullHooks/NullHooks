@@ -1,5 +1,5 @@
 #pragma once
-#include "../../dependencies/interfaces/imageformats.h"
+#include "dependencies/interfaces/imageformats.h"
 //#include "../math/vector3d.hpp"
 
 enum material_var_flags_t {

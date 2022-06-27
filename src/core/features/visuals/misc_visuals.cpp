@@ -1,4 +1,6 @@
-#include "../features.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 void visuals::misc::nade_predict() noexcept {
     // TODO: https://www.unknowncheats.me/forum/counterstrike-global-offensive/452030-hijacking-games-nade-prediction.html

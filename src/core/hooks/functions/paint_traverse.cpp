@@ -1,5 +1,6 @@
-#include "../hooks.hpp"
-#include "../../menu/menu.hpp"
+#include "core/features/features.hpp"
+#include "core/hooks/hooks.hpp"
+#include "core/menu/menu.hpp"
 
 void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repaint, bool allow_force) {
 	auto panel_to_draw = fnv::hash(interfaces::panel->get_panel_name(panel));

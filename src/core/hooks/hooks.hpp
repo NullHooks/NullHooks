@@ -1,9 +1,8 @@
 #pragma once
 #include <cstdint>
-#include "../features/features.hpp"
-#include "../../source-sdk/sdk.hpp"
-#include "../helpers/misc_helpers.hpp"
-#include "../menu/framework.hpp"
+#include "source-sdk/sdk.hpp"
+#include "core/helpers/misc_helpers.hpp"
+#include "core/menu/framework.hpp"
 
 namespace hooks {
 	bool initialize();

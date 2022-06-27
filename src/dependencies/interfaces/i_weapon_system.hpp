@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/structs/weaponinfo.hpp"
+#include "source-sdk/structs/weaponinfo.hpp"
 
 class i_weapon_system {
 	virtual void unused0() = 0;

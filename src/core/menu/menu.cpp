@@ -1,5 +1,5 @@
-#include "menu.hpp"
-#include "../features/features.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/menu.hpp"
 
 auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
 	// Background

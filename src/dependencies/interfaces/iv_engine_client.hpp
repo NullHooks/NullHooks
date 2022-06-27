@@ -1,9 +1,9 @@
 #pragma once
 #include <cstdint>
-#include "../../source-sdk/math/vector3d.hpp"
-#include "../../source-sdk/math/vector2d.hpp"
-#include "../../source-sdk/math/view_matrix.hpp"
-#include "../../source-sdk/classes/net_channel.hpp"
+#include "source-sdk/math/vector3d.hpp"
+#include "source-sdk/math/vector2d.hpp"
+#include "source-sdk/math/view_matrix.hpp"
+#include "source-sdk/classes/net_channel.hpp"
 
 struct player_info_t {
 	int64_t __pad0;

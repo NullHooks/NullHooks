@@ -1,5 +1,5 @@
-#include "utilities.hpp"
-#include "../utilities/csgo.hpp"
+#include "dependencies/utilities/utilities.hpp"
+#include "dependencies/utilities/csgo.hpp"
 #include <psapi.h>
 
 std::uint8_t* utilities::pattern_scan(const char* module_name, const char* signature) noexcept {

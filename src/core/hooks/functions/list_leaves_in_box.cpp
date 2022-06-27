@@ -1,5 +1,4 @@
-#include "../hooks.hpp"
-#include "../../menu/menu.hpp"
+#include "core/hooks/hooks.hpp"
 
 struct renderable_info_t {
 	entity_t *renderable;

@@ -1,4 +1,6 @@
-#include "../features.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
 // Checks if the current weapon can shoot and all that
 bool aimbot_weapon_check() {

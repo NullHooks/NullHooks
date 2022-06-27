@@ -1,5 +1,5 @@
-#include "netvars.hpp"
-#include "../../interfaces/interfaces.hpp"
+#include "dependencies/utilities/netvars/netvars.hpp"
+#include "dependencies/interfaces/interfaces.hpp"
 
 //antario if i remember correctly
 namespace netvar_manager {

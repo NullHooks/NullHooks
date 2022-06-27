@@ -1,4 +1,4 @@
-#include "../utilities/csgo.hpp"
+#include "dependencies/utilities/csgo.hpp"
 
 //aimtux
 void math::correct_movement(vec3_t old_angles, c_usercmd* cmd, float old_forwardmove, float old_sidemove) {
