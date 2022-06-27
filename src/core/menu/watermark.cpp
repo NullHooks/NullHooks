@@ -39,51 +39,22 @@ void watermark::draw() {
     }
 }
 
-void watermark::draw_stats() {
-    if (!variables::misc::draw_stats) return;
-
-    // Colors
-    const color base_color = color(220, 5,   5,  255);
-    const color color_l    = color(255, 150, 0,  255);
-    const color color_m    = color(255, 255, 0,  255);
-    const color color_h    = color(0,   255, 10, 255);
-
-    color fps_color = base_color;
-
-    const int fps = helpers::get_fps();
-    if (fps < 100)      fps_color = color_l;
-    else if (fps < 150) fps_color = color_m;
-    else                fps_color = color_h;
-
-    if (csgo::local_player && interfaces::engine->is_connected()) {
-        const int speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
-
-        color speed_color = base_color;
-        if (speed < 95)         speed_color = color_l;
-        else if (speed < 135)   speed_color = color_m;
-        else                    speed_color = color_h;
-
-        watermark::draw_stats_string(helpers::get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, std::to_string(speed), speed_color, true);
-    } else {
-        watermark::draw_stats_string(helpers::get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, "", base_color, false);
-    }
-}
-
-int watermark::helpers::get_fps() noexcept {
+int get_fps() noexcept {
     static float frame_rate = 0;
     frame_rate = 0.9f * frame_rate + (1.f - 0.9f) * interfaces::globals->absolute_frametime;
     return int(1.f / frame_rate);
 }
 
-std::string watermark::helpers::get_timestamp_string() noexcept {
+std::string get_timestamp_string() noexcept {
     auto now = std::time(nullptr);
     auto dt = std::ctime(&now);
     std::string final_str = std::string(dt);
-    final_str.pop_back();   // Remove last char because timestamp is too long (tab?)
+    final_str.pop_back();   // Remove last char because timestamp is too long (has a tab?)
     return final_str;
 }
 
-void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps, color fpscolor, std::string speed, color speedcolor, bool draw_speed) {
+// Will draw the actual string based on the values and lengths
+void draw_stats_string(std::string ts, color tscolor, std::string fps, color fpscolor, std::string speed, color speedcolor, bool draw_speed) {
     const int x = variables::ui::watermark::x;
     const int y = variables::ui::watermark::y + 12;
     const unsigned long font = render::fonts::watermark_font;
@@ -113,5 +84,36 @@ void watermark::draw_stats_string(std::string ts, color tscolor, std::string fps
 
         interfaces::surface->set_text_color(speedcolor.r, speedcolor.g, speedcolor.b, speedcolor.a);
         interfaces::surface->draw_render_text(converted_speed.c_str(), wcslen(converted_speed.c_str()));
+    }
+}
+
+// Will get the stats and colors and pass them to draw_stats_string()
+void watermark::draw_stats() {
+    if (!variables::misc::draw_stats) return;
+
+    // Colors
+    const color base_color = color(220, 5, 5, 255);
+    const color color_l = color(255, 150, 0, 255);
+    const color color_m = color(255, 255, 0, 255);
+    const color color_h = color(0, 255, 10, 255);
+
+    color fps_color = base_color;
+
+    const int fps = get_fps();
+    if (fps < 100)      fps_color = color_l;
+    else if (fps < 150) fps_color = color_m;
+    else                fps_color = color_h;
+
+    if (csgo::local_player && interfaces::engine->is_connected()) {
+        const int speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
+
+        color speed_color = base_color;
+        if (speed < 95)         speed_color = color_l;
+        else if (speed < 135)   speed_color = color_m;
+        else                    speed_color = color_h;
+
+        draw_stats_string(get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, std::to_string(speed), speed_color, true);
+    } else {
+        draw_stats_string(get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, "", base_color, false);
     }
 }
