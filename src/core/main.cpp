@@ -1,4 +1,3 @@
-#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 
 unsigned long WINAPI initialize(void* instance) {
