@@ -92,10 +92,10 @@ void watermark::draw_stats() {
     if (!variables::misc::draw_stats) return;
 
     // Colors
-    const color base_color = color(220, 5, 5, 255);
-    const color color_l = color(255, 150, 0, 255);
-    const color color_m = color(255, 255, 0, 255);
-    const color color_h = color(0, 255, 10, 255);
+    const color base_color = color(220,   5,   5, 255);
+    const color color_l    = color(255, 150,   0, 255);
+    const color color_m    = color(255, 255,   0, 255);
+    const color color_h    = color(  0, 255,  10, 255);
 
     color fps_color = base_color;
 
