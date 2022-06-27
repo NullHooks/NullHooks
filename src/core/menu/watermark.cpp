@@ -51,17 +51,17 @@ void watermark::draw_stats() {
     color fps_color = base_color;
 
     const int fps = helpers::get_fps();
-    if (fps < 100) fps_color = color_l;
+    if (fps < 100)      fps_color = color_l;
     else if (fps < 150) fps_color = color_m;
-    else fps_color = color_h;
+    else                fps_color = color_h;
 
     if (csgo::local_player && interfaces::engine->is_connected()) {
         const int speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 
         color speed_color = base_color;
-        if (speed < 95) speed_color = color_l;
-        else if (speed < 135) speed_color = color_m;
-        else speed_color = color_h;
+        if (speed < 95)         speed_color = color_l;
+        else if (speed < 135)   speed_color = color_m;
+        else                    speed_color = color_h;
 
         watermark::draw_stats_string(helpers::get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, std::to_string(speed), speed_color, true);
     } else {
