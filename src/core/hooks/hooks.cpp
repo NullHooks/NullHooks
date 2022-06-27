@@ -10,6 +10,7 @@ bool hooks::initialize() {
 	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 	const auto findmdl_target = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
+	const auto list_leaves_in_box_target = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
 
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Input", "Global input initialized!");
@@ -53,6 +54,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(draw_model_execute_target, &draw_model_execute::hook, reinterpret_cast<void**>(&draw_model_execute::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize draw_model_execute.");
 	custom_helpers::state_to_console_color("Hooks", "draw_model_execute initialized!");
+
+	if(MH_CreateHook(list_leaves_in_box_target, &list_leaves_in_box::hook, reinterpret_cast<void **>(&list_leaves_in_box::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize list_leaves_in_box.");
+	custom_helpers::state_to_console_color("Hooks", "list_leaves_in_box initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
