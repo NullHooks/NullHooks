@@ -1,4 +1,4 @@
-#include "../hooks.hpp"
+#include "core/hooks/hooks.hpp"
 
 unsigned long __stdcall hooks::findmdl::hook(char* path) noexcept {
 	visuals::models::replace_model(path);		// We will change (or not) the path in draw_models()

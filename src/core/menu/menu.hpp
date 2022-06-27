@@ -1,8 +1,8 @@
 #pragma once
-#include "../../dependencies/utilities/csgo.hpp"
-#include "../features/features.hpp"
-#include "framework.hpp"
-#include "variables.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/features/features.hpp"
+#include "core/menu/framework.hpp"
+#include "core/menu/variables.hpp"
 
 namespace menu {
 	inline int current_tab {1};

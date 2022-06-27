@@ -1,5 +1,5 @@
 #pragma once
-#include "../math/vector3d.hpp"
+#include "source-sdk/math/vector3d.hpp"
 
 struct model_t {
 	void	*handle;

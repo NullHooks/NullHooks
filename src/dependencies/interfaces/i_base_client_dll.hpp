@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/classes/client_class.hpp"
+#include "source-sdk/classes/client_class.hpp"
 
 enum cstrike15_user_message_t {
 	cs_um_vguimenu = 1,

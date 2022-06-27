@@ -1,5 +1,5 @@
 #pragma once
-#include "vector3d.hpp"
+#include "source-sdk/math/vector3d.hpp"
 
 typedef float vec_t;
 

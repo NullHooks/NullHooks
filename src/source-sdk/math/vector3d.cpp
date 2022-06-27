@@ -1,9 +1,9 @@
-#include "vector3d.hpp"
 #include <cstdint>
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <random>
+#include "source-sdk/math/vector3d.hpp"
 
 vec3_t::vec3_t(void) {
 	x = y = z = 0.0f;

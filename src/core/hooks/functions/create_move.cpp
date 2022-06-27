@@ -1,5 +1,5 @@
-#include "../hooks.hpp"
-#include "../../features/misc/engine_prediction.hpp"
+#include "core/hooks/hooks.hpp"
+#include "core/features/misc/engine_prediction.hpp"
 
 bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd* cmd) {
 	original(input_sample_frametime, cmd);

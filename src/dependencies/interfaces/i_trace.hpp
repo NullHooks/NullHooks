@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/math/vector3d.hpp"
+#include "source-sdk/math/vector3d.hpp"
 #include <minwindef.h>
 class player_t;
 #define	SURF_LIGHT		0x0001		// value will hold the light strength

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/classes/c_usercmd.hpp"
+#include "source-sdk/classes/c_usercmd.hpp"
 
 class i_input {
 private:

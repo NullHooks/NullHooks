@@ -1,4 +1,4 @@
-#include "../hooks.hpp"
+#include "core/hooks/hooks.hpp"
 
 float __fastcall hooks::get_viewmodel_fov::hook(uintptr_t, uintptr_t) {
 	if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots)

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../dependencies/utilities/csgo.hpp"
+#include "dependencies/utilities/csgo.hpp"
 
 // Hue in 360 format
 typedef struct IHSV {
