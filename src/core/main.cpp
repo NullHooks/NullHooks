@@ -6,7 +6,7 @@ unsigned long WINAPI initialize(void* instance) {
 		Sleep(200);
 
 #ifdef _DEBUG
-	console::initialize("csgo-cheat console");
+	console::initialize("NullHooks console");
 #endif
 
 	try {
