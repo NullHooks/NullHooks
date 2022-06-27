@@ -1,5 +1,5 @@
 #pragma once
-#include "../math/vector2d.hpp"
+#include "source-sdk/math/vector2d.hpp"
 struct vertex_t {
 	vertex_t() {}
 	vertex_t(const vec2_t& pos, const vec2_t& coord = vec2_t(0, 0)) {

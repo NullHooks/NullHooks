@@ -1,4 +1,5 @@
 #pragma once
+//lol ok
 #include <windows.h>
 #include <SDKDDKVer.h>
 #include <string.h>
@@ -41,9 +42,9 @@
 #include <future>
 #include <Lmcons.h>
 #include <tchar.h>
-#include "../../../source-sdk/classes/recv_props.hpp"
-#include "../../../source-sdk/classes/client_class.hpp"
-#include "../../utilities/fnv.hpp"
+#include "source-sdk/classes/recv_props.hpp"
+#include "source-sdk/classes/client_class.hpp"
+#include "dependencies/utilities/fnv.hpp"
 
 namespace netvar_manager {
     uintptr_t get_net_var( uint32_t table, uint32_t prop );

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/structs/vertex_t.hpp"
+#include "source-sdk/structs/vertex_t.hpp"
 
 class i_surface {
 public:

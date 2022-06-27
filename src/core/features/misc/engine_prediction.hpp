@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../dependencies/utilities/csgo.hpp"
+#include "dependencies/utilities/csgo.hpp"
 
 namespace prediction {
 	void start(c_usercmd* cmd);

@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 void visuals::noflash() {
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;

@@ -1,10 +1,10 @@
 #pragma once
-#include "../../dependencies/math/math.hpp"
+#include "dependencies/math/math.hpp"
 #include <array>
-#include "collideable.hpp"
-#include "client_class.hpp"
-#include "../structs/animstate.hpp"
-#include "../../dependencies/utilities/netvars/netvars.hpp"
+#include "source-sdk/classes/collideable.hpp"
+#include "source-sdk/classes/client_class.hpp"
+#include "source-sdk/structs/animstate.hpp"
+#include "dependencies/utilities/netvars/netvars.hpp"
 
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,

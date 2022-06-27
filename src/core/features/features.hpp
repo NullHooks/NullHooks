@@ -1,7 +1,7 @@
 #pragma once
-#include "../../dependencies/utilities/csgo.hpp"
-#include "../helpers/misc_helpers.hpp"
-#include "../menu/variables.hpp"
+#include "dependencies/utilities/csgo.hpp"
+#include "core/helpers/misc_helpers.hpp"
+#include "core/menu/variables.hpp"
 
 namespace aim {
 	void run_aimbot(c_usercmd* cmd);

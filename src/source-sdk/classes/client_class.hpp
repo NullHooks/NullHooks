@@ -1,5 +1,5 @@
 #pragma once
-#include "recv_props.hpp"
+#include "source-sdk/classes/recv_props.hpp"
 
 class client_class;
 class i_client_networkable;

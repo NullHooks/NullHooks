@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/math/vector3d.hpp"
+#include "source-sdk/math/vector3d.hpp"
 
 // Credits to ma man cazz (@cazzwastaken)
 //class CEntity;

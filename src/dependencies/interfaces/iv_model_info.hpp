@@ -1,6 +1,6 @@
 #pragma once
-#include "../../source-sdk/structs/models.hpp"
-#include "../../source-sdk/classes/studio.hpp"
+#include "source-sdk/structs/models.hpp"
+#include "source-sdk/classes/studio.hpp"
 
 class iv_model_info {
 public:

@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 /*
  * The files should be placed in:

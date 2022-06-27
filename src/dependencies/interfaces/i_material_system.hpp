@@ -1,5 +1,5 @@
 #pragma once
-#include "../../source-sdk/structs/materials.hpp"
+#include "source-sdk/structs/materials.hpp"
 #define DECLARE_POINTER_HANDLE(name) struct name##__ { int unused; }; typedef struct name##__ *name
 #define MAXSTUDIOSKINS		32
 

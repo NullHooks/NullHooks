@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 // DoPostScreenSpaceEffects hook
 void visuals::glow::draw_glow() {

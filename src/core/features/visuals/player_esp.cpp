@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 void visuals::playeresp() {
 	if (!(variables::player_visuals::boxesp

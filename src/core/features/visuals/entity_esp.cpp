@@ -1,4 +1,4 @@
-#include "../features.hpp"
+#include "core/features/features.hpp"
 
 struct inferno_t : public entity_t {
 	OFFSET(float, get_spawn_time, 0x20);
