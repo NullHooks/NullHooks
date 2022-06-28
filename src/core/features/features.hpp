@@ -50,7 +50,7 @@ namespace misc {
 	}
 	void spectator_list();
 	namespace speedgraph {
-		void update();
+		void update(c_usercmd* cmd);
 		void draw();
 	}
 }
