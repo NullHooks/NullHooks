@@ -22,6 +22,8 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	prediction::start(cmd); {
 	} prediction::end();
 
+	misc::movement::edgejump(cmd, old_flags);
+
 	math::correct_movement(old_viewangles, cmd, old_forwardmove, old_sidemove);
 
 	cmd->forwardmove = std::clamp(cmd->forwardmove, -450.0f, 450.0f);
