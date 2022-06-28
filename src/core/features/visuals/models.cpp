@@ -11,6 +11,8 @@
  *   - Pickaxe: https://gamebanana.com/mods/171920
  */
 
+struct 
+
 void visuals::models::replace_model(char* path) {
     std::string model_path = "csgo/";
     

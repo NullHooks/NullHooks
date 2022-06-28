@@ -6,9 +6,10 @@
 bool recoil_crosshair_weapon_check() {
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return false;
+	const weapon_info_t* weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return false;
 
-	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
-	switch (weapon_type) {												// Only draw recoil crosshair on weapons that shoot
+	switch (weapon_data->weapon_type) {												// Only draw recoil crosshair on weapons that shoot
 		case WEAPONTYPE_MACHINEGUN:
 		case WEAPONTYPE_RIFLE:
 		case WEAPONTYPE_SUBMACHINEGUN:
