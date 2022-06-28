@@ -52,11 +52,13 @@ void draw_speed_str(int x, int y, int speed, color col) {
 }
 
 void misc::speedgraph::update(c_usercmd* cmd) {
+	if (csgo::local_player->move_type() == movetype_noclip || csgo::local_player->move_type() == movetype_observer) return; // Don't update speed if noclip
+
 	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 	shift_and_append(cur_speed);
 
-	if (csgo::local_player->flags() & fl_onground) {	
-		if (cmd->buttons & in_jump) {		// Just jumped
+	if (csgo::local_player->flags() & fl_onground) {
+		if (cmd->buttons & in_jump && cur_speed > 0) {		// Just jumped
 			old_last_jumped = last_jumped;	// Store old to compare and get color
 			last_jumped = cur_speed;		// The last jumped speed
 		} else {							// Reset if player walks
@@ -71,6 +73,7 @@ void misc::speedgraph::draw() {
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
 	if (!csgo::local_player->is_alive()) return;
+	if (csgo::local_player->move_type() == movetype_noclip || csgo::local_player->move_type() == movetype_observer) return;	// Noclip
 	if (csgo::local_player->is_scoped()) return;		// We don't want to draw speed graph when scoped
 
 	// Render graph
