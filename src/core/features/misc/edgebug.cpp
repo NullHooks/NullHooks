@@ -2,6 +2,8 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+// I am sorry but I pasted this. I dont know what those vectors mean. If you wanna explain how this eb assist works feel free to open an issue.
+
 void misc::movement::edgebug(c_usercmd* cmd, int old_flags) {
     if (!csgo::local_player) return;
     if (!csgo::local_player->is_alive()) return;
