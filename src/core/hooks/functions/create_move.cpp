@@ -13,6 +13,7 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	auto old_viewangles = cmd->viewangles;
 	auto old_forwardmove = cmd->forwardmove;
 	auto old_sidemove = cmd->sidemove;
+	auto old_flags = csgo::local_player->flags();		// For prediction stuff
 
 	misc::speedgraph::update(cmd);
 	misc::movement::bunny_hop(cmd);
@@ -29,8 +30,6 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	cmd->viewangles.normalize();
 	cmd->viewangles.clamp();
-
-	misc_vars::old_flags = csgo::local_player->flags();		// Not used
 
 	return false;
 }
