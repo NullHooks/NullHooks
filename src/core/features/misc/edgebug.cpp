@@ -10,7 +10,7 @@ void misc::movement::edgebug(c_usercmd* cmd, int old_flags) {
     float step = max_radias / 128;
     float xThick = 23;
 
-    if (input::gobal_input.IsHeld(VK_XBUTTON1) && (csgo::local_player->flags() & fl_onground)) {
+    if (input::gobal_input.IsHeld(variables::misc::eb_key) && (csgo::local_player->flags() & fl_onground)) {
         vec3_t pos = csgo::local_player->origin();
         for (float a = 0.f; a < max_radias; a += step) {
             vec3_t pt;
