@@ -9,16 +9,18 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	if (!cmd || !cmd->command_number) return false;
 
 	csgo::local_player = static_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
-
-	auto old_viewangles = cmd->viewangles;
-	auto old_forwardmove = cmd->forwardmove;
-	auto old_sidemove = cmd->sidemove;
-
+	
 	misc::speedgraph::update(cmd);
 	misc::movement::bunny_hop(cmd);
 	aim::run_aimbot(cmd);
 
+	auto old_viewangles = cmd->viewangles;
+	auto old_forwardmove = cmd->forwardmove;
+	auto old_sidemove = cmd->sidemove;
+	auto old_flags = csgo::local_player->flags();
+
 	prediction::start(cmd); {
+		misc::movement::edgebug(cmd, old_flags);
 	} prediction::end();
 
 	math::correct_movement(old_viewangles, cmd, old_forwardmove, old_sidemove);
@@ -29,8 +31,6 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	cmd->viewangles.normalize();
 	cmd->viewangles.clamp();
-
-	misc_vars::old_flags = csgo::local_player->flags();		// Not used
 
 	return false;
 }
