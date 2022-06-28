@@ -102,7 +102,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_sleeve_c, materials.at(variables::chams::sleeve_chams_mat_id));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
-	} else if (strstr(mdl->name + 17, "arms")) {
+	} else if (strstr(mdl->name + 17, "arms")) {		// Also replaces some player model's arms (worldmodel arms)
 		if (variables::chams::vm_arm_chams) {
 			if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_arms_c, materials.at(variables::chams::arm_chams_mat_id));
