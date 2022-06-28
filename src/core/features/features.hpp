@@ -47,6 +47,7 @@ namespace visuals {
 namespace misc {
 	namespace movement {
 		void bunny_hop(c_usercmd* cmd);
+		void edgejump(c_usercmd* cmd, int old_flags);
 	}
 	void spectator_list();
 	namespace speedgraph {
