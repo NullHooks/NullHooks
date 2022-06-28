@@ -1,5 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 
 bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd* cmd) {
@@ -13,7 +14,7 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	auto old_forwardmove = cmd->forwardmove;
 	auto old_sidemove = cmd->sidemove;
 
-	misc::speedgraph::update();
+	misc::speedgraph::update(cmd);
 	misc::movement::bunny_hop(cmd);
 	aim::run_aimbot(cmd);
 
@@ -28,6 +29,8 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	cmd->viewangles.normalize();
 	cmd->viewangles.clamp();
+
+	misc_vars::old_flags = csgo::local_player->flags();		// Not used
 
 	return false;
 }

@@ -1,5 +1,9 @@
 #pragma once
 
+namespace misc_vars {		// Should be in another file
+	inline int old_flags = 0;
+}
+
 namespace variables {
 	
 	namespace aim {
