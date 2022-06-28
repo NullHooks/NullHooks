@@ -158,6 +158,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add second color picker
     - [X] Add color picker for friendly player chams
 - [X] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html)) (#18)
+- [X] Add custom models
+    - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
 #
 </details>
 
@@ -168,9 +170,11 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
     - [ ] Custom aimbot key (Add keybind to framework)
-- [X] Add custom models
-    - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
-    - [ ] Menu options
+- [ ] Add movement stuff
+    - [X] EdgeJump
+    - [ ] EdgeBug
+    - [ ] JumpBug
+- [ ] Add custom hotkeys to framework
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Add custom radar with renderer, why not
