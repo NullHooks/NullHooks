@@ -104,6 +104,7 @@
     <ClCompile Include="core\features\misc\edgejump.cpp" />
     <ClCompile Include="core\features\misc\engine_prediction.cpp" />
     <ClCompile Include="core\features\misc\bhop.cpp" />
+    <ClCompile Include="core\features\misc\edgebug.cpp" />
     <ClCompile Include="core\features\misc\speedgraph.cpp" />
     <ClCompile Include="core\features\visuals\chams.cpp" />
     <ClCompile Include="core\features\visuals\custom_crosshair.cpp" />
