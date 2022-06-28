@@ -20,6 +20,7 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	aim::run_aimbot(cmd);
 
 	prediction::start(cmd); {
+		misc::movement::edgebug(cmd, old_flags);
 	} prediction::end();
 
 	misc::movement::edgejump(cmd, old_flags);

@@ -90,6 +90,9 @@ namespace variables {
 	namespace misc {
 		inline bool bhop = true;
 		inline bool edgejump = false;
+		inline int ej_key = VK_MENU;
+		inline bool edgebug = false;
+		inline int eb_key = VK_PRIOR;
 		inline bool draw_watermark = true;
 		inline bool draw_speedgraph = false;
 		inline bool use_speedgraph_color = false;
