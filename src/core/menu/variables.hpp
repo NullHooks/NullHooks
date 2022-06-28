@@ -74,24 +74,6 @@ namespace variables {
 		inline bool weapon_chams_popup_tog = false;
 	}
 
-	namespace models {
-		// v_*_path -> view model path
-		// w_*_path -> world model path
-
-		inline const char* v_knife_path	     = NULL;		// "models/weapons/v_minecraft_pickaxe.mdl" | "models/weapons/caleon1/screwdriver/v_knife_screwdriver.mdl" | "models/weapons/eminem/bananabit/v_bananabit.mdl"
-		inline const char* w_knife_path	     = NULL;		// "models/weapons/w_minecraft_pickaxe.mdl"
-		inline const char* v_ak_path	     = NULL;		// "models/weapons/eminem/ethereal/v_ethereal.mdl"
-		inline const char* w_ak_path	     = NULL;		// "models/weapons/eminem/ethereal/w_ethereal.mdl"
-		inline const char* v_awp_path	     = NULL;		// "models/weapons/eminem/dsr_50/v_dsr_50_2.mdl"
-		inline const char* w_awp_path	     = NULL;		// "models/weapons/eminem/dsr_50/w_dsr_50_2.mdl"
-		inline const char* w_awp_drop_path   = NULL;		// "models/weapons/eminem/dsr_50/w_dsr_50_dropped.mdl"
-		inline const char* v_ssg08_path	     = NULL;		// "models/weapons/eminem/crysis3_predator_bow/v_crysis3_predator_bow.mdl"
-		inline const char* w_ssg08_path	     = NULL;		// "models/weapons/eminem/crysis3_predator_bow/w_crysis3_predator_bow.mdl"
-		inline const char* w_ssg08_drop_path = NULL;		// "models/weapons/eminem/crysis3_predator_bow/w_crysis3_predator_bow_dropped.mdl"
-		inline const char* player_path	     = NULL;		// Kinda broken
-		inline const char* arms_path	     = NULL;
-	}
-
 	namespace misc_visuals {
 		inline bool nade_predict = true;
 		inline float noflash_alpha = 0.f;
