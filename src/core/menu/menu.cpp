@@ -200,21 +200,31 @@ void menu::render() {
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 5;
+			const int part2_items_num = 2;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
-			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Misc", false); {
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Fov", false); {
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 0), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom FOV", variables::misc_visuals::custom_fov_slider, 80.f, 130.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Custom viewmodel FOV (Mult.)", variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
+			}
+
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_items_num = 4;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Movement", false); {
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "EdgeJump (Page Up for now)", variables::misc::edgejump);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
 			}
 
 			// Buttons (start from bottom)

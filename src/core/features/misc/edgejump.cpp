@@ -3,7 +3,7 @@
 #include "core/menu/variables.hpp"
 
 void misc::movement::edgejump(c_usercmd* cmd, int old_flags) {
-	if (false) return;									// Setting
+	if (!variables::misc::edgejump) return;
 	if (!input::gobal_input.IsHeld(VK_PRIOR)) return;	// Key (PAGE UP until I add key thing to framework)
 	if (!csgo::local_player) return;
 	if (csgo::local_player->move_type() == movetype_ladder || csgo::local_player->move_type() == movetype_noclip) return;
