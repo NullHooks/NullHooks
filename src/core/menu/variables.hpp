@@ -1,11 +1,11 @@
 #pragma once
 
 namespace variables {
-	
 	namespace aim {
 		inline bool aimbot = false;
 		inline float aimbot_fov = 0.3f;
 		inline bool draw_fov = false;
+		inline bool ignore_walls = false;
 		inline float aimbot_smoothing = 0.5f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
@@ -97,11 +97,11 @@ namespace variables {
 		inline bool draw_watermark = true;
 		inline bool draw_speedgraph = false;
 		inline bool use_speedgraph_color = false;
+		inline float speedgraph_h = 60;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
 	}
 	
-
 	namespace ui {
 		namespace spectators {
 			inline bool spectator_list = true;

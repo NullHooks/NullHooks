@@ -29,7 +29,9 @@ void visuals::crosshair::recoil_crosshair() {
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
 	if (!variables::misc_visuals::recoil_crosshair) return;
-	if (csgo::local_player->is_scoped()) return;
+
+	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+	if (local_player_ent->is_scoped()) return;
 
 	if (!recoil_crosshair_weapon_check()) return;	// Weapon does not shoot
 
