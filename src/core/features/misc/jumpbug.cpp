@@ -20,9 +20,17 @@ void misc::movement::post_pred_jumpbug(c_usercmd* cmd, int old_flags) {
     if (!csgo::local_player) return;
     if (csgo::local_player->move_type() == movetype_ladder || csgo::local_player->move_type() == movetype_noclip) return;
 
-    if (!(old_flags & fl_onground) && (csgo::local_player->flags() & fl_onground))
-        cmd->buttons |= in_duck;
+    static bool should_jump = false;
 
-    if (csgo::local_player->flags() & fl_onground)
+    if (should_jump) {
+        cmd->buttons |= in_jump;
+        should_jump = false;
+        return;
+    }
+
+    if (!(old_flags & fl_onground) && (csgo::local_player->flags() & fl_onground)) {
+        cmd->buttons |= in_duck;
         cmd->buttons &= ~in_jump;
+        should_jump = true;
+    }
 }
