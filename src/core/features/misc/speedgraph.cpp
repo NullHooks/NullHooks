@@ -72,7 +72,7 @@ void misc::speedgraph::draw() {
 	if (!variables::misc::draw_speedgraph) return;
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
-	if (!csgo::local_player->is_alive()) return;
+	if (!csgo::local_player->is_alive()) return;		// TODO: Add spectated player?
 	if (csgo::local_player->move_type() == movetype_noclip || csgo::local_player->move_type() == movetype_observer) return;	// Noclip
 	if (csgo::local_player->is_scoped()) return;		// We don't want to draw speed graph when scoped
 
