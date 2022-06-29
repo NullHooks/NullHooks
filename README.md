@@ -170,9 +170,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
     - [ ] Custom aimbot key (Add keybind to framework)
-- [ ] Add movement stuff
+- [X] Add movement stuff
     - [X] EdgeJump
-    - [ ] EdgeBug
+    - [X] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [ ] JumpBug
 - [ ] Add custom hotkeys to framework
 - [ ] Add autoscope for snipers (independent of aimbot)
