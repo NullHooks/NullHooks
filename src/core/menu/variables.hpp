@@ -94,6 +94,8 @@ namespace variables {
 		inline int ej_key = VK_MENU;
 		inline bool edgebug = false;
 		inline int eb_key = VK_PRIOR;
+		inline bool jumpbug = false;
+		inline int jb_key = VK_NEXT;
 		inline bool draw_watermark = true;
 		inline bool draw_speedgraph = false;
 		inline bool use_speedgraph_color = false;
