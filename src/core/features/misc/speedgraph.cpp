@@ -3,24 +3,73 @@
 #include "core/menu/variables.hpp"
 
 const int speed_graph_width = 420;                          // Width in px, each px will be a speed value
-static std::vector<int> speeds_vec(speed_graph_width, 0);	// Initialize vec of size graph_width with values as 0. Will store all the speed values
-int old_last_jumped = 0;									// Compared to newest speed to check if it has improved or not
-int last_jumped = 0;										// Speed when jumping. 0 if none
 
-void shift_and_append(int new_val) {
-	for (int n = 0; n < speed_graph_width - 1; n++) {		// -1 to skip last item
-		speeds_vec.at(n) = speeds_vec.at(n + 1);			// Right to left shitf
+struct speedinfo_t {
+
+	int   m_tickcount;
+	int   m_buttons;
+	int   m_movetype;
+	int   m_flags;
+	float m_speed;
+
+	bool onground() { return m_flags   & fl_onground; }
+	bool jump_cmd() { return m_buttons & in_jump;     }
+
+	bool jump() {
+		return onground() && jump_cmd();
 	}
-	speeds_vec.at(speed_graph_width - 1) = new_val;			// Add new value
-}
 
-color speed2color(int speed) {
-	float_hsv hue = { speed / 600.0f, 1.0f, 1.0f };
-	return custom_helpers::hsv2color(hue, 255);
-}
+	bool to_screen(int &x, int &y) {
+
+		int w, h;
+		interfaces::surface->get_screen_size(w, h);
+
+		int tickdelta = m_tickcount - interfaces::globals->tick_count;
+
+		x = w / 2 + speed_graph_width / 2 + tickdelta;
+		y = h * 0.9 - m_speed * 0.3;
+
+		return true;
+	}
+
+	color get_color() {
+		float_hsv hue = { m_speed / 600.0f, 1.0f, 1.0f };
+		return custom_helpers::hsv2color(hue, 255);
+	}
+
+	speedinfo_t(player_t *player, c_usercmd *cmd) {
+		m_buttons   = cmd->buttons;
+		m_flags     = player->flags();
+		m_movetype  = player->move_type();
+		m_speed     = player->velocity().length_2d();
+		m_tickcount = interfaces::globals->tick_count;
+	}
+
+};
+
+std::deque<speedinfo_t> g_speeds;
 
 void draw_speed_str(int x, int y, int speed, color col) {
 	render::draw_text_string(x, y, render::fonts::watermark_font_m, std::to_string(speed), true, col);
+
+	int last_jumped     = -1;
+	int old_last_jumped = -1;
+
+	for(auto &speed : g_speeds) {
+
+		if(speed.jump()) {
+
+			if(last_jumped < 0)
+				last_jumped = speed.m_speed;
+
+			else if(old_last_jumped < 0) {
+				old_last_jumped = speed.m_speed;
+				break;
+			}
+
+		}
+
+	}
 
 	if (last_jumped > 0) {
 		y += 17;
@@ -52,20 +101,8 @@ void draw_speed_str(int x, int y, int speed, color col) {
 }
 
 void misc::speedgraph::update(c_usercmd* cmd) {
-	if (csgo::local_player->move_type() == movetype_noclip || csgo::local_player->move_type() == movetype_observer) return; // Don't update speed if noclip
-
-	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
-	shift_and_append(cur_speed);
-
-	if (csgo::local_player->flags() & fl_onground) {
-		if (cmd->buttons & in_jump && cur_speed > 0) {		// Just jumped
-			old_last_jumped = last_jumped;	// Store old to compare and get color
-			last_jumped = cur_speed;		// The last jumped speed
-		} else {							// Reset if player walks
-			old_last_jumped = 0;
-			last_jumped = 0;
-		}
-	}
+	if (csgo::local_player->move_type() == movetype_observer) return; // Don't update speed if noclip
+	g_speeds.push_front(speedinfo_t(csgo::local_player, cmd));
 }
 
 void misc::speedgraph::draw() {
@@ -80,24 +117,30 @@ void misc::speedgraph::draw() {
 	int screen_w, screen_h;
 	interfaces::surface->get_screen_size(screen_w, screen_h);
 
-	for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
-		int cur_speed  = speeds_vec.at(n);
-		int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
-
-		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
-		int next_x = cur_x + 1;
-		int cur_y  = screen_h * 0.9 - cur_speed  * 0.3;
-		int next_y = screen_h * 0.9 - next_speed * 0.3;
+	if (!g_speeds.empty())
+	for (int n = 0; n < g_speeds.size() - 1; n++) {   // -1 to skip last item
+		auto cur_speed  = g_speeds.at(n);
+		auto next_speed = g_speeds.at(n + 1);          // Needed to draw line to next value
 
 		color line_col = color::white();
 		if (variables::misc::use_speedgraph_color)
-			line_col = speed2color(next_speed);
+			line_col = next_speed.get_color();
 
-		render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
+		int x1, y1, x2, y2;
+
+		cur_speed.to_screen(x1, y1);
+		next_speed.to_screen(x2, y2);
+
+		if(cur_speed.jump())
+			render::draw_text_string(x1, y1, render::fonts::watermark_font_m, std::to_string(static_cast<int>(cur_speed.m_speed)), true, cur_speed.get_color());
+
+		render::draw_line(x1, y1, x2, y2, line_col);
 	}
 
+	while (g_speeds.size() > speed_graph_width)
+		g_speeds.pop_back();
+
 	// Speed text
-	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
-	color speed_col = speed2color(cur_speed);
-	draw_speed_str(screen_w / 2, screen_h * 0.9 + 20, cur_speed, speed_col);
+	auto speed = g_speeds.front();
+	draw_speed_str(screen_w / 2, screen_h * 0.9 + 20, speed.m_speed, speed.get_color());
 }
