@@ -212,7 +212,7 @@ void menu::render() {
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;
-			const int part3_items_num = 7;
+			const int part3_items_num = 8;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
 
@@ -226,10 +226,12 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "EdgeBug (Page Up for now)", variables::misc::edgebug);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos,
+					render::fonts::watermark_font, "JumpBug (Page Down for now)", variables::misc::jumpbug);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::slider(item_left_pos, part3_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 6), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos,
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
 			}
 
