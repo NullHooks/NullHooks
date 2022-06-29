@@ -88,6 +88,7 @@ namespace variables {
 	}
 
 	namespace misc {
+		inline bool infinite_duck = true;
 		inline bool bhop = true;
 		inline bool edgejump = false;
 		inline int ej_key = VK_MENU;

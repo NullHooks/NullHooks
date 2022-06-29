@@ -9,8 +9,6 @@ void misc::movement::pre_pred_jumpbug(c_usercmd* cmd, int old_flags) {
     if (!csgo::local_player) return;
     if (csgo::local_player->move_type() == movetype_ladder || csgo::local_player->move_type() == movetype_noclip) return;
 
-    cmd->buttons |= in_bullrush;    // Infinite duck
-
     if ( variables::misc::bhop && !(old_flags & fl_onground) && cmd->buttons & in_jump)
         cmd->buttons &= ~in_jump;   // Stop bhop
 }

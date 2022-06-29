@@ -105,6 +105,7 @@
     <ClCompile Include="core\features\misc\engine_prediction.cpp" />
     <ClCompile Include="core\features\misc\bhop.cpp" />
     <ClCompile Include="core\features\misc\edgebug.cpp" />
+    <ClCompile Include="core\features\misc\infinite_duck.cpp" />
     <ClCompile Include="core\features\misc\jumpbug.cpp" />
     <ClCompile Include="core\features\misc\speedgraph.cpp" />
     <ClCompile Include="core\features\visuals\chams.cpp" />
