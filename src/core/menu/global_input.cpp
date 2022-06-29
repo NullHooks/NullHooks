@@ -62,6 +62,42 @@ void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
             key_states[VK_LBUTTON].held = false;
             break;
         }
+        case WM_RBUTTONDBLCLK:
+        case WM_RBUTTONDOWN: {
+            key_states[VK_RBUTTON].held = true;
+            break;
+        }
+        case WM_RBUTTONUP: {
+            key_states[VK_RBUTTON].pressed = false;
+            key_states[VK_RBUTTON].held = false;
+            break;
+        }
+        case WM_MBUTTONDBLCLK:
+        case WM_MBUTTONDOWN: {
+            key_states[VK_MBUTTON].held = true;
+            break;
+        }
+        case WM_MBUTTONUP: {
+            key_states[VK_MBUTTON].pressed = false;
+            key_states[VK_MBUTTON].held = false;
+            break;
+        }
+        case WM_XBUTTONDBLCLK:
+        case WM_XBUTTONDOWN: {
+            if (wparam & MK_XBUTTON1)      key_states[VK_XBUTTON1].held = true;
+            else if (wparam & MK_XBUTTON2) key_states[VK_XBUTTON2].held = true;
+            break;
+        }
+        case WM_XBUTTONUP: {
+            if (wparam & 0x10000) {
+                key_states[VK_XBUTTON1].pressed = false;
+                key_states[VK_XBUTTON1].held = false;
+            } else if (wparam & 0x20000) {
+                key_states[VK_XBUTTON2].pressed = false;
+                key_states[VK_XBUTTON2].held = false;
+            }
+            break;
+        }
         default: return;
     }
 }

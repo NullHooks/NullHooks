@@ -30,6 +30,15 @@ public:
 public:
     bool reading_hotkey = false;
 
+    inline int LatestChange() {
+        for (int n = 0; n < 256; n++) {
+            if (!key_states_old[n].held && key_states[n].held)
+                return n;
+        }
+
+        return -1;
+    }
+
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
         return (!reading_hotkey) ? key_states[vKey].pressed : false;       // See comment on GlobalInput::WndProcUpdate()
