@@ -35,6 +35,7 @@ void visuals::crosshair::custom_crosshair() {
 	if (!csgo::local_player) return;
 
 	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+	if (!local_player_ent->is_alive()) return;
 	if (local_player_ent->is_scoped()) return;
 
 	int screen_w, screen_h;
