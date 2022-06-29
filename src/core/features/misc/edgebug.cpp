@@ -15,7 +15,7 @@ void misc::movement::edgebug(c_usercmd* cmd, int old_flags) {
     float step = max_radias / 128;
     float xThick = 23;
 
-    vec3_t pos = csgo::local_player->origin();
+    vec3_t pos = csgo::local_player->abs_origin();
     for (float a = 0.f; a < max_radias; a += step) {
         vec3_t pt;
         pt.x = (xThick * cos(a)) + pos.x;
