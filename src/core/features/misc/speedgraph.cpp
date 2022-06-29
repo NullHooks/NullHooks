@@ -86,8 +86,8 @@ void misc::speedgraph::draw() {
 
 		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
 		int next_x = cur_x + 1;
-		int cur_y  = screen_h * 0.9 - cur_speed  * (variables::misc::speedgraph_h / 100 * 0.5f);
-		int next_y = screen_h * 0.9 - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
+		int cur_y  = screen_h * (variables::misc::speedgraph_pos/100.f) - cur_speed  * (variables::misc::speedgraph_h / 100 * 0.5f);
+		int next_y = screen_h * (variables::misc::speedgraph_pos/100.f) - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
 
 		color line_col = color::white();
 		if (variables::misc::use_speedgraph_color)
@@ -99,5 +99,5 @@ void misc::speedgraph::draw() {
 	// Speed text
 	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 	color speed_col = speed2color(cur_speed);
-	draw_speed_str(screen_w / 2, screen_h * 0.9 + 20, cur_speed, speed_col);
+	draw_speed_str(screen_w / 2, screen_h * (variables::misc::speedgraph_pos/100.f) + 20, cur_speed, speed_col);
 }
