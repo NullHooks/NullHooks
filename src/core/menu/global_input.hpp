@@ -28,9 +28,11 @@ public:
     void WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam);
 
 public:
+    bool reading_hotkey = false;
+
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
-        return key_states[vKey].pressed;       // See comment on GlobalInput::WndProcUpdate()
+        return (!reading_hotkey) ? key_states[vKey].pressed : false;       // See comment on GlobalInput::WndProcUpdate()
     }
 
     // While key is down
