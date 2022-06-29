@@ -301,6 +301,8 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target_idx, popup_toggle});
 }
 
+/* --------------------------- WINDOW MOVEMENT --------------------------- */
+
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
 	if (spectator_framework::user_dragging_spec) return;	// Avoid overlapping
 
@@ -352,6 +354,8 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 		should_move_spec = false;
 	}
 }
+
+/* --------------------------- POPUPS --------------------------- */
 
 // Will call each check_popups()
 void popup_system::render_popups() {	
