@@ -312,6 +312,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned
 	const int h = 11;
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey) {
+		
 		// Get latest key change from not pressed to pressed
 	}
 
