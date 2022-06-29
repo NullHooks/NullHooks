@@ -66,7 +66,9 @@ int get_ping() noexcept {
     if (cl_updaterate->float_value > 0.001f)
         average_latency += -0.5f / cl_updaterate->float_value;
 
-    return std::fabs(average_latency) * 1000.0f;
+    const int num = std::abs(average_latency) * 1000.0f;
+
+    return (num < 1000) ? num : -1;
 }
 
 // Will draw the actual string based on the values and lengths
@@ -116,8 +118,8 @@ void watermark::draw_stats() {
     color fps_color = base_color;
 
     const int fps = get_fps();
-    if (fps < 100)      fps_color = color_l;
-    else if (fps < 150) fps_color = color_m;
+    if (fps < 80)      fps_color = color_l;
+    else if (fps < 110) fps_color = color_m;
     else                fps_color = color_h;
 
     const int ping = get_ping();
