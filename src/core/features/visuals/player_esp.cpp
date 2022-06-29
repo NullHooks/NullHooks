@@ -2,13 +2,13 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-//https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Bounding_ESP_Boxes
-//you can use this for any collideable entity, not just players.
+// https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Bounding_ESP_Boxes
+// Can be used for any collideable entity, not just players.
 bool bbox(entity_t *entity, int &x, int &y, int &w, int &h) {
 	auto collideable = entity->collideable();
-	auto obb_mins = collideable->obb_mins();
-	auto obb_maxs = collideable->obb_maxs();
-	auto &trans = entity->coordinate_frame();
+	auto obb_mins    = collideable->obb_mins();
+	auto obb_maxs    = collideable->obb_maxs();
+	auto &trans	     = entity->coordinate_frame();
 
 	vec3_t points[] = {
 		{obb_mins.x, obb_mins.y, obb_mins.z},
@@ -47,7 +47,6 @@ bool bbox(entity_t *entity, int &x, int &y, int &w, int &h) {
 	h = static_cast<int>(bottom - top);
 
 	return true;
-
 }
 
 void visuals::playeresp() {
@@ -90,8 +89,8 @@ void visuals::playeresp() {
 				auto child  = vec3_t(bones[i][0][3], bones[i][1][3], bones[i][2][3]);
 				auto parent = vec3_t(bones[bone->parent][0][3], bones[bone->parent][1][3], bones[bone->parent][2][3]);
 
-				//https://www.unknowncheats.me/forum/counterstrike-global-offensive/261581-appealing-bone-esp.html
-				//if (point is close enough to chest) use chest instead;
+				// https://www.unknowncheats.me/forum/counterstrike-global-offensive/261581-appealing-bone-esp.html
+				// if (point is close enough to chest) use chest instead;
 				if ((child  - chest).length_sqr() < 25) child  = chest;
 				if ((parent - chest).length_sqr() < 25) parent = chest;
 
