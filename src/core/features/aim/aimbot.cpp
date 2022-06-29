@@ -53,7 +53,7 @@ player_t* get_best_target(c_usercmd* cmd) {
 		vec3_t cur_player_head = bones[8].get_origin();
 
 		// Try to trace ray to taget player (check visible)
-		if (!csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
+		if (!variables::aim::ignore_walls && !csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
 
 		vec3_t aim_angle = math::calculate_angle(local_eye_pos, cur_player_head);
 		aim_angle.clamp();

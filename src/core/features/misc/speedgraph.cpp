@@ -86,8 +86,8 @@ void misc::speedgraph::draw() {
 
 		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
 		int next_x = cur_x + 1;
-		int cur_y  = screen_h * 0.9 - cur_speed  * 0.3;
-		int next_y = screen_h * 0.9 - next_speed * 0.3;
+		int cur_y  = screen_h * 0.9 - cur_speed  * (variables::misc::speedgraph_h / 100 * 0.5f);
+		int next_y = screen_h * 0.9 - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
 
 		color line_col = color::white();
 		if (variables::misc::use_speedgraph_color)
