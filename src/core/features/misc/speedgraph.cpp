@@ -12,17 +12,11 @@ struct speedinfo_t {
 	int   m_flags;
 	float m_speed;
 
-	bool is_jumping() {
+	bool onground() { return m_flags   & fl_onground; }
+	bool jump_cmd() { return m_buttons & in_jump;     }
 
-		if(m_speed == 0.0f)
-			return false;
-
-		if(m_flags & fl_onground)
-			if(m_buttons & in_jump)
-				return true;
-
-		return false;
-
+	bool jump() {
+		return onground() && jump_cmd();
 	}
 
 	bool to_screen(int &x, int &y) {
@@ -63,7 +57,7 @@ void draw_speed_str(int x, int y, int speed, color col) {
 
 	for(auto &speed : g_speeds) {
 
-		if(speed.is_jumping()) {
+		if(speed.jump()) {
 
 			if(last_jumped < 0)
 				last_jumped = speed.m_speed;
@@ -137,7 +131,7 @@ void misc::speedgraph::draw() {
 		cur_speed.to_screen(x1, y1);
 		next_speed.to_screen(x2, y2);
 
-		if(cur_speed.is_jumping())
+		if(cur_speed.jump())
 			render::draw_text_string(x1, y1, render::fonts::watermark_font_m, std::to_string(static_cast<int>(cur_speed.m_speed)), true, cur_speed.get_color());
 
 		render::draw_line(x1, y1, x2, y2, line_col);
