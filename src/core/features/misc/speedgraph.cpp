@@ -58,7 +58,7 @@ void misc::speedgraph::update(c_usercmd* cmd) {
 	shift_and_append(cur_speed);
 
 	if (csgo::local_player->flags() & fl_onground) {
-		if (cmd->buttons & in_jump && cur_speed > 0) {		// Just jumped
+		if ( ((cmd->buttons & in_jump) || input::gobal_input.IsHeld(variables::misc::jb_key)) && cur_speed > 0 ) {		// Just jumped
 			old_last_jumped = last_jumped;	// Store old to compare and get color
 			last_jumped = cur_speed;		// The last jumped speed
 		} else {							// Reset if player walks
