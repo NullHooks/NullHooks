@@ -171,6 +171,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [ ] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
     - [ ] Menu options
+- [ ] Add multicombobox
+    - [ ] For selecting what parts of the speedgraph we should draw
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Add custom radar with renderer, why not
