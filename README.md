@@ -28,6 +28,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Aim
 - Aimbot
     - Silent
+- Ignore walls
 - Aimbot fov
 - Aimbot smoothness
 - Only if scoped
