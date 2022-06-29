@@ -39,21 +39,22 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		if (!variables::misc_visuals::noscope) break;
 		if (!csgo::local_player) break;
 		if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) break;
-		if (!csgo::local_player->is_scoped()) break;
 		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
+		
+		player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+		if (!local_player_ent->is_scoped()) break;
 
 		int screen_w, screen_h;
 		interfaces::engine->get_screen_size(screen_w, screen_h);
 		const int mid_x = screen_w / 2;
 		const int mid_y = screen_h / 2;
 
-		if (csgo::local_player->active_weapon()->get_weapon_data()->weapon_type == WEAPONTYPE_SNIPER_RIFLE) {
+		if (local_player_ent->active_weapon()->get_weapon_data()->weapon_type == WEAPONTYPE_SNIPER_RIFLE) {
 			render::draw_line(0, mid_y, screen_w, mid_y, color::black(255));	// X
 			render::draw_line(mid_x, 0, mid_x, screen_h, color::black(255));	// Y
 		}
 
 		return;
-		break;
 	}
 
 	original(interfaces::panel, panel, force_repaint, allow_force);

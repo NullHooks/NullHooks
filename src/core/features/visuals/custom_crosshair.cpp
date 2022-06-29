@@ -33,7 +33,9 @@ void visuals::crosshair::custom_crosshair() {
 
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
-	if (csgo::local_player->is_scoped()) return;
+
+	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+	if (local_player_ent->is_scoped()) return;
 
 	int screen_w, screen_h;
 	interfaces::engine->get_screen_size(screen_w, screen_h);
