@@ -17,10 +17,12 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	misc::speedgraph::update(cmd);
 	misc::movement::bunny_hop(cmd);
-	aim::run_aimbot(cmd);
+	misc::movement::pre_pred_jumpbug(cmd);
 
 	prediction::start(cmd); {
+		aim::run_aimbot(cmd);
 		misc::movement::edgebug(cmd, old_flags);
+		misc::movement::post_pred_jumpbug(cmd);
 	} prediction::end();
 
 	misc::movement::edgejump(cmd, old_flags);
