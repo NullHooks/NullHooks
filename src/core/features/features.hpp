@@ -58,7 +58,7 @@ namespace misc {
 	}
 	void spectator_list();
 	namespace speedgraph {
-		void update(c_usercmd* cmd, int old_flags);
+		void update(c_usercmd* cmd);
 		void draw();
 	}
 }

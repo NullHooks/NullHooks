@@ -15,9 +15,10 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	auto old_sidemove = cmd->sidemove;
 	auto old_flags = csgo::local_player->flags();		// For prediction stuff
 
+	misc::speedgraph::update(cmd);
 	misc::movement::bunny_hop(cmd);
-	misc::movement::infinite_duck(cmd);
 	misc::movement::pre_pred_jumpbug(cmd, old_flags);
+	misc::movement::infinite_duck(cmd);
 
 	prediction::start(cmd); {
 		aim::run_aimbot(cmd);
@@ -25,7 +26,6 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
 	} prediction::end();
 
-	misc::speedgraph::update(cmd, old_flags);	// After pred to get old_flags
 	misc::movement::edgejump(cmd, old_flags);
 
 	math::correct_movement(old_viewangles, cmd, old_forwardmove, old_sidemove);
