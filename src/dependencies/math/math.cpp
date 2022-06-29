@@ -151,46 +151,27 @@ bool math::screen_transform(const vec3_t & point, vec3_t & screen) {
 }
 
 bool math::world_to_screen(const vec3_t& origin, vec3_t& screen) {
-	auto matrix = interfaces::engine->world_to_screen_matrix();
 
-	auto find_point = [](vec3_t& point, int screen_w, int screen_h, int degrees) -> void {
-		float x2 = screen_w * 0.5f;
-		float y2 = screen_h * 0.5f;
+	static auto &view_matrix = interfaces::engine->world_to_screen_matrix();
 
-		float d = sqrt(pow((point.x - x2), 2) + (pow((point.y - y2), 2))); //Distance
-		float r = degrees / d; //Segment ratio
-
-		point.x = r * point.x + (1 - r) * x2; //find point that divides the segment
-		point.y = r * point.y + (1 - r) * y2; //into the ratio (1-r):r
+	auto mul_row = [origin](size_t index) {
+		return  view_matrix[index][0] * origin.x +
+			view_matrix[index][1] * origin.y +
+			view_matrix[index][2] * origin.z +
+			view_matrix[index][3];
 	};
 
-	float w = matrix[3][0] * origin.x + matrix[3][1] * origin.y + matrix[3][2] * origin.z + matrix[3][3];
+	auto w = mul_row(3);
 
-	int screen_width, screen_height;
-	interfaces::engine->get_screen_size(screen_width, screen_height);
-
-	float inverse_width = -1.0f / w;
-	bool behind = true;
-
-	if (w > 0.01) {
-		inverse_width = 1.0f / w;
-		behind = false;
-	}
-
-	screen.x = (float)((screen_width / 2) + (0.5 * ((matrix[0][0] * origin.x
-		+ matrix[0][1] * origin.y
-		+ matrix[0][2] * origin.z
-		+ matrix[0][3]) * inverse_width) * screen_width + 0.5));
-
-	screen.y = (float)((screen_height / 2) - (0.5 * ((matrix[1][0] * origin.x
-		+ matrix[1][1] * origin.y
-		+ matrix[1][2] * origin.z
-		+ matrix[1][3]) * inverse_width) * screen_height + 0.5));
-
-	if (screen.x > screen_width || screen.x < 0 || screen.y > screen_height || screen.y < 0 || behind) {
-		find_point(screen, screen_width, screen_height, screen_height / 2);
+	if(w < 0.01f)
 		return false;
-	}
 
-	return !(behind);
+	int x, y;
+	interfaces::engine->get_screen_size(x, y);
+
+	screen.x = (x / 2.0f) * (1.0f + mul_row(0) / w);
+	screen.y = (y / 2.0f) * (1.0f - mul_row(1) / w);
+
+	return true;
+
 }
