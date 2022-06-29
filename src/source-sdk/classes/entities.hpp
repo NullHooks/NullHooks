@@ -184,6 +184,17 @@ enum item_definition_indexes {
 	GLOVE_HYDRA = 5035
 };
 
+struct collideable_t {
+	vec3_t obb_mins() { 
+		using original_fn = vec3_t * (__thiscall *)(void *);
+		return *((*(original_fn **)this)[1](this));
+	};
+	vec3_t obb_maxs() {
+		using original_fn = vec3_t * (__thiscall *)(void *);
+		return *((*(original_fn **)this)[2](this));
+	};
+};
+
 class entity_t {
 public:
 	void* animating() {
@@ -196,11 +207,14 @@ public:
 		using original_fn = collideable_t * (__thiscall*)(void*);
 		return (*(original_fn * *)this)[3](this);
 	}
+	matrix_t &coordinate_frame() {
+		static auto offset = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_CollisionGroup")) - 0x30;
+		return *reinterpret_cast<matrix_t *>(reinterpret_cast<uint8_t *>(this) + offset);
+	}
 	c_client_class* client_class() {
 		using original_fn = c_client_class * (__thiscall*)(void*);
 		return (*(original_fn * *)networkable())[2](networkable());
 	}
-
 	int index() {
 		using original_fn = int(__thiscall*)(void*);
 		return (*(original_fn * *)networkable())[10](networkable());
