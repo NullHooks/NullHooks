@@ -301,6 +301,33 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target_idx, popup_toggle});
 }
 
+/*
+ * hotkey: Will scan for keys and will change the target_key value to the scanned virtual key code
+ * reading_this_hotkey is needed to check if the hotkey we are changing in input::gobal_input.reading_hotkey is the same as the one in this option
+ */
+void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	const int w = 30;	// This should be the current hotkey's text size + '[]'
+	const int h = 11;
+
+	if (input::gobal_input.reading_hotkey && reading_this_hotkey) {
+		// Get latest key change from not pressed to pressed
+	}
+
+	// Check click last to not get the click as hotkey
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+		// If in hotkey button or text and clicked
+		if ((cursor.x >= x) && (cursor.x <= position + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+			input::gobal_input.reading_hotkey = true;
+			reading_this_hotkey = true;
+		}
+	}
+
+	// Checkbox label
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
+}
+
 /* --------------------------- WINDOW MOVEMENT --------------------------- */
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
