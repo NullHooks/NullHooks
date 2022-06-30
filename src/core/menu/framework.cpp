@@ -323,7 +323,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
 		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
-			if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey). TODO: It also opens the pause menu...
+			if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey).
 				target_key = newkey;		// Store key
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
