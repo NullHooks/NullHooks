@@ -91,12 +91,13 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	// We need to get weapon_type for aim_punch anyway so
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
-	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return;
 
 	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 	if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
 	else {
-		switch (weapon_type) {
+		switch (weapon_data->weapon_type) {
 			case WEAPONTYPE_RIFLE:
 			case WEAPONTYPE_SUBMACHINEGUN:
 			case WEAPONTYPE_MACHINEGUN:
