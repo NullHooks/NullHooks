@@ -70,4 +70,10 @@ namespace hooks {
 		int __fastcall hook(void *ecx, void *edx, const vec3_t *mins, const vec3_t *maxs, uint16_t *list, int listmax);
 	}
 
+	namespace get_client_model_renderable {
+		using fn = void*(__stdcall *)();
+		inline fn original;
+		void* __stdcall hook();
+	}
+
 }
