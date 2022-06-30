@@ -1,6 +1,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
+#include "core/menu/menu.hpp"
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
@@ -14,6 +15,7 @@ bool hooks::initialize() {
 	const auto list_leaves_in_box_target = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
 	const auto get_client_model_renderable_target = reinterpret_cast<void *>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 
+	menu::init_windows();		// For window positions on smaller screens
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Input", "Global input initialized!");
 

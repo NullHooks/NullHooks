@@ -303,3 +303,13 @@ void menu::check_toggle() {
 	if (input::gobal_input.IsPressed(VK_INSERT))
 		variables::ui::menu::opened = !variables::ui::menu::opened;
 }
+
+// Makes the window positions relative based on screen size
+void menu::init_windows() {
+	int screen_w, screen_h;
+	interfaces::engine->get_screen_size(screen_w, screen_h);
+
+	variables::ui::menu::y = screen_h * 0.2;
+	variables::ui::menu::x = screen_w * 0.2;
+	variables::ui::spectators::y = screen_h * 0.5;		// For smaller screens
+}
