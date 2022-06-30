@@ -9,14 +9,9 @@ void aim::triggerbot(c_usercmd* cmd) {
 	if (!csgo::local_player) return;
 	if (!aimbot_weapon_check()) return;
 
-	weapon_t* active_weapon = csgo::local_player->active_weapon();
-	if (!active_weapon) return;
-	const auto weapon_data = active_weapon->get_weapon_data();
-	if (!weapon_data) return;
-
-	vec3_t eye_pos = csgo::local_player->get_eye_pos();		// Start
+	vec3_t eye_pos = csgo::local_player->get_eye_pos();									// Start
 	vec3_t ang = cmd->viewangles + csgo::local_player->aim_punch_angle() * 2.f;
-	const vec3_t dst = eye_pos + math::angle_vector(ang) * 1000.f;	// End
+	const vec3_t dst = eye_pos + math::angle_vector(ang) * 2500.f;	// End
 
 	ray_t ray;
 	ray.initialize(eye_pos, dst);
