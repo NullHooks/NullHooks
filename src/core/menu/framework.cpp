@@ -326,11 +326,11 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
-			if (newkey == VK_DELETE)		// Delte will remove the hotkey
-				target_key = HOTKEY_NONE;	// When a hotkey is none, it will apear as pressed all the time
-			else if (newkey != VK_ESCAPE)	// Press scape (cancel hotkey).
-				target_key = newkey;		// Store key
+		if (newkey != HOTKEY_WAITING) {			// -1 means there is no new keypress
+			if (newkey == VK_DELETE)			// Delte will remove the hotkey
+				target_key = HOTKEY_NONE;		// When a hotkey is none, it will apear as pressed all the time
+			else if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey).
+				target_key = newkey;			// Store key
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			reading_this_hotkey               = false;		// And we don't have to worry about wich hotkey are we reading
@@ -340,11 +340,11 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	}
 
 	// Key text
-	std::string key_name = (reading_this_hotkey) ? input::key_names[HOTKEY_WAITING] : input::key_names[target_key];		// Defined in global_input.hpp
+	std::string key_name    = (reading_this_hotkey) ? input::key_names[HOTKEY_WAITING] : input::key_names[target_key];		// Defined in global_input.hpp
 	std::string display_key = "[" + key_name + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
-	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());		// Patoke if you tell me its 1px down I will kill a small animal
+	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color(210, 210, 210));		// Patoke if you tell me its 1px down I will kill a small animal
 	
 	// Description (label)
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
@@ -362,10 +362,9 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !hotkey_info.reading_this) {
 			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
 				input::gobal_input.reading_hotkey = true;
-				hotkey_info.reading_this = true;
-				should_skip_frame = true;
-			}
-			else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+				hotkey_info.reading_this          = true;
+				should_skip_frame                 = true;
+			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
 				hotkey_info.key = HOTKEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
@@ -373,26 +372,25 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 	if (input::gobal_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
-			if (newkey == VK_DELETE)		// Delte will remove the hotkey
-				hotkey_info.key = HOTKEY_NONE;	// When a hotkey is none, it will apear as pressed all the time
-			else if (newkey != VK_ESCAPE)	// Press scape (cancel hotkey).
-				hotkey_info.key = newkey;		// Store key
+		if (newkey != HOTKEY_WAITING) {				// -1 means there is no new keypress
+			if (newkey == VK_DELETE)				// Delte will remove the hotkey
+				hotkey_info.key = HOTKEY_NONE;		// When a hotkey is none, it will apear as pressed all the time
+			else if (newkey != VK_ESCAPE)			// Press scape (cancel hotkey).
+				hotkey_info.key = newkey;			// Store key
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
-			hotkey_info.reading_this = false;		// And we don't have to worry about wich hotkey are we reading
+			hotkey_info.reading_this          = false;		// And we don't have to worry about wich hotkey are we reading
 		}
-	}
-	else if (should_skip_frame) {
+	} else if (should_skip_frame) {
 		should_skip_frame = false;		// We skipped so reset
 	}
 
 	// Key text
-	std::string key_name = (hotkey_info.reading_this) ? input::key_names[HOTKEY_WAITING] : input::key_names[hotkey_info.key];		// Defined in global_input.hpp
+	std::string key_name    = (hotkey_info.reading_this) ? input::key_names[HOTKEY_WAITING] : input::key_names[hotkey_info.key];	// Defined in global_input.hpp
 	std::string display_key = "[" + key_name + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
-	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());		// Patoke if you tell me its 1px down I will kill a small animal
+	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color(210, 210, 210));		// Patoke if you tell me its 1px down I will kill a small animal
 
 	// Description (label)
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
