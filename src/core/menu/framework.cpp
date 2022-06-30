@@ -350,6 +350,54 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
+// Same as the other hotkey but using struct
+void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string string, hotkey_t& hotkey_info) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	const int h = 11;
+	static bool should_skip_frame = false;		// Will ignore hotkey if true. Used to avoid detecting the click itself
+
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+		// If in hotkey button or text and clicked (but was not reading a hotkey)
+		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !hotkey_info.reading_this) {
+			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
+				input::gobal_input.reading_hotkey = true;
+				hotkey_info.reading_this = true;
+				should_skip_frame = true;
+			}
+			else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+				hotkey_info.key = HOTKEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+			}
+		}
+	}
+
+	if (input::gobal_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
+		const int newkey = input::gobal_input.LatestPressed();
+		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
+			if (newkey == VK_DELETE)		// Delte will remove the hotkey
+				hotkey_info.key = HOTKEY_NONE;	// When a hotkey is none, it will apear as pressed all the time
+			else if (newkey != VK_ESCAPE)	// Press scape (cancel hotkey).
+				hotkey_info.key = newkey;		// Store key
+
+			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
+			hotkey_info.reading_this = false;		// And we don't have to worry about wich hotkey are we reading
+		}
+	}
+	else if (should_skip_frame) {
+		should_skip_frame = false;		// We skipped so reset
+	}
+
+	// Key text
+	std::string key_name = (hotkey_info.reading_this) ? input::key_names[HOTKEY_WAITING] : input::key_names[hotkey_info.key];		// Defined in global_input.hpp
+	std::string display_key = "[" + key_name + "]";
+	int tw, th;		// Text's width and height
+	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
+	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());		// Patoke if you tell me its 1px down I will kill a small animal
+
+	// Description (label)
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
+}
+
 /* --------------------------- WINDOW MOVEMENT --------------------------- */
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {

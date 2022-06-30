@@ -23,6 +23,21 @@ struct KeyStateInfo {
     bool held;
 };
 
+// Stores the key and the togge value
+class hotkey_t {
+public:
+    int key;
+    bool reading_this;
+
+    hotkey_t(const int key, const bool reading_this = false) {
+        this->key          = key;
+        this->reading_this = reading_this;
+    }
+
+    operator int() { return key; }
+    operator bool() { return reading_this; }
+};
+
 class GlobalInput {
 public:
     void Init();
