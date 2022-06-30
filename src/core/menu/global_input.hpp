@@ -83,7 +83,7 @@ namespace input {
         { VK_ESCAPE,        "Esc" },        // Should not be a valid bind
         { VK_SPACE,         "Space" },
         { VK_PRIOR,         "Page up" },
-        { VK_NEXT,          "Page donw" },
+        { VK_NEXT,          "Page down" },
         { VK_END,           "End" },
         { VK_HOME,          "Home" },
         { VK_LEFT,          "Left" },
@@ -102,7 +102,7 @@ namespace input {
         { VK_NUMPAD7,       "Num7" },
         { VK_NUMPAD8,       "Num8" },
         { VK_NUMPAD9,       "Num9" }
-        // Letters are added in Init();
+        // Letters and numbers are added in Init();
     };
 }
 
