@@ -91,13 +91,13 @@ namespace variables {
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
 		inline bool edgejump = false;
-		inline int ej_key = VK_MENU;
+		inline int ej_key = 'C';			// Mind the ' ' and the capital letter
 		inline bool r_ej_key = false;		// These are used by the hotkey function to determine what hotkey needs to be stored right now
 		inline bool edgebug = false;
 		inline int eb_key = VK_XBUTTON1;
 		inline bool r_eb_key = false;
 		inline bool jumpbug = false;
-		inline int jb_key = VK_NEXT;
+		inline int jb_key = VK_MENU;		// Alt key
 		inline bool r_jb_key = false;
 		inline bool draw_watermark = true;
 		inline bool draw_speedgraph = false;

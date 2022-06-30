@@ -19,7 +19,7 @@ void GlobalInput::Init() {
 
     // Digits (VK_0 - VK_9)
     for (int n = 0x30; n <= 0x39; n++) {
-        input::key_names.insert({ n, std::to_string(n) });
+        input::key_names.insert({ n, std::string(1, n) });
     }
 
     // Letters (VK_A - VK_Z)
