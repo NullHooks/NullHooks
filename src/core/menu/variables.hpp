@@ -1,10 +1,10 @@
 #pragma once
+#include "global_input.hpp"
 
 namespace variables {
 	namespace aim {
 		inline bool triggerbot = false;
-		inline int triggerbot_key = VK_PRIOR;
-		inline bool r_triggerbot_key = false;
+		inline hotkey_t triggerbot_key(VK_PRIOR);
 
 		inline bool aimbot = false;
 		inline float aimbot_fov = 0.3f;
@@ -95,14 +95,11 @@ namespace variables {
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
 		inline bool edgejump = false;
-		inline int ej_key = 'C';			// Mind the ' ' and the capital letter
-		inline bool r_ej_key = false;		// These are used by the hotkey function to determine what hotkey needs to be stored right now
+		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
-		inline int eb_key = VK_XBUTTON1;
-		inline bool r_eb_key = false;
+		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
-		inline int jb_key = VK_MENU;		// Alt key
-		inline bool r_jb_key = false;
+		inline hotkey_t jb_key(VK_MENU);	// Alt key
 		inline bool draw_watermark = true;
 		inline bool draw_speedgraph = false;
 		inline bool use_speedgraph_color = false;

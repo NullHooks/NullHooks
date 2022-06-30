@@ -58,7 +58,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable triggerbot", variables::aim::triggerbot);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 1), item_hotkey_w,
-					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key, variables::aim::r_triggerbot_key);
+					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key);
 			}
 
 			const int part2_items_num = 7;
@@ -222,15 +222,15 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable edgejump", variables::misc::edgejump);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 3), item_hotkey_w,
-					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key, variables::misc::r_ej_key);
+					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
 					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 5), item_hotkey_w,
-					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key, variables::misc::r_eb_key);
+					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
 					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 7), item_hotkey_w,
-					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key, variables::misc::r_jb_key);
+					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
