@@ -199,7 +199,7 @@ void menu::render() {
 			item_slider_pos                = variables::ui::menu::x + container_width - container_margin - item_slider_length;
 			item_hotkey_w                  = container_width - container_padding * 2;
 
-			const int part1_items_num = 6;
+			const int part1_items_num = 8;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Movement", false); {
@@ -213,8 +213,12 @@ void menu::render() {
 					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key, variables::misc::r_ej_key);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
 					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 5), item_hotkey_w,
+					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key, variables::misc::r_eb_key);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
 					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 7), item_hotkey_w,
+					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key, variables::misc::r_jb_key);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
