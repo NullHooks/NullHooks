@@ -1,20 +1,30 @@
 #include "core/menu/global_input.hpp"
 
-// Initialize the arrays and what not
-void GlobalInput::Init() {
-    for (int n = 0; n < 256; n++) {
-        key_states[n].pressed = false;
-        key_states[n].held = false;
-    }
-}
-
-// Get key states and store them. Then check that instead of GetAsyncKeyState()
+// (UNUSED) Get key states and store them. Then check that instead of GetAsyncKeyState()
 void GlobalInput::UpdateGetKeyState() {
     for (int n = 0; n < 256; n++) {
         const short sKey = GetAsyncKeyState(n);
 
         key_states[n].held = sKey;                  // 0x8000 for held
         key_states[n].pressed = (sKey & 0x0001);    // 0x0001 for press (changed state)
+    }
+}
+
+// Initialize the arrays and what not (Called on top of hooks.cpp)
+void GlobalInput::Init() {
+    for (int n = 0; n < 256; n++) {
+        key_states[n].pressed = false;
+        key_states[n].held = false;
+    }
+
+    // Digits (VK_0 - VK_9)
+    for (int n = 0x30; n <= 0x39; n++) {
+        input::key_names.insert({ n, std::to_string(n) });
+    }
+
+    // Letters (VK_A - VK_Z)
+    for (int n = 0x41; n <= 0x5A; n++) {
+        input::key_names.insert({ n, std::string(1, n ) });
     }
 }
 
@@ -89,10 +99,10 @@ void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
             break;
         }
         case WM_XBUTTONUP: {
-            if (wparam & 0x10000) {
+            if (wparam & 0x10000) {             // Mouse4
                 key_states[VK_XBUTTON1].pressed = false;
                 key_states[VK_XBUTTON1].held = false;
-            } else if (wparam & 0x20000) {
+            } else if (wparam & 0x20000) {      // Mouse5
                 key_states[VK_XBUTTON2].pressed = false;
                 key_states[VK_XBUTTON2].held = false;
             }
