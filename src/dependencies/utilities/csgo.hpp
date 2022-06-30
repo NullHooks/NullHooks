@@ -41,6 +41,7 @@
 // custom for the hooks
 #define sig_key_values_engine "85 C0 74 ? 51 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 #define sig_key_values_client "85 C0 74 ? 6A ? 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
+#define sig_client_model_renderable "56 8B F1 80 BE ? ? ? ? ? 0F 84 ? ? ? ? 80 BE"
 
 namespace csgo {
 	extern player_t* local_player;
