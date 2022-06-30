@@ -7,6 +7,9 @@
  *   https://pastebin.com/KLuSQ5Tz
  */
 
+#define HOTKEY_WAITING -1
+#define HOTKEY_NONE -2
+
 struct KeyStateInfo {
     /*
      * .pressed will store:
@@ -30,13 +33,13 @@ public:
 public:
     bool reading_hotkey = false;
 
-    inline int LatestChange() {
+    inline int LatestPressed() {
         for (int n = 0; n < 256; n++) {
             if (key_states[n].pressed)      // We don't use IsPressed because we check for reading_hotkey there
                 return n;
         }
 
-        return -1;
+        return HOTKEY_WAITING;
     }
 
     // Only the first time is pressed
@@ -46,6 +49,7 @@ public:
 
     // While key is down
     inline bool IsHeld(const int vKey) const {
+        if (vKey == HOTKEY_NONE) return true;       // If a hotkey is set to "None"
         return key_states[vKey].held;
     }
 
@@ -59,40 +63,42 @@ namespace input {
 
     inline std::map<int, std::string> key_names = {
     /*   Virtual key id                           Key name */
-        { VK_LBUTTON,   "LMouse" },
-        { VK_RBUTTON,   "RMouse" },
-        { VK_MBUTTON,   "MMouse" },
-        { VK_XBUTTON1,  "Mouse4" },
-        { VK_XBUTTON2,  "Mouse5" },
-        { VK_TAB,       "Tab" },
-        { VK_RETURN,    "Return" },
-        { VK_SHIFT,     "Shift" },
-        { VK_CONTROL,   "Ctrl" },
-        { VK_MENU,      "Alt" },
-        { VK_PAUSE,     "Pause" },
-        { VK_CAPITAL,   "Caps" },
-        { VK_ESCAPE,    "Esc" },      // Should not be a valid bind
-        { VK_SPACE,     "Space" },
-        { VK_PRIOR,     "Page up" },
-        { VK_NEXT,      "Page donw" },
-        { VK_END,       "End" },
-        { VK_HOME,      "Home" },
-        { VK_LEFT,      "Left" },
-        { VK_UP,        "Up" },
-        { VK_RIGHT,     "Right" },
-        { VK_DOWN,      "Down" },
-        { VK_INSERT,    "Insert" },
-        { VK_DELETE,    "Delete" },
-        { VK_NUMPAD0,   "Num0" },
-        { VK_NUMPAD1,   "Num1" },
-        { VK_NUMPAD2,   "Num2" },
-        { VK_NUMPAD3,   "Num3" },
-        { VK_NUMPAD4,   "Num4" },
-        { VK_NUMPAD5,   "Num5" },
-        { VK_NUMPAD6,   "Num6" },
-        { VK_NUMPAD7,   "Num7" },
-        { VK_NUMPAD8,   "Num8" },
-        { VK_NUMPAD9,   "Num9" }
+        { HOTKEY_WAITING,   "..." },
+        { HOTKEY_NONE,      "None" },
+        { VK_LBUTTON,       "LMouse" },
+        { VK_RBUTTON,       "RMouse" },
+        { VK_MBUTTON,       "MMouse" },
+        { VK_XBUTTON1,      "Mouse4" },
+        { VK_XBUTTON2,      "Mouse5" },
+        { VK_TAB,           "Tab" },
+        { VK_RETURN,        "Return" },
+        { VK_SHIFT,         "Shift" },
+        { VK_CONTROL,       "Ctrl" },
+        { VK_MENU,          "Alt" },
+        { VK_PAUSE,         "Pause" },
+        { VK_CAPITAL,       "Caps" },
+        { VK_ESCAPE,        "Esc" },        // Should not be a valid bind
+        { VK_SPACE,         "Space" },
+        { VK_PRIOR,         "Page up" },
+        { VK_NEXT,          "Page donw" },
+        { VK_END,           "End" },
+        { VK_HOME,          "Home" },
+        { VK_LEFT,          "Left" },
+        { VK_UP,            "Up" },
+        { VK_RIGHT,         "Right" },
+        { VK_DOWN,          "Down" },
+        { VK_INSERT,        "Insert" },
+        { VK_DELETE,        "Delete" },
+        { VK_NUMPAD0,       "Num0" },
+        { VK_NUMPAD1,       "Num1" },
+        { VK_NUMPAD2,       "Num2" },
+        { VK_NUMPAD3,       "Num3" },
+        { VK_NUMPAD4,       "Num4" },
+        { VK_NUMPAD5,       "Num5" },
+        { VK_NUMPAD6,       "Num6" },
+        { VK_NUMPAD7,       "Num7" },
+        { VK_NUMPAD8,       "Num8" },
+        { VK_NUMPAD9,       "Num9" }
         // Letters are added in Init();
     };
 }

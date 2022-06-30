@@ -302,7 +302,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 }
 
 /*
- * hotkey: Will scan for keys and will change the target_key value to the scanned virtual key code
+ * hotkey: Will scan for keys and will change the target_key value to the scanned (latest pressed) virtual key code
  * reading_this_hotkey is needed to check if the hotkey we are changing in input::gobal_input.reading_hotkey is the same as the one in this option
  */
 void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey) {
@@ -321,10 +321,10 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	}
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
-		const int newkey = input::gobal_input.LatestChange();
-		if (newkey != -1) {				// -1 means there is no new keypress
-			if (newkey != VK_ESCAPE)	// Press scape (cancel hotkey). TODO: It also opens the pause menu...
-				target_key = newkey;	// Store key
+		const int newkey = input::gobal_input.LatestPressed();
+		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
+			if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey). TODO: It also opens the pause menu...
+				target_key = newkey;		// Store key
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			reading_this_hotkey               = false;		// And we don't have to worry about wich hotkey are we reading
@@ -334,7 +334,8 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	}
 
 	// Key text
-	std::string display_key = (reading_this_hotkey) ? "[...]" : "[" + input::key_names[target_key] + "]";
+	std::string key_name = (reading_this_hotkey) ? input::key_names[HOTKEY_WAITING] : input::key_names[target_key];		// Defined in global_input.hpp
+	std::string display_key = "[" + key_name + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
 	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());		// Patoke if you tell me its 1px down I will kill a small animal
