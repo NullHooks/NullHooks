@@ -7,6 +7,7 @@ namespace menu {
 
 	void render();
 	void check_toggle();
+	void init_windows();
 };
 
 namespace watermark {
