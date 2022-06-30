@@ -337,7 +337,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	std::string display_key = (reading_this_hotkey) ? "[...]" : "[" + input::key_names[target_key] + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
-	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());
+	render::draw_text_string(x + w - tw, y - 1, font, display_key, false, color::white());		// Patoke if you tell me its 1px down I will kill a small animal
 	
 	// Description (label)
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
