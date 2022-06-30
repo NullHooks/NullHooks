@@ -180,7 +180,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [X] Silent
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
-    - [ ] Custom aimbot key (Add keybind to framework)
+    - [ ] Custom aimbot key
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -188,15 +188,15 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Longjump
 - [ ] Add multicombobox
     - [ ] For selecting what parts of the speedgraph we should draw
-- [ ] Add autoscope for snipers (independent of aimbot)
-- [ ] Add chicken chams <!-- Rainbow? -->
-- [ ] Add custom radar with renderer, why not
-- [ ] Add "defusing" to bomb timer
-- [ ] Reset bomb timer on new round (sometimes?)
-- [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
+- [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+- [ ] Add autoscope for snipers (independent of aimbot)
+- [ ] Add chicken chams
+- [ ] Add custom radar with renderer, why not
+- [ ] Add "defusing" to bomb timer
+- [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Add config and all that (json or whatever)
 - [ ] Port to linux <!-- <3 -->
