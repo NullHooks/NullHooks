@@ -185,6 +185,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
+    - [ ] Longjump
 - [ ] Add multicombobox
     - [ ] For selecting what parts of the speedgraph we should draw
 - [ ] Add autoscope for snipers (independent of aimbot)
