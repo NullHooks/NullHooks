@@ -3,14 +3,16 @@
 #include "core/menu/variables.hpp"
 
 // Checks if the current weapon can shoot and all that
-bool aimbot_weapon_check() {
+bool aim::aimbot_weapon_check() {
 	if (csgo::local_player->is_defusing()) return false;
 
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return false;
 
-	const int weapon_type = active_weapon->get_weapon_data()->weapon_type;
-	switch (weapon_type) {										// Only aimbot on weapons that shoot
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return false;
+
+	switch (weapon_data->weapon_type) {										// Only aimbot on weapons that shoot
 		case WEAPONTYPE_MACHINEGUN:
 		case WEAPONTYPE_RIFLE:
 		case WEAPONTYPE_SUBMACHINEGUN:
@@ -19,7 +21,7 @@ bool aimbot_weapon_check() {
 		case WEAPONTYPE_PISTOL: {
 			if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
 
-			if (weapon_type == WEAPONTYPE_SNIPER_RIFLE
+			if (weapon_data->weapon_type == WEAPONTYPE_SNIPER_RIFLE
 				&& !csgo::local_player->is_scoped()
 				&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
 

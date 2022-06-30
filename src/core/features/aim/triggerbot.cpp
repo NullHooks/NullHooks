@@ -1,3 +1,34 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/menu/variables.hpp"
 
-// :)
+void aim::triggerbot(c_usercmd* cmd) {
+	if (!variables::aim::triggerbot) return;
+	if (!input::gobal_input.IsHeld(variables::aim::triggerbot_key)) return;
+	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
+	if (!csgo::local_player) return;
+	if (!aimbot_weapon_check()) return;
+
+	weapon_t* active_weapon = csgo::local_player->active_weapon();
+	if (!active_weapon) return;
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return;
+
+	vec3_t eye_pos = csgo::local_player->get_eye_pos();		// Start
+	vec3_t ang = cmd->viewangles + csgo::local_player->aim_punch_angle() * 2.f;
+	const vec3_t dst = eye_pos + math::angle_vector(ang) * 1000.f;	// End
+
+	ray_t ray;
+	ray.initialize(eye_pos, dst);
+
+	trace_filter filter;
+	filter.skip = csgo::local_player;
+
+	trace_t trace;
+	interfaces::trace_ray->trace_ray(ray, 0x46004009, &filter, &trace );
+	if (!trace.entity || !trace.entity->is_player()) return;
+
+	if (!trace.entity->is_alive() || (!variables::aim::target_friends && trace.entity->team() == csgo::local_player->team())) return;
+
+	cmd->buttons |= in_attack;		// Shoot
+}

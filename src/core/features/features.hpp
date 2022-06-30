@@ -2,7 +2,9 @@
 #include "source-sdk/sdk.hpp"
 
 namespace aim {
+	void triggerbot(c_usercmd* cmd);
 	void run_aimbot(c_usercmd* cmd);
+	bool aimbot_weapon_check();
 	void draw_fov();
 }
 
