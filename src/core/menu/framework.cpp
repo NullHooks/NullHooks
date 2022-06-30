@@ -313,17 +313,23 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		// If in hotkey button or text and clicked (but was not reading a hotkey)
-		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !reading_this_hotkey && input::gobal_input.IsPressed(VK_LBUTTON)) {
-			input::gobal_input.reading_hotkey = true;
-			reading_this_hotkey				  = true;
-			should_skip_frame				  = true;
+		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !reading_this_hotkey) {
+			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
+				input::gobal_input.reading_hotkey = true;
+				reading_this_hotkey				  = true;
+				should_skip_frame				  = true;
+			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+				target_key = HOTKEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+			}
 		}
 	}
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
 		if (newkey != HOTKEY_WAITING) {		// -1 means there is no new keypress
-			if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey).
+			if (newkey == VK_DELETE)		// Delte will remove the hotkey
+				target_key = HOTKEY_NONE;	// When a hotkey is none, it will apear as pressed all the time
+			else if (newkey != VK_ESCAPE)	// Press scape (cancel hotkey).
 				target_key = newkey;		// Store key
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys

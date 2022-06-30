@@ -44,12 +44,15 @@ public:
 
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
-        return (!reading_hotkey) ? key_states[vKey].pressed : false;       // See comment on GlobalInput::WndProcUpdate()
+        if (vKey < 0) return false;                                         // Keys like HOTKEY_WAITING or HOTKEY_NONE should be checked with IsPressed()
+        return (!reading_hotkey) ? key_states[vKey].pressed : false;        // See comment on GlobalInput::WndProcUpdate()
     }
 
     // While key is down
     inline bool IsHeld(const int vKey) const {
-        if (vKey == HOTKEY_NONE) return true;       // If a hotkey is set to "None"
+        if (vKey == HOTKEY_NONE) return true;       // If a hotkey is set to "None" is the same as always on
+        
+        if (vKey < 0) return false;                 // Should not happen
         return key_states[vKey].held;
     }
 
