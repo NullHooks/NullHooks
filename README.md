@@ -78,13 +78,22 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Custom crosshair
 - Recoil crosshair
 
-### Misc
+### Movement
+- Infinite duck (:warning: Untrusted)
 - BunnyHop
+- Edgejump (On key)
+- Edgebug assist (Needs improvement)
+- Jumpbug (On key)
+- Speed graph (*With color, height and position options*)
+
+### Misc
 - Spectator list
 - Fov changer
 - Stats watermark (*username, time, fps, ping...*)
-- Speed graph (*With color option*)
 - Hide cheat on screenshots
+- Hotkey system
+    - <kbd>Delete</kbd> sets the hotkey to `None`, meaning that the hotkey will apear always as held
+    - <kbd>Esc</kbd> will cancel the current hotkey selection, restoring it to its original state
 
 ## Installing
 ### Compiling from source (Recommended)
@@ -161,6 +170,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Fix chams render distance ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/330483-disable-model-occulusion.html)) (#18)
 - [X] Add custom models
     - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
+- [X] Add custom hotkeys to framework
 #
 </details>
 
@@ -177,7 +187,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] JumpBug
 - [ ] Add multicombobox
     - [ ] For selecting what parts of the speedgraph we should draw
-- [X] Add custom hotkeys to framework
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams <!-- Rainbow? -->
 - [ ] Add custom radar with renderer, why not
