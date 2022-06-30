@@ -229,12 +229,12 @@ void menu::render() {
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
 			}
 
 			/* ----- Misc - Second column ----- */
