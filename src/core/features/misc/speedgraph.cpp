@@ -19,6 +19,7 @@ color speed2color(int speed) {
 	return custom_helpers::hsv2color(hue, 255);
 }
 
+// Used by misc::speedgraph::draw()
 void draw_speed_str(int x, int y, int speed, color col) {
 	render::draw_text_string(x, y, render::fonts::watermark_font_m, std::to_string(speed), true, col);
 
@@ -51,14 +52,16 @@ void draw_speed_str(int x, int y, int speed, color col) {
 	}
 }
 
-void misc::speedgraph::update(c_usercmd* cmd) {
+// Used in create_move
+void misc::speedgraph::update() {
 	if (csgo::local_player->move_type() == movetype_noclip || csgo::local_player->move_type() == movetype_observer) return; // Don't update speed if noclip
 
 	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 	shift_and_append(cur_speed);
 
-	if (csgo::local_player->flags() & fl_onground) {
-		if ( ((cmd->buttons & in_jump) || input::gobal_input.IsHeld(variables::misc::jb_key)) && cur_speed > 0 ) {		// Just jumped
+	static bool was_on_ground = true;
+	if (was_on_ground) {
+		if (!(csgo::local_player->flags() & fl_onground) && cur_speed > 0 ) {		// Just jumped
 			old_last_jumped = last_jumped;	// Store old to compare and get color
 			last_jumped = cur_speed;		// The last jumped speed
 		} else {							// Reset if player walks
@@ -66,8 +69,16 @@ void misc::speedgraph::update(c_usercmd* cmd) {
 			last_jumped = 0;
 		}
 	}
+
+	// Use this instead of prediction so we get the actual speed and not the prediction one
+	if (csgo::local_player->flags() & fl_onground)
+		was_on_ground = true;
+	else
+		was_on_ground = false;
+
 }
 
+// Used in paint_traverse
 void misc::speedgraph::draw() {
 	if (!variables::misc::draw_speedgraph) return;
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
