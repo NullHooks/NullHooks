@@ -22,6 +22,7 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 
 	prediction::start(cmd); {
 		aim::run_aimbot(cmd);
+		aim::triggerbot(cmd);
 		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
 	} prediction::end();

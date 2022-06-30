@@ -2,6 +2,10 @@
 
 namespace variables {
 	namespace aim {
+		inline bool triggerbot = false;
+		inline int triggerbot_key = VK_PRIOR;
+		inline bool r_triggerbot_key = false;
+
 		inline bool aimbot = false;
 		inline float aimbot_fov = 0.3f;
 		inline bool draw_fov = false;
