@@ -12,7 +12,7 @@ bool hooks::initialize() {
 	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 	const auto findmdl_target = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
 	const auto list_leaves_in_box_target = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
-	const auto get_client_model_renderable_target = reinterpret_cast<void *>(utilities::pattern_scan("client.dll", "56 8B F1 80 BE ? ? ? ? ? 0F 84 ? ? ? ? 80 BE"));
+	const auto get_client_model_renderable_target = reinterpret_cast<void *>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Input", "Global input initialized!");
