@@ -180,6 +180,6 @@ namespace variables {
 		float fallingMax{ 20.0f };
 		float fallingIntensity{ 1.0f };
 		float rotationIntensity{ 1.0f };
-		float strength{ 2.0f };
+		float strength{ 4.0f };
 	} motion_blur;
 }
