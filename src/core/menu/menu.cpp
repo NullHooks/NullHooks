@@ -286,6 +286,24 @@ void menu::render() {
 					render::fonts::watermark_font, "Custom viewmodel FOV", variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
+			const int part3c2_items_num = 5;
+			const int part3c2_y = part2c2_y + part2c2_h + container_margin;
+			const int part3c2_base_item_y = part3c2_y + container_padding;
+			const int part3c2_h = (15 * part3c2_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part3c2_y, container_width, part3c2_h, render::fonts::watermark_font, "Fov", false); {
+				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable motion blur", variables::motion_blur.enabled);
+				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Forward motion blur", variables::motion_blur.forwardEnabled);
+				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Motion blur strenght", variables::motion_blur.strength, 0.f, 15.f);
+				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Motion blur falling intensity", variables::motion_blur.fallingIntensity, 0.f, 15.f);
+				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Motion blur rotation intensity", variables::motion_blur.rotationIntensity, 0.f, 15.f);
+			}
+
 			/* ----- Misc - Buttons ----- */
 
 			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container

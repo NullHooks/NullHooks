@@ -173,4 +173,13 @@ namespace variables {
 		inline bool recoil_crosshair_c_tog = false;
 	};
 
+	inline struct MotionBlur {
+		bool enabled{ false };
+		bool forwardEnabled{ false };
+		float fallingMin{ 10.0f };
+		float fallingMax{ 20.0f };
+		float fallingIntensity{ 1.0f };
+		float rotationIntensity{ 1.0f };
+		float strength{ 2.0f };
+	} motion_blur;
 }
