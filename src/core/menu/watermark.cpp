@@ -13,7 +13,7 @@ void watermark::draw() {
         player_info_t player_info;
         interfaces::engine->get_player_info(interfaces::engine->get_local_player(), &player_info);
         const std::string name(player_info.name);
-        const std::string at = "@";
+        const std::string at = (name == "") ? "" : "@";
 
         const color at_color = color(180, 5, 5, 255);
         const color watermark_color = color::red(255);
