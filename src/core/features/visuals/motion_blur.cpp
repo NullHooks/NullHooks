@@ -2,6 +2,22 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#define DRAW_SCREEN_EFFECT(material) \
+{ \
+    const auto drawFunction = memory->drawScreenEffectMaterial; \   // TODO: Error
+    int w, h; \
+    interfaces::engine->get_screen_size(w, h); \                    // Wtf??
+    __asm { \
+        __asm push h \
+        __asm push w \
+        __asm push 0 \
+        __asm xor edx, edx \
+        __asm mov ecx, material \
+        __asm call drawFunction \
+        __asm add esp, 12 \
+    } \
+}
+
 struct MotionBlur {
     bool enabled{ false };
     bool forwardEnabled{ false };
@@ -75,12 +91,12 @@ void visuals::motion_blur(view_setup_t* setup) noexcept {
         } else {
             const float horizontalFov = setup->fov;
             const float verticalFov = (setup->aspectRatio <= 0.0f) ? (setup->fov) : (setup->fov / setup->aspectRatio);
-            const float viewdotMotion = currentForwardVector.dotProduct(positionChange);    // TODO: Need to add dotproduct
+            const float viewdotMotion = currentForwardVector.dot(positionChange);
 
             if (motionBlur.forwardEnabled)
                 motionBlurValues[2] = viewdotMotion;
 
-            const float sidedotMotion = currentSideVector.dotProduct(positionChange);       // TODO: Need to add dotproduct
+            const float sidedotMotion = currentSideVector.dot(positionChange);
             float yawdiffOriginal = history.previousYaw - currentYaw;
             if (((history.previousYaw - currentYaw > 180.0f) || (history.previousYaw - currentYaw < -180.0f)) &&
                 ((history.previousYaw + currentYaw > -180.0f) && (history.previousYaw + currentYaw < 180.0f)))
@@ -145,22 +161,21 @@ void visuals::motion_blur(view_setup_t* setup) noexcept {
     }
 
     const auto material = interfaces::material_system->find_material("dev/motion_blur", "RenderTargets", false);
-    
     if (!material) return;
 
     const auto MotionBlurInternal = material->find_var("$MotionBlurInternal", nullptr, false);
     
-    MotionBlurInternal->setVecComponentValue(motionBlurValues[0], 0);   // TODO: Error
-    MotionBlurInternal->setVecComponentValue(motionBlurValues[1], 1);
-    MotionBlurInternal->setVecComponentValue(motionBlurValues[2], 2);
-    MotionBlurInternal->setVecComponentValue(motionBlurValues[3], 3);
+    MotionBlurInternal->set_vec_component_value(motionBlurValues[0], 0);
+    MotionBlurInternal->set_vec_component_value(motionBlurValues[1], 1);
+    MotionBlurInternal->set_vec_component_value(motionBlurValues[2], 2);
+    MotionBlurInternal->set_vec_component_value(motionBlurValues[3], 3);
 
     const auto MotionBlurViewPortInternal = material->find_var("$MotionBlurViewportInternal", nullptr, false);
 
-    MotionBlurViewPortInternal->setVecComponentValue(0.0f, 0);
-    MotionBlurViewPortInternal->setVecComponentValue(0.0f, 1);
-    MotionBlurViewPortInternal->setVecComponentValue(1.0f, 2);
-    MotionBlurViewPortInternal->setVecComponentValue(1.0f, 3);
+    MotionBlurViewPortInternal->set_vec_component_value(0.0f, 0);
+    MotionBlurViewPortInternal->set_vec_component_value(0.0f, 1);
+    MotionBlurViewPortInternal->set_vec_component_value(1.0f, 2);
+    MotionBlurViewPortInternal->set_vec_component_value(1.0f, 3);
 
     DRAW_SCREEN_EFFECT(material)
 }

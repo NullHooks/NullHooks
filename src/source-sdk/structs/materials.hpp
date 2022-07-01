@@ -131,3 +131,10 @@ public:
 	virtual bool set_temp_excluded(bool set, int excluded_dimension_limit) = 0;
 	virtual int get_reference_count() const = 0;
 };
+
+class i_material_var {
+public:
+	virtual void set_value(float value) const = 0;
+	virtual void set_vector_value(float x, float y, float z) const = 0;
+	virtual void set_vec_component_value(float value, int component) const = 0;
+};
