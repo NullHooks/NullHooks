@@ -2,7 +2,12 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/menu/global_input.hpp"
 
-class hotkey_t;
+struct multicombo_opt_t {
+	std::string text;
+	bool state;
+};
+
+class hotkey_t;	// Declared in global input
 namespace gui {
 	void group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
 	void tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string, std::int32_t& tab, std::int32_t count);
@@ -11,6 +16,7 @@ namespace gui {
 	void check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color1, bool& toggle_color1, color& setting_color2, bool& toggle_color2);
 	void slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value);
 	void combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string string, std::vector<std::string>& opt_vec, int& target_idx, bool& popup_toggle);
+	void multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<multicombo_opt_t>& target_vec, bool& popup_toggle);
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey);
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, hotkey_t& hinfo);
 	void menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
@@ -44,6 +50,15 @@ struct combo_popup_info {
 	bool& popup_toggle;
 };
 
+struct multicombo_popup_info {
+	std::int32_t x;
+	std::int32_t y;
+	std::int32_t w;
+	std::uint32_t h;
+	std::vector<multicombo_opt_t>& target_vec;
+	bool& popup_toggle;
+};
+
 namespace popup_system {
 	// TODO: Add sub-namespaces?
 
@@ -62,9 +77,14 @@ namespace popup_system {
 	void color_picker_popup(color_popup_info color_popup);		// Will render the actual popup
 	
 	/* ------------- Combobox ------------ */
-	const int combo_win_padding = 4;
+	const int combo_win_padding = 4;							// For combobox and multicombobox
 
 	inline std::vector<combo_popup_info> active_combo_popups;	// Menu combobox buttons will store here information about the popup that will be rendered
-	void check_combo_popups();									// Will check for popups in the active_color_popups vector
+	void check_combo_popups();									// Will check for popups in the active_combo_popups vector
 	void combobox_popup(combo_popup_info combo_popup);			// Will render the actual popup
+
+	/* ---------- Multicombobox ---------- */
+	inline std::vector<multicombo_popup_info> active_multicombo_popups;		// Menu multicombobox buttons will store here information about the popup that will be rendered
+	void check_multicombo_popups();											// Will check for popups in the active_multicombo_popups vector
+	void multicombobox_popup(multicombo_popup_info combo_popup);			// Will render the actual popup
 }

@@ -22,10 +22,10 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 
 	// Cursor in button and clicked
 	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Checkbox background (Hover)
+		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Button background (Hover)
 		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON));
 	}
-	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Checkbox background
+	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Button background
 
 	return pressed;
 }
@@ -301,6 +301,70 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target_idx, popup_toggle});
 }
 
+// Same as combobox but with more than one option. Will store selected options as true in a bool vector.
+void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<multicombo_opt_t>& target_vec, bool& popup_toggle) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	const int x_margin = popup_system::combo_win_padding;
+	const int h = 11;
+	const int arrow_w = 7, arrow_h = 4;
+	const int arrow_x = combo_right_pos - x_margin - arrow_w, arrow_y = y + 4;	// h/2 is not reliable
+	const int max_button_len = 100;
+	std::string button_str = "";
+	bool has_enabled = false;	// Will be false if all options are disabled
+	for (multicombo_opt_t item : target_vec) {
+		std::string temp_str = button_str;
+		if (item.state) {
+			if (has_enabled) temp_str += ", ";		// The check makes it not add a comma before the first item
+			temp_str += item.text;
+			if (render::get_text_size(render::fonts::watermark_font_ns, temp_str).x < max_button_len) {
+				if (has_enabled) button_str += ", ";
+				button_str += item.text;
+			} else {
+				button_str += ", ...";
+				break;
+			}
+			has_enabled = true;		// We found an enabled item
+		}
+	}
+	if (!has_enabled) button_str = "None";
+	const int item_w = render::get_text_size(render::fonts::watermark_font_ns, button_str).x;	// Need to get text first (selected options)
+	int w = x_margin + item_w + x_margin + arrow_w + x_margin;
+	if (popup_toggle) {		// Stores the px width of the biggest text in the vector if popup is active
+		for (multicombo_opt_t item : target_vec) {
+			int text_w = render::get_text_size(render::fonts::watermark_font_ns, item.text).x + x_margin * 2;
+			if (text_w > w)
+				w = text_w;
+		}
+	}
+	const int position = combo_right_pos - w;		// Get top left corner of current item
+
+	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
+			popup_toggle = !popup_toggle;			// If in checkbox and clicked
+		// See color picker comment
+		else if (!((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h + target_vec.size() * 15)))
+			popup_toggle = false;					// Close popup if user clicks outside
+	}
+
+	// Combobox "button"
+	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
+	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, button_str, false, color::white());
+
+	// Draw arrow
+	for (int n = 0; n < arrow_h; n++) {
+		render::draw_filled_rect(arrow_x + n, arrow_y + n, arrow_w - n * 2, 1, color::white());
+	}
+
+	// Combobox label
+	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
+
+	// Push to vector to render after menu
+	if (popup_toggle)
+		popup_system::active_multicombo_popups.push_back(multicombo_popup_info{ position, y + h + 2, w, target_vec.size() * 15, target_vec, popup_toggle });
+}
+
 /*
  * hotkey: Will scan for keys and will change the target_key value to the scanned (latest pressed) virtual key code
  * reading_this_hotkey is needed to check if the hotkey we are changing in input::gobal_input.reading_hotkey is the same as the one in this option
@@ -456,6 +520,7 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 void popup_system::render_popups() {	
 	check_color_popups();
 	check_combo_popups();
+	check_multicombo_popups();
 }
 
 // Checks if the mouse is in an active popup
@@ -489,6 +554,15 @@ void popup_system::check_combo_popups() {
 	while (!active_combo_popups.empty()) {
 		combobox_popup(active_combo_popups.back());			// Render
 		active_combo_popups.pop_back();						// Remove
+	}
+}
+
+// Will check for popups in the active_combo_popups vector
+void popup_system::check_multicombo_popups() {
+	// Render each active popup and pop from vector until there are no popups left
+	while (!active_multicombo_popups.empty()) {
+		multicombobox_popup(active_multicombo_popups.back());	// Render
+		active_multicombo_popups.pop_back();				// Remove
 	}
 }
 
@@ -562,4 +636,30 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 
 	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsHeld(VK_LBUTTON))
 		combo_p.target_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
+}
+
+void popup_system::multicombobox_popup(multicombo_popup_info combo_p) {
+	if (!combo_p.popup_toggle) return;
+
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	// We get the largest item width when rendering the button, and we pass it to the combo_p, so we just use that
+	render::draw_filled_rect(combo_p.x, combo_p.y, combo_p.w, combo_p.h, color(30, 30, 30, 255));
+	int cur_option = 0;
+	for (multicombo_opt_t item : combo_p.target_vec) {
+		if (item.state)
+			render::draw_filled_rect(combo_p.x, combo_p.y + cur_option * 15 - 1, combo_p.w, 15, color(20, 20, 20, 255));
+		cur_option++;
+	}
+
+	int item_n = 0;
+	for (multicombo_opt_t item : combo_p.target_vec) {
+		render::draw_text_string(combo_p.x + combo_win_padding, combo_p.y + (15 * item_n), render::fonts::watermark_font_ns, item.text, false, item.state ? color(200, 10, 10, 255) : color(190, 190, 190, 255));
+		item_n++;
+	}
+
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+		int clicked_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
+		combo_p.target_vec.at(clicked_idx).state = !combo_p.target_vec.at(clicked_idx).state;
+	}
 }

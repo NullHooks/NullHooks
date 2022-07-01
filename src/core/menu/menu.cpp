@@ -44,6 +44,7 @@ void menu::render() {
 	int item_left_pos              = container_left_pos + container_padding;
 	int item_checkbox_pos          = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 	int item_slider_pos            = variables::ui::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
+	int item_combo_pos             = item_checkbox_pos + item_checkbox_length;
 	int item_hotkey_w              = container_width - container_padding*2;
 
 	const int part1_y           = variables::ui::menu::y + top_margin_with_tabs + container_margin;
@@ -90,6 +91,7 @@ void menu::render() {
 			container_width   = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 			item_slider_pos   = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos    = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w     = container_width - container_padding * 2;
 
 			const int part1_items_num = 7;
@@ -140,20 +142,20 @@ void menu::render() {
 					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
 					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_friend_tog, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_combo_pos, render::fonts::watermark_font,
+					"Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
 					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c, variables::colors::chams_arms_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 8), item_combo_pos, render::fonts::watermark_font,
+					"Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
 					"Sleeve chams", variables::chams::vm_sleeve_chams, variables::colors::chams_sleeve_c, variables::colors::chams_sleeve_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 10), item_combo_pos, render::fonts::watermark_font,
+					"Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
 			}
 
 			/* ----- Visuals - Second column ----- */
@@ -164,6 +166,7 @@ void menu::render() {
 			item_left_pos      = item_left_pos + (container_width * column_number) + container_margin;
 			item_checkbox_pos  = item_checkbox_pos + (container_width * column_number) + container_margin;
 			item_slider_pos    = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos     = item_checkbox_pos + item_checkbox_length;
 
 			const int part1c2_items_num   = 3;			// part1c2 => part 1 from column 2
 			const int part1c2_y           = part1_y;	// Needs to reset y pos on new col
@@ -202,13 +205,14 @@ void menu::render() {
 			const int columns              = 2;
 			const int container_width_o    = container_width;		// Original used for buttons
 			const int container_left_pos_o = container_left_pos;	// Original used for buttons
-			const int item_left_pos_o      = item_left_pos;		// Original used for buttons
+			const int item_left_pos_o      = item_left_pos;		    // Original used for buttons
 			const int item_checkbox_pos_o  = item_checkbox_pos;		// Original used for buttons
 			const int item_slider_pos_o    = item_slider_pos;		// Original used for buttons
 			const int item_hotkey_w_o      = item_hotkey_w;			// Original used for buttons
 			container_width                = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos              = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 			item_slider_pos                = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos                 = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w                  = container_width - container_padding * 2;
 
 			const int part1_items_num = 8;
@@ -234,19 +238,21 @@ void menu::render() {
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 4;
+			const int part2_items_num = 5;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Draw speedgraph", variables::misc::draw_speedgraph);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Enable speedgraph color", variables::misc::use_speedgraph_color);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
+				gui::multicombobox(item_left_pos, part2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Speedgraph options", variables::misc::speedgraph_options, variables::misc::speedgraph_options_tog);
 			}
 
 			/* ----- Misc - Second column ----- */
@@ -257,6 +263,7 @@ void menu::render() {
 			item_left_pos = item_left_pos + (container_width * column_number) + container_margin;
 			item_checkbox_pos = item_checkbox_pos + (container_width * column_number) + container_margin;
 			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 
 			const int part1c2_items_num = 4;			// part1c2 => part 1 from column 2
 			const int part1c2_y = part1_y;	// Needs to reset y pos on new col
