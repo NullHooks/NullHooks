@@ -81,4 +81,10 @@ namespace hooks {
 		inline fn original;
 		bool __stdcall hook();
 	}
+
+	namespace fire_event {
+		using fn = void(__fastcall*)(void*, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
+		inline fn original;
+		void __fastcall hook(void* thisptr, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
+	}
 }
