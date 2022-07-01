@@ -42,7 +42,7 @@
 #define sig_key_values_engine "85 C0 74 ? 51 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 #define sig_key_values_client "85 C0 74 ? 6A ? 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 #define sig_client_model_renderable "56 8B F1 80 BE ? ? ? ? ? 0F 84 ? ? ? ? 80 BE"
-#define sig_depth_of_field "8B 0D ? ? 56 8B 01 FF 50 34 8B F0 85 F6 75 04"
+#define sig_depth_of_field "8B 0D ? ? ? ? 56 8B 01 FF 50 ? 8B F0 85 F6 75 ?"
 
 namespace csgo {
 	extern player_t* local_player;
