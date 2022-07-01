@@ -4,16 +4,17 @@
 #include "core/menu/menu.hpp"
 
 bool hooks::initialize() {
-	const auto alloc_key_values_target = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
-	const auto create_move_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
-	const auto paint_traverse_target = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
-	const auto post_screen_space_effects_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
-	const auto get_viewmodel_fov_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
-	const auto override_view_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
-	const auto draw_model_execute_target = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
-	const auto findmdl_target = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
-	const auto list_leaves_in_box_target = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
-	const auto get_client_model_renderable_target = reinterpret_cast<void *>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
+	const auto alloc_key_values_target            = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
+	const auto create_move_target                 = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
+	const auto paint_traverse_target              = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
+	const auto post_screen_space_effects_target   = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
+	const auto get_viewmodel_fov_target           = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
+	const auto override_view_target               = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
+	const auto draw_model_execute_target          = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
+	const auto findmdl_target                     = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
+	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
+	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
+	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 
 	menu::init_windows();		// For window positions on smaller screens
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
@@ -62,6 +63,10 @@ bool hooks::initialize() {
 	if(MH_CreateHook(list_leaves_in_box_target, &list_leaves_in_box::hook, reinterpret_cast<void **>(&list_leaves_in_box::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize list_leaves_in_box.");
 	custom_helpers::state_to_console_color("Hooks", "list_leaves_in_box initialized!");
+
+	if (MH_CreateHook(is_depth_of_field_enabled_target, &is_depth_of_field_enabled::hook, reinterpret_cast<void**>(&is_depth_of_field_enabled::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize is_depth_of_field_enabled.");
+	custom_helpers::state_to_console_color("Hooks", "is_depth_of_field_enabled initialized!");
 
 	if(MH_CreateHook(get_client_model_renderable_target, &get_client_model_renderable::hook, reinterpret_cast<void **>(&get_client_model_renderable::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize get_client_model_renderable.");

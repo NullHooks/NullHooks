@@ -76,4 +76,9 @@ namespace hooks {
 		void* __stdcall hook();
 	}
 
+	namespace is_depth_of_field_enabled {
+		using fn = void* (__thiscall*)(void*);
+		inline fn original;
+		bool __stdcall hook();
+	}
 }

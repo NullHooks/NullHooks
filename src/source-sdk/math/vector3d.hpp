@@ -90,6 +90,7 @@ public:
 		return ((float*)this)[i];
 	}
 
+	inline float dot_product(vec3_t)
 	inline float length_2d() const {
 		return sqrt((x * x) + (y * y));
 	}
