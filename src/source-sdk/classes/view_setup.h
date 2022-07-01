@@ -6,8 +6,8 @@ struct view_setup_t {
 	std::byte pad1[4];
 	vec3_t origin;
 	vec3_t angles;
-	std::byte pad1[4];
+	std::byte pad2[4];
 	float far_z;
-	std::byte pad1[8];
+	std::byte pad3[8];
 	float aspectRatio;
 };

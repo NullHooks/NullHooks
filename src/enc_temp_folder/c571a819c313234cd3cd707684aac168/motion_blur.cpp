@@ -18,8 +18,8 @@ void draw_screen_effect(i_material* material) {
 }
 
 struct MotionBlur {
-    bool enabled{ false };
-    bool forwardEnabled{ false };
+    bool enabled{ true };
+    bool forwardEnabled{ true };
     float fallingMin{ 10.0f };
     float fallingMax{ 20.0f };
     float fallingIntensity{ 1.0f };
@@ -44,7 +44,7 @@ struct MotionBlurHistory {
 };
 
 void visuals::motion_blur(view_setup_t* setup) noexcept {
-    if (!motionBlur.enabled) return;
+    if (false) return;  // REPLACE: TOGGLE VAR
 
     static MotionBlurHistory history;
     static float motionBlurValues[4] = { 0.0f, 0.0f, 0.0f, 0.0f };

@@ -134,7 +134,16 @@ public:
 
 class i_material_var {
 public:
-	virtual void set_value(float value) const = 0;
-	virtual void set_vector_value(float x, float y, float z) const = 0;
-	virtual void set_vec_component_value(float value, int component) const = 0;
+	void set_value(float value) {
+		using original_fn = void(__thiscall*)(void*, float);
+		return (*(original_fn**)this)[4](this, value);
+	}
+	void set_vector_value(float x, float y, float z) {
+		typedef void(__thiscall* original_fn)(void*, float, float, float);
+		return (*(original_fn**)this)[11](this, x, y, z);
+	}
+	void set_vec_component_value(float value, int component) {
+		using original_fn = void(__thiscall*)(void*, float, int);
+		return (*(original_fn**)this)[26](this, value, component);
+	}
 };
