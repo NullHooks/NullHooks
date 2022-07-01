@@ -2,6 +2,8 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+// See issue #25
+
 void draw_screen_effect(i_material* material) {
     static auto fn = utilities::pattern_scan("client.dll", sig_draw_screen_effect_material);
     int w, h;
@@ -35,6 +37,8 @@ struct MotionBlurHistory {
 
 void visuals::motion_blur(view_setup_t* setup) noexcept {
     if (!variables::motion_blur.enabled) return;
+    if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
+    if (!csgo::local_player) return;
 
     static MotionBlurHistory history;
     static float motionBlurValues[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
