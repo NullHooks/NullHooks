@@ -15,6 +15,7 @@ bool hooks::initialize() {
 	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
 	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
+	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
 
 	menu::init_windows();		// For window positions on smaller screens
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
@@ -71,6 +72,10 @@ bool hooks::initialize() {
 	if(MH_CreateHook(get_client_model_renderable_target, &get_client_model_renderable::hook, reinterpret_cast<void **>(&get_client_model_renderable::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize get_client_model_renderable.");
 	custom_helpers::state_to_console_color("Hooks", "get_client_model_renderable initialized!");
+
+	if(MH_CreateHook(supports_resolve_depth_target, &supports_resolve_depth::hook, reinterpret_cast<void **>(&supports_resolve_depth::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize supports_resolve_depth.");
+	custom_helpers::state_to_console_color("Hooks", "supports_resolve_depth initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");

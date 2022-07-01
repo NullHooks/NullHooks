@@ -81,4 +81,11 @@ namespace hooks {
 		inline fn original;
 		bool __stdcall hook();
 	}
+
+	namespace supports_resolve_depth {
+		using fn = bool(*)();
+		inline fn original;
+		bool hook();
+	}
+
 }
