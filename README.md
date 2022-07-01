@@ -174,6 +174,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
 - [X] Add custom hotkeys to framework
 - [X] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
+- [X] Add multicombobox
+    - [X] For selecting what parts of the speedgraph we should draw
 #
 </details>
 
@@ -189,8 +191,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [ ] Longjump
-- [ ] Add multicombobox
-    - [ ] For selecting what parts of the speedgraph we should draw
 - [ ] Add event listeners (or `FireEvent` hook, etc.)
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
