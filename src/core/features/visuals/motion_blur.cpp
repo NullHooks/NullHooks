@@ -2,20 +2,19 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-#define DRAW_SCREEN_EFFECT(material) \
-{ \
-    const auto drawFunction = memory->drawScreenEffectMaterial; \   // TODO: Error
-    int w, h; \
-    interfaces::engine->get_screen_size(w, h); \                    // Wtf??
-    __asm { \
-        __asm push h \
-        __asm push w \
-        __asm push 0 \
-        __asm xor edx, edx \
-        __asm mov ecx, material \
-        __asm call drawFunction \
-        __asm add esp, 12 \
-    } \
+void draw_screen_effect(i_material* material) {
+    const auto drawFunction = memory->drawScreenEffectMaterial;
+    int w, h;
+    interfaces::engine->get_screen_size(w, h);
+    __asm {
+        push h
+        push w
+        push 0
+        xor edx, edx
+        mov ecx, material
+        call drawFunction
+        add esp, 12
+    }
 }
 
 struct MotionBlur {
