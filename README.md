@@ -26,6 +26,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 ## Features
 ### Aim
+- Triggerbot
 - Aimbot
     - Silent
 - Ignore walls
@@ -175,12 +176,12 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 </details>
 
 - [X] Add aim stuff
-    - [ ] Triggerbot
+    - [X] Triggerbot
     - [X] Aimbot
         - [X] Silent
         - [ ] Snappy
     - [ ] Aimbot fov circle (or square)
-    - [ ] Custom aimbot key
+    - [ ] Custom aimbot key (autofire)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -192,6 +193,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+- [ ] Add motion blur (See #25)
 - [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
