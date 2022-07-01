@@ -238,21 +238,17 @@ void menu::render() {
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 5;
+			const int part2_items_num = 3;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
-					"Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
-					"Enable speedgraph color", variables::misc::use_speedgraph_color);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
-					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length, render::fonts::watermark_font,
-					"Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
-				gui::multicombobox(item_left_pos, part2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+				gui::multicombobox(item_left_pos, part2_base_item_y + (15 * 0), item_combo_pos, render::fonts::watermark_font,
 					"Speedgraph options", variables::misc::speedgraph_options, variables::misc::speedgraph_options_tog);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
 			}
 
 			/* ----- Misc - Second column ----- */

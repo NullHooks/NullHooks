@@ -82,7 +82,6 @@ void misc::speedgraph::update() {
 
 // Used in paint_traverse
 void misc::speedgraph::draw() {
-	if (!variables::misc::draw_speedgraph) return;
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
 	if (!csgo::local_player->is_alive()) return;		// TODO: Add spectated player?
