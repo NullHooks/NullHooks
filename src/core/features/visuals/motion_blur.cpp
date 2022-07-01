@@ -3,7 +3,7 @@
 #include "core/menu/variables.hpp"
 
 void draw_screen_effect(i_material* material) {
-    static auto fn = utilities::pattern_scan("client.dll", "55 8B EC 83 E4 ? 83 EC ? 53 56 57 8D 44 24 ? 89 4C 24 ?");
+    static auto fn = utilities::pattern_scan("client.dll", sig_draw_screen_effect_material);
     int w, h;
     interfaces::engine->get_screen_size(w, h);
     __asm {
@@ -16,16 +16,6 @@ void draw_screen_effect(i_material* material) {
         add esp, 12
     }
 }
-
-struct MotionBlur {
-    bool enabled{ false };
-    bool forwardEnabled{ false };
-    float fallingMin{ 10.0f };
-    float fallingMax{ 20.0f };
-    float fallingIntensity{ 1.0f };
-    float rotationIntensity{ 1.0f };
-    float strength{ 1.0f };
-} motionBlur;
 
 struct MotionBlurHistory {
     MotionBlurHistory() noexcept {
@@ -44,7 +34,7 @@ struct MotionBlurHistory {
 };
 
 void visuals::motion_blur(view_setup_t* setup) noexcept {
-    if (!motionBlur.enabled) return;
+    if (!variables::motion_blur.enabled) return;
 
     static MotionBlurHistory history;
     static float motionBlurValues[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -92,7 +82,7 @@ void visuals::motion_blur(view_setup_t* setup) noexcept {
             const float verticalFov = (setup->aspectRatio <= 0.0f) ? (setup->fov) : (setup->fov / setup->aspectRatio);
             const float viewdotMotion = currentForwardVector.dot(positionChange);
 
-            if (motionBlur.forwardEnabled)
+            if (variables::motion_blur.forwardEnabled)
                 motionBlurValues[2] = viewdotMotion;
 
             const float sidedotMotion = currentSideVector.dot(positionChange);
@@ -135,12 +125,12 @@ void visuals::motion_blur(view_setup_t* setup) noexcept {
             else
                 motionBlurValues[2] = 0.0f;
 
-            motionBlurValues[2] = std::clamp((fabsf(motionBlurValues[2]) - motionBlur.fallingMin ) / (motionBlur.fallingMax - motionBlur.fallingMin), 0.0f, 1.0f) * (motionBlurValues[2] >= 0.0f ? 1.0f : -1.0f);
+            motionBlurValues[2] = std::clamp((fabsf(motionBlurValues[2]) - variables::motion_blur.fallingMin ) / (variables::motion_blur.fallingMax - variables::motion_blur.fallingMin), 0.0f, 1.0f) * (motionBlurValues[2] >= 0.0f ? 1.0f : -1.0f);
             motionBlurValues[2] /= 30.0f;
-            motionBlurValues[0] *= motionBlur.rotationIntensity * .15f * motionBlur.strength;
-            motionBlurValues[1] *= motionBlur.rotationIntensity * .15f * motionBlur.strength;
-            motionBlurValues[2] *= motionBlur.rotationIntensity * .15f * motionBlur.strength;
-            motionBlurValues[3] *= motionBlur.fallingIntensity * .15f * motionBlur.strength;
+            motionBlurValues[0] *= variables::motion_blur.rotationIntensity * .15f * variables::motion_blur.strength;
+            motionBlurValues[1] *= variables::motion_blur.rotationIntensity * .15f * variables::motion_blur.strength;
+            motionBlurValues[2] *= variables::motion_blur.rotationIntensity * .15f * variables::motion_blur.strength;
+            motionBlurValues[3] *= variables::motion_blur.fallingIntensity * .15f * variables::motion_blur.strength;
 
         }
 
