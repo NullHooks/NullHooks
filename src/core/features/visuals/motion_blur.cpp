@@ -3,7 +3,7 @@
 #include "core/menu/variables.hpp"
 
 void draw_screen_effect(i_material* material) {
-    const auto drawFunction = memory->drawScreenEffectMaterial;
+    static auto fn = utilities::pattern_scan("client.dll", "55 8B EC 83 E4 ? 83 EC ? 53 56 57 8D 44 24 ? 89 4C 24 ?");
     int w, h;
     interfaces::engine->get_screen_size(w, h);
     __asm {
@@ -12,7 +12,7 @@ void draw_screen_effect(i_material* material) {
         push 0
         xor edx, edx
         mov ecx, material
-        call drawFunction
+        call fn
         add esp, 12
     }
 }
