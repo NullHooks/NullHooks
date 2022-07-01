@@ -100,11 +100,21 @@ namespace variables {
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
-		inline bool draw_watermark = true;
+
+		inline std::vector<multicombo_opt_t> speedgraph_options = {
+			{ "Line",  true },
+			{ "Color", false },
+			{ "Speed", true },
+			{ "Jump",  true }
+		};
+		inline bool speedgraph_options_tog = false;
+
 		inline bool draw_speedgraph = false;
 		inline bool use_speedgraph_color = false;
 		inline float speedgraph_h = 50.f;
 		inline float speedgraph_pos = 92.5;
+		
+		inline bool draw_watermark = true;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
 	}
