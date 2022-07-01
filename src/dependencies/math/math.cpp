@@ -134,31 +134,16 @@ vec3_t math::vector_divide(vec3_t & a, vec3_t & b) {
 		a.z / b.z);
 }
 
-bool math::screen_transform(const vec3_t & point, vec3_t & screen) {
-	auto matrix = interfaces::engine->world_to_screen_matrix();
-
-	float w = matrix[3][0] * point.x + matrix[3][1] * point.y + matrix[3][2] * point.z + matrix[3][3];
-	screen.x = matrix[0][0] * point.x + matrix[0][1] * point.y + matrix[0][2] * point.z + matrix[0][3];
-	screen.y = matrix[1][0] * point.x + matrix[1][1] * point.y + matrix[1][2] * point.z + matrix[1][3];
-	screen.z = 0.0f;
-
-	int inverse_width = static_cast<int>((w < 0.001f) ? -1.0f / w :
-		1.0f / w);
-
-	screen.x *= inverse_width;
-	screen.y *= inverse_width;
-	return (w < 0.001f);
-}
-
 bool math::world_to_screen(const vec3_t& origin, vec3_t& screen) {
 
-	static auto &view_matrix = interfaces::engine->world_to_screen_matrix();
+	//https://github.com/frk1/hazedumper/blob/master/config.json#L370
+	static auto &viewmatrix = *(view_matrix_t *)(*(uint8_t **)(utilities::pattern_scan("client.dll", sig_viewmatrix) + 3) + 176);
 
 	auto mul_row = [origin](size_t index) {
-		return  view_matrix[index][0] * origin.x +
-			view_matrix[index][1] * origin.y +
-			view_matrix[index][2] * origin.z +
-			view_matrix[index][3];
+		return  viewmatrix[index][0] * origin.x +
+			viewmatrix[index][1] * origin.y +
+			viewmatrix[index][2] * origin.z +
+			viewmatrix[index][3];
 	};
 
 	auto w = mul_row(3);
