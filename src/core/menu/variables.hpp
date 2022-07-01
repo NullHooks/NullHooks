@@ -1,5 +1,6 @@
 #pragma once
 #include "global_input.hpp"
+#include "framework.hpp"
 
 namespace variables {
 	namespace aim {
