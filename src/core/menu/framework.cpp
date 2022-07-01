@@ -536,6 +536,11 @@ bool popup_system::mouse_in_popup(int x, int y) {
 			return true;
 	}
 
+	for (const multicombo_popup_info& pinfo : active_multicombo_popups) {
+		if (pinfo.popup_toggle && (x >= pinfo.x) && (x <= pinfo.x + pinfo.w) && (y >= pinfo.y) && (y <= pinfo.y + pinfo.h))
+			return true;
+	}
+
 	return false;
 }
 
