@@ -12,7 +12,7 @@ bool aim::aimbot_weapon_check() {
 	const auto weapon_data = active_weapon->get_weapon_data();
 	if (!weapon_data) return false;
 
-	switch (weapon_data->weapon_type) {										// Only aimbot on weapons that shoot
+	switch (weapon_data->weapon_type) {									// Only aimbot on weapons that shoot
 		case WEAPONTYPE_MACHINEGUN:
 		case WEAPONTYPE_RIFLE:
 		case WEAPONTYPE_SUBMACHINEGUN:
