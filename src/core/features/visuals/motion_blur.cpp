@@ -5,7 +5,7 @@
 // See issue #25
 
 void draw_screen_effect(i_material* material) {
-    static auto fn = utilities::pattern_scan("client.dll", sig_draw_screen_effect_material);
+    static auto fn = interfaces::draw_screen_effect_material;
     int w, h;
     interfaces::engine->get_screen_size(w, h);
     __asm {

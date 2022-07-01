@@ -101,5 +101,7 @@ namespace interfaces {
 	inline std::uint8_t* key_values_engine = nullptr;
 	inline std::uint8_t* key_values_client = nullptr;
 	
+	inline std::uint8_t* draw_screen_effect_material = nullptr;
+
 	bool initialize();
 }
