@@ -55,7 +55,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
-			if (player->index() == csgo::local_player->index()) {
+			if (player == csgo::local_player) {
 				/*
 				// Remove until thirdperson is implemented
 				override_material(false, false, color(255, 100, 255, csgo::local_player->is_scoped() ? 30 : 255));
