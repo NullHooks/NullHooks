@@ -90,6 +90,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Misc
 - Spectator list
 - Fov changer
+- Motion blur (:warning: Might be buggy in some AMD cards)
 - Stats watermark (*username, time, fps, ping...*)
 - Hide cheat on screenshots
 - Hotkey system
@@ -172,6 +173,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
 - [X] Add custom hotkeys to framework
+- [X] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
 #
 </details>
 
@@ -193,8 +195,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
-- [ ] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
-- [ ] Add autoscope for snipers (independent of aimbot)
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
 - [ ] Add "defusing" to bomb timer
