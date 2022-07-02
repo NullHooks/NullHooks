@@ -29,7 +29,7 @@ void visuals::bullet_tracer(i_game_event* event) {
 
 	constexpr auto time = 5.0f;
 	auto line_col = (is_friend) ? variables::colors::friendly_color : variables::colors::enemy_color;					// Use different line color for enemies
-	auto box_col = /*(tr.entity && tr.entity->is_player()) ? color(255, 0, 0, 100) :*/ line_col.get_custom_alpha(100);		// Removed because hit detection is buggy
+	auto box_col = /*(tr.entity && tr.entity->is_player()) ? color(255, 0, 0, 100) :*/ line_col.col.get_custom_alpha(100);		// Removed because hit detection is buggy
 
 	if (variables::misc_visuals::bulletracer_draw_options.at(0).state)											// Draw a line from eyes to the hit point
 		interfaces::debug_overlay->add_line_overlay(eyes, hit, line_col, false, time);

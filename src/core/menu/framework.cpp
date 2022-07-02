@@ -145,7 +145,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 }
 
 // Checkbox with color picker and custom region
-void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color, bool& toggle_color) {
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	const int w = 11, h = 11;							// For checkbox
 	const int margin = 5;								// Color "button" margin
@@ -159,24 +159,24 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		
 		// Not else if because we want to check if the cursor is in the toggle color button (open popup) or outside (close popup)
 		if ((cursor.x >= color_x) && (cursor.x <= color_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
-			toggle_color = !toggle_color;	// Toggle the "active popup" bool
+			col.toggle = !col.toggle;	// Toggle the "active popup" bool
 		// We need to check like this instead of using mouse_in_popup because the first check will be on a popup that is not yet in the active_color_popups vector (see bottom of this func)
 		else if (!((cursor.x >= color_x) && (cursor.x <= color_x + popup_system::win_w) && (cursor.y >= y + h + margin) && (cursor.y <= y + h + margin + popup_system::win_h)))
-			toggle_color = false;			// Close popup if user clicks outside
+			col.toggle = false;			// Close popup if user clicks outside
 	}
 
 	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));		// Checkbox itself
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
 
-	render::draw_filled_rect(color_x, y, col_w, col_h, setting_color);											// Color itself
+	render::draw_filled_rect(color_x, y, col_w, col_h, col.col);											// Color itself
 	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));						// Color outline
 
 	// Push to vector to render after menu
-	if (toggle_color)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, setting_color, toggle_color });
+	if (col.toggle)
+		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, col.col, col.toggle });
 }
 
-void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, color& setting_color1, bool& toggle_color1, color& setting_color2, bool& toggle_color2) {
+void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col1, colorpicker_col_t& col2) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	const int w = 11, h = 11;							// For checkbox
 	const int margin = 5;								// Color "button" margin
@@ -195,15 +195,15 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		if (!((cursor.x >= color_l_x) && (cursor.x <= color_r_x + popup_system::win_w) && (cursor.y >= y + h + margin) && (cursor.y <= y + h + margin + popup_system::win_h))) {
 			// Check if we clicked left button, then toggle. If not just turn it off
 			if ((cursor.x >= color_l_x) && (cursor.x <= color_l_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
-				toggle_color1 = !toggle_color1;
+				col1.toggle = !col1.toggle;
 			else
-				toggle_color1 = false;
+				col1.toggle = false;
 
 			// Check if we clicked right button, then toggle. If not just turn it off
 			if ((cursor.x >= color_r_x) && (cursor.x <= color_r_x + col_w) && (cursor.y >= y) && (cursor.y <= y + col_h))
-				toggle_color2 = !toggle_color2;
+				col2.toggle = !col2.toggle;
 			else
-				toggle_color2 = false;
+				col2.toggle = false;
 		}
 	}
 
@@ -212,18 +212,18 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 
 	// Left color
-	render::draw_filled_rect(color_l_x, y, col_w, col_h, setting_color1);
+	render::draw_filled_rect(color_l_x, y, col_w, col_h, col1.col);
 	render::draw_rect(color_l_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
 
 	// Right color
-	render::draw_filled_rect(color_r_x, y, col_w, col_h, setting_color2);
+	render::draw_filled_rect(color_r_x, y, col_w, col_h, col2.col);
 	render::draw_rect(color_r_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
 
 	// Push to vector to render after menu
-	if (toggle_color1)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, setting_color1, toggle_color1 });
-	if (toggle_color2)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, setting_color2, toggle_color2 });
+	if (col1.toggle)
+		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1.col, col1.toggle });
+	if (col2.toggle)
+		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2.col, col2.toggle });
 }
 
 // Thanks to https://github.com/bobloxmonke

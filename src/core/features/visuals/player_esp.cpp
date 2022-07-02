@@ -123,9 +123,9 @@ void visuals::playeresp() {
 			
 			// Draw from crosshair
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
-				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::friendly_color);
+				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::friendly_color.col);
 			else if (player->team() != csgo::local_player->team())
-				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::enemy_color);
+				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::enemy_color.col);
 		}
 		/* ------------- NAME ESP ------------- */
 		if (variables::player_visuals::nameesp) {
@@ -135,16 +135,16 @@ void visuals::playeresp() {
 			if (MultiByteToWideChar(CP_UTF8, 0, playerinfo.name, -1, w_player_name, 128) < 0) continue;
 
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
-				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::friendly_color);
+				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::friendly_color.col);
 			else if (player->team() != csgo::local_player->team())
-				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::enemy_color);
+				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::enemy_color.col);
 		}
 		/* ------------- INFO ESP ------------- */
 		if (variables::player_visuals::playerinfo) {
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
 				if (player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
-					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
 				int item_num = 0;
@@ -152,12 +152,12 @@ void visuals::playeresp() {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
 				} else if (player->has_defuser()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
 				} // TODO: Has c4
 
 				if (player->is_scoped()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
 					item_num++;
 				}
 				if (player->is_flashed()) {
@@ -172,11 +172,11 @@ void visuals::playeresp() {
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer);
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer.col);
 			} else if (player->team() != csgo::local_player->team()) {
 				if (player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
-					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer);
+					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
 				int item_num = 0;
@@ -184,12 +184,12 @@ void visuals::playeresp() {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
 				} else if (player->has_defuser()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
 				} // TODO: Has c4
 
 				if (player->is_scoped()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
 					item_num++;
 				}
 				if (player->is_flashed()) {
@@ -204,7 +204,7 @@ void visuals::playeresp() {
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer);
+				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer.col);
 			}
 		}
 		/* ------------- HEALTH ESP ------------- */
