@@ -3,7 +3,7 @@
 
 class iv_debug_overlay {
 public:
-	virtual void addBoxOverlay(const vec3_t& vecOrigin, const vec3_t& vecAbsMin, const vec3_t& vecAbsMax, const vec3_t& angOrientation, int r, int g, int b, int a, float flDuration) = 0;
+	virtual void add_box_overlay(const vec3_t& vecOrigin, const vec3_t& vecAbsMin, const vec3_t& vecAbsMax, const vec3_t& angOrientation, int r, int g, int b, int a, float flDuration) = 0;
 
 	// Used for bullet tracer
 	void add_line_overlay(const vec3_t& origin, const vec3_t& dest, int r, int g, int b, bool noDepthTest, float duration) {
