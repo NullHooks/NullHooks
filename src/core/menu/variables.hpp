@@ -86,6 +86,19 @@ namespace variables {
 		inline bool crosshair = false;
 		inline bool recoil_crosshair = false;
 
+		inline std::vector<multicombo_opt_t> bulletracer_draw_options = {
+			{ "Line",			false },
+			{ "Impacts",		false }
+			//{ "Hits",			false }		// Will just draw a different color for hits
+		};
+		inline std::vector<multicombo_opt_t> bulletracer_team_options = {
+			{ "Localplayer",	true },
+			{ "Friendly",		false },
+			{ "Enemy",			false }
+		};
+		inline bool bulletracer_draw_options_tog = false;
+		inline bool bulletracer_team_options_tog = false;
+
 		inline bool chickenpride = false;
 
 		inline float custom_fov_slider = 90.f;
@@ -103,10 +116,10 @@ namespace variables {
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
 
 		inline std::vector<multicombo_opt_t> speedgraph_options = {
-			{ "Line",  false },
-			{ "Color", false },
-			{ "Speed", true },
-			{ "Jump",  true }
+			{ "Line",		false },
+			{ "Color",		false },
+			{ "Speed",		true },
+			{ "Jump",		true }
 		};
 		inline bool speedgraph_options_tog = false;
 		inline float speedgraph_h = 40.f;
@@ -147,6 +160,7 @@ namespace variables {
 		inline bool rainbow_crosshair = false;
 	}
 
+	// TODO: replace with the same as multicombo_opt_t
 	namespace colors {
 		// Esp and glow
 		inline color friendly_color = color(0, 90, 255, 255);
