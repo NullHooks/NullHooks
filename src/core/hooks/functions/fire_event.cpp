@@ -8,13 +8,18 @@ void __fastcall hooks::fire_event::hook(void* thisptr, void* edx, i_game_event* 
         auto name = gameEvent->get_name();
 
         // Event list: https://wiki.alliedmods.net/Counter-Strike:_Global_Offensive_Events
-        if (!strcmp(name, "bullet_impact")) {
-            visuals::bullet_tracer.log(gameEvent);
-        } else if (!strcmp(name, "round_end")) {
-            event_globals::round_ended = true;
-        } else if (!strcmp(name, "round_start")) {
-            event_globals::round_ended = false;
+        switch(fnv::hash(name)) {
+        case fnv::hash("bullet_impact"):
+                visuals::bullet_tracer(gameEvent);
+                break;
+        case fnv::hash("round_end"):
+                event_globals::round_ended = true;
+                break;
+        case fnv::hash("round_start"):
+                event_globals::round_ended = false;
+                break;
         }
+
     }
 
     original(thisptr, edx, gameEvent, bServerOnly, bClientOnly);

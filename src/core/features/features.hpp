@@ -1,28 +1,6 @@
 #pragma once
 #include "source-sdk/sdk.hpp"
 
-class cbullet_tracer {
-public:
-	void log(i_game_event* event);
-	void render();
-private:
-	class cbullet_tracer_info {
-	public:
-		cbullet_tracer_info(vec3_t src, vec3_t dst, float time, color color) {
-			this->src = src;
-			this->dst = dst;
-			this->time = time;
-			this->color = color;
-		}
-
-		vec3_t src, dst;
-		float time;
-		color color;
-	};
-
-	std::vector<cbullet_tracer_info> logs;
-};
-
 namespace aim {
 	void triggerbot(c_usercmd* cmd);
 	void run_aimbot(c_usercmd* cmd);
@@ -35,7 +13,7 @@ namespace visuals {
 	void grenade_projectile_esp();
 	void noflash();
 	void motion_blur(view_setup_t* setup) noexcept;
-	inline cbullet_tracer bullet_tracer;
+	void bullet_tracer(i_game_event *event);
 
 	namespace glow {
 		void draw_glow();
