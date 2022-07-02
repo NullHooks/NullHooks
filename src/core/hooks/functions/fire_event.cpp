@@ -11,10 +11,8 @@ void __fastcall hooks::fire_event::hook(void* thisptr, void* edx, i_game_event* 
         if (!strcmp(name, "bullet_impact")) {
             visuals::bullet_tracer.log(gameEvent);
         } else if (!strcmp(name, "round_end")) {
-            printf("round_end\n");
             event_globals::round_ended = true;
         } else if (!strcmp(name, "round_start")) {
-            printf("round_start\n");
             event_globals::round_ended = false;
         }
     }
