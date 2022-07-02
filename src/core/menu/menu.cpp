@@ -304,11 +304,11 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Forward motion blur", variables::motion_blur.forwardEnabled);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur strenght", variables::motion_blur.strength, 0.f, 15.f);
+					render::fonts::watermark_font, "Strenght", variables::motion_blur.strength, 0.f, 15.f);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur falling intensity", variables::motion_blur.fallingIntensity, 0.f, 10.f);
+					render::fonts::watermark_font, "Falling intensity", variables::motion_blur.fallingIntensity, 0.f, 10.f);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur rotation intensity", variables::motion_blur.rotationIntensity, 0.f, 10.f);
+					render::fonts::watermark_font, "Rotation intensity", variables::motion_blur.rotationIntensity, 0.f, 10.f);
 			}
 
 			/* ----- Misc - Buttons ----- */
