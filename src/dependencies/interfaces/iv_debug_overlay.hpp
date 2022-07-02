@@ -3,12 +3,14 @@
 
 class iv_debug_overlay {
 public:
-	virtual void add_box_overlay(const vec3_t& vecOrigin, const vec3_t& vecAbsMin, const vec3_t& vecAbsMax, const vec3_t& angOrientation, int r, int g, int b, int a, float flDuration) = 0;
+	void add_box_overlay(const vec3_t& vecOrigin, const vec3_t& vecAbsMin, const vec3_t& vecAbsMax, const vec3_t& angOrientation, int r, int g, int b, int a, float flDuration) {
+		using original_fn = void(__thiscall*)(void*, const vec3_t&, const vec3_t&, const vec3_t&, const vec3_t&, int, int, int, int, float);
+		return (*(original_fn**)this)[1](this, vecOrigin, vecAbsMin, vecAbsMax, angOrientation, r, g, b, a, flDuration);
+	}
 
-	// Used for bullet tracer
 	void add_line_overlay(const vec3_t& origin, const vec3_t& dest, int r, int g, int b, bool noDepthTest, float duration) {
-		using original_fn = void(__thiscall*)(iv_debug_overlay*, const vec3_t&, const vec3_t&, int, int, int, bool, float);
-		return (*(original_fn**)this)[6](this, origin, dest, r, g, b, noDepthTest, duration);
+		using original_fn = void(__thiscall*)(void*, const vec3_t&, const vec3_t&, int, int, int, bool, float);
+		return (*(original_fn**)this)[4](this, origin, dest, r, g, b, noDepthTest, duration);
 	}
 
 	bool world_to_screen(const vec3_t& in, vec3_t& out) {
