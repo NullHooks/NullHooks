@@ -48,6 +48,9 @@ namespace visuals {
 }
 
 namespace misc {
+	void spectator_list();
+	void thirdperson();
+
 	namespace movement {
 		void infinite_duck(c_usercmd* cmd);
 		
@@ -59,7 +62,6 @@ namespace misc {
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
 
 	}
-	void spectator_list();
 	namespace speedgraph {
 		void update();
 		void draw();
