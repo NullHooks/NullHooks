@@ -9,7 +9,7 @@ void __fastcall hooks::fire_event::hook(void* thisptr, void* edx, i_game_event* 
 
         // Event list: https://wiki.alliedmods.net/Counter-Strike:_Global_Offensive_Events
         if (!strcmp(name, "bullet_impact")) {
-            printf("bullet_impact\n");
+            visuals::bullet_tracer.log(gameEvent);
         } else if (!strcmp(name, "round_end")) {
             printf("round_end\n");
             event_globals::round_ended = true;
