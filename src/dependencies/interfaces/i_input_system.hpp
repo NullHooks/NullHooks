@@ -143,32 +143,32 @@ enum button_code_t {
 class i_input_system {
 public:
 	void enable_input(bool bEnable) {
-		using original_fn = void(__thiscall*)(void*, bool);
-		return (*(original_fn * *)this)[11](this, bEnable);
+		using original_fn = void(__thiscall*)(i_input_system*, bool);
+		return (*(original_fn**)this)[11](this, bEnable);
 	}
 
 	void reset_input_state() {
-		using original_fn = void(__thiscall*)(void*);
-		return (*(original_fn * *)this)[39](this);
+		using original_fn = void(__thiscall*)(i_input_system*);
+		return (*(original_fn**)this)[39](this);
 	}
 
 	bool is_button_down(button_code_t code) {
-		using original_fn = bool(__thiscall*)(void*, button_code_t);
-		return (*(original_fn * *)this)[15](this, code);
+		using original_fn = bool(__thiscall*)(i_input_system*, button_code_t);
+		return (*(original_fn**)this)[15](this, code);
 	}
 
 	int get_analog_value(analog_code_t code) {
-		using original_fn = int(__thiscall*)(void*, analog_code_t);
-		return (*(original_fn * *)this)[18](this, code);
+		using original_fn = int(__thiscall*)(i_input_system*, analog_code_t);
+		return (*(original_fn**)this)[18](this, code);
 	}
 
 	int get_analog_delta(analog_code_t code) {
-		using original_fn = int(__thiscall*)(void*, analog_code_t);
-		return (*(original_fn * *)this)[19](this, code);
+		using original_fn = int(__thiscall*)(i_input_system*, analog_code_t);
+		return (*(original_fn**)this)[19](this, code);
 	}
 
 	const char* button_code_to_string(int code) {
-		using original_fn = const char* (__thiscall*)(void*, int);
-		return (*(original_fn * *)this)[40](this, code);
+		using original_fn = const char*(__thiscall*)(i_input_system*, int);
+		return (*(original_fn**)this)[40](this, code);
 	}
 };

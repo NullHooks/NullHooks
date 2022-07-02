@@ -58,7 +58,7 @@ public:
 	float   constraint_radius;
 	float   constraint_width;
 	float   constraint_speed_factor;
-	float   u0[ 5 ];
+	float   u0[5];
 	vec3_t	abs_origin;
 };
 

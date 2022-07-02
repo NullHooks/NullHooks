@@ -112,9 +112,9 @@ class player_t;
 #define MASK_NPCWORLDSTATIC		(CONTENTS_SOLID|CONTENTS_WINDOW|CONTENTS_MONSTERCLIP|CONTENTS_GRATE) 					/**< just the world, used for route rebuilding */
 #define MASK_SPLITAREAPORTAL	(CONTENTS_WATER|CONTENTS_SLIME) 									/**< These are things that can split areaportals */
 
-class __declspec(align(16))VectorAligned : public vec3_t {
+class __declspec(align(16))vec_aligned_t: public vec3_t {
 public:
-	VectorAligned& operator=(const vec3_t& vOther) {
+	vec_aligned_t& operator=(const vec3_t& vOther) {
 		init(vOther.x, vOther.y, vOther.z);
 		return *this;
 	}
@@ -122,47 +122,36 @@ public:
 	float w;
 };
 
-class IHandleEntity;
+class IHandleEntity; // ?
 
 struct ray_t {
-	VectorAligned m_start; // starting point, centered within the extents
-	VectorAligned m_delta; // direction + length of the ray
-	VectorAligned m_start_offset; // Add this to m_Start to get the actual ray start
-	VectorAligned m_extents; // Describes an axis aligned box extruded along a ray
+	vec_aligned_t m_start; // starting point, centered within the extents
+	vec_aligned_t m_delta; // direction + length of the ray
+	vec_aligned_t m_start_offset; // Add this to m_Start to get the actual ray start
+	vec_aligned_t m_extents; // Describes an axis aligned box extruded along a ray
 	const matrix_t* m_world_axis_transform;
-	//const matrix_t *m_pWorldAxisTransform;
 	bool m_is_ray; // are the extents zero?
 	bool m_is_swept; // is delta != 0?
 
 	void initialize(const vec3_t& start, const vec3_t& end) {
 		m_delta = end - start;
-
 		m_is_swept = (m_delta.length_sqr() != 0);
-
 		m_extents.x = m_extents.y = m_extents.z = 0.0f;
 		m_is_ray = true;
-
 		m_start_offset.x = m_start_offset.y = m_start_offset.z = 0.0f;
-
 		m_start = start;
 	}
 
-	void initialize(vec3_t & vecStart, vec3_t & vecEnd, vec3_t min, vec3_t max) {
+	void initialize(vec3_t& vecStart, vec3_t& vecEnd, vec3_t min, vec3_t max) {
 		m_delta = vecEnd - vecStart;
-
 		m_is_swept = (m_delta.length_sqr() != 0);
-
 		m_extents.x = (max.x - min.x);
 		m_extents.y = (max.y - min.y);
 		m_extents.z = (max.z - min.z);
 		m_is_ray = false;
-
 		m_start_offset.x = m_start_offset.y = m_start_offset.z = 0.0f;
-
 		m_start = vecStart + ((max + min) * 0.5f);
 	}
-
-private:
 };
 
 struct csurface_t {
@@ -211,7 +200,7 @@ struct trace_t {
 	*/
 };
 
-enum TraceType_t {
+enum trace_type_t {
 	TRACE_EVERYTHING = 0,
 	TRACE_WORLD_ONLY, // NOTE: This does *not* test static props!!!
 	TRACE_ENTITIES_ONLY, // NOTE: This version will *not* test static props
@@ -220,18 +209,18 @@ enum TraceType_t {
 
 class i_trace_filter {
 public:
-	virtual bool ShouldHitEntity(void* pEntity, int contentsMask) = 0;
-	virtual TraceType_t GetTraceType() const = 0;
+	virtual bool should_hit_entity(void* pEntity, int contentsMask) = 0;
+	virtual trace_type_t get_trace_type() const = 0;
 };
 
 class trace_filter : public i_trace_filter {
 public:
-	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
+	bool should_hit_entity(void* pEntityHandle, int contentsMask) {
 		return (pEntityHandle != skip);
 	}
 
-	TraceType_t GetTraceType() const {
-		return TRACE_EVERYTHING;
+	trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_EVERYTHING;
 	}
 
 	const void* skip;
@@ -239,12 +228,12 @@ public:
 
 class trace_filter_one_entity : public i_trace_filter {
 public:
-	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
+	bool should_hit_entity(void* pEntityHandle, int contentsMask) {
 		return (pEntityHandle == pEntity);
 	}
 
-	TraceType_t GetTraceType() const {
-		return TRACE_EVERYTHING;
+	trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_EVERYTHING;
 	}
 
 	void* pEntity;
@@ -252,12 +241,12 @@ public:
 
 class trace_filter_one_entity2 : public i_trace_filter {
 public:
-	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
+	bool should_hit_entity(void* pEntityHandle, int contentsMask) {
 		return (pEntityHandle == pEntity);
 	}
 
-	TraceType_t GetTraceType() const {
-		return TRACE_ENTITIES_ONLY;
+	trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_ENTITIES_ONLY;
 	}
 
 	void* pEntity;
@@ -266,63 +255,63 @@ public:
 class trace_filter_skip_two_entities : public i_trace_filter {
 public:
 	trace_filter_skip_two_entities(void* pPassEnt1, void* pPassEnt2) {
-		passentity1 = pPassEnt1;
-		passentity2 = pPassEnt2;
+		pass_entity = pPassEnt1;
+		pass_entity2 = pPassEnt2;
 	}
 
-	virtual bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
-		return !(pEntityHandle == passentity1 || pEntityHandle == passentity2);
+	virtual bool should_hit_entity(void* pEntityHandle, int contentsMask) {
+		return !(pEntityHandle == pass_entity || pEntityHandle == pass_entity2);
 	}
 
-	virtual TraceType_t GetTraceType() const {
-		return TRACE_EVERYTHING;
+	virtual trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_EVERYTHING;
 	}
 
-	void* passentity1;
-	void* passentity2;
+	void* pass_entity;
+	void* pass_entity2;
 };
 
 class trace_filter_skip_one_entity : public i_trace_filter {
 public:
 	trace_filter_skip_one_entity(void* pPassEnt1) {
-		passentity1 = pPassEnt1;
+		pass_entity = pPassEnt1;
 	}
 
-	virtual bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
-		return !(pEntityHandle == passentity1);
+	virtual bool should_hit_entity(void* pEntityHandle, int contentsMask) {
+		return !(pEntityHandle == pass_entity);
 	}
 
-	virtual TraceType_t GetTraceType() const {
-		return TRACE_EVERYTHING;
+	virtual trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_EVERYTHING;
 	}
 
-	void* passentity1;
+	void* pass_entity;
 };
 
 class trace_entity : public i_trace_filter {
 public:
-	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
-		return !(pEntityHandle == pSkip1);
+	bool should_hit_entity(void* pEntityHandle, int contentsMask) {
+		return !(pEntityHandle == pass_entity);
 	}
 
-	TraceType_t GetTraceType() const {
-		return TRACE_ENTITIES_ONLY;
+	trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_ENTITIES_ONLY;
 	}
 
-	void* pSkip1;
+	void* pass_entity;
 };
 
 class trace_world_only : public i_trace_filter {
 public:
-	bool ShouldHitEntity(void* pEntityHandle, int contentsMask) {
-		return false;
+	bool should_hit_entity(void* pEntityHandle, int contentsMask) {
+		return false; // ??
 	}
 
-	TraceType_t GetTraceType() const {
-		return TRACE_EVERYTHING;
+	trace_type_t get_trace_type() const {
+		return trace_type_t::TRACE_EVERYTHING;
 	}
 
-	void* pSkip1;
+	void* pass_entity;
 };
 
 class collideable_t;

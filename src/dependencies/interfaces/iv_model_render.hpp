@@ -13,13 +13,15 @@ public:
 };
 
 class iv_model_render {
-	public:
-	void override_material( i_material *material ) {
-		using fn = void( __thiscall * )( iv_model_render *, i_material *, int, int );
-		return ( *( fn ** ) this )[ 1 ]( this, material, 0, 0 );
+public:
+	//virtual void override_material(i_material*);
+	//virtual bool is_forced();
+	void override_material(i_material *material) {
+		using original_fn = void( __thiscall*)(iv_model_render*, i_material*, int, int);
+		return (*(original_fn**)this)[1](this, material, 0, 0 );
 	}
 	bool is_forced() {
-		using fn = bool(__thiscall*)(void*);
-		return (*(fn**)this)[2](this);
+		using original_fn = bool(__thiscall*)(iv_model_render*);
+		return (*(original_fn**)this)[2](this);
 	}
 };

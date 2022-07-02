@@ -29,43 +29,21 @@
 #include "dependencies/interfaces/i_mdlcache.hpp"
 
 namespace interfaces {
-	enum class interface_type { index, bruteforce };
-
-	template <typename ret, interface_type type>
+	template <typename ret>
 	ret* get_interface(const std::string& module_name, const std::string& interface_name) {
-		using create_interface_fn = void* (*)(const char*, int*);
+		using create_interface_fn = void*(*)(const char*, int*);
 		const auto fn = reinterpret_cast<create_interface_fn>(GetProcAddress(GetModuleHandle(module_name.c_str()), "CreateInterface"));
 
 		if (fn) {
-			void* result = nullptr;
-
-			switch (type) {
-			case interface_type::index:
-				result = fn(interface_name.c_str(), nullptr);
-
-				break;
-			case interface_type::bruteforce:
-				char buf[128];
-
-				for (uint32_t i = 0; i <= 100; ++i) {
-					memset(static_cast<void*>(buf), 0, sizeof buf);
-
-					result = fn(interface_name.c_str(), nullptr);
-
-					if (result)
-						break;
-				}
-
-				break;
-			}
+			void* result = fn(interface_name.c_str(), nullptr);
 		
 			if (!result)
-				throw std::runtime_error( interface_name + " wasn't found in " + module_name );
+				throw std::runtime_error(interface_name + " wasn't found in " + module_name);
 
 			return static_cast<ret*>(result);
 		}
 
-		throw std::runtime_error( module_name + " wasn't found" );
+		throw std::runtime_error(module_name + " wasn't found");
 	}
 
 	inline i_base_client_dll* client;
@@ -101,7 +79,5 @@ namespace interfaces {
 	inline std::uint8_t* key_values_engine = nullptr;
 	inline std::uint8_t* key_values_client = nullptr;
 	
-	inline std::uint8_t* draw_screen_effect_material = nullptr;
-
 	bool initialize();
 }

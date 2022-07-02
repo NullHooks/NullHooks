@@ -22,6 +22,6 @@ public:
     bool is_forced() noexcept {
         if (!material_override)
             return override_type == override_type::depth_write || override_type == override_type::ssao_depth_write;
-        return std::string_view{ material_override->get_name() }.starts_with("dev/glow");
+        return std::string_view {material_override->get_name()}.starts_with("dev/glow");
     }
 };

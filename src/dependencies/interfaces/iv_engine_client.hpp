@@ -33,8 +33,8 @@ public:
 	}
 
 	void* get_bsp_tree_query() {
-		using original_fn = void *(__thiscall *)(iv_engine_client *);
-		return (*(original_fn **)this)[43](this);
+		using original_fn = void*(__thiscall*)(iv_engine_client*);
+		return (*(original_fn**)this)[43](this);
 	}
 	
 	int get_local_player() {

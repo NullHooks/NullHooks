@@ -1,6 +1,6 @@
 #pragma once
 #include "source-sdk/structs/materials.hpp"
-#define DECLARE_POINTER_HANDLE(name) struct name##__ { int unused; }; typedef struct name##__ *name
+#define DECLARE_POINTER_HANDLE(name) struct name##__ { int unused; }; typedef struct name##__* name
 #define MAXSTUDIOSKINS		32
 
 // These are given to FindMaterial to reference the texture groups that Show up on the
@@ -148,7 +148,7 @@ struct i_ms_app_instant_counters_info_t {
 */
 
 struct i_matsys_material_adapter_info_t {
-	char		driver_name[ MATERIAL_ADAPTER_NAME_LENGTH ];
+	char		driver_name[MATERIAL_ADAPTER_NAME_LENGTH];
 	unsigned int	vendor_id;
 	unsigned int	device_id;
 	unsigned int	sub_sys_id;
@@ -195,40 +195,40 @@ enum i_ms_mat_render_target_depth_t {
 	MATERIAL_RT_DEPTH_ONLY
 };
 
-typedef void( *mat_buffer_release_func_t )( int flags );
-typedef void( *mat_buffer_restore_func_t )( int flags );
-typedef void( *mode_change_callback_function_t )( void );
-typedef void( *end_frame_cleanup_function_t )( void );
-typedef bool( *end_frame_prior_to_next_ctx_function_t )( void );
-typedef void( *on_level_shutdown_function_t )( void *data );
+typedef void(*mat_buffer_release_func_t)(int flags);
+typedef void(*mat_buffer_restore_func_t)(int flags);
+typedef void(*mode_change_callback_function_t)(void);
+typedef void(*end_frame_cleanup_function_t)(void);
+typedef bool(*end_frame_prior_to_next_ctx_function_t)(void);
+typedef void(*on_level_shutdown_function_t)(void* data);
 
 typedef unsigned short mat_handle_t;
-DECLARE_POINTER_HANDLE( mat_lock_t );
+DECLARE_POINTER_HANDLE(mat_lock_t);
 
 class i_material_system {
 public:
-	i_material *find_material( char const *material_name, const char *group_name, bool complain = true, const char *complain_prefix = 0 ) {
-		using fn = i_material * ( __thiscall * )( i_material_system *, char const *, const char *, bool, const char * );
-		return ( *( fn ** ) this )[ 84 ]( this, material_name, group_name, complain, complain_prefix );
+	i_material* find_material(const char* material_name, const char* group_name, bool complain = true, const char* complain_prefix = 0) {
+		using original_fn = i_material*(__thiscall*)(i_material_system* , const char* , const char* , bool, const char*);
+		return (*(original_fn**)this)[84](this, material_name, group_name, complain, complain_prefix);
 	}
 	material_handle_t first_material() {
-		using fn = material_handle_t( __thiscall * )( i_material_system * );
-		return ( *( fn ** ) this )[ 86 ]( this );
+		using original_fn = material_handle_t(__thiscall*)(i_material_system*);
+		return (*(original_fn**)this)[86](this);
 	}
-	material_handle_t next_material( material_handle_t handle ) {
-		using fn = material_handle_t( __thiscall * )( i_material_system *, material_handle_t );
-		return ( *( fn ** ) this )[ 87 ]( this, handle );
+	material_handle_t next_material(material_handle_t handle) {
+		using original_fn = material_handle_t(__thiscall*)(i_material_system* , material_handle_t);
+		return (*(original_fn**)this)[87](this, handle);
 	}
 	material_handle_t invalid_material_handle() {
-		using fn = material_handle_t( __thiscall * )( i_material_system * );
-		return ( *( fn ** ) this )[ 88 ]( this );
+		using original_fn = material_handle_t(__thiscall*)(i_material_system*);
+		return (*(original_fn**)this)[88](this);
 	}
-	i_material *get_material( material_handle_t handle ) {
-		using fn = i_material * ( __thiscall * )( i_material_system *, material_handle_t );
-		return ( *( fn ** ) this )[ 89 ]( this, handle );
+	i_material* get_material(material_handle_t handle) {
+		using original_fn = i_material*(__thiscall*)(i_material_system* , material_handle_t);
+		return (*(original_fn**)this)[89](this, handle);
 	}
 	int	get_materials_count() {
-		using fn = int( __thiscall * )( i_material_system * );
-		return ( *( fn ** ) this )[ 90 ]( this );
+		using original_fn = int(__thiscall*)(i_material_system*);
+		return (*(original_fn**)this)[90](this);
 	}
 };
