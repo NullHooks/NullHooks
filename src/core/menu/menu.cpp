@@ -182,21 +182,25 @@ void menu::render() {
 					render::fonts::watermark_font, "Entity info", variables::entity_visuals::entitytext);
 			}
 
-			const int part2c2_items_num   = 5;
+			const int part2c2_items_num   = 7;
 			const int part2c2_y           = part1c2_y + part1c2_h + container_margin;
 			const int part2c2_base_item_y = part2c2_y + container_padding;
 			const int part2c2_h           = (15 * part2c2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2c2_y, container_width, part2c2_h, render::fonts::watermark_font, "Misc", false); {
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Nade prediction", variables::misc_visuals::nade_predict);
-				gui::slider(item_left_pos, part2c2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash_alpha, 0.f, 1.f);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+				gui::slider(item_left_pos, part2c2_base_item_y + (15 * 0), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"No flash", variables::misc_visuals::noflash_alpha, 0.f, 1.f);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Nade prediction", variables::misc_visuals::nade_predict);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"No sniper scope", variables::misc_visuals::noscope);
+				gui::multicombobox(item_left_pos, part2c2_base_item_y + (15 * 3), item_combo_pos, render::fonts::watermark_font,
+					"Bullet tracers", variables::misc_visuals::bulletracer_draw_options, variables::misc_visuals::bulletracer_draw_options_tog);
+				gui::multicombobox(item_left_pos, part2c2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Bullet tracer teams", variables::misc_visuals::bulletracer_team_options, variables::misc_visuals::bulletracer_team_options_tog);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c, variables::colors::crosshair_c_tog);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 6), item_checkbox_pos, render::fonts::watermark_font,
 					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c, variables::colors::recoil_crosshair_c_tog);
 			}
 			break;
