@@ -84,6 +84,8 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Infinite duck (:warning: Untrusted)
 - BunnyHop
 - Autostrafe
+    - Legit
+    - Rage
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
