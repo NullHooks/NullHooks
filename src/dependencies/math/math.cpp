@@ -68,17 +68,13 @@ void math::vector_angles(vec3_t & forward, vec3_t & angles) {
 	if (forward.y == 0.0f && forward.x == 0.0f) {
 		angles.x = (forward.z > 0.0f) ? 270.0f : 90.0f;
 		angles.y = 0.0f;
-	}
-	else {
+	} else {
 		angles.x = atan2(-forward.z, vec2_t(forward).length()) * -180 / static_cast<float>(M_PI);
 		angles.y = atan2(forward.y, forward.x) * 180 / static_cast<float>(M_PI);
 
-		if (angles.y > 90)
-			angles.y -= 180;
-		else if (angles.y < 90)
-			angles.y += 180;
-		else if (angles.y == 90)
-			angles.y = 0;
+		if (angles.y > 90)       angles.y -= 180;
+		else if (angles.y < 90)  angles.y += 180;
+		else if (angles.y == 90) angles.y = 0;
 	}
 
 	angles.z = 0.0f;
@@ -108,6 +104,17 @@ void math::angle_vectors(vec3_t & angles, vec3_t * forward, vec3_t * right, vec3
 		up->y = cr * sp * sy + -sr * cy;
 		up->z = cr * cp;
 	}
+}
+
+void math::angle_vectors(const vec3_t& angles, vec3_t& forward) {
+	float	sp, sy, cp, cy;
+
+	math::sin_cos(DEG2RAD(angles[0]), &sp, &cp);
+	math::sin_cos(DEG2RAD(angles[1]), &sy, &cy);
+
+	forward.x = cp * cy;
+	forward.y = cp * sy;
+	forward.z = -sp;
 }
 
 vec3_t math::vector_add(vec3_t & a, vec3_t & b) {
@@ -159,4 +166,13 @@ bool math::world_to_screen(const vec3_t& origin, vec3_t& screen) {
 
 	return true;
 
+}
+
+float math::get_fov(const vec3_t& view_angle, const vec3_t& aim_angle) {
+	vec3_t ang, aim;
+
+	angle_vectors(view_angle, aim);
+	angle_vectors(aim_angle, ang);
+
+	return RAD2DEG(acos(aim.dot(ang) / aim.length_sqr()));
 }

@@ -15,14 +15,18 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	misc::movement::bunny_hop(cmd);
 	misc::movement::infinite_duck(cmd);
 
+
+	// old_* for prediction
 	auto old_viewangles = cmd->viewangles;
 	auto old_forwardmove = cmd->forwardmove;
 	auto old_sidemove = cmd->sidemove;
-	auto old_flags = csgo::local_player->flags();		// For prediction stuff
+	auto old_flags = csgo::local_player->flags();
 
+	backtrack.update();
 	misc::movement::pre_pred_jumpbug(cmd, old_flags);
 	
 	prediction::start(cmd); {
+		backtrack.run(cmd);
 		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
 		aim::triggerbot(cmd);
