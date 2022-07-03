@@ -181,6 +181,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 
 - [X] Add aim stuff
     - [X] Triggerbot
+        - [ ] Add delay slider
     - [X] Aimbot
         - [X] Silent
         - [ ] Snappy
