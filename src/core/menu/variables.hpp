@@ -109,6 +109,7 @@ namespace variables {
 	namespace misc {
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
+		inline bool autostrafe = false;
 		inline bool edgejump = false;
 		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
