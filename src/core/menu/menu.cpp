@@ -219,7 +219,7 @@ void menu::render() {
 			item_combo_pos                 = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w                  = container_width - container_padding * 2;
 
-			const int part1_items_num = 8;
+			const int part1_items_num = 9;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Movement", false); {
@@ -228,16 +228,18 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Autostrafe", variables::misc::autostrafe);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable edgejump", variables::misc::edgejump);
-				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 3), item_hotkey_w,
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 4), item_hotkey_w,
 					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos,
 					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
-				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 5), item_hotkey_w,
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 6), item_hotkey_w,
 					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 7), item_checkbox_pos,
 					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
-				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 7), item_hotkey_w,
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 8), item_hotkey_w,
 					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key);
 			}
 

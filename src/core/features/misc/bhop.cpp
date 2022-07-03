@@ -10,5 +10,13 @@ void misc::movement::bunny_hop(c_usercmd* cmd) {
 	const int move_type = csgo::local_player->move_type();
 	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
 
-	if (!(csgo::local_player->flags() & fl_onground)) cmd->buttons &= ~in_jump;
+	if (!(csgo::local_player->flags() & fl_onground)) {
+		cmd->buttons &= ~in_jump;
+	
+		// Autostrafe
+		if (variables::misc::autostrafe) {
+			if (cmd->mousedx < 0)		cmd->sidemove = -450.0f;
+			else if (cmd->mousedx > 0)	cmd->sidemove = 450.0f;
+		}
+	}
 };
