@@ -28,10 +28,11 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Aim
 - Triggerbot
 - Aimbot
+    - Snappy
     - Silent
 - Ignore walls
 - Aimbot fov
-- Aimbot smoothness
+- Aimbot smoothness (Only on snappy)
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
 
@@ -82,6 +83,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Movement
 - Infinite duck (:warning: Untrusted)
 - BunnyHop
+- Autostrafe
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
@@ -184,7 +186,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Add delay slider
     - [X] Aimbot
         - [X] Silent
-        - [ ] Snappy
+        - [X] Snappy
     - [ ] Aimbot fov circle (or square)
     - [ ] Custom aimbot key (autofire)
 - [X] Add movement stuff
@@ -192,8 +194,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [ ] Longjump
-- [ ] Add event listeners (or `FireEvent` hook, etc.)
-    - [ ] Add bullet tracers
+- [X] Add event listeners (or `FireEvent` hook, etc.)
+    - [X] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 - [ ] Add chicken chams
