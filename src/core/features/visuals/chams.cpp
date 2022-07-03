@@ -1,6 +1,7 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
+#include "core/features/misc/backtrack.hpp"
 
  std::vector<const char*> materials = {
 	"vgui/screens/transparent",														// "Transparent"
@@ -65,17 +66,15 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			}
 
 			if (player->team() != csgo::local_player->team()) {
-				/*
 				// Backtrack chams
-				if (variables::backtrack_chams && records[player->index()].size() > 0) {
+				if (true /*REPLACE VAR*/ && records[player->index()].size() > 0) {
 					for (uint32_t i = 0; i < records[player->index()].size(); i++) {
 						if (!backtrack.valid_tick(records[player->index()][i].simulation_time, 0.2f) || records[player->index()][i].matrix == nullptr)
 							continue;
-						override_material(false, false, color(255 - (i * (255 / records[player->index()].size())), i * (255 / records[player->index()].size()), 255, 30));
+						override_material(false, false, color(255 - (i * (255 / records[player->index()].size())), i * (255 / records[player->index()].size()), 255, 30), materials[1]);
 						hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, records[player->index()][i].matrix);
 					}
 				}
-				*/
 				if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				if (!variables::chams::only_visible_chams) {
 					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_enemy_c, player_material);		// Not visible - Enemy
