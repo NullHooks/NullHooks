@@ -8,10 +8,11 @@ namespace variables {
 		inline hotkey_t triggerbot_key(VK_PRIOR);
 
 		inline bool aimbot = false;
+		inline bool silent = false;
 		inline float aimbot_fov = 0.3f;
 		inline bool draw_fov = false;
 		inline bool ignore_walls = false;
-		inline float aimbot_smoothing = 0.5f;
+		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
