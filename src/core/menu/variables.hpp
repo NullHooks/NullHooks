@@ -93,8 +93,8 @@ namespace variables {
 			{ "Friendly",		false },
 			{ "Enemy",			false }
 		};
-		inline bool bulletracer_draw_options_tog = false;
-		inline bool bulletracer_team_options_tog = false;
+		inline multicombobox_toggle_t bulletracer_draw_target(bulletracer_draw_options);
+		inline multicombobox_toggle_t bulletracer_team_target(bulletracer_team_options);
 
 		inline bool chickenpride = false;
 
@@ -120,7 +120,8 @@ namespace variables {
 			{ "Speed",		true },
 			{ "Jump",		true }
 		};
-		inline bool speedgraph_options_tog = false;
+		inline multicombobox_toggle_t speedgraph_target(speedgraph_options);
+
 		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
 		

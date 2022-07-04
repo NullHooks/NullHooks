@@ -209,9 +209,9 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
 					"No sniper scope", variables::misc_visuals::noscope);
 				gui::multicombobox(item_left_pos, part3c2_base_item_y + (15 * 3), item_combo_pos, render::fonts::watermark_font,
-					"Bullet tracers", variables::misc_visuals::bulletracer_draw_options, variables::misc_visuals::bulletracer_draw_options_tog);
+					"Bullet tracers", variables::misc_visuals::bulletracer_draw_target);
 				gui::multicombobox(item_left_pos, part3c2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
-					"Bullet tracer teams", variables::misc_visuals::bulletracer_team_options, variables::misc_visuals::bulletracer_team_options_tog);
+					"Bullet tracer teams", variables::misc_visuals::bulletracer_team_target);
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c);
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 6), item_checkbox_pos, render::fonts::watermark_font,
@@ -266,7 +266,7 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
 				gui::multicombobox(item_left_pos, part2_base_item_y + (15 * 0), item_combo_pos, render::fonts::watermark_font,
-					"Speedgraph options", variables::misc::speedgraph_options, variables::misc::speedgraph_options_tog);
+					"Speedgraph options", variables::misc::speedgraph_target);
 				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
 				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,

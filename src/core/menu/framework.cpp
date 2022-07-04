@@ -301,8 +301,8 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 		popup_system::active_combo_popups.push_back(combo_popup_info{ position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target.idx, target.toggle });
 }
 
-// Same as combobox but with more than one option. Will store selected options as true in a bool vector.
-void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<multicombo_opt_t>& target_vec, bool& popup_toggle) {
+// Same as combobox but with more than one option. Will store selected options as true in a bool vector (target.vector).
+void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, multicombobox_toggle_t& target) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int x_margin = popup_system::combo_win_padding;
@@ -312,7 +312,7 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	const int max_button_len = 100;
 	std::string button_str = "";
 	bool has_enabled = false;	// Will be false if all options are disabled
-	for (multicombo_opt_t item : target_vec) {
+	for (multicombo_opt_t item : target.vector) {
 		std::string temp_str = button_str;
 		if (item.state) {
 			if (has_enabled) temp_str += ", ";		// The check makes it not add a comma before the first item
@@ -330,8 +330,8 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	if (!has_enabled) button_str = "None";
 	const int item_w = render::get_text_size(render::fonts::watermark_font_ns, button_str).x;	// Need to get text first (selected options)
 	int w = x_margin + item_w + x_margin + arrow_w + x_margin;
-	if (popup_toggle) {		// Stores the px width of the biggest text in the vector if popup is active
-		for (multicombo_opt_t item : target_vec) {
+	if (target.toggle) {		// Stores the px width of the biggest text in the vector if popup is active
+		for (multicombo_opt_t item : target.vector) {
 			int text_w = render::get_text_size(render::fonts::watermark_font_ns, item.text).x + x_margin * 2;
 			if (text_w > w)
 				w = text_w;
@@ -342,10 +342,10 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
 		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
-			popup_toggle = !popup_toggle;			// If in checkbox and clicked
+			target.toggle = !target.toggle;			// If in checkbox and clicked
 		// See color picker comment
-		else if (!((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h + target_vec.size() * 15)))
-			popup_toggle = false;					// Close popup if user clicks outside
+		else if (!((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h + target.vector.size() * 15)))
+			target.toggle = false;					// Close popup if user clicks outside
 	}
 
 	// Combobox "button"
@@ -361,8 +361,8 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
 
 	// Push to vector to render after menu
-	if (popup_toggle)
-		popup_system::active_multicombo_popups.push_back(multicombo_popup_info{ position, y + h + 2, w, target_vec.size() * 15, target_vec, popup_toggle });
+	if (target.toggle)
+		popup_system::active_multicombo_popups.push_back(multicombo_popup_info{ position, y + h + 2, w, target.vector.size() * 15, target.vector, target.toggle });
 }
 
 /*
