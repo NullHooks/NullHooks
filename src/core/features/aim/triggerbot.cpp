@@ -21,7 +21,11 @@ void aim::triggerbot(c_usercmd* cmd) {
 
 	trace_t trace;
 	interfaces::trace_ray->trace_ray(ray, 0x46004009, &filter, &trace );
-	if (!trace.entity || !trace.entity->is_player()) return;
+	if (!trace.entity 
+		|| !trace.entity->is_player()
+		|| !trace.entity->is_alive()
+		|| trace.entity->dormant()
+		|| trace.entity->has_gun_game_immunity()) return;
 
 	if (!trace.entity->is_alive() || (!variables::aim::target_friends && trace.entity->team() == csgo::local_player->team())) return;
 

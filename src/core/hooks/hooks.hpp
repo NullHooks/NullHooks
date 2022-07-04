@@ -70,6 +70,12 @@ namespace hooks {
 		int __fastcall hook(void *ecx, void *edx, const vec3_t *mins, const vec3_t *maxs, uint16_t *list, int listmax);
 	}
 
+	namespace frame_stage_notify {
+		using fn = void(__thiscall*)(void*, client_frame_stage_t);
+		inline fn original;
+		void __stdcall hook(client_frame_stage_t frame_stage);
+	}
+
 	namespace get_client_model_renderable {
 		using fn = void*(__stdcall *)();
 		inline fn original;
@@ -88,4 +94,9 @@ namespace hooks {
 		bool hook();
 	}
 
+	namespace fire_event {
+		using fn = void(__fastcall*)(void*, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
+		inline fn original;
+		void __fastcall hook(void* thisptr, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
+	}
 }

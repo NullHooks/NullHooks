@@ -28,10 +28,11 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Aim
 - Triggerbot
 - Aimbot
+    - Snappy
     - Silent
 - Ignore walls
 - Aimbot fov
-- Aimbot smoothness
+- Aimbot smoothness (Only on snappy)
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
 
@@ -82,6 +83,9 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Movement
 - Infinite duck (:warning: Untrusted)
 - BunnyHop
+- Autostrafe
+    - Legit
+    - Rage
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
@@ -90,6 +94,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Misc
 - Spectator list
 - Fov changer
+- Thirdperson
 - Motion blur (:warning: Might be buggy in some AMD cards)
 - Stats watermark (*username, time, fps, ping...*)
 - Hide cheat on screenshots
@@ -174,14 +179,18 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
 - [X] Add custom hotkeys to framework
 - [X] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
+- [X] Add multicombobox
+    - [X] For selecting what parts of the speedgraph we should draw
+- [X] Reset bomb timer on new round (sometimes?)
 #
 </details>
 
 - [X] Add aim stuff
     - [X] Triggerbot
+        - [ ] Add delay slider
     - [X] Aimbot
         - [X] Silent
-        - [ ] Snappy
+        - [X] Snappy
     - [ ] Aimbot fov circle (or square)
     - [ ] Custom aimbot key (autofire)
 - [X] Add movement stuff
@@ -189,16 +198,17 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [ ] Longjump
-- [ ] Add multicombobox
-    - [ ] For selecting what parts of the speedgraph we should draw
-- [ ] Add event listeners (or `FireEvent` hook, etc.)
-    - [ ] Add bullet tracers
+- [X] Add event listeners (or `FireEvent` hook, etc.)
+    - [X] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
+- [ ] Add antiaim
+- [ ] Add skinchanger
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+<!--
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
+-->
 - [ ] Add "defusing" to bomb timer
-- [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Add config and all that (json or whatever)
 - [ ] Port to linux <!-- <3 -->

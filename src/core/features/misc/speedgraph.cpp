@@ -21,10 +21,12 @@ color speed2color(int speed) {
 
 // Used by misc::speedgraph::draw()
 void draw_speed_str(int x, int y, int speed, color col) {
-	render::draw_text_string(x, y, render::fonts::watermark_font_m, std::to_string(speed), true, col);
+	if (variables::misc::speedgraph_options.at(2).state) {
+		render::draw_text_string(x, y, render::fonts::watermark_font_m, std::to_string(speed), true, col);
+		y += 17;	// Only increase y for jump text if we did the first text
+	}
 
-	if (last_jumped > 0) {
-		y += 17;
+	if (variables::misc::speedgraph_options.at(3).state && last_jumped > 0) {
 		const color jmpspeed_col = (last_jumped > old_last_jumped) ? color(0, 240, 0) : color(230, 10, 10);
 		const color p_col = color::white();
 
@@ -80,7 +82,6 @@ void misc::speedgraph::update() {
 
 // Used in paint_traverse
 void misc::speedgraph::draw() {
-	if (!variables::misc::draw_speedgraph) return;
 	if (!interfaces::engine->is_in_game() || !interfaces::engine->is_connected()) return;
 	if (!csgo::local_player) return;
 	if (!csgo::local_player->is_alive()) return;		// TODO: Add spectated player?
@@ -91,24 +92,26 @@ void misc::speedgraph::draw() {
 	int screen_w, screen_h;
 	interfaces::surface->get_screen_size(screen_w, screen_h);
 
-	for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
-		int cur_speed  = speeds_vec.at(n);
-		int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
+	if (variables::misc::speedgraph_options.at(0).state) {		// Line
+		for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
+			int cur_speed  = speeds_vec.at(n);
+			int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
 
-		int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
-		int next_x = cur_x + 1;
-		int cur_y  = screen_h * (variables::misc::speedgraph_pos/100.f) - cur_speed  * (variables::misc::speedgraph_h / 100 * 0.5f);
-		int next_y = screen_h * (variables::misc::speedgraph_pos/100.f) - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
+			int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
+			int next_x = cur_x + 1;
+			int cur_y  = screen_h * (variables::misc::speedgraph_pos/100.f) - cur_speed  * (variables::misc::speedgraph_h / 100 * 0.5f);
+			int next_y = screen_h * (variables::misc::speedgraph_pos/100.f) - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
 
-		color line_col = color::white();
-		if (variables::misc::use_speedgraph_color)
-			line_col = speed2color(next_speed);
+			color line_col = color::white();
+			if (variables::misc::speedgraph_options.at(1).state)
+				line_col = speed2color(next_speed);
 
-		render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
+			render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
+		}
 	}
 
 	// Speed text
 	const int cur_speed = (int)std::ceil(csgo::local_player->velocity().length_2d());
 	color speed_col = speed2color(cur_speed);
-	draw_speed_str(screen_w / 2, screen_h * (variables::misc::speedgraph_pos/100.f) + 20, cur_speed, speed_col);
+	draw_speed_str(screen_w / 2, screen_h * (variables::misc::speedgraph_pos / 100.f) + 20, cur_speed, speed_col);
 }

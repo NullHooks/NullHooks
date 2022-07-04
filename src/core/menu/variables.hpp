@@ -1,5 +1,6 @@
 #pragma once
 #include "global_input.hpp"
+#include "framework.hpp"
 
 namespace variables {
 	namespace aim {
@@ -7,10 +8,11 @@ namespace variables {
 		inline hotkey_t triggerbot_key(VK_PRIOR);
 
 		inline bool aimbot = false;
+		inline bool silent = false;
 		inline float aimbot_fov = 0.3f;
 		inline bool draw_fov = false;
 		inline bool ignore_walls = false;
-		inline float aimbot_smoothing = 0.5f;
+		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
@@ -85,6 +87,19 @@ namespace variables {
 		inline bool crosshair = false;
 		inline bool recoil_crosshair = false;
 
+		inline std::vector<multicombo_opt_t> bulletracer_draw_options = {
+			{ "Line",			false },
+			{ "Impacts",		false }
+			//{ "Hits",			false }		// Will just draw a different color for hits
+		};
+		inline std::vector<multicombo_opt_t> bulletracer_team_options = {
+			{ "Localplayer",	true },
+			{ "Friendly",		false },
+			{ "Enemy",			false }
+		};
+		inline bool bulletracer_draw_options_tog = false;
+		inline bool bulletracer_team_options_tog = false;
+
 		inline bool chickenpride = false;
 
 		inline float custom_fov_slider = 90.f;
@@ -94,17 +109,30 @@ namespace variables {
 	namespace misc {
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
+		inline bool autostrafe = false;
+		inline bool ragestrafe = false;
 		inline bool edgejump = false;
 		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
-		inline bool draw_watermark = true;
-		inline bool draw_speedgraph = false;
-		inline bool use_speedgraph_color = false;
-		inline float speedgraph_h = 50.f;
+
+		inline std::vector<multicombo_opt_t> speedgraph_options = {
+			{ "Line",		false },
+			{ "Color",		false },
+			{ "Speed",		true },
+			{ "Jump",		true }
+		};
+		inline bool speedgraph_options_tog = false;
+		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
+		
+		inline bool thirdperson = false;
+		inline hotkey_t thirdperson_key(VK_MBUTTON);
+		inline float thirdperson_dist = 100.f;
+
+		inline bool draw_watermark = true;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
 	}
@@ -139,38 +167,29 @@ namespace variables {
 		inline bool rainbow_crosshair = false;
 	}
 
+	// TODO: replace with the same as multicombo_opt_t
 	namespace colors {
 		// Esp and glow
-		inline color friendly_color = color(0, 90, 255, 255);
-		inline bool friendly_color_tog = false;
-		inline color friendly_color_soft = color(0, 150, 255, 255);
-		inline color friendly_color_softer = color(90, 180, 255, 255);
-		inline color enemy_color = color::red(255);
-		inline bool enemy_color_tog = false;
-		inline color enemy_color_soft = color(190, 25, 25, 255);
-		inline bool enemy_color_soft_tog = false;
-		inline color enemy_color_softer = color(255, 75, 75, 255);
+		inline colorpicker_col_t friendly_color(		color(0, 90, 255, 255) );
+		inline colorpicker_col_t friendly_color_soft(	color(0, 150, 255, 255) );
+		inline colorpicker_col_t friendly_color_softer(	color(90, 180, 255, 255) );
+		inline colorpicker_col_t enemy_color(			color(255, 0, 0, 255) );
+		inline colorpicker_col_t enemy_color_soft(		color(190, 25, 25, 255) );
+		inline colorpicker_col_t enemy_color_softer(	color(255, 75, 75, 255) );
 
 		// Chams
-		inline color chams_vis_enemy_c = color(230, 20, 70);
-		inline bool chams_vis_enemy_tog = false;
-		inline color chams_inv_enemy_c = color(150, 15, 15, 255);
-		inline color chams_vis_friend_c = color(0, 150, 255);
-		inline bool chams_vis_friend_tog = false;
-		inline color chams_inv_friend_c = color(0, 75, 255);
+		inline colorpicker_col_t chams_vis_enemy_c(		color(230, 20, 70) );
+		inline colorpicker_col_t chams_inv_enemy_c(		color(150, 15, 15, 255) );
+		inline colorpicker_col_t chams_vis_friend_c(	color(0, 150, 255) );
+		inline colorpicker_col_t chams_inv_friend_c(	color(0, 75, 255) );
 
-		inline color chams_sleeve_c = color(200, 0, 200, 255);
-		inline bool chams_sleeve_c_tog = false;
-		inline color chams_arms_c = color(255, 0, 255, 255);
-		inline bool chams_arms_c_tog = false;
-		inline color chams_weapon_c = color(255, 150, 255, 255);
-		inline bool chams_weapon_c_tog = false;
+		inline colorpicker_col_t chams_sleeve_c(		color(200, 0, 200, 255) );
+		inline colorpicker_col_t chams_arms_c(			color(255, 0, 255, 255) );
+		inline colorpicker_col_t chams_weapon_c(		color(255, 150, 255, 255) );
 
 		// Misc
-		inline color crosshair_c = color::white();
-		inline bool crosshair_c_tog = false;
-		inline color recoil_crosshair_c = color(0, 255, 0, 255);
-		inline bool recoil_crosshair_c_tog = false;
+		inline colorpicker_col_t crosshair_c(			color(255, 255, 255, 255) );
+		inline colorpicker_col_t recoil_crosshair_c(	color(0, 255, 0, 255) );
 	};
 
 	inline struct MotionBlur {

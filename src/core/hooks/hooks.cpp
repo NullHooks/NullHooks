@@ -13,9 +13,11 @@ bool hooks::initialize() {
 	const auto draw_model_execute_target          = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
 	const auto findmdl_target                     = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
 	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
+	const auto frame_stage_notify_target          = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
 	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
+	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
 
 	menu::init_windows();		// For window positions on smaller screens
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
@@ -65,6 +67,10 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize list_leaves_in_box.");
 	custom_helpers::state_to_console_color("Hooks", "list_leaves_in_box initialized!");
 
+	if (MH_CreateHook(frame_stage_notify_target, &frame_stage_notify::hook, reinterpret_cast<void**>(&frame_stage_notify::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize frame_stage_notify.");
+	custom_helpers::state_to_console_color("Hooks", "frame_stage_notify initialized!");
+
 	if (MH_CreateHook(is_depth_of_field_enabled_target, &is_depth_of_field_enabled::hook, reinterpret_cast<void**>(&is_depth_of_field_enabled::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize is_depth_of_field_enabled.");
 	custom_helpers::state_to_console_color("Hooks", "is_depth_of_field_enabled initialized!");
@@ -76,6 +82,9 @@ bool hooks::initialize() {
 	if(MH_CreateHook(supports_resolve_depth_target, &supports_resolve_depth::hook, reinterpret_cast<void **>(&supports_resolve_depth::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize supports_resolve_depth.");
 	custom_helpers::state_to_console_color("Hooks", "supports_resolve_depth initialized!");
+	if (MH_CreateHook(fire_event_target, &fire_event::hook, reinterpret_cast<void**>(&fire_event::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize fire_event.");
+	custom_helpers::state_to_console_color("Hooks", "fire_event initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
@@ -99,6 +108,10 @@ bool hooks::initialize() {
 
 void hooks::release() {
 	custom_helpers::state_to_console_color("Unhook", "Unhooking the cheat...\n");
+
+	// Restore thirdperson
+	variables::misc::thirdperson = false;
+	misc::reset_thirdperson();
 
 	// Restore crosshair
 	if (variables::misc_visuals::crosshair)

@@ -1,6 +1,7 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
+#include "core/hooks/functions/event_globals.hpp"
 
 struct inferno_t : public entity_t {
 	OFFSET(float, get_spawn_time, 0x20);
@@ -162,7 +163,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	float flblow = bomb_p->m_flC4Blow();
 	float exp_time = flblow - (csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick);
 
-	if (exp_time > 0 && !bomb_p->m_bBombDefused()) {
+	if (exp_time > 0 && !bomb_p->m_bBombDefused() && !event_globals::round_ended) {
 		if (variables::entity_visuals::bombtimer) {
 			const int bar_w = 600;
 			int screen_width, screen_height;
