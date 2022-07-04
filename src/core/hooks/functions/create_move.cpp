@@ -15,7 +15,6 @@ bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd*
 	misc::movement::bunny_hop(cmd);
 	misc::movement::infinite_duck(cmd);
 
-
 	// old_* for prediction
 	auto old_viewangles = cmd->viewangles;
 	auto old_forwardmove = cmd->forwardmove;
