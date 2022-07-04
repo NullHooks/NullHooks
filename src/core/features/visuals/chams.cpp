@@ -66,6 +66,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			} else if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
 				// Backtrack chams
 				// TODO: Add custom color and option and all that but not yet cuz I migth change the whole backtrack
+				// TODO: Make independent of team
 				if (variables::misc::backtrack && records[player->index()].size() > 0) {
 					for (uint32_t i = 0; i < records[player->index()].size(); i++) {
 						if (!backtrack.valid_tick(records[player->index()][i].simulation_time, 0.2f) || records[player->index()][i].matrix == nullptr)
