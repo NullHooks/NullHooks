@@ -67,7 +67,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 #### Model changer
 - Model changer
-*Note: The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`variables.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/menu/variables.hpp) (`NULL` means it's disabled).*
+*Note: The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/experimental-backtrack/src/core/features/visuals/models.hpp) (`NULL` means it's disabled).*
 
 #### Misc
 - C4 timer and bar
