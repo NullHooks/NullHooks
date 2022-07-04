@@ -77,8 +77,9 @@ namespace variables {
 	}
 
 	namespace misc_visuals {
-		inline bool nade_predict = true;
 		inline float noflash_alpha = 0.f;
+		inline bool wireframe_smoke = false;
+		inline bool nade_predict = true;
 		inline bool noscope  = true;
 		inline bool crosshair = false;
 		inline bool recoil_crosshair = false;
