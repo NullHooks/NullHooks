@@ -88,6 +88,12 @@ namespace hooks {
 		bool __stdcall hook();
 	}
 
+	namespace supports_resolve_depth {
+		using fn = bool(*)();
+		inline fn original;
+		bool hook();
+	}
+
 	namespace fire_event {
 		using fn = void(__fastcall*)(void*, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
 		inline fn original;
