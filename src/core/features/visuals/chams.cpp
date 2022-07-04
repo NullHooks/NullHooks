@@ -37,6 +37,7 @@ void override_material(bool ignorez, bool wireframe, const color& rgba, const ch
 void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& info, matrix_t* matrix) {
 	if (!csgo::local_player) return;
 	if (!(variables::chams::player_chams
+		|| variables::chams::localplayer_chams
 		|| variables::chams::vm_weapon_chams
 		|| variables::chams::vm_arm_chams
 		|| variables::chams::vm_sleeve_chams)) return;
@@ -45,7 +46,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 	if (!mdl) return;
 
 	// Players
-	if (strstr(mdl->name, "models/player") && variables::chams::player_chams) {
+	if (strstr(mdl->name, "models/player") && (variables::chams::player_chams || variables::chams::localplayer_chams)) {
 		const char* player_material = (variables::chams::player_chams_mat_id < materials.size()) ? materials.at(variables::chams::player_chams_mat_id) : materials.at(materials.size() - 1);
 
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(info.entity_index));
@@ -56,16 +57,14 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
-			if (player == csgo::local_player) {
-				/*
-				// Remove until thirdperson is implemented
-				override_material(false, false, color(255, 100, 255, csgo::local_player->is_scoped() ? 30 : 255));
+			if (player == csgo::local_player && variables::misc::thirdperson && variables::chams::localplayer_chams) {		// For thirdperson
+				const float localplayer_col_a = (csgo::local_player->is_scoped()) ? 30 : variables::colors::chams_localplayer.col.a;
+				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id]);
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-				*/
 				return;
 			}
 
-			if (player->team() != csgo::local_player->team()) {
+			if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
 				// Backtrack chams
 				if (true /*REPLACE VAR*/ && records[player->index()].size() > 0) {
 					for (uint32_t i = 0; i < records[player->index()].size(); i++) {
@@ -82,7 +81,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				}
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_vis_enemy_c, player_material);			// Visible - Enemy
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			} else if (variables::player_visuals::showteamesp) {
+			} else if (variables::chams::player_chams && variables::player_visuals::showteamesp) {
 				if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				if (!variables::chams::only_visible_chams) {
 					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_friend_c, player_material);		// Not visible - Friendly
