@@ -63,11 +63,11 @@ int get_ping() noexcept {
     auto average_latency = net_channel_info->get_average_latency(FLOW_OUTGOING);
     static auto cl_updaterate = interfaces::console->get_convar("cl_updaterate");
 
-    if (cl_updaterate->float_value > 0.001f)
-        average_latency += -0.5f / cl_updaterate->float_value;
+    if (cl_updaterate->get_float() > 0.001f)
+        average_latency += -0.5f / cl_updaterate->get_float();
 
     const int num = std::abs(average_latency) * 1000.0f;
-
+    
     return (num < 1000) ? num : -1;
 }
 
