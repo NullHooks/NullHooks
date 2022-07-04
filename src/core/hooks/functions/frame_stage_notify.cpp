@@ -27,15 +27,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 				}
 			}
 			break;
-		case FRAME_RENDER_START:
-			/*if (local) {
-				misc::thirdperson();
-				if (!local->is_alive())
-					interfaces::input->camera_in_third_person = false;
-				if (local->is_alive() && interfaces::input->camera_in_third_person)
-					*(vec3_t*)(((DWORD)local) + 0x31D4 + 0x4) = csgo::angles;
-			}*/
-			break;
+		case FRAME_RENDER_START:                    break;
 		case FRAME_RENDER_END:                      break;
 		default:                                    break;
 	}
