@@ -107,8 +107,8 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		}
 	}
 
-	//static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->float_value;	// Does not work :(
-	vec3_t enemy_angle = (aim_angle - (local_aim_punch * 2.f)) - cmd->viewangles;
+	static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->get_float();
+	vec3_t enemy_angle = (aim_angle - (local_aim_punch * recoil_scale)) - cmd->viewangles;
 	enemy_angle.clamp();
 
 	vec3_t final_angle = enemy_angle;	
