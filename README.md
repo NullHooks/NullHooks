@@ -77,6 +77,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Grenade prediction
 - No flash
 - No scope
+- No smoke (Broken insdide smoke)
 - Custom crosshair
 - Recoil crosshair
 - Bullet tracers (:warning: Broken in online matches. Check [todo](#todo))
