@@ -86,7 +86,7 @@ void backtracking::update() noexcept {
 }
 
 void backtracking::run(c_usercmd* cmd) noexcept {
-	if (false /*REPLACE VAR*/ || !csgo::local_player || !csgo::local_player->is_alive()) return;
+	if (!variables::misc::backtrack || !csgo::local_player || !csgo::local_player->is_alive()) return;
 
 	auto local_player = csgo::local_player;
 	auto wpn = csgo::local_player->active_weapon();
@@ -149,4 +149,24 @@ void backtracking::run(c_usercmd* cmd) noexcept {
 	}
 	if (best_record && cmd->buttons & in_attack)
 		cmd->tick_count = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());
+}
+
+/* ------------------------------------------------- */
+
+// Used in frame_stage_notify
+void misc::backtrack() {
+	static auto set_interpolation_flags = [](player_t* e, int flag) {
+		const auto var_map = (uintptr_t)e + 36;
+		const auto sz_var_map = *(int*)(var_map + 20);
+		for (auto index = 0; index < sz_var_map; index++)
+			*(uintptr_t*)((*(uintptr_t*)var_map) + index * 12) = flag;
+	};
+
+	if (!(true /*REPLACE VAR*/ && csgo::local_player && csgo::local_player->is_alive())) return;
+	for (uint32_t i = 1; i <= interfaces::globals->max_clients; i++) {
+		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
+		if (!player || player->team() == csgo::local_player->team() || player == csgo::local_player || player->dormant())
+			continue;
+		set_interpolation_flags(player, 0);
+	}
 }
