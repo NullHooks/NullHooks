@@ -105,6 +105,10 @@ bool hooks::initialize() {
 void hooks::release() {
 	custom_helpers::state_to_console_color("Unhook", "Unhooking the cheat...\n");
 
+	// Restore thirdperson
+	variables::misc::thirdperson = false;
+	misc::reset_thirdperson();
+
 	// Restore crosshair
 	if (variables::misc_visuals::crosshair)
 		interfaces::engine->execute_cmd("crosshair 1");
