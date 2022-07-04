@@ -128,6 +128,10 @@ namespace variables {
 		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
 		
+		inline bool thirdperson = false;
+		inline hotkey_t thirdperson_key(VK_MBUTTON);
+		inline float thirdperson_dist = 100.f;
+
 		inline bool draw_watermark = true;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;

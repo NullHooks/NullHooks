@@ -47,6 +47,7 @@ public:
 
 public:
     bool reading_hotkey = false;
+    int latest_hotkey = HOTKEY_NONE;          // Used by UpdatePressed() to avoid instantly toggling the pressed key
 
     inline int LatestPressed() {
         for (int n = 0; n < 256; n++) {
@@ -60,14 +61,16 @@ public:
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
         if (vKey < 0) return false;                                         // Keys like HOTKEY_WAITING or HOTKEY_NONE should be checked with IsPressed()
+        if (vKey == latest_hotkey) return false;                            // Avoid toggling the key when assigning
         return (!reading_hotkey) ? key_states[vKey].pressed : false;        // See comment on GlobalInput::WndProcUpdate()
     }
 
     // While key is down
     inline bool IsHeld(const int vKey) const {
         if (vKey == HOTKEY_NONE) return true;       // If a hotkey is set to "None" is the same as always on
-        
+
         if (vKey < 0) return false;                 // Should not happen
+        if (vKey == latest_hotkey) return false;    // Avoid toggling the key when assigning
         return key_states[vKey].held;
     }
 
