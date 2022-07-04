@@ -69,18 +69,11 @@ namespace variables {
 		inline bool vm_sleeve_chams = false;
 
 		// Selected material for each setting
-		inline int player_chams_mat_id = 1;
-		inline int localplayer_chams_mat_id = 1;
-		inline int weapon_chams_mat_id = 4;
-		inline int arm_chams_mat_id = 1;
-		inline int sleeve_chams_mat_id = 1;
-
-		// Used for togling popups
-		inline bool player_chams_popup_tog = false;
-		inline bool localplayer_chams_popup_tog = false;
-		inline bool sleeve_chams_popup_tog = false;
-		inline bool arm_chams_popup_tog = false;
-		inline bool weapon_chams_popup_tog = false;
+		inline combobox_toggle_t player_chams_mat_id(1);
+		inline combobox_toggle_t localplayer_chams_mat_id(1);
+		inline combobox_toggle_t weapon_chams_mat_id(4);
+		inline combobox_toggle_t arm_chams_mat_id(1);
+		inline combobox_toggle_t sleeve_chams_mat_id(1);
 	}
 
 	namespace misc_visuals {
@@ -150,7 +143,7 @@ namespace variables {
 		namespace menu {
 			inline bool opened = false;
 			inline int x = 300, y = 200;
-			inline int w = 500, h = 450;
+			inline int w = 500, h = 420;
 		}
 
 		namespace watermark {

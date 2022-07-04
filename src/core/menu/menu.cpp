@@ -139,23 +139,23 @@ void menu::render() {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
 					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_enemy_c);
 				gui::combobox(item_left_pos, part2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
-					"Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
+					"Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Local player chams", variables::chams::localplayer_chams, variables::colors::chams_localplayer);
 				gui::combobox(item_left_pos, part2_base_item_y + (15 * 6), item_combo_pos, render::fonts::watermark_font,
-					"Local chams material", variables::chams::materials, variables::chams::localplayer_chams_mat_id, variables::chams::localplayer_chams_popup_tog);
+					"Local chams material", variables::chams::materials, variables::chams::localplayer_chams_mat_id);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
 					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c);
 				gui::combobox(item_left_pos, part2_base_item_y + (15 * 8), item_combo_pos, render::fonts::watermark_font,
-					"Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
+					"Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
 					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c);
 				gui::combobox(item_left_pos, part2_base_item_y + (15 * 10), item_combo_pos, render::fonts::watermark_font,
-					"Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
+					"Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id);
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 11), item_checkbox_pos, render::fonts::watermark_font,
 					"Sleeve chams", variables::chams::vm_sleeve_chams, variables::colors::chams_sleeve_c);
 				gui::combobox(item_left_pos, part2_base_item_y + (15 * 12), item_combo_pos, render::fonts::watermark_font,
-					"Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
+					"Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id);
 			}
 
 			/* ----- Visuals - Second column ----- */

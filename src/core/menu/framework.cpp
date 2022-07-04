@@ -252,21 +252,21 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 }
 
 /*
- * combobox: Will render a combobox with the strings in opt_vec as options, and change& target_idx to the selected item's index in the vector
+ * combobox: Will render a combobox with the strings in opt_vec as options, and change &target.idx to the selected item's index in the vector
  * combo_right_pos: top right corner of the selected option indicator.
- * popup_toggle: for deciding if the popup is open or not.
+ * target.toggle: for deciding if this popup is open or not.
  */ 
-void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<std::string>& opt_vec, int &target_idx, bool& popup_toggle) {
+void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<std::string>& opt_vec, combobox_toggle_t& target) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	
 	const int x_margin = popup_system::combo_win_padding;
 	const int h = 11;
 	const int arrow_w = 7, arrow_h = 4;
 	const int arrow_x = combo_right_pos - x_margin - arrow_w, arrow_y = y + 4;	// h/2 is not reliable
-	const int item_w = render::get_text_size(render::fonts::watermark_font_ns, opt_vec.at(target_idx)).x;
+	const int item_w = render::get_text_size(render::fonts::watermark_font_ns, opt_vec.at(target.idx)).x;
 	int w = x_margin + item_w + x_margin + arrow_w + x_margin;
 	// Stores the px width of the biggest text in the vector if popup is active
-	if (popup_toggle) {
+	if (target.toggle) {
 		for (std::string item : opt_vec) {
 			int text_w = render::get_text_size(render::fonts::watermark_font_ns, item).x + x_margin * 2;
 			if (text_w > w)
@@ -278,15 +278,15 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
 		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
-			popup_toggle = !popup_toggle;			// If in checkbox and clicked
+			target.toggle = !target.toggle;			// If in checkbox and clicked
 		// See color picker comment
 		else if ( !((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h + opt_vec.size() * 15)) )
-			popup_toggle = false;			// Close popup if user clicks outside
+			target.toggle = false;			// Close popup if user clicks outside
 	}
 
 	// Combobox "button"
 	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
-	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, opt_vec.at(target_idx), false, color::white());
+	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, opt_vec.at(target.idx), false, color::white());
 	
 	// Draw arrow
 	for (int n = 0; n < arrow_h; n++) {
@@ -297,8 +297,8 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
 
 	// Push to vector to render after menu
-	if (popup_toggle)
-		popup_system::active_combo_popups.push_back(combo_popup_info{position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target_idx, popup_toggle});
+	if (target.toggle)
+		popup_system::active_combo_popups.push_back(combo_popup_info{ position, y + h + 1, w, opt_vec.size() * 15, opt_vec, target.idx, target.toggle });
 }
 
 // Same as combobox but with more than one option. Will store selected options as true in a bool vector.
