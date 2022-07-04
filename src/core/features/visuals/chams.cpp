@@ -47,7 +47,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 
 	// Players
 	if (strstr(mdl->name, "models/player") && (variables::chams::player_chams || variables::chams::localplayer_chams)) {
-		const char* player_material = (variables::chams::player_chams_mat_id < materials.size()) ? materials.at(variables::chams::player_chams_mat_id) : materials.at(materials.size() - 1);
+		const char* player_material = (variables::chams::player_chams_mat_id.idx < materials.size()) ? materials.at(variables::chams::player_chams_mat_id.idx) : materials.at(materials.size() - 1);
 
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(info.entity_index));
 		if (!player || !player->is_alive() || player->dormant()) return;
@@ -59,7 +59,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 		} else {
 			if (player == csgo::local_player && variables::misc::thirdperson && variables::chams::localplayer_chams) {		// For thirdperson
 				const float localplayer_col_a = (csgo::local_player->is_scoped()) ? 30 : variables::colors::chams_localplayer.col.a;
-				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id]);
+				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id.idx]);
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				return;
 			}
@@ -97,19 +97,19 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 	if (strstr(mdl->name, "sleeve")) {
 		if (variables::chams::vm_sleeve_chams) {
 			if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_sleeve_c, materials.at(variables::chams::sleeve_chams_mat_id));
+			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_sleeve_c, materials.at(variables::chams::sleeve_chams_mat_id.idx));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name + 17, "arms")) {		// Also replaces some player model's arms (worldmodel arms)
 		if (variables::chams::vm_arm_chams) {
 			if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_arms_c, materials.at(variables::chams::arm_chams_mat_id));
+			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_arms_c, materials.at(variables::chams::arm_chams_mat_id.idx));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	} else if (strstr(mdl->name, "models/weapons/v")) {
 		if (variables::chams::vm_weapon_chams && !csgo::local_player->is_scoped()) {
 			if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_weapon_c, materials.at(variables::chams::weapon_chams_mat_id));
+			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_weapon_c, materials.at(variables::chams::weapon_chams_mat_id.idx));
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		}
 	}
