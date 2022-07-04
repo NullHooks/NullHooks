@@ -118,6 +118,7 @@
     <ClCompile Include="core\features\visuals\misc_visuals.cpp" />
     <ClCompile Include="core\features\visuals\models.cpp" />
     <ClCompile Include="core\features\visuals\motion_blur.cpp" />
+    <ClCompile Include="core\features\visuals\nosmoke.cpp" />
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\player_esp.cpp" />

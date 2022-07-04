@@ -215,7 +215,7 @@ public:
 		using fn = void(__thiscall *)(i_material_system *, int, i_matsys_material_adapter_info_t *);
 		return (*(fn **)this)[26](this, adapter, info);
 	}
-	i_material *find_material( char const *material_name, const char *group_name, bool complain = true, const char *complain_prefix = 0 ) {
+	i_material *find_material( char const *material_name, const char *group_name = nullptr, bool complain = true, const char *complain_prefix = 0 ) {
 		using fn = i_material * ( __thiscall * )( i_material_system *, char const *, const char *, bool, const char * );
 		return ( *( fn ** ) this )[ 84 ]( this, material_name, group_name, complain, complain_prefix );
 	}

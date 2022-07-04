@@ -32,6 +32,7 @@ namespace visuals {
 
 	namespace misc {
 		void nade_predict() noexcept;
+		void nosmoke(client_frame_stage_t frame_stage);
 	}
 
 	namespace entity_info {		// paint_traverse
