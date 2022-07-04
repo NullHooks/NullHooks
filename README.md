@@ -79,6 +79,10 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - No scope
 - Custom crosshair
 - Recoil crosshair
+- Bullet tracers (:warning: Broken in online matches. Check [todo](#todo))
+- Fov changer
+- Thirdperson
+- Motion blur
 
 ### Movement
 - Infinite duck (:warning: Untrusted)
@@ -92,10 +96,8 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Speed graph (*With color, height and position options*)
 
 ### Misc
+- Backtrack
 - Spectator list
-- Fov changer
-- Thirdperson
-- Motion blur (:warning: Might be buggy in some AMD cards)
 - Stats watermark (*username, time, fps, ping...*)
 - Hide cheat on screenshots
 - Hotkey system
@@ -198,8 +200,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [ ] Longjump
-- [X] Add event listeners (or `FireEvent` hook, etc.)
+- [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
+        - [ ] Fix `bullet_impact` not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Add antiaim
 - [ ] Add skinchanger
