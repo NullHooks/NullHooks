@@ -62,9 +62,8 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id.idx]);
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				return;
-			}
-
-			if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
+			// Enemies
+			} else if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
 				// Backtrack chams
 				if (true /*REPLACE VAR*/ && records[player->index()].size() > 0) {
 					for (uint32_t i = 0; i < records[player->index()].size(); i++) {
@@ -81,7 +80,8 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				}
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_vis_enemy_c, player_material);			// Visible - Enemy
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-			} else if (variables::chams::player_chams && variables::player_visuals::showteamesp) {
+			// Friends
+			} else if (variables::chams::player_chams && variables::player_visuals::showteamesp && player != csgo::local_player) {
 				if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				if (!variables::chams::only_visible_chams) {
 					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_friend_c, player_material);		// Not visible - Friendly
