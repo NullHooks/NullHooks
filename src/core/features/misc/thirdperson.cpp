@@ -24,6 +24,8 @@ void misc::thirdperson() {
 
         vec3_t view_angles;
         interfaces::engine->get_view_angles(view_angles);
+        view_angles.z = 0.f;
+
         vec3_t forward(math::angle_vector(view_angles));
         vec3_t eyes = csgo::local_player->get_eye_pos();
 
@@ -39,10 +41,11 @@ void misc::thirdperson() {
         if (trace.flFraction < 1.f)
             distance *= trace.flFraction;
 
+        view_angles.z = distance;
         interfaces::input->camera_in_third_person = true;
         interfaces::input->camera_offset = view_angles;
     } else {
         interfaces::input->camera_in_third_person = false;
-        interfaces::input->camera_offset = vec3_t(0.f, 0.f, 0.f);
+        interfaces::input->camera_offset.z = 0.f;
     }
 }
