@@ -63,18 +63,21 @@ namespace variables {
 		inline bool draw_chams_on_top = false;
 		inline bool wireframe_chams = false;
 		inline bool player_chams = false;
+		inline bool localplayer_chams = false;
 		inline bool vm_weapon_chams = false;
 		inline bool vm_arm_chams = false;
 		inline bool vm_sleeve_chams = false;
 
 		// Selected material for each setting
 		inline int player_chams_mat_id = 1;
-		inline int sleeve_chams_mat_id = 6;
-		inline int arm_chams_mat_id = 7;
-		inline int weapon_chams_mat_id = 5;
+		inline int localplayer_chams_mat_id = 1;
+		inline int weapon_chams_mat_id = 4;
+		inline int arm_chams_mat_id = 1;
+		inline int sleeve_chams_mat_id = 1;
 
 		// Used for togling popups
 		inline bool player_chams_popup_tog = false;
+		inline bool localplayer_chams_popup_tog = false;
 		inline bool sleeve_chams_popup_tog = false;
 		inline bool arm_chams_popup_tog = false;
 		inline bool weapon_chams_popup_tog = false;
@@ -178,14 +181,15 @@ namespace variables {
 		inline colorpicker_col_t enemy_color_softer(	color(255, 75, 75, 255) );
 
 		// Chams
+		inline colorpicker_col_t chams_localplayer(     color(255, 150, 255, 255) );
 		inline colorpicker_col_t chams_vis_enemy_c(		color(230, 20, 70) );
 		inline colorpicker_col_t chams_inv_enemy_c(		color(150, 15, 15, 255) );
 		inline colorpicker_col_t chams_vis_friend_c(	color(0, 150, 255) );
 		inline colorpicker_col_t chams_inv_friend_c(	color(0, 75, 255) );
 
-		inline colorpicker_col_t chams_sleeve_c(		color(200, 0, 200, 255) );
-		inline colorpicker_col_t chams_arms_c(			color(255, 0, 255, 255) );
 		inline colorpicker_col_t chams_weapon_c(		color(255, 150, 255, 255) );
+		inline colorpicker_col_t chams_arms_c(			color(255, 0, 255, 255) );
+		inline colorpicker_col_t chams_sleeve_c(		color(100, 0, 255, 255) );
 
 		// Misc
 		inline colorpicker_col_t crosshair_c(			color(255, 255, 255, 255) );
