@@ -40,10 +40,10 @@ public:
 	std::vector<multicombo_opt_t> vector;		// The selected idx of the vector. We don't need an address here cuz we will pass the whole &multicombobox_toggle_t
 	bool toggle;	// For toggling combobox popup
 
-	/*multicombobox_toggle_t(std::vector<multicombo_opt_t>& vector, const bool toggle = false) {
+	multicombobox_toggle_t(std::vector<multicombo_opt_t> vector, const bool toggle = false) {
 		this->vector = vector;
 		this->toggle = toggle;
-	}*/
+	}
 
 	operator std::vector<multicombo_opt_t>() { return vector; }
 	operator bool() { return toggle; }
@@ -58,7 +58,7 @@ namespace gui {
 	void check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col1, colorpicker_col_t& col2);
 	void slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std::int32_t slider_len, unsigned long font, const std::string string, float& value, float min_value, float max_value);
 	void combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string string, std::vector<std::string>& opt_vec, combobox_toggle_t& target);
-	void multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, std::vector<multicombo_opt_t>& target_vec, bool& popup_toggle);
+	void multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos, unsigned long font, const std::string label, multicombobox_toggle_t& target);
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey);
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, hotkey_t& hinfo);
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
