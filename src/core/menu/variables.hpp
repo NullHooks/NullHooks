@@ -104,6 +104,7 @@ namespace variables {
 	}
 
 	namespace misc {
+		// Movement
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
 		inline bool autostrafe = false;
@@ -114,7 +115,6 @@ namespace variables {
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
-
 		inline std::vector<multicombo_opt_t> speedgraph_options = {
 			{ "Line",		false },
 			{ "Color",		false },
@@ -122,14 +122,18 @@ namespace variables {
 			{ "Jump",		true }
 		};
 		inline multicombobox_toggle_t speedgraph_target(speedgraph_options);
-
 		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
 		
+		// Network
+		inline bool backtrack = false;
+
+		// Thirdperson
 		inline bool thirdperson = false;
 		inline hotkey_t thirdperson_key('P');
 		inline float thirdperson_dist = 100.f;
 
+		// UI
 		inline bool draw_watermark = true;
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
