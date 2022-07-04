@@ -8,23 +8,23 @@ std::deque<stored_records> records[65];
 convars cvars;
 
 float backtracking::get_lerp_time() noexcept {
-	int ud_rate = interfaces::console->get_convar("cl_updaterate")->numerical_value;
+	int ud_rate = interfaces::console->get_convar("cl_updaterate")->get_int();
 	convar* min_ud_rate = interfaces::console->get_convar("sv_minupdaterate");
 	convar* max_ud_rate = interfaces::console->get_convar("sv_maxupdaterate");
 
 	if (min_ud_rate && max_ud_rate)
-		ud_rate = max_ud_rate->numerical_value;
+		ud_rate = max_ud_rate->get_int();
 
-	float ratio = interfaces::console->get_convar("cl_interp_ratio")->float_value;
+	float ratio = interfaces::console->get_convar("cl_interp_ratio")->get_float();
 
 	if (ratio == 0)
 		ratio = 1.0f;
 
-	float lerp = interfaces::console->get_convar("cl_interp")->float_value;
+	float lerp = interfaces::console->get_convar("cl_interp")->get_float();
 	convar* c_min_ratio = interfaces::console->get_convar("sv_client_min_interp_ratio");
 	convar* c_max_ratio = interfaces::console->get_convar("sv_client_max_interp_ratio");
-	auto ratiod = std::clamp(ratio, c_min_ratio->float_value, c_max_ratio->float_value);
-	return max(interfaces::console->get_convar("cl_interp")->float_value, (ratiod / ((min_ud_rate->float_value) ? max_ud_rate->float_value : ud_rate)));
+	auto ratiod = std::clamp(ratio, c_min_ratio->get_float(), c_max_ratio->get_float());
+	return max(interfaces::console->get_convar("cl_interp")->get_float(), (ratiod / ((min_ud_rate->get_float()) ? max_ud_rate->get_float() : ud_rate)));
 }
 
 bool backtracking::valid_tick(float simtime, float maxtime) noexcept {
@@ -36,7 +36,7 @@ bool backtracking::valid_tick(float simtime, float maxtime) noexcept {
 	correct += net_channel->get_latency(1);
 	correct += get_lerp_time();
 
-	std::clamp(correct, 0.f, interfaces::console->get_convar("sv_maxunlag")->float_value);
+	std::clamp(correct, 0.f, interfaces::console->get_convar("sv_maxunlag")->get_float());
 
 	float delta_time = correct - (TICKS_TO_TIME(csgo::local_player->get_tick_base()) - simtime);
 
@@ -63,7 +63,7 @@ void backtracking::update() noexcept {
 			records[i].clear();
 			continue;
 		}
-
+		
 		if (records[i].size() && (records[i].front().simulation_time == entity->simulation_time()))
 			continue;
 	
