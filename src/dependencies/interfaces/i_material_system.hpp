@@ -207,6 +207,14 @@ DECLARE_POINTER_HANDLE( mat_lock_t );
 
 class i_material_system {
 public:
+	int get_current_adapter() {
+		using fn = int(__thiscall *)(i_material_system *);
+		return (*(fn **)this)[25](this);
+	}
+	void get_display_adapter_info(int adapter, i_matsys_material_adapter_info_t *info) {
+		using fn = void(__thiscall *)(i_material_system *, int, i_matsys_material_adapter_info_t *);
+		return (*(fn **)this)[26](this, adapter, info);
+	}
 	i_material *find_material( char const *material_name, const char *group_name, bool complain = true, const char *complain_prefix = 0 ) {
 		using fn = i_material * ( __thiscall * )( i_material_system *, char const *, const char *, bool, const char * );
 		return ( *( fn ** ) this )[ 84 ]( this, material_name, group_name, complain, complain_prefix );
