@@ -16,6 +16,7 @@ bool hooks::initialize() {
 	const auto frame_stage_notify_target          = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
 	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
+	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
 	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
 
 	menu::init_windows();		// For window positions on smaller screens
@@ -78,6 +79,9 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize get_client_model_renderable.");
 	custom_helpers::state_to_console_color("Hooks", "get_client_model_renderable initialized!");
 
+	if(MH_CreateHook(supports_resolve_depth_target, &supports_resolve_depth::hook, reinterpret_cast<void **>(&supports_resolve_depth::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize supports_resolve_depth.");
+	custom_helpers::state_to_console_color("Hooks", "supports_resolve_depth initialized!");
 	if (MH_CreateHook(fire_event_target, &fire_event::hook, reinterpret_cast<void**>(&fire_event::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize fire_event.");
 	custom_helpers::state_to_console_color("Hooks", "fire_event initialized!");
