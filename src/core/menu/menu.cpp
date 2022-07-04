@@ -144,12 +144,12 @@ void menu::render() {
 			const int part3_h           = (15 * part3_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Only visible chams", variables::chams::only_visible_chams);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Wireframe chams", variables::chams::wireframe_chams);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Only visible chams", variables::chams::only_visible_chams);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Wireframe chams", variables::chams::wireframe_chams);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"Draw on top", variables::chams::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
 					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_enemy_c);
 				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
@@ -265,8 +265,22 @@ void menu::render() {
 					"Speedgraph options", variables::misc::speedgraph_options, variables::misc::speedgraph_options_tog);
 				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
+			}
+
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_items_num = 3;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Movement", false); {
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Thirdperson", variables::misc::thirdperson);
+				gui::hotkey(item_left_pos, part3_base_item_y + (15 * 1), item_hotkey_w, render::fonts::watermark_font,
+					"Thirdperson toggle key", variables::misc::thirdperson_key);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Thirdperson distance", variables::misc::thirdperson_dist, 50.f, 200.f);
 			}
 
 			/* ----- Misc - Second column ----- */

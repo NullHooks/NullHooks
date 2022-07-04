@@ -50,6 +50,9 @@ namespace visuals {
 
 namespace misc {
 	void spectator_list();
+	void thirdperson();
+	void reset_thirdperson();
+
 	namespace movement {
 		void infinite_duck(c_usercmd* cmd);
 		

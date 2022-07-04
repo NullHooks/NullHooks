@@ -55,19 +55,30 @@ class convar {
 public:
 	void set_value(const char* value) {
 		using original_fn = void(__thiscall*)(convar*, const char*);
-		return (*(original_fn * *)this)[14](this, value);
+		return (*(original_fn**)this)[14](this, value);
 	}
 	void set_value(float value) {
 		using original_fn = void(__thiscall*)(convar*, float);
-		return (*(original_fn * *)this)[15](this, value);
+		return (*(original_fn**)this)[15](this, value);
 	}
 	void set_value(int value) {
 		using original_fn = void(__thiscall*)(convar*, int);
-		return (*(original_fn * *)this)[16](this, value);
+		return (*(original_fn**)this)[16](this, value);
 	}
 	void set_value(bool value) {
 		using original_fn = void(__thiscall*)(convar*, int);
-		return (*(original_fn * *)this)[16](this, static_cast<int>(value));
+		return (*(original_fn**)this)[16](this, static_cast<int>(value));
+	}
+
+	// So its not encrypted
+	float get_float() {
+		using original_fn = float(__thiscall*)(convar*);
+		return (*(original_fn**)this)[12](this);
+	}
+
+	float get_int() {
+		using original_fn = float(__thiscall*)(convar*);
+		return (*(original_fn**)this)[13](this);
 	}
 
 private:

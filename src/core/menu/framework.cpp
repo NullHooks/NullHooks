@@ -390,11 +390,13 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {			// -1 means there is no new keypress
-			if (newkey == VK_DELETE)			// Delte will remove the hotkey
-				target_key = HOTKEY_NONE;		// When a hotkey is none, it will apear as pressed all the time
-			else if (newkey != VK_ESCAPE)		// Press scape (cancel hotkey).
-				target_key = newkey;			// Store key
+		if (newkey != HOTKEY_WAITING) {							// -1 means there is no new keypress
+			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
+				target_key = HOTKEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
+			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
+				target_key = newkey;							// Store key
+				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
+			}
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			reading_this_hotkey               = false;		// And we don't have to worry about wich hotkey are we reading
@@ -436,11 +438,13 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 	if (input::gobal_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {				// -1 means there is no new keypress
-			if (newkey == VK_DELETE)				// Delte will remove the hotkey
-				hotkey_info.key = HOTKEY_NONE;		// When a hotkey is none, it will apear as pressed all the time
-			else if (newkey != VK_ESCAPE)			// Press scape (cancel hotkey).
-				hotkey_info.key = newkey;			// Store key
+		if (newkey != HOTKEY_WAITING) {							// -1 means there is no new keypress
+			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
+				hotkey_info.key = HOTKEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
+			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
+				hotkey_info.key = newkey;						// Store key
+				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
+			}
 
 			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			hotkey_info.reading_this          = false;		// And we don't have to worry about wich hotkey are we reading

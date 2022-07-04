@@ -94,6 +94,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ### Misc
 - Spectator list
 - Fov changer
+- Thirdperson
 - Motion blur (:warning: Might be buggy in some AMD cards)
 - Stats watermark (*username, time, fps, ping...*)
 - Hide cheat on screenshots
@@ -180,6 +181,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
 - [X] Add multicombobox
     - [X] For selecting what parts of the speedgraph we should draw
+- [X] Reset bomb timer on new round (sometimes?)
 #
 </details>
 
@@ -199,11 +201,14 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add event listeners (or `FireEvent` hook, etc.)
     - [X] Add bullet tracers
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
+- [ ] Add antiaim
+- [ ] Add skinchanger
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+<!--
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
+-->
 - [ ] Add "defusing" to bomb timer
-- [ ] Reset bomb timer on new round (sometimes?)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Add config and all that (json or whatever)
 - [ ] Port to linux <!-- <3 -->
