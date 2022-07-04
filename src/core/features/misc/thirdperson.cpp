@@ -31,7 +31,7 @@ void misc::thirdperson() {
         return;
     }
 
-    float distance = variables::misc::thirdperson_dist;
+    float distance = variables::misc::thirdperson_dist + 5.f;
 
     vec3_t view_angles;
     interfaces::engine->get_view_angles(view_angles);
@@ -49,8 +49,10 @@ void misc::thirdperson() {
     trace_t trace;
     interfaces::trace_ray->trace_ray(ray, MASK_SOLID, &filter, &trace);     // Detect hit behind (make distance smaller)
 
-    if (trace.flFraction < 1.f)
+    if (trace.flFraction < 1.f) {
         distance *= trace.flFraction;
+        distance -= 10.f;
+    }
 
     view_angles.z = distance;
     interfaces::input->camera_in_third_person = true;
