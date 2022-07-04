@@ -111,7 +111,10 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	vec3_t enemy_angle = (aim_angle - (local_aim_punch * 2.f)) - cmd->viewangles;
 	enemy_angle.clamp();
 
-	cmd->viewangles += enemy_angle * (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing
+	vec3_t final_angle = enemy_angle;	
+	if (!variables::aim::silent) final_angle *= (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing if not silent
+	
+	cmd->viewangles += final_angle;
 }
 
 // https://www.unknowncheats.me/forum/counterstrike-global-offensive/129068-draw-aimbot-fov.html
