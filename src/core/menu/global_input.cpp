@@ -38,6 +38,16 @@ void GlobalInput::UpdatePressed() {
         else
             key_states[n].pressed = false;
 
+        // Avoid toggling the key when assigning
+        if (latest_hotkey == n) {
+            if (key_states[n].held) {
+                key_states[n].held = false;
+                key_states[n].pressed = false;
+            } else {
+                latest_hotkey = HOTKEY_NONE;        // Reset key to none
+            }
+        }
+
         // Move all the array to the old one
         key_states_old[n].held = key_states[n].held;
         key_states_old[n].pressed = key_states[n].pressed;

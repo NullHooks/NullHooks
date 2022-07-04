@@ -44,6 +44,7 @@ void menu::render() {
 	int item_left_pos              = container_left_pos + container_padding;
 	int item_checkbox_pos          = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 	int item_slider_pos            = variables::ui::menu::x + container_width - container_margin - item_slider_length;	// Top left corner of the actual slider
+	int item_combo_pos             = item_checkbox_pos + item_checkbox_length;
 	int item_hotkey_w              = container_width - container_padding*2;
 
 	const int part1_y           = variables::ui::menu::y + top_margin_with_tabs + container_margin;
@@ -53,33 +54,43 @@ void menu::render() {
 		case 0: {	// Aim
 			const int part1_items_num = 2;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
-
-			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Triggerbot", false); {
+			
+			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "General", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable triggerbot", variables::aim::triggerbot);
-				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 1), item_hotkey_w,
-					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key);
+					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
 			}
 
-			const int part2_items_num = 7;
+			const int part2_items_num = 2;
 			const int part2_y = part1_y + part1_h + container_margin;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
-			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Aimbot", false); {
+			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Triggerbot", false); {
 				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable triggerbot", variables::aim::triggerbot);
+				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 1), item_hotkey_w,
+					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key);
+			}
+
+			const int part3_items_num = 6;
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Aimbot", false); {
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable aimbot", variables::aim::aimbot);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Silent", variables::aim::silent);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
 					render::fonts::watermark_font, "Ignore walls", variables::aim::ignore_walls);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 4), item_checkbox_pos,
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 1.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 6), item_slider_pos, item_slider_length,
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
 					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
@@ -90,6 +101,7 @@ void menu::render() {
 			container_width   = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 			item_slider_pos   = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos    = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w     = container_width - container_padding * 2;
 
 			const int part1_items_num = 7;
@@ -97,11 +109,11 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Player ESP", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
-					"Enable team ESP (global)", variables::player_visuals::showteamesp, variables::colors::friendly_color, variables::colors::friendly_color_tog);
+					"Enable team ESP (global)", variables::player_visuals::showteamesp, variables::colors::friendly_color);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
-					"Box ESP", variables::player_visuals::boxesp, variables::colors::enemy_color, variables::colors::enemy_color_tog);
+					"Box ESP", variables::player_visuals::boxesp, variables::colors::enemy_color);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
-					"Skeleton ESP", variables::player_visuals::skeletonesp, variables::colors::enemy_color_soft, variables::colors::enemy_color_soft_tog);
+					"Skeleton ESP", variables::player_visuals::skeletonesp, variables::colors::enemy_color_soft);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Name ESP", variables::player_visuals::nameesp);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
@@ -132,28 +144,28 @@ void menu::render() {
 			const int part3_h           = (15 * part3_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Chams", false); {
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Only visible chams", variables::chams::only_visible_chams);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Wireframe chams", variables::chams::wireframe_chams);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw on top", variables::chams::draw_chams_on_top);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Only visible chams", variables::chams::only_visible_chams);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Wireframe chams", variables::chams::wireframe_chams);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"Draw on top", variables::chams::draw_chams_on_top);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
-					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_friend_tog, variables::colors::chams_vis_enemy_c, variables::colors::chams_vis_enemy_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
+					"Player chams", variables::chams::player_chams, variables::colors::chams_vis_friend_c, variables::colors::chams_vis_enemy_c);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Player chams material", variables::chams::materials, variables::chams::player_chams_mat_id, variables::chams::player_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
-					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c, variables::colors::chams_weapon_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
+					"Viewmodel weapon chams", variables::chams::vm_weapon_chams, variables::colors::chams_weapon_c);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 6), item_combo_pos, render::fonts::watermark_font,
+					"Weapon chams material", variables::chams::materials, variables::chams::weapon_chams_mat_id, variables::chams::weapon_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
-					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c, variables::colors::chams_arms_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 8), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
+					"Arms chams", variables::chams::vm_arm_chams, variables::colors::chams_arms_c);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 8), item_combo_pos, render::fonts::watermark_font,
+					"Arms chams material", variables::chams::materials, variables::chams::arm_chams_mat_id, variables::chams::arm_chams_popup_tog);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
-					"Sleeve chams", variables::chams::vm_sleeve_chams, variables::colors::chams_sleeve_c, variables::colors::chams_sleeve_c_tog);
-				gui::combobox(item_left_pos, part3_base_item_y + (15 * 10), item_checkbox_pos + item_checkbox_length,
-					render::fonts::watermark_font, "Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
+					"Sleeve chams", variables::chams::vm_sleeve_chams, variables::colors::chams_sleeve_c);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 10), item_combo_pos, render::fonts::watermark_font,
+					"Sleeve chams material", variables::chams::materials, variables::chams::sleeve_chams_mat_id, variables::chams::sleeve_chams_popup_tog);
 			}
 
 			/* ----- Visuals - Second column ----- */
@@ -164,6 +176,7 @@ void menu::render() {
 			item_left_pos      = item_left_pos + (container_width * column_number) + container_margin;
 			item_checkbox_pos  = item_checkbox_pos + (container_width * column_number) + container_margin;
 			item_slider_pos    = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos     = item_checkbox_pos + item_checkbox_length;
 
 			const int part1c2_items_num   = 3;			// part1c2 => part 1 from column 2
 			const int part1c2_y           = part1_y;	// Needs to reset y pos on new col
@@ -179,22 +192,26 @@ void menu::render() {
 					render::fonts::watermark_font, "Entity info", variables::entity_visuals::entitytext);
 			}
 
-			const int part2c2_items_num   = 5;
+			const int part2c2_items_num   = 7;
 			const int part2c2_y           = part1c2_y + part1c2_h + container_margin;
 			const int part2c2_base_item_y = part2c2_y + container_padding;
 			const int part2c2_h           = (15 * part2c2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2c2_y, container_width, part2c2_h, render::fonts::watermark_font, "Misc", false); {
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Nade prediction", variables::misc_visuals::nade_predict);
-				gui::slider(item_left_pos, part2c2_base_item_y + (15 * 1), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "No flash", variables::misc_visuals::noflash_alpha, 0.f, 1.f);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "No sniper scope", variables::misc_visuals::noscope);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
-					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c, variables::colors::crosshair_c_tog);
-				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
-					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c, variables::colors::recoil_crosshair_c_tog);
+				gui::slider(item_left_pos, part2c2_base_item_y + (15 * 0), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"No flash", variables::misc_visuals::noflash_alpha, 0.f, 1.f);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Nade prediction", variables::misc_visuals::nade_predict);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"No sniper scope", variables::misc_visuals::noscope);
+				gui::multicombobox(item_left_pos, part2c2_base_item_y + (15 * 3), item_combo_pos, render::fonts::watermark_font,
+					"Bullet tracers", variables::misc_visuals::bulletracer_draw_options, variables::misc_visuals::bulletracer_draw_options_tog);
+				gui::multicombobox(item_left_pos, part2c2_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Bullet tracer teams", variables::misc_visuals::bulletracer_team_options, variables::misc_visuals::bulletracer_team_options_tog);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
+					"Custom crosshair", variables::misc_visuals::crosshair, variables::colors::crosshair_c);
+				gui::check_box(item_left_pos, part2c2_base_item_y + (15 * 6), item_checkbox_pos, render::fonts::watermark_font,
+					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c);
 			}
 			break;
 		}
@@ -202,16 +219,17 @@ void menu::render() {
 			const int columns              = 2;
 			const int container_width_o    = container_width;		// Original used for buttons
 			const int container_left_pos_o = container_left_pos;	// Original used for buttons
-			const int item_left_pos_o      = item_left_pos;		// Original used for buttons
+			const int item_left_pos_o      = item_left_pos;		    // Original used for buttons
 			const int item_checkbox_pos_o  = item_checkbox_pos;		// Original used for buttons
 			const int item_slider_pos_o    = item_slider_pos;		// Original used for buttons
 			const int item_hotkey_w_o      = item_hotkey_w;			// Original used for buttons
 			container_width                = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos              = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 			item_slider_pos                = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos                 = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w                  = container_width - container_padding * 2;
 
-			const int part1_items_num = 8;
+			const int part1_items_num = 10;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Movement", false); {
@@ -220,33 +238,49 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable edgejump", variables::misc::edgejump);
-				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 3), item_hotkey_w,
-					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key);
+					render::fonts::watermark_font, "Legit autostrafe", variables::misc::autostrafe);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos,
+					render::fonts::watermark_font, "Rage autostrafe", variables::misc::ragestrafe);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
+					render::fonts::watermark_font, "Enable edgejump", variables::misc::edgejump);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 5), item_hotkey_w,
-					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key);
+					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 6), item_checkbox_pos,
-					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
+					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
 				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 7), item_hotkey_w,
+					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 8), item_checkbox_pos,
+					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
+				gui::hotkey(item_left_pos, part1_base_item_y + (15 * 9), item_hotkey_w,
 					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 4;
+			const int part2_items_num = 3;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Draw speedgraph", variables::misc::draw_speedgraph);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable speedgraph color", variables::misc::use_speedgraph_color);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
-				gui::slider(item_left_pos, part2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
+				gui::multicombobox(item_left_pos, part2_base_item_y + (15 * 0), item_combo_pos, render::fonts::watermark_font,
+					"Speedgraph options", variables::misc::speedgraph_options, variables::misc::speedgraph_options_tog);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph height", variables::misc::speedgraph_h, 0.f, 100.f);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Speedgraph pos", variables::misc::speedgraph_pos, 0.f, 100.f);
+			}
+
+			const int part3_y = part2_y + part2_h + container_margin;
+			const int part3_items_num = 3;
+			const int part3_base_item_y = part3_y + container_padding;
+			const int part3_h = (15 * part3_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Movement", false); {
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Thirdperson", variables::misc::thirdperson);
+				gui::hotkey(item_left_pos, part3_base_item_y + (15 * 1), item_hotkey_w, render::fonts::watermark_font,
+					"Thirdperson toggle key", variables::misc::thirdperson_key);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Thirdperson distance", variables::misc::thirdperson_dist, 50.f, 200.f);
 			}
 
 			/* ----- Misc - Second column ----- */
@@ -257,6 +291,7 @@ void menu::render() {
 			item_left_pos = item_left_pos + (container_width * column_number) + container_margin;
 			item_checkbox_pos = item_checkbox_pos + (container_width * column_number) + container_margin;
 			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 
 			const int part1c2_items_num = 4;			// part1c2 => part 1 from column 2
 			const int part1c2_y = part1_y;	// Needs to reset y pos on new col
@@ -297,11 +332,11 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Forward motion blur", variables::motion_blur.forwardEnabled);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur strenght", variables::motion_blur.strength, 0.f, 15.f);
+					render::fonts::watermark_font, "Strenght", variables::motion_blur.strength, 0.f, 15.f);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 3), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur falling intensity", variables::motion_blur.fallingIntensity, 0.f, 10.f);
+					render::fonts::watermark_font, "Falling intensity", variables::motion_blur.fallingIntensity, 0.f, 10.f);
 				gui::slider(item_left_pos, part3c2_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Motion blur rotation intensity", variables::motion_blur.rotationIntensity, 0.f, 10.f);
+					render::fonts::watermark_font, "Rotation intensity", variables::motion_blur.rotationIntensity, 0.f, 10.f);
 			}
 
 			/* ----- Misc - Buttons ----- */

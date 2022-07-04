@@ -16,8 +16,9 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		visuals::playeresp();
 		visuals::grenade_projectile_esp();
-
 		visuals::noflash();
+
+		// UI
 		visuals::misc::nade_predict();
 		visuals::crosshair::custom_crosshair();
 		visuals::crosshair::recoil_crosshair();

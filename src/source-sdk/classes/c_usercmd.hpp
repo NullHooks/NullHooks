@@ -29,20 +29,22 @@ enum cmd_buttons {
 };
 
 struct c_usercmd {
-	int pad;
-	int command_number;
-	int tick_count;
+	void* vmt;
+	std::int32_t command_number;
+	std::int32_t tick_count;
 	vec3_t viewangles;
 	vec3_t aimdirection;
 	float forwardmove;
 	float sidemove;
 	float upmove;
-	int buttons;
+	std::int32_t buttons;
 	char impulse;
-	int weaponselect;
-	int weaponsubtype;
-	int randomseed;
+	std::int32_t weaponselect;
+	std::int32_t weaponsubtype;
+	std::int32_t randomseed;
 	short mousedx;
 	short mousedy;
 	bool predicted;
+	vec3_t headAngles;
+	vec3_t headOffset;
 };

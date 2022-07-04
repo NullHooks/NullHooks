@@ -13,6 +13,7 @@ namespace visuals {
 	void grenade_projectile_esp();
 	void noflash();
 	void motion_blur(view_setup_t* setup) noexcept;
+	void bullet_tracer(i_game_event *event);
 
 	namespace glow {
 		void draw_glow();
@@ -47,6 +48,10 @@ namespace visuals {
 }
 
 namespace misc {
+	void spectator_list();
+	void thirdperson();
+	void reset_thirdperson();
+
 	namespace movement {
 		void infinite_duck(c_usercmd* cmd);
 		
@@ -58,7 +63,6 @@ namespace misc {
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
 
 	}
-	void spectator_list();
 	namespace speedgraph {
 		void update();
 		void draw();
