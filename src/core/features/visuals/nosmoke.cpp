@@ -2,6 +2,8 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+// For removal of the inside smoke see src/core/hooks/functions/render_smoke_overlay.cpp
+
 void enable_wiresmoke()  {
 	constexpr std::array disable_mats {
 		"particle/vistasmokev1/vistasmokev1_emods",
