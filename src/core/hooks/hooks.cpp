@@ -35,7 +35,7 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize alloc_key_values_memory.");
  	custom_helpers::state_to_console_color("Hooks", "alloc_key_values_memory initialized!");
 
-	if (MH_CreateHook(create_move_target, &create_move::hook, reinterpret_cast<void**>(&create_move::original)) != MH_OK)
+	if (MH_CreateHook(create_move_target, &create_move::proxy, reinterpret_cast<void**>(&create_move::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize create_move. (outdated index?)");
 	custom_helpers::state_to_console_color("Hooks", "create_move initialized!");
 
@@ -82,6 +82,7 @@ bool hooks::initialize() {
 	if(MH_CreateHook(supports_resolve_depth_target, &supports_resolve_depth::hook, reinterpret_cast<void **>(&supports_resolve_depth::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize supports_resolve_depth.");
 	custom_helpers::state_to_console_color("Hooks", "supports_resolve_depth initialized!");
+
 	if (MH_CreateHook(fire_event_target, &fire_event::hook, reinterpret_cast<void**>(&fire_event::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize fire_event.");
 	custom_helpers::state_to_console_color("Hooks", "fire_event initialized!");

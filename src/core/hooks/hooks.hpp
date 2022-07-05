@@ -23,9 +23,10 @@ namespace hooks {
 	}
 
 	namespace create_move {
-		using fn = bool(__stdcall*)(float, c_usercmd*);
+		using fn = bool(__stdcall *)(float, c_usercmd *);
 		inline fn original;
-		bool __stdcall hook(float input_sample_frametime, c_usercmd* cmd);
+		bool hook(float input_sample_frametime, c_usercmd *cmd, bool &send_packet);
+		void proxy();
 	}
 
 	namespace paint_traverse {
