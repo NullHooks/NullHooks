@@ -215,6 +215,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
 -->
+- [ ] Add <kbd>alt</kbd>+<kbd>tab</kbd> checks to global input
 - [ ] Add "defusing" to bomb timer
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Add config and all that (json or whatever)
