@@ -3,6 +3,7 @@
 #include "core/menu/variables.hpp"
 
 void rage_strafe(c_usercmd* cmd);
+void legit_strafe(c_usercmd* cmd);
 
 void misc::movement::bunny_hop(c_usercmd* cmd) {
 	if (!variables::misc::bhop) return;
@@ -12,23 +13,33 @@ void misc::movement::bunny_hop(c_usercmd* cmd) {
 	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
 
 	if (csgo::local_player->flags() & fl_onground) return;
-	
 	cmd->buttons &= ~in_jump;
-	
+
 	/* ---------- Autostrafe ---------- */
-	if (variables::misc::ragestrafe) {			// Rage
+	if (variables::misc::ragestrafe)		// Rage
 		rage_strafe(cmd);
-	} else if (variables::misc::autostrafe) {	// Legit
-		if (cmd->mousedx < 0)		cmd->sidemove = -450.0f;
-		else if (cmd->mousedx > 0)	cmd->sidemove = 450.0f;
-	}
+	else if (variables::misc::autostrafe)	// Legit
+		legit_strafe(cmd);
 };
+
+void legit_strafe(c_usercmd* cmd) {
+	const bool player_strafing = cmd->buttons & in_forward || cmd->buttons & in_back || cmd->buttons & in_moveleft || cmd->buttons & in_moveright;
+	if (player_strafing) return;
+
+	if (cmd->mousedx < 0)		cmd->sidemove = -450.0f;
+	else if (cmd->mousedx > 0)	cmd->sidemove = 450.0f;
+}
 
 void rage_strafe(c_usercmd* cmd) {
 	const float speed = csgo::local_player->velocity().length_2d();
 
-	if ((cmd->buttons & in_forward) && speed <= 50.0f)
-		cmd->forwardmove = 450.0f;
+	if (cmd->buttons & in_back) cmd->forwardmove = 0.f;
+	else if (cmd->buttons & in_forward) {
+		if (speed <= 60.0f)
+			cmd->forwardmove = 450.0f;
+		else
+			cmd->forwardmove = 0.f;
+	}
 
 	float yaw_change = 0.0f;
 	if (speed > 50.f)
@@ -43,9 +54,7 @@ void rage_strafe(c_usercmd* cmd) {
 
 	static bool strafe_right;	// For toggling next strafe direction
 	const bool player_strafing = cmd->buttons & in_moveleft || cmd->buttons & in_moveright;
-	if (!(csgo::local_player->flags() & fl_onground) && !player_strafing) {
-		if (cmd->buttons & in_forward)
-			printf("forward\n");
+	if (!(csgo::local_player->flags() & fl_onground)/* && !player_strafing*/) {
 		if (strafe_right || cmd->mousedx > 1) {
 			viewangles.y += yaw_change;
 			cmd->sidemove = 450.0f;
