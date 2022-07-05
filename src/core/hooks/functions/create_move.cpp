@@ -3,7 +3,33 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 
-bool __stdcall hooks::create_move::hook(float input_sample_frametime, c_usercmd* cmd) {
+void __declspec(naked) hooks::create_move::proxy() {
+
+	__asm {
+
+		push ebp
+		mov  ebp, esp
+
+		push ebx		// move sendpacket to stack
+
+		push esp		// sendpacket ptr
+		push[ebp + 0xC]		// usercmd
+		push[ebp + 0x8]		// input_sample_frametime, already in xmm0
+		//movss xmm0, [ebp + 0x8] 
+		call hooks::create_move::hook
+		add esp, 0xC
+
+		pop ebx			// move sendpacket back to ebx
+
+		mov esp, ebp
+		pop ebp
+
+		ret 0x8			// thiscall stack cleanup
+
+	}
+}
+
+bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool &send_packet) {
 	const bool result = original(input_sample_frametime, cmd);
 
 	if (!cmd || !cmd->command_number) return result;
