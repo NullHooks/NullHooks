@@ -2,21 +2,49 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-// Works more or less but only if you are not IN the smoke :/
+// Works more or less but only if you are not IN the smoke : /
 
-void visuals::misc::nosmoke(client_frame_stage_t frame_stage) {
-	if (frame_stage != FRAME_RENDER_START && frame_stage != FRAME_RENDER_END) return;
+void enable_wiresmoke()  {
+	constexpr std::array disable_mats {
+		"particle/vistasmokev1/vistasmokev1_emods",
+		"particle/vistasmokev1/vistasmokev1_emods_impactdust",
+		"particle/vistasmokev1/vistasmokev1_fire"
+	};
 
-	constexpr std::array smokeMaterials{
+	for (const auto mat : disable_mats) {
+		const auto material = interfaces::material_system->find_material(mat);
+		material->set_material_var_flag(material_var_no_draw, true);	// Don't draw
+	}
+
+	const auto material = interfaces::material_system->find_material("particle/vistasmokev1/vistasmokev1_smokegrenade");
+	material->set_material_var_flag(material_var_no_draw, false);		// Draw
+	material->set_material_var_flag(material_var_wireframe, true);		// Wireframe smoke
+}
+
+void disable_wiresmoke() {
+	constexpr std::array mats {
 		"particle/vistasmokev1/vistasmokev1_emods",
 		"particle/vistasmokev1/vistasmokev1_emods_impactdust",
 		"particle/vistasmokev1/vistasmokev1_fire",
 		"particle/vistasmokev1/vistasmokev1_smokegrenade"
 	};
 
-	for (const auto mat : smokeMaterials) {
+	for (const auto mat : mats) {
 		const auto material = interfaces::material_system->find_material(mat);
-		material->set_material_var_flag(material_var_no_draw, frame_stage == FRAME_RENDER_START && false);		// No smoke
-		material->set_material_var_flag(material_var_wireframe, frame_stage == FRAME_RENDER_START && variables::misc_visuals::wireframe_smoke);		// Wireframe smoke
+		material->set_material_var_flag(material_var_no_draw, false);		// Draw
+		material->set_material_var_flag(material_var_wireframe, false);		// Disable wireframe
+	}
+}
+
+void visuals::misc::nosmoke(client_frame_stage_t frame_stage) {
+	if (frame_stage != FRAME_RENDER_START && frame_stage != FRAME_RENDER_END) return;
+
+	static bool smoke_applied = false;
+	if (variables::misc_visuals::wireframe_smoke && !smoke_applied) {
+		enable_wiresmoke();
+		smoke_applied = true;
+	} else if (!variables::misc_visuals::wireframe_smoke && smoke_applied) {
+		disable_wiresmoke();
+		smoke_applied = false;
 	}
 }
