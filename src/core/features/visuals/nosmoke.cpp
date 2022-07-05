@@ -2,8 +2,6 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-// Works more or less but only if you are not IN the smoke : /
-
 void enable_wiresmoke()  {
 	constexpr std::array disable_mats {
 		"particle/vistasmokev1/vistasmokev1_emods",

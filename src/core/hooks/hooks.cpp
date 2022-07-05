@@ -14,6 +14,7 @@ bool hooks::initialize() {
 	const auto findmdl_target                     = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
 	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
 	const auto frame_stage_notify_target          = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
+	const auto render_smoke_overlay_target        = reinterpret_cast<void*>(get_virtual(interfaces::view_render, 41));
 	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
@@ -66,13 +67,17 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize draw_model_execute.");
 	custom_helpers::state_to_console_color("Hooks", "draw_model_execute initialized!");
 
-	if(MH_CreateHook(list_leaves_in_box_target, &list_leaves_in_box::hook, reinterpret_cast<void **>(&list_leaves_in_box::original)) != MH_OK)
+	if(MH_CreateHook(list_leaves_in_box_target, &list_leaves_in_box::hook, reinterpret_cast<void**>(&list_leaves_in_box::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize list_leaves_in_box.");
 	custom_helpers::state_to_console_color("Hooks", "list_leaves_in_box initialized!");
 
 	if (MH_CreateHook(frame_stage_notify_target, &frame_stage_notify::hook, reinterpret_cast<void**>(&frame_stage_notify::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize frame_stage_notify.");
 	custom_helpers::state_to_console_color("Hooks", "frame_stage_notify initialized!");
+
+	if (MH_CreateHook(render_smoke_overlay_target, &render_smoke_overlay::hook, reinterpret_cast<void**>(&render_smoke_overlay::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize render_smoke_overlay.");
+	custom_helpers::state_to_console_color("Hooks", "render_smoke_overlay initialized!");
 
 	if (MH_CreateHook(is_depth_of_field_enabled_target, &is_depth_of_field_enabled::hook, reinterpret_cast<void**>(&is_depth_of_field_enabled::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize is_depth_of_field_enabled.");
