@@ -79,7 +79,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Grenade prediction
 - No flash
 - No scope
-- No smoke (Broken insdide smoke)
+- Wireframe smoke (Open an issue if you want NoSmoke)
 - Custom crosshair
 - Recoil crosshair
 - Bullet tracers (:warning: Broken in online matches. Check [todo](#todo))
@@ -205,10 +205,11 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Longjump
 - [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
-        - [ ] Fix `bullet_impact` not working in online matches (without using event listener)
+        - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
-- [ ] Add antiaim
 - [ ] Add skinchanger
+- [ ] Add worldcolor
+- [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 <!--
 - [ ] Add chicken chams
