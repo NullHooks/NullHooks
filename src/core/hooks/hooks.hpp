@@ -78,9 +78,9 @@ namespace hooks {
 	}
 
 	namespace render_smoke_overlay {
-		using fn = void(__thiscall*)(void*, int, bool);
+		using fn = void(__thiscall*)(void*, bool);
 		inline fn original;
-		void __fastcall hook(int edx, bool previewmodel);
+		void __fastcall hook(void* thisptr, void* edx, bool previewmodel);
 	}
 
 	namespace get_client_model_renderable {
