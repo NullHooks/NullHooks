@@ -1,6 +1,6 @@
 #pragma once
-#include "../../source-sdk/math/vector3d.hpp"
-#include "../../source-sdk/classes/c_usercmd.hpp"
+#include "source-sdk/math/vector3d.hpp"
+#include "source-sdk/classes/c_usercmd.hpp"
 
 class player_move_helper {
 public:
