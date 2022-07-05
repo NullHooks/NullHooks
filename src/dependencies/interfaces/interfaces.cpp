@@ -20,8 +20,10 @@ bool interfaces::initialize() {
 	trace_ray       = get_interface<trace, interface_type::index>("engine.dll", "EngineTraceClient004");
 	game_movement   = get_interface<player_game_movement, interface_type::index>("client.dll", "GameMovement001");
 	prediction      = get_interface<player_prediction, interface_type::index>("client.dll", "VClientPrediction001");
+	mdl_cache       = get_interface<mdlcache, interface_type::index>("datacache.dll", "MDLCache004");
 
 	/* ------------------ Custom interfaces ------------------ */
+
 	clientmode = **reinterpret_cast<i_client_mode***>((*reinterpret_cast<uintptr_t**>(client))[10] + 5);
 	globals    = **reinterpret_cast<c_global_vars_base***>((*reinterpret_cast<uintptr_t**>(client))[11] + 10);
 
@@ -31,7 +33,7 @@ bool interfaces::initialize() {
 	glow_manager  = *reinterpret_cast<glow_manager_t**>(utilities::pattern_scan("client.dll", sig_glow_manager) + 3);	// "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00"
 	move_helper   = **reinterpret_cast<player_move_helper***>(utilities::pattern_scan("client.dll", sig_player_move_helper) + 2);
 	weapon_system = *reinterpret_cast<i_weapon_system**>(utilities::pattern_scan("client.dll", sig_weapon_data) + 2);
-	mdl_cache     = get_interface<mdlcache, interface_type::index>("datacache.dll", "MDLCache004");
+	view_render   = **reinterpret_cast<i_view_render***>(utilities::pattern_scan("client.dll", sig_view_render) + 2);
 
 	// KeyValuesSystem
 	if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))												// Get the exported KeyValuesSystem function

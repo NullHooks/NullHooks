@@ -45,6 +45,7 @@
 #define sig_draw_screen_effect_material "55 8B EC 83 E4 ? 83 EC ? 53 56 57 8D 44 24 ? 89 4C 24 ?"
 #define sig_supports_resolve_depth      "A1 ? ? ? ? A8 ? 75 ? 83 C8 ? B9 ? ? ? ? 68 ? ? ? ? A3"
 #define sig_fire_event                  "55 8B EC 83 E4 F8 83 EC 0C 53 8B D9 56 57 89 5C 24 0C"
+#define sig_view_render                 "8B 0D ? ? ? ? FF 75 0C 8B 45 08"
 
 namespace csgo {
 	extern player_t* local_player;

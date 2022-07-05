@@ -1,3 +1,4 @@
+#pragma once
 
 struct view_setup_t {
 	std::byte pad[172];

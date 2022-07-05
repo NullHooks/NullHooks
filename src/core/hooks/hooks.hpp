@@ -66,15 +66,21 @@ namespace hooks {
 	}
 
 	namespace list_leaves_in_box {
-		using fn = int(__thiscall *)(void *, const vec3_t *mins, const vec3_t *maxs, uint16_t *list, int listmax);
+		using fn = int(__thiscall*)(void*, const vec3_t* mins, const vec3_t* maxs, uint16_t* list, int listmax);
 		inline fn original;
-		int __fastcall hook(void *ecx, void *edx, const vec3_t *mins, const vec3_t *maxs, uint16_t *list, int listmax);
+		int __fastcall hook(void* ecx, void* edx, const vec3_t* mins, const vec3_t* maxs, uint16_t* list, int listmax);
 	}
 
 	namespace frame_stage_notify {
 		using fn = void(__thiscall*)(void*, client_frame_stage_t);
 		inline fn original;
 		void __stdcall hook(client_frame_stage_t frame_stage);
+	}
+
+	namespace render_smoke_overlay {
+		using fn = void(__thiscall*)(void*, int, bool);
+		inline fn original;
+		void __fastcall hook(int edx, bool previewmodel);
 	}
 
 	namespace get_client_model_renderable {
