@@ -64,17 +64,18 @@ void math::transform_vector(vec3_t & a, matrix_t & b, vec3_t & out) {
 	out.z = a.dot(b.mat_val[2]) + b.mat_val[2][3];
 }
 
+// (Degree Euler QAngle: pitch, yaw, roll)
 void math::vector_angles(vec3_t & forward, vec3_t & angles) {
 	if (forward.y == 0.0f && forward.x == 0.0f) {
-		angles.x = (forward.z > 0.0f) ? 270.0f : 90.0f;
 		angles.y = 0.0f;
+		angles.x = (forward.z > 0.0f) ? 270.0f : 90.0f;
 	} else {
-		angles.x = atan2(-forward.z, vec2_t(forward).length()) * -180 / static_cast<float>(M_PI);
 		angles.y = atan2(forward.y, forward.x) * 180 / static_cast<float>(M_PI);
+		if (angles.y < 0.f) angles.y += 360.f;
 
-		if (angles.y > 90)       angles.y -= 180;
-		else if (angles.y < 90)  angles.y += 180;
-		else if (angles.y == 90) angles.y = 0;
+		float tmp = sqrt(forward.x*forward.z + forward.y*forward.y);
+		angles.x = atan2(-forward.z, tmp) * 180 / static_cast<float>(M_PI);
+		if (angles.x < 0.f) angles.x += 360.f;
 	}
 
 	angles.z = 0.0f;
