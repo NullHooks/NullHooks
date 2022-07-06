@@ -15,6 +15,7 @@ bool hooks::initialize() {
 	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
 	const auto frame_stage_notify_target          = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
 	const auto render_smoke_overlay_target        = reinterpret_cast<void*>(get_virtual(interfaces::view_render, 41));
+	const auto on_screen_size_changed_target      = reinterpret_cast<void*>(get_virtual(interfaces::surface, 116));
 	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
@@ -78,6 +79,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(render_smoke_overlay_target, &render_smoke_overlay::hook, reinterpret_cast<void**>(&render_smoke_overlay::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize render_smoke_overlay.");
 	custom_helpers::state_to_console_color("Hooks", "render_smoke_overlay initialized!");
+
+	if (MH_CreateHook(on_screen_size_changed_target, &on_screen_size_changed::hook, reinterpret_cast<void**>(&on_screen_size_changed::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize on_screen_size_changed.");
+	custom_helpers::state_to_console_color("Hooks", "on_screen_size_changed initialized!");
 
 	if (MH_CreateHook(is_depth_of_field_enabled_target, &is_depth_of_field_enabled::hook, reinterpret_cast<void**>(&is_depth_of_field_enabled::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize is_depth_of_field_enabled.");

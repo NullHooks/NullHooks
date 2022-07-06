@@ -83,6 +83,12 @@ namespace hooks {
 		void __fastcall hook(void* thisptr, void* edx, bool previewmodel);
 	}
 
+	namespace on_screen_size_changed {
+		using fn = void(__thiscall*)(void*, int, int);
+		inline fn original;
+		void __fastcall hook(void* thisptr, void* edx, int old_width, int old_height);
+	}
+
 	namespace get_client_model_renderable {
 		using fn = void*(__stdcall *)();
 		inline fn original;
