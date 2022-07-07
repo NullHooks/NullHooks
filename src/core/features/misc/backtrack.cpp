@@ -11,8 +11,18 @@
  *   explaining what that code is for and I will update the comment.
  */
 
-std::deque<player_record> records[65];		// For each player
-convars cvars;
+// Clears the array and gets the convars
+void backtrack::init() {
+	records->clear();
+
+	cvars.update_rate = interfaces::console->get_convar("cl_updaterate");
+	cvars.max_update_rate = interfaces::console->get_convar("sv_maxupdaterate");
+	cvars.interp = interfaces::console->get_convar("cl_interp");
+	cvars.interp_ratio = interfaces::console->get_convar("cl_interp_ratio");
+	cvars.min_interp_ratio = interfaces::console->get_convar("sv_client_min_interp_ratio");
+	cvars.max_interp_ratio = interfaces::console->get_convar("sv_client_max_interp_ratio");
+	cvars.max_unlag = interfaces::console->get_convar("sv_maxunlag");
+}
 
 // Needs explanation
 float backtrack::get_lerp_time() noexcept {
