@@ -207,6 +207,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
+- [ ] Make aimbot and triggerbot also aim for backtrack (Using `backtrack::records[player][record]`?)
 - [ ] Add skinchanger
 - [ ] Add worldcolor
 - [ ] Add antiaim
