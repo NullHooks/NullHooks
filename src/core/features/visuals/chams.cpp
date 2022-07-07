@@ -46,7 +46,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 	if (!mdl) return;
 
 	// Players
-	if (strstr(mdl->name, "models/player") && (variables::chams::player_chams || variables::chams::localplayer_chams)) {
+	if (strstr(mdl->name, "models/player") && (variables::chams::player_chams || variables::chams::localplayer_chams || variables::chams::backtrack_chams)) {
 		const char* player_material = (variables::chams::player_chams_mat_id.idx < materials.size()) ? materials.at(variables::chams::player_chams_mat_id.idx) : materials.at(materials.size() - 1);
 
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(info.entity_index));
@@ -58,7 +58,9 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
 			// Backtrack chams
-			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
+			// TODO: Only works if you have player chams activated. It also overwrites the actual player's material
+			// TODO: Colors based on color vars
+			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
 					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
 						|| backtrack::records[player->index()][i].matrix == nullptr)

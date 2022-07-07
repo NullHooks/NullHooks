@@ -12,6 +12,11 @@ public:
 	color col;
 	bool toggle;
 
+	colorpicker_col_t(colorpicker_col_t& col_picker) {
+		this->col = col_picker.col;
+		this->toggle = col_picker.toggle;
+	}
+
 	colorpicker_col_t(const color col, const bool toggle = false) {
 		this->col = col;
 		this->toggle = toggle;

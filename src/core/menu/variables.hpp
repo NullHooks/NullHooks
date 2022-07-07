@@ -74,6 +74,9 @@ namespace variables {
 		inline combobox_toggle_t weapon_chams_mat_id(4);
 		inline combobox_toggle_t arm_chams_mat_id(1);
 		inline combobox_toggle_t sleeve_chams_mat_id(1);
+
+		// Backtrack
+		inline bool backtrack_chams = true;
 	}
 
 	namespace misc_visuals {
@@ -190,6 +193,9 @@ namespace variables {
 		inline colorpicker_col_t chams_weapon_c(		color(255, 150, 255, 255) );
 		inline colorpicker_col_t chams_arms_c(			color(255, 0, 255, 255) );
 		inline colorpicker_col_t chams_sleeve_c(		color(100, 0, 255, 255) );
+
+		inline colorpicker_col_t bt_chams_enemy(        chams_vis_enemy_c);		// Backtrack enemy
+		inline colorpicker_col_t bt_chams_friend(       chams_vis_friend_c);	// Backtrack friendly
 
 		// Misc
 		inline colorpicker_col_t crosshair_c(			color(255, 255, 255, 255) );
