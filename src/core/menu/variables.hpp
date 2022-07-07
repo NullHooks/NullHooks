@@ -127,6 +127,7 @@ namespace variables {
 		
 		// Network
 		inline bool backtrack = false;
+		inline bool backtrack_team = false;
 
 		// Thirdperson
 		inline bool thirdperson = false;

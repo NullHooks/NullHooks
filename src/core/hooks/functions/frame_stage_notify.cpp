@@ -11,7 +11,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_START: break;
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_END:   break;
 		case FRAME_NET_UPDATE_END:
-			misc::backtrack();
+			backtrack::frame_stage_notify();
 			break;
 		case FRAME_RENDER_START:
 			visuals::misc::nosmoke(frame_stage);

@@ -39,12 +39,8 @@ void disable_wiresmoke() {
 void visuals::misc::nosmoke(client_frame_stage_t frame_stage) {
 	if (frame_stage != FRAME_RENDER_START && frame_stage != FRAME_RENDER_END) return;
 
-	static bool smoke_applied = false;
-	if (variables::misc_visuals::wireframe_smoke && !smoke_applied) {
+	if (variables::misc_visuals::wireframe_smoke)
 		enable_wiresmoke();
-		smoke_applied = true;
-	} else if (!variables::misc_visuals::wireframe_smoke && smoke_applied) {
+	else if (!variables::misc_visuals::wireframe_smoke)
 		disable_wiresmoke();
-		smoke_applied = false;
-	}
 }
