@@ -48,7 +48,7 @@ unsigned long WINAPI release() {
 }
 
 std::int32_t WINAPI DllMain(const HMODULE instance [[maybe_unused]], const unsigned long reason, const void* reserved [[maybe_unused]] ) {
-	strlen((const char*)fuck_skids);	// Need to call var so shit ass compiler does not ignore it
+	int fuck_you = strlen((const char*)fuck_skids);	// Need to call var so shit ass compiler does not ignore it
 	
 	DisableThreadLibraryCalls(instance);
 
