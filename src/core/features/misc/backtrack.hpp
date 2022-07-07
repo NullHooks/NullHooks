@@ -26,8 +26,9 @@ struct convars {
 namespace backtrack {
 	float get_lerp_time() noexcept;
 	bool valid_tick(float simtime, float maxtime) noexcept;
-	void update() noexcept;				// create_move before prediction
-	void run(c_usercmd*) noexcept;		// create_move inside preciction
+	void update() noexcept;				// Uesd in create_move before prediction
+	void run(c_usercmd*) noexcept;		// Uesd in create_move inside preciction
+	void frame_stage_notify();			// Uesd in frame_stage_notify
 
 	inline std::deque<player_record> records[65];		// For each player (65) store a deque of records (undefined len)
 	inline convars cvars;

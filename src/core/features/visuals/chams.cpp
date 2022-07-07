@@ -67,12 +67,12 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 				// Backtrack chams
 				// TODO: Add custom color and option and all that but not yet cuz I migth change the whole backtrack
 				// TODO: Make independent of team
-				if (variables::misc::backtrack && records[player->index()].size() > 0) {
-					for (uint32_t i = 0; i < records[player->index()].size(); i++) {
-						if (!backtrack.valid_tick(records[player->index()][i].simulation_time, 0.2f) || records[player->index()][i].matrix == nullptr)
+				if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0) {
+					for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
+						if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f) || backtrack::records[player->index()][i].matrix == nullptr)
 							continue;
-						override_material(false, false, color(255 - (i * (255 / records[player->index()].size())), i * (255 / records[player->index()].size()), 255, 30), materials[1]);
-						hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, records[player->index()][i].matrix);
+						override_material(false, false, color(255 - (i * (255 / backtrack::records[player->index()].size())), i * (255 / backtrack::records[player->index()].size()), 255, 30), materials[1]);
+						hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);
 					}
 				}
 				if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
