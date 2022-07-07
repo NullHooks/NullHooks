@@ -169,10 +169,11 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 		cmd->tick_count = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());	// Epic matrix glitch
 }
 
-/* ------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
 
 // Used in frame_stage_notify
-void misc::backtrack() {
+// Needs comments and explanation as well
+void backtrack::frame_stage_notify() {
 	static auto set_interpolation_flags = [](player_t* e, int flag) {
 		const auto var_map = (uintptr_t)e + 36;
 		const auto sz_var_map = *(int*)(var_map + 20);
@@ -180,7 +181,7 @@ void misc::backtrack() {
 			*(uintptr_t*)((*(uintptr_t*)var_map) + index * 12) = flag;
 	};
 
-	if (!(true /*REPLACE VAR*/ && csgo::local_player && csgo::local_player->is_alive())) return;
+	if (!(variables::misc::backtrack && csgo::local_player && csgo::local_player->is_alive())) return;
 	for (uint32_t i = 1; i <= interfaces::globals->max_clients; i++) {
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
 		if (!player || player->team() == csgo::local_player->team() || player == csgo::local_player || player->dormant())
