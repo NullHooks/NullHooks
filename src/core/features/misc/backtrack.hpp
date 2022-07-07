@@ -6,7 +6,8 @@
 #define ROUND_TO_TICKS( t )		( TICK_INTERVAL * time_to_ticks( t ) )
 #define TICK_NEVER_THINK		( -1 )
 
-struct stored_records {
+// Stores information about that tick
+struct player_record {
 	vec3_t head;
 	float simulation_time;
 	matrix_t matrix[128];
@@ -22,26 +23,14 @@ struct convars {
 	convar* max_unlag;
 };
 
-extern std::deque<stored_records> records[65];
-extern convars cvars;
-
-class backtracking {
-public:
-	void update() noexcept;
+namespace backtrack {
+	void init();
 	float get_lerp_time() noexcept;
 	bool valid_tick(float simtime, float maxtime) noexcept;
-	void run(c_usercmd*) noexcept;
-	static void init() {
-		records->clear();
+	void update() noexcept;				// Uesd in create_move before prediction
+	void run(c_usercmd*) noexcept;		// Uesd in create_move inside preciction
+	void frame_stage_notify();			// Uesd in frame_stage_notify
 
-		cvars.update_rate      = interfaces::console->get_convar("cl_updaterate");
-		cvars.max_update_rate  = interfaces::console->get_convar("sv_maxupdaterate");
-		cvars.interp           = interfaces::console->get_convar("cl_interp");
-		cvars.interp_ratio     = interfaces::console->get_convar("cl_interp_ratio");
-		cvars.min_interp_ratio = interfaces::console->get_convar("sv_client_min_interp_ratio");
-		cvars.max_interp_ratio = interfaces::console->get_convar("sv_client_max_interp_ratio");
-		cvars.max_unlag        = interfaces::console->get_convar("sv_maxunlag");
-	}
-};
-
-extern backtracking backtrack;
+	inline std::deque<player_record> records[65];		// For each player (65) store a deque of records (undefined len)
+	inline convars cvars;
+}

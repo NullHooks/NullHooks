@@ -2,6 +2,11 @@
 #include "core/menu/variables.hpp"
 #include "dependencies/utilities/renderer/renderer.hpp"
 
+volatile constexpr const char fuck_skids[] = /* :^) */
+	"Hey! If you are reading this maybe you looked through the source code or maybe you are reversing this DLL! "
+	"Either way you need to know that this project is open source and you can find the code at: "
+	"https://github.com/r4v10l1/NullHooks or https://github.com/NullHooks/NullHooks";
+
 unsigned long WINAPI initialize(void* instance) {
 	while (!GetModuleHandleA("serverbrowser.dll"))
 		Sleep(200);
@@ -43,6 +48,8 @@ unsigned long WINAPI release() {
 }
 
 std::int32_t WINAPI DllMain(const HMODULE instance [[maybe_unused]], const unsigned long reason, const void* reserved [[maybe_unused]] ) {
+	int fuck_you = strlen((const char*)fuck_skids);	// Need to call var so shit ass compiler does not ignore it
+	
 	DisableThreadLibraryCalls(instance);
 
 	switch (reason) {
