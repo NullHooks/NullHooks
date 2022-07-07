@@ -26,8 +26,6 @@ namespace visuals {
 
 	namespace custom_models {
 		void replace_model(char* path);
-		// TODO: Make a models::init() that checks for file model paths and stores them in static bools (or downloads them)
-		//       Call on top of hooks.cpp
 	}
 
 	namespace misc {
@@ -35,11 +33,10 @@ namespace visuals {
 		void nosmoke(client_frame_stage_t frame_stage);
 	}
 
-	namespace entity_info {		// paint_traverse
+	namespace entity_info {
 		void bomb(entity_t* bomb_ent);
 		void dropped_bomb(entity_t* bomb_ent);
 		void weapon_name(entity_t* entity, const char* text, int y_offset);
-		//void weapon_icon(entity_t* entity, int class_id);
 	}
 
 	namespace crosshair {

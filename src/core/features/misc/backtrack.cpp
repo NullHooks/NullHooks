@@ -11,12 +11,11 @@
  *   explaining what that code is for and I will update the comment.
  */
 
-backtracking backtrack;
 std::deque<player_record> records[65];		// For each player
 convars cvars;
 
 // Needs explanation
-float backtracking::get_lerp_time() noexcept {
+float backtrack::get_lerp_time() noexcept {
 	int ud_rate = interfaces::console->get_convar("cl_updaterate")->get_int();
 	convar* min_ud_rate = interfaces::console->get_convar("sv_minupdaterate");
 	convar* max_ud_rate = interfaces::console->get_convar("sv_maxupdaterate");
@@ -34,7 +33,7 @@ float backtracking::get_lerp_time() noexcept {
 }
 
 // Needs more comments and explanation
-bool backtracking::valid_tick(float simtime, float maxtime) noexcept {
+bool backtrack::valid_tick(float simtime, float maxtime) noexcept {
 	auto nci = interfaces::engine->get_net_channel_info();
 	if (!nci) return false;
 
@@ -50,7 +49,7 @@ bool backtracking::valid_tick(float simtime, float maxtime) noexcept {
 }
 
 // Used in create_move before prediction
-void backtracking::update() noexcept {
+void backtrack::update() noexcept {
 	if (!csgo::local_player) {
 		if (!records->empty()) records->clear();
 		return;
@@ -90,15 +89,15 @@ void backtracking::update() noexcept {
 		
 		// I have no idea what the next 5 lines are for. If you want you can make an issue explaining it :)
 		auto invalid = std::find_if(std::cbegin(records[i]), std::cend(records[i]), [](const player_record& rec) {
-			return !backtrack.valid_tick(rec.simulation_time, 0.2f);
+			return !valid_tick(rec.simulation_time, 0.2f);
 		});
 		if (invalid != std::cend(records[i]))
 			records[i].erase(invalid, std::cend(records[i]));
 	}
 }
 
-// Used in create_move inside prediction
-void backtracking::run(c_usercmd* cmd) noexcept {
+// Used in create_move inside prediction. Used to get the best target when shooting
+void backtrack::run(c_usercmd* cmd) noexcept {
 	if (!variables::misc::backtrack) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
 
