@@ -235,12 +235,14 @@ void menu::render() {
 			item_combo_pos                 = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w                  = container_width - container_padding * 2;
 
-			const int part1_items_num = 1;
+			const int part1_items_num = 2;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Network", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
 					render::fonts::watermark_font, "Backtrack", variables::misc::backtrack);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
+					render::fonts::watermark_font, "Backtrack", variables::misc::backtrack_team);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;

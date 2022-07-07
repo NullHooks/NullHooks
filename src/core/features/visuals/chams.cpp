@@ -57,24 +57,26 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
-			if (player == csgo::local_player && variables::misc::thirdperson && variables::chams::localplayer_chams) {		// For thirdperson
+			// Backtrack chams
+			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
+				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
+					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
+						|| backtrack::records[player->index()][i].matrix == nullptr)
+						continue;
+
+					override_material(false, false, color(255 - (i * (255 / backtrack::records[player->index()].size())), i * (255 / backtrack::records[player->index()].size()), 255, 30), materials[1]);
+					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);
+				}
+			}
+
+			// For thirdperson
+			if (player == csgo::local_player && variables::misc::thirdperson && variables::chams::localplayer_chams) {
 				const float localplayer_col_a = (csgo::local_player->is_scoped()) ? 30 : variables::colors::chams_localplayer.col.a;
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id.idx]);
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				return;
 			// Enemies
 			} else if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
-				// Backtrack chams
-				// TODO: Add custom color and option and all that but not yet cuz I migth change the whole backtrack
-				// TODO: Make independent of team
-				if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0) {
-					for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
-						if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f) || backtrack::records[player->index()][i].matrix == nullptr)
-							continue;
-						override_material(false, false, color(255 - (i * (255 / backtrack::records[player->index()].size())), i * (255 / backtrack::records[player->index()].size()), 255, 30), materials[1]);
-						hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);
-					}
-				}
 				if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 				if (!variables::chams::only_visible_chams) {
 					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_enemy_c, player_material);		// Not visible - Enemy

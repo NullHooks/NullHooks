@@ -74,13 +74,12 @@ void backtrack::update() noexcept {
 			|| entity == csgo::local_player
 			|| entity->dormant()
 			|| !entity->is_alive()
-			|| (entity->team() == csgo::local_player->team() && true /*REPLACE: Also teammates bool*/)) {
+			|| (entity->team() == csgo::local_player->team() && !variables::misc::backtrack_team)) {
 			records[i].clear();		// Clear current player
 			continue;				// And go to the next one
 		}
 		
 		if (records[i].size() && (records[i].front().simulation_time == entity->simulation_time())) continue;		// Not sure what this is for
-	
 		
 		*(vec3_t*)((uintptr_t)entity + 0xA0) = entity->origin();
 		*(int*)((uintptr_t)entity + 0xA68) = 0;
@@ -126,7 +125,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 			|| entity == csgo::local_player
 			|| entity->dormant()
 			|| !entity->is_alive()
-			|| (entity->team() == csgo::local_player->team() && true /*REPLACE: Also teammates bool*/)) continue;
+			|| (entity->team() == csgo::local_player->team() && !variables::misc::backtrack_team)) continue;
 		
 		// Get entity's eye pos and convert to angle
 		auto eyes = entity->get_hitbox_position(hitbox_head) - csgo::local_player->get_eye_pos();
@@ -148,7 +147,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 	}
 
 	int best_record{ };
-	if (best_target) {		// We found a good target
+	if (best_target) {			// We found a good target
 		if (records[besst_target_index].size() <= 3) return;	// ???
 
 		best_fov = 255.f;		// ???
