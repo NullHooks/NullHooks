@@ -6,7 +6,8 @@
 #define ROUND_TO_TICKS( t )		( TICK_INTERVAL * time_to_ticks( t ) )
 #define TICK_NEVER_THINK		( -1 )
 
-struct stored_records {
+// Stores information about that tick
+struct player_record {
 	vec3_t head;
 	float simulation_time;
 	matrix_t matrix[128];
@@ -22,7 +23,7 @@ struct convars {
 	convar* max_unlag;
 };
 
-extern std::deque<stored_records> records[65];
+extern std::deque<player_record> records[65];
 extern convars cvars;
 
 class backtracking {
