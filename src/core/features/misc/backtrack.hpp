@@ -24,6 +24,7 @@ struct convars {
 };
 
 namespace backtrack {
+	void init();
 	float get_lerp_time() noexcept;
 	bool valid_tick(float simtime, float maxtime) noexcept;
 	void update() noexcept;				// Uesd in create_move before prediction
@@ -32,16 +33,4 @@ namespace backtrack {
 
 	inline std::deque<player_record> records[65];		// For each player (65) store a deque of records (undefined len)
 	inline convars cvars;
-
-	static void init() {
-		records->clear();
-
-		cvars.update_rate      = interfaces::console->get_convar("cl_updaterate");
-		cvars.max_update_rate  = interfaces::console->get_convar("sv_maxupdaterate");
-		cvars.interp           = interfaces::console->get_convar("cl_interp");
-		cvars.interp_ratio     = interfaces::console->get_convar("cl_interp_ratio");
-		cvars.min_interp_ratio = interfaces::console->get_convar("sv_client_min_interp_ratio");
-		cvars.max_interp_ratio = interfaces::console->get_convar("sv_client_max_interp_ratio");
-		cvars.max_unlag        = interfaces::console->get_convar("sv_maxunlag");
-	}
 }
