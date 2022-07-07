@@ -20,9 +20,9 @@ void render::initialize() {
 	interfaces::surface->set_font_glyph(render::fonts::watermark_font_ns, "Tahoma", 12, 500, 0, 0, 0);
 	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Lucida Console", 12, 500, 0, 0, 0);
 
-	interfaces::surface->set_font_glyph(render::fonts::weapon_icon_font, "csgo_icons", 30, 300, 0, 0, 0x210);			// No worky
-	// A personal favourite https://www.dcmembers.com/jibsen/download/61/
-	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Dina", 12, 500, 0, 0, 0);
+	// Other
+	interfaces::surface->set_font_glyph(render::fonts::weapon_icon_font, "csgo_icons", 30, 300, 0, 0, 0x210);			// No worky (it broky)
+	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Dina", 12, 500, 0, 0, 0);						// A personal favourite https://www.dcmembers.com/jibsen/download/61/
 }
 
 void render::draw_line(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2, color colour) {
