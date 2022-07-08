@@ -15,7 +15,7 @@ Describe (In steps if possible) what did you do to find the bug.
 Avoid saying: "Just join a match and play" (What gamemode, what settings were active, etc.)
 -->
 
-### (Optional) Possible fix
+### <!-- Optional --> Possible fix
 <!--
 If you think you found a solution (even just a general idea) put it here. Make sure you use code blocks for code using:
 ```cpp
