@@ -54,7 +54,7 @@ void rage_strafe(c_usercmd* cmd) {
 
 	static bool strafe_right;	// For toggling next strafe direction
 	const bool player_strafing = cmd->buttons & in_moveleft || cmd->buttons & in_moveright;
-	if (!(csgo::local_player->flags() & fl_onground)/* && !player_strafing*/) {
+	if (!(csgo::local_player->flags() & fl_onground) && !player_strafing) {
 		if (strafe_right || cmd->mousedx > 1) {
 			viewangles.y += yaw_change;
 			cmd->sidemove = 450.0f;
