@@ -3,7 +3,6 @@ name: Custom issue template
 about: Use a blank template
 title: "[misc]"
 labels: ''
-assignees: r4v10l1
 
 ---
 

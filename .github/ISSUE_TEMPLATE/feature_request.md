@@ -3,7 +3,6 @@ name: Feature request
 about: Describe a feature that you would like to see implemented
 title: "[feature]"
 labels: feature
-assignees: r4v10l1
 
 ---
 
