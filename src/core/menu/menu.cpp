@@ -244,7 +244,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Also teammates", variables::misc::backtrack_team);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Backtrack chams", variables::chams::backtrack_chams/*, variables::colors::bt_chams_friend, variables::colors::bt_chams_enemy*/);
+					render::fonts::watermark_font, "Backtrack chams", variables::chams::backtrack_chams, variables::colors::bt_chams_friend, variables::colors::bt_chams_enemy);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
