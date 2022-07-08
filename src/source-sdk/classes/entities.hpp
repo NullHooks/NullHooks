@@ -6,6 +6,21 @@
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
 
+// For skins
+#define m_AttributeManager			0x2D70
+#define m_Item						0x40
+#define m_iItemDefinitionIndex		0x1D8
+#define m_iItemIDHigh				0x1F0
+#define m_iAccountID				0x1F8
+#define m_iEntityQuality			0x1DC
+#define m_szCustomName				0x26C
+#define m_OriginalOwnerXuidLow		0x3168
+#define m_OriginalOwnerXuidHigh		0x316C
+#define m_nFallbackPaintKit			0x3170
+#define m_nFallbackSeed				0x3174
+#define m_flFallbackWear			0x3178
+#define m_nFallbackStatTrak			0x317C
+
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
 	DATA_UPDATE_DATATABLE_CHANGED,
@@ -254,7 +269,6 @@ public:
 	void set_position(vec3_t position) {
 		using original_fn = void(__thiscall*)(void*, const vec3_t&);
 		static original_fn set_position_fn = (original_fn)((DWORD)utilities::pattern_scan("client.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8"));
-		//static original_fn set_position_fn = (original_fn)((DWORD)utilities::pattern_scan("client.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8 ? ? ? ? 8B 7D"));
 		set_position_fn(this, position);
 	}
 
@@ -343,6 +357,56 @@ public:
 
 	weapon_info_t* get_weapon_data() {
 		return interfaces::weapon_system->get_weapon_data(this->item_definition_index());
+	}
+};
+
+// If problems see https://github.com/aixxe/Chameleon/blob/master/Chameleon/IClientEntity.h#L78
+class base_attributable_item : public weapon_t
+{
+public:
+	inline int* get_item_definition_index() {
+		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iItemDefinitionIndex
+		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iItemDefinitionIndex);
+	}
+
+	inline int* get_item_id_high() {
+		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iItemIDHigh
+		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iItemIDHigh);
+	}
+
+	inline int* get_account_id() {
+		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iAccountID
+		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iAccountID);
+	}
+
+	inline int* get_entity_quality() {
+		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iEntityQuality
+		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iEntityQuality);
+	}
+
+	inline char* get_custom_name() {
+		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_szCustomName
+		return (char*)((DWORD)this + m_AttributeManager + m_Item + m_szCustomName);
+	}
+
+	inline int* get_fallback_paint_kit() {
+		// DT_BaseAttributableItem -> m_nFallbackPaintKit
+		return (int*)((DWORD)this + m_nFallbackPaintKit);
+	}
+
+	inline int* get_fallback_seed() {
+		// DT_BaseAttributableItem -> m_nFallbackSeed
+		return (int*)((DWORD)this + m_nFallbackSeed);
+	}
+
+	inline float* get_fallback_wear() {
+		// DT_BaseAttributableItem -> m_flFallbackWear
+		return (float*)((DWORD)this + m_flFallbackWear);
+	}
+
+	inline int* get_fallback_stattrack() {
+		// DT_BaseAttributableItem -> m_nFallbackStatTrak
+		return (int*)((DWORD)this + m_nFallbackStatTrak);
 	}
 };
 
