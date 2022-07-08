@@ -40,7 +40,8 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 		|| variables::chams::localplayer_chams
 		|| variables::chams::vm_weapon_chams
 		|| variables::chams::vm_arm_chams
-		|| variables::chams::vm_sleeve_chams)) return;
+		|| variables::chams::vm_sleeve_chams
+		|| variables::chams::backtrack_chams)) return;
 
 	const auto mdl = info.model;
 	if (!mdl) return;
@@ -58,15 +59,16 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 		} else {
 			// Backtrack chams
-			// TODO: Only works if you have player chams activated. It also overwrites the actual player's material
-			// TODO: Colors based on color vars
+			// TODO: It also overwrites the actual player's material
 			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
+				// TODO: Maybe make the color a fade from player chams color to backtrack chams color
+				const color chams_col = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend : variables::colors::bt_chams_enemy;
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
 					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
 						|| backtrack::records[player->index()][i].matrix == nullptr)
 						continue;
 
-					override_material(false, false, color(255 - (i * (255 / backtrack::records[player->index()].size())), i * (255 / backtrack::records[player->index()].size()), 255, 30), materials[1]);
+					override_material(false, false, chams_col, materials[1]);
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);
 				}
 			}
