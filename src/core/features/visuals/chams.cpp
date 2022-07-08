@@ -58,9 +58,12 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 		} else {
 			// Backtrack chams
-			// TODO: It also overwrites the actual player's material
 			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
+				if (!variables::chams::player_chams)
+					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);	// Draw original player before backtrack if normal player chams are disabled. Probably a bad way of doing it
+
 				// TODO: Maybe make the color a fade from player chams color to backtrack chams color
+				// TODO: Backtrack color at max opacity glitches a bit with normal chams
 				const color chams_col = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend : variables::colors::bt_chams_enemy;
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
 					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
@@ -68,6 +71,7 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 						continue;
 
 					override_material(false, false, chams_col, materials[1]);
+					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);		// Use backtrack's matrix
 				}
 			}
 
@@ -82,15 +86,21 @@ void visuals::chams::draw_chams(i_mat_render_context* ctx, const draw_model_stat
 			} else if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
 				if (variables::chams::draw_chams_on_top)
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-				if (!variables::chams::only_visible_chams)
-					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_enemy_c, player_material);		// Not visible - Enemy
+				if (!variables::chams::only_visible_chams) {
+					const color invisible_chams_col = variables::colors::chams_inv_enemy_c.col.get_custom_alpha(variables::colors::chams_vis_enemy_c.col.a);	// So it uses the same alpha as normal col
+					override_material(true, variables::chams::wireframe_chams, invisible_chams_col, player_material);						// Not visible - Enemy
+					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);								// Call original to draw the ignorez one
+				}
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_vis_enemy_c, player_material);			// Visible - Enemy
 			// Friends
 			} else if (variables::chams::player_chams && variables::player_visuals::showteamesp && player != csgo::local_player) {
 				if (variables::chams::draw_chams_on_top)
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-				if (!variables::chams::only_visible_chams)
-					override_material(true, variables::chams::wireframe_chams, variables::colors::chams_inv_friend_c, player_material);		// Not visible - Friendly
+				if (!variables::chams::only_visible_chams) {
+					const color invisible_chams_col = variables::colors::chams_inv_friend_c.col.get_custom_alpha(variables::colors::chams_vis_friend_c.col.a);	// So it uses the same alpha as normal col
+					override_material(true, variables::chams::wireframe_chams, invisible_chams_col, player_material);						// Not visible - Friendly
+					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);								// Call original to draw the ignorez one
+				}
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_vis_friend_c, player_material);		// Visible - Friendly
 			}
 		}
