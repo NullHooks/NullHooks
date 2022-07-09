@@ -2,7 +2,7 @@
 
 # If you are extremely based you can compile the project using this script (MSBuild)
 
-PROJECT="src/NullHooks.sln"
+PROJECT="NullHooks.sln"
 RELEASE_CONFIG="-p:Configuration=Release"
 DEBUG_CONFIG="-p:Configuration=Debug"
 PLATFORM="-p:Plataform=x86"
