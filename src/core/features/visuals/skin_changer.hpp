@@ -51,5 +51,9 @@ namespace skins {
 
         custom_skins[WEAPON_AWP].paint_kit = 344;
         custom_skins[WEAPON_AWP].quality = SKIN_QUALITY_DEVELOPER;
+
+        custom_skins[WEAPON_AK47].paint_kit = 675;
+
+        custom_skins[WEAPON_DEAGLE].paint_kit = 37;
     }
 }

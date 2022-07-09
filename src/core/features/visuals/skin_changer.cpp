@@ -10,11 +10,20 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	int weapon_index = weapon->item_definition_index();										// Get the weapons item definition index
 	if (skins::custom_skins.find(weapon_index) == skins::custom_skins.end()) return false;	// Check if the weapon is in map
 
-	if (custom_models.find(weapon_index) != custom_models.end())
+	// Knife models
+	// TODO: Models https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L203
+	// TODO: Animations https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L970
+	if (custom_models.find(weapon_index) != custom_models.end()) {
 		weapon->set_model_index(interfaces::model_info->get_model_index(custom_models[weapon_index]));
+		weapon->net_pre_data_update(0);
+	}
 
 	// Apply to fallback variables
-	if (skins::custom_skins.at(weapon_index).item_definition_index != NULL) weapon->item_definition_index() = skins::custom_skins.at(weapon_index).item_definition_index;
+	if (skins::custom_skins.at(weapon_index).item_definition_index != NULL) {
+		weapon->item_definition_index() = skins::custom_skins.at(weapon_index).item_definition_index;
+		weapon_index = skins::custom_skins.at(weapon_index).item_definition_index;
+	}
+
 	if (skins::custom_skins.at(weapon_index).paint_kit != NULL)             weapon->fallback_paint_kit()    = skins::custom_skins.at(weapon_index).paint_kit;
 	if (skins::custom_skins.at(weapon_index).quality != NULL)               weapon->entity_quality()        = skins::custom_skins.at(weapon_index).quality;
 	if (skins::custom_skins.at(weapon_index).seed != NULL)                  weapon->fallback_seed()         = skins::custom_skins.at(weapon_index).seed;
