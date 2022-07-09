@@ -330,15 +330,26 @@ public:
 
 class weapon_t : public entity_t {
 public:
-	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack", next_primary_attack, float)
-	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack", next_secondary_attack, float)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip1", clip1_count, int)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip2", clip2_count, int)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack",      next_primary_attack,         float)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack",    next_secondary_attack,       float)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip1",                   clip1_count,                 int)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip2",                   clip2_count,                 int)
 	NETVAR("DT_BaseCombatWeapon", "m_iPrimaryReserveAmmoCount", primary_reserve_ammo_acount, int)
-	NETVAR("DT_WeaponCSBase", "m_flRecoilIndex", recoil_index, float)
-	NETVAR("DT_WeaponCSBaseGun", "m_zoomLevel", zoom_level, float)
+	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
+	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
+	//NETVAR("DT_BaseCombatWeapon", "m_iEntityQuality",           entity_quality,              int)
+
+	#pragma region BaseAttributableItem
 	NETVAR("DT_BaseAttributableItem", "m_iItemDefinitionIndex", item_definition_index, short)
-	NETVAR("DT_BaseCombatWeapon", "m_iEntityQuality", entity_quality, int)
+	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,       int)
+	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,         int)
+	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,     int)
+	NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,        char*)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit, int)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,      int)
+	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,      float)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak",    fallback_stattrack, int)
+	#pragma endregion
 
 	float inaccuracy() {
 		using original_fn = float(__thiscall*)(void*);
@@ -357,56 +368,6 @@ public:
 
 	weapon_info_t* get_weapon_data() {
 		return interfaces::weapon_system->get_weapon_data(this->item_definition_index());
-	}
-};
-
-// If problems see https://github.com/aixxe/Chameleon/blob/master/Chameleon/IClientEntity.h#L78
-class base_attributable_item : public weapon_t
-{
-public:
-	inline int* get_item_definition_index() {
-		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iItemDefinitionIndex
-		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iItemDefinitionIndex);
-	}
-
-	inline int* get_item_id_high() {
-		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iItemIDHigh
-		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iItemIDHigh);
-	}
-
-	inline int* get_account_id() {
-		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iAccountID
-		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iAccountID);
-	}
-
-	inline int* get_entity_quality() {
-		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_iEntityQuality
-		return (int*)((DWORD)this + m_AttributeManager + m_Item + m_iEntityQuality);
-	}
-
-	inline char* get_custom_name() {
-		// DT_BaseAttributableItem -> m_AttributeManager -> m_Item -> m_szCustomName
-		return (char*)((DWORD)this + m_AttributeManager + m_Item + m_szCustomName);
-	}
-
-	inline int* get_fallback_paint_kit() {
-		// DT_BaseAttributableItem -> m_nFallbackPaintKit
-		return (int*)((DWORD)this + m_nFallbackPaintKit);
-	}
-
-	inline int* get_fallback_seed() {
-		// DT_BaseAttributableItem -> m_nFallbackSeed
-		return (int*)((DWORD)this + m_nFallbackSeed);
-	}
-
-	inline float* get_fallback_wear() {
-		// DT_BaseAttributableItem -> m_flFallbackWear
-		return (float*)((DWORD)this + m_flFallbackWear);
-	}
-
-	inline int* get_fallback_stattrack() {
-		// DT_BaseAttributableItem -> m_nFallbackStatTrak
-		return (int*)((DWORD)this + m_nFallbackStatTrak);
 	}
 };
 
