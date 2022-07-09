@@ -1,15 +1,15 @@
 <div align="center">
     <h1>NullHooks</h1>
-    <b>CS:GO cheat I made based on designer's base, and many other cheats I found. Mainly made for learning.</b>
+    <p><b>CS:GO cheat I made based on designer's base, and many other cheats I found. Mainly made for learning.</b></p>
     <div>
         <a href="https://github.com/r4v10l1/NullHooks/issues">
-            <img src="https://img.shields.io/github/issues/r4v10l1/NullHooks?color=ee0000&style=flat" alt="GitHub issues">
+            <img src="https://img.shields.io/github/issues/r4v10l1/NullHooks?color=cc0000&style=flat" alt="GitHub issues">
         </a>
         <a href="https://github.com/r4v10l1/NullHooks/pulls">
-            <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=ee0000&style=flat" alt="Pull requests welcome">
+            <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=cc0000&style=flat" alt="Pull requests welcome">
         </a>
         <a href="https://github.com/r4v10l1/NullHooks/blob/main/LICENSE">
-            <img src="https://img.shields.io/github/license/r4v10l1/NullHooks?color=ff0000&style=flat" alt="License">
+            <img src="https://img.shields.io/github/license/r4v10l1/NullHooks?color=cc0000&style=flat" alt="License">
         </a>
     </div>
 </div>
