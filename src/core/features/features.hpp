@@ -2,7 +2,6 @@
 #include "source-sdk/sdk.hpp"
 #include "core/features/misc/backtrack.hpp"
 #include "misc/backtrack.hpp"					// VIP so uses his own header file
-#include "visuals/skin_changer.hpp"
 
 namespace aim {
 	void triggerbot(c_usercmd* cmd);
