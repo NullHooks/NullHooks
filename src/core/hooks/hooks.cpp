@@ -2,6 +2,7 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 #include "core/menu/menu.hpp"
+#include "core/features/visuals/skin_changer.hpp"	// For init
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target            = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
@@ -27,6 +28,8 @@ bool hooks::initialize() {
 	custom_helpers::state_to_console_color("Init", "Backtrack initialized!");
 	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Init", "Global input initialized!");
+	skins::init_skin_config();	// Initialize skin map
+	custom_helpers::state_to_console_color("Init", "Custom skins initialized!");
 
 	// WndProc
 	WndProc_hook::csgo_window = FindWindowW(L"Valve001", nullptr);		// Get window for SetWindowLongPtrW()

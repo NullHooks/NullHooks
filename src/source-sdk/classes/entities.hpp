@@ -6,21 +6,6 @@
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
 
-// For skins
-#define m_AttributeManager			0x2D70
-#define m_Item						0x40
-#define m_iItemDefinitionIndex		0x1D8
-#define m_iItemIDHigh				0x1F0
-#define m_iAccountID				0x1F8
-#define m_iEntityQuality			0x1DC
-#define m_szCustomName				0x26C
-#define m_OriginalOwnerXuidLow		0x3168
-#define m_OriginalOwnerXuidHigh		0x316C
-#define m_nFallbackPaintKit			0x3170
-#define m_nFallbackSeed				0x3174
-#define m_flFallbackWear			0x3178
-#define m_nFallbackStatTrak			0x317C
-
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
 	DATA_UPDATE_DATATABLE_CHANGED,
@@ -435,6 +420,10 @@ public:
 
 	anim_state* get_anim_state() {
 		return *reinterpret_cast<anim_state * *>(this + 0x3914);
+	}
+
+	base_view_model_t* get_view_model() {
+		return (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(view_model());
 	}
 
 	bool can_see_player_pos(player_t* player, const vec3_t& pos) {
