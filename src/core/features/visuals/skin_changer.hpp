@@ -43,17 +43,21 @@ namespace skins {
         // T Knife
         custom_models[WEAPON_KNIFE_T] = "models/weapons/v_knife_butterfly.mdl";
         custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_KNIFE_BUTTERFLY;
-        custom_skins[WEAPON_KNIFE_T].paint_kit = 33;
+        custom_skins[WEAPON_KNIFE_T].paint_kit = 417;
         custom_skins[WEAPON_KNIFE_T].quality = SKIN_QUALITY_UNUSUAL;
 
         custom_skins[WEAPON_GLOCK].paint_kit = 38;
         custom_skins[WEAPON_GLOCK].stattrack = 1337;
 
+        custom_skins[WEAPON_HKP2000].paint_kit = 695;
+        
+        custom_skins[WEAPON_DEAGLE].paint_kit = 37;
+
+        custom_skins[WEAPON_AK47].paint_kit = 639;
+
+        custom_skins[WEAPON_M4A1].paint_kit = 844;
+
         custom_skins[WEAPON_AWP].paint_kit = 344;
         custom_skins[WEAPON_AWP].quality = SKIN_QUALITY_DEVELOPER;
-
-        custom_skins[WEAPON_AK47].paint_kit = 675;
-
-        custom_skins[WEAPON_DEAGLE].paint_kit = 37;
     }
 }
