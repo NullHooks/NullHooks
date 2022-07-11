@@ -89,35 +89,38 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 	vec3_t start = local_player->get_eye_pos();
 	vec3_t direction = (destination - start);
 	direction /= direction.length();
-	vec3_t end = start + (direction * weapon_data->weapon_range);
+	float distance = 0.f;			// Will store traveled distance in the loop, max is the weapon range
 
+	ray_t ray;						// Declare ray once before loop
 	trace_filter filter;
 	filter.skip = local_player;		// Initialize filter for ray before loop
 
 	int hits_left = 4;
 	while (damage >= 1.0f && hits_left) {
-		ray_t ray;
+		vec3_t end = start + (direction * (weapon_data->weapon_range - distance));
 		ray.initialize(start, end);
 		
 		static trace_t trace;
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
-
 		if (trace.flFraction == 1.0f) break;
 
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
-			damage = get_damage_multiplier(trace.hit_group) * damage * powf(weapon_data->weapon_range_mod, trace.flFraction * weapon_data->weapon_range / 500.0f);
+			distance = trace.flFraction * (weapon_data->weapon_range - distance);
+			damage = get_damage_multiplier(trace.hit_group) * damage * powf(weapon_data->weapon_range_mod, distance / 500.0f);
 
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
 
 			return damage >= min_damage;		// Never reaches here
 		}
-		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 
+		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
 
 		damage = autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage);
+		// Should change start here
 		hits_left--;
 	}
+
 	return false;
 }
