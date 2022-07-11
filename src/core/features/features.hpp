@@ -12,7 +12,7 @@ namespace aim {
 	namespace autowall {
 		float get_damage_multiplier(int hit_group);
 		bool is_armored(int hit_group, bool helmet);
-		bool trace_to_exit(vec3_t& end, trace_t& tr, float x, float y, float z, float x2, float y2, float z2, trace_t* trace);
+		bool trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace);
 		static float handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& result, float penetration, float damage);
 		bool is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage);
 	}
