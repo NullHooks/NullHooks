@@ -98,7 +98,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 }
 
 void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(cmd->buttons & cmd_buttons::in_attack)) return;		// User not attacking
+	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))		// Not holding aimbot key
+		&& !(cmd->buttons & cmd_buttons::in_attack)) return;										// or not attacking
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
@@ -136,12 +137,14 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (!variables::aim::silent) final_angle *= (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing if not silent
 	
 	cmd->viewangles += final_angle;
+	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
+		cmd->buttons |= in_attack;
 }
 
 // https://www.unknowncheats.me/forum/counterstrike-global-offensive/129068-draw-aimbot-fov.html
-// Needs fix
+// TODO: Needs fix
 void aim::draw_fov() {
-	if (!variables::aim::draw_fov) return;
+	if (false /*REPLACE VAR*/) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 	if (!aimbot_weapon_check()) return;
