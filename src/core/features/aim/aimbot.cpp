@@ -2,6 +2,18 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+bool aim::can_fire(weapon_t* active_weapon) {
+	if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
+
+	if (csgo::local_player->next_attack() > interfaces::globals->cur_time)
+		return false;
+
+	if (active_weapon->next_primary_attack() > interfaces::globals->cur_time)
+		return false;
+
+	return true;
+}
+
 // Checks if the current weapon can shoot and all that
 bool aim::aimbot_weapon_check() {
 	if (csgo::local_player->is_defusing()) return false;
@@ -19,7 +31,7 @@ bool aim::aimbot_weapon_check() {
 		case WEAPONTYPE_SHOTGUN:
 		case WEAPONTYPE_SNIPER_RIFLE:
 		case WEAPONTYPE_PISTOL: {
-			if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
+			if (!can_fire(active_weapon)) return false;					// Check if we can fire
 
 			if (weapon_data->weapon_type == WEAPONTYPE_SNIPER_RIFLE
 				&& !csgo::local_player->is_scoped()
@@ -98,8 +110,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 }
 
 void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))		// Not holding aimbot key
-		&& !(cmd->buttons & cmd_buttons::in_attack)) return;										// or not attacking
+	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))) return;	// Not holding aimbot key
+	else if (!variables::aim::autofire && !(cmd->buttons & cmd_buttons::in_attack)) return;												// or not attacking
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;

@@ -6,6 +6,8 @@
 namespace aim {
 	void triggerbot(c_usercmd* cmd);
 	void run_aimbot(c_usercmd* cmd);
+
+	bool can_fire(weapon_t* active_weapon);
 	bool aimbot_weapon_check();
 	void draw_fov();
 
