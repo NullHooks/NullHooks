@@ -62,7 +62,7 @@ void menu::render() {
 					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
 			}
 
-			const int part2_items_num   = 2;
+			const int part2_items_num   = 3;
 			const int part2_y           = part1_y + part1_h + container_margin;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h           = (15 * part2_items_num) + (container_padding * 2) - 4;
@@ -72,6 +72,8 @@ void menu::render() {
 					render::fonts::watermark_font, "Enable triggerbot", variables::aim::triggerbot);
 				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 1), item_hotkey_w,
 					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key);
+				gui::slider(item_left_pos, part2_base_item_y + (15 * 2), item_slider_pos, item_slider_length,
+					render::fonts::watermark_font, "Triggerbot delay", variables::aim::triggerbot_delay, 0.f, 30.f);
 			}
 
 			const int part3_items_num   = 6;
