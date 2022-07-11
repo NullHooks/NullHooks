@@ -23,14 +23,32 @@ bool aim::autowall::is_armored(int hit_group, bool helmet) {
 	}
 }
 
-bool aim::autowall::trace_to_exit(vec3_t& end, trace_t& tr, float x, float y, float z, float x2, float y2, float z2, trace_t* trace) {
-	typedef bool(__fastcall* fn)(vec3_t&, trace_t&, float, float, float, float, float, float, trace_t*);
-	static auto trace_to_exit = reinterpret_cast<fn>(utilities::pattern_scan("client.dll", sig_trace_to_exit));
-
-	if (!trace_to_exit)
-		return false;
-
+bool aim::autowall::trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace) {
+	static std::uintptr_t trace_to_exit = reinterpret_cast<std::uintptr_t>(utilities::pattern_scan("client.dll", sig_trace_to_exit));
+	if (!trace_to_exit) return false; 
+	const auto trace_to_exit_fn = trace_to_exit;
+	if (!trace_to_exit_fn) return false;
+	
+	bool result = false;
 	_asm {
+		push 0
+		push 0
+		push 0
+		push exit_trace
+		mov eax, direction
+		push[eax]vec3_t.z
+		push[eax]vec3_t.y
+		push[eax]vec3_t.x
+		mov eax, start
+		push[eax]vec3_t.z
+		push[eax]vec3_t.y
+		push[eax]vec3_t.x
+		mov edx, enter_trace
+		mov ecx, end
+		call trace_to_exit_fn
+		add esp, 40
+		mov result, al
+		/*
 		push trace
 		push z2
 		push y2
@@ -42,14 +60,16 @@ bool aim::autowall::trace_to_exit(vec3_t& end, trace_t& tr, float x, float y, fl
 		mov ecx, end
 		call trace_to_exit
 		add esp, 0x1C
+		*/
 	}
+	return result;
 }
 
 static float aim::autowall::handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& result, float penetration, float damage) {
 	trace_t exit_trace;
 	vec3_t dummy;
 
-	if (!trace_to_exit(dummy, enter_trace, enter_trace.end.x, enter_trace.end.y, enter_trace.end.z, direction.x, direction.y, direction.z, &exit_trace))
+	if (!trace_to_exit(enter_trace, enter_trace.end, direction, dummy, exit_trace))
 		return -1.0f;
 
 	auto exit_surface_data = interfaces::surface_props_physics->get_surface_data(exit_trace.surface.surfaceProps);
@@ -60,8 +80,7 @@ static float aim::autowall::handle_bullet_penetration(surface_data* enter_surfac
 	if (enter_surface_data->material == 71 || enter_surface_data->material == 89) {
 		damage_modifier = 0.05f;
 		penetration_modifier = 3.0f;
-	}
-	else if (enter_trace.contents >> 3 & 1 || enter_trace.surface.flags >> 7 & 1) {
+	} else if (enter_trace.contents >> 3 & 1 || enter_trace.surface.flags >> 7 & 1) {
 		penetration_modifier = 1.0f;
 	}
 
@@ -87,15 +106,15 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 	int hits_left = 4;
 	static trace_t trace{};
 	ray_t ray{};
-	trace_filter filter{};
+	
+	trace_filter filter;
+	filter.skip = csgo::local_player;
 
 	while (damage >= 1.0f && hits_left) {
-		filter.skip = csgo::local_player;
 		ray.initialize(start, destination);
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
 
-		if (trace.flFraction == 1.0f)
-			break;
+		if (trace.flFraction == 1.0f) break;
 
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
 			damage = get_damage_multiplier(trace.hit_group) * damage * powf(weapon_data->weapon_range_mod, trace.flFraction * weapon_data->weapon_range / 500.0f);
@@ -107,8 +126,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 		}
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 
-		if (surface_data->penetrationmodifier < 0.1f)
-			break;
+		if (surface_data->penetrationmodifier < 0.1f) break;
 
 		damage = autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage);
 		hits_left--;

@@ -38,6 +38,9 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	vec3_t best_target(0,0,0);								// Position of best bone
 	float best_fov{ 180.f * variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
 
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return best_target;
+
 	// Store selected hitboxes
 	std::vector<int> selected_bones;
 	if (variables::aim::hitboxes.vector[0].state) {		// Head
@@ -76,8 +79,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		for (const auto bone : selected_bones) {
 			auto bone_pos = cur_player->get_bone_position(bone);
 
-			if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && !variables::aim::only_visible)
-				|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, active_weapon->get_weapon_data(), variables::aim::min_damage)) continue;
+			if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && variables::aim::only_visible)
+				|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, weapon_data, (int)variables::aim::min_damage)) continue;
 
 			vec3_t aim_angle = math::calculate_angle(local_eye_pos, bone_pos);
 			aim_angle.clamp();

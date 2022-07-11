@@ -36,7 +36,7 @@
 #define sig_set_angles             "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8"
 #define sig_prediction_random_seed "8B 0D ? ? ? ? BA ? ? ? ? E8 ? ? ? ? 83 C4 04"
 #define sig_viewmatrix             "0F 10 05 ? ? ? ? 8D 85 ? ? ? ? B9"
-#define sig_trace_to_exit          "55 8B EC 83 EC 30 F3 0F 10 75"					// For autowall
+#define sig_trace_to_exit          "55 8B EC 83 EC 4C F3 0F 10 75"					// For autowall
 
 // custom for the hooks
 #define sig_key_values_engine           "85 C0 74 ? 51 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"

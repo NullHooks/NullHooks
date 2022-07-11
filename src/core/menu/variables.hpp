@@ -18,7 +18,7 @@ namespace variables {
 		inline bool non_rifle_aimpunch = true;
 		inline bool aimbot_noscope = true;
 
-		inline float min_damage = 60.f;
+		inline int min_damage = 60;
 
 		inline std::vector<multicombo_opt_t> hitboxes_options = {
 			{ "Head",	        true },
