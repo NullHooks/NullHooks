@@ -168,7 +168,7 @@ void visuals::playeresp() {
 				auto current_weapon = player->active_weapon();
 				if (!current_weapon) continue;
 
-				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name_alt;
+				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name;
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
@@ -200,7 +200,7 @@ void visuals::playeresp() {
 				auto current_weapon = player->active_weapon();
 				if (!current_weapon) continue;
 
-				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name_alt;
+				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name;
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
