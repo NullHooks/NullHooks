@@ -16,8 +16,7 @@ void aim::triggerbot(c_usercmd* cmd) {
 	ray_t ray;
 	ray.initialize(eye_pos, dst);
 
-	trace_filter filter;
-	filter.skip = csgo::local_player;
+	trace_filter filter(csgo::local_player);
 
 	trace_t trace;
 	interfaces::trace_ray->trace_ray(ray, 0x46004009, &filter, &trace );
