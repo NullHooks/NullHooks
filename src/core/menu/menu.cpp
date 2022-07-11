@@ -52,7 +52,7 @@ void menu::render() {
 
 	switch (current_tab) {
 		case 0: {	// Aim
-			const int part1_items_num = 2;
+			const int part1_items_num = 3;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 			
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "General", false); {
@@ -60,6 +60,8 @@ void menu::render() {
 					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
+				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
+					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
 			}
 
 			const int part2_items_num   = 2;
@@ -74,24 +76,26 @@ void menu::render() {
 					render::fonts::watermark_font, "Triggerbot key", variables::aim::triggerbot_key);
 			}
 
-			const int part3_items_num   = 6;
+			const int part3_items_num   = 7;
 			const int part3_y           = part2_y + part2_h + container_margin;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h           = (15 * part3_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part3_y, container_width, part3_h, render::fonts::watermark_font, "Aimbot", false); {
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable aimbot", variables::aim::aimbot);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Silent", variables::aim::silent);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Only visible", variables::aim::only_visible);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
-				gui::slider(item_left_pos, part3_base_item_y + (15 * 4), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Aimbot fov", variables::aim::aimbot_fov, 0.f, 1.f);
-				gui::slider(item_left_pos, part3_base_item_y + (15 * 5), item_slider_pos, item_slider_length,
-					render::fonts::watermark_font, "Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Enable aimbot", variables::aim::aimbot);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Silent", variables::aim::silent);
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos, render::fonts::watermark_font,
+					"Only visible", variables::aim::only_visible);
+				gui::multicombobox(item_left_pos, part3_base_item_y + (15 * 3), item_combo_pos, render::fonts::watermark_font,
+					"Aimbot hitboxes", variables::aim::hitboxes);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 4), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Minimum damage", variables::aim::min_damage, 0.f, 100.f);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 5), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Aimbot fov", variables::aim::aimbot_fov, 0.f, 1.f);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 6), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
 			break;

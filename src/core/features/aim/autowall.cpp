@@ -48,19 +48,6 @@ bool aim::autowall::trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec
 		call trace_to_exit_fn
 		add esp, 40
 		mov result, al
-		/*
-		push trace
-		push z2
-		push y2
-		push x2
-		push z
-		push y
-		push x
-		mov edx, tr
-		mov ecx, end
-		call trace_to_exit
-		add esp, 0x1C
-		*/
 	}
 	return result;
 }
@@ -103,15 +90,15 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 	vec3_t direction = (destination - start);
 	direction /= direction.length();
 
-	int hits_left = 4;
-	static trace_t trace{};
-	ray_t ray{};
-	
 	trace_filter filter;
-	filter.skip = csgo::local_player;
+	filter.skip = local_player;		// Initialize filter for ray before loop
 
+	int hits_left = 4;
 	while (damage >= 1.0f && hits_left) {
+		ray_t ray;
 		ray.initialize(start, destination);
+		
+		static trace_t trace;
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
 
 		if (trace.flFraction == 1.0f) break;

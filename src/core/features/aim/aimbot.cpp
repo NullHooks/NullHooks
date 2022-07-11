@@ -53,11 +53,11 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		selected_bones.emplace_back(4);
 		selected_bones.emplace_back(3);
 	}
-	if (variables::aim::hitboxes.vector[2].state) {		// Arms
+	if (variables::aim::hitboxes.vector[2].state) {		// Arms	TODO: Broken
 		selected_bones.emplace_back(12);
 		selected_bones.emplace_back(40);
 	}
-	if (variables::aim::hitboxes.vector[3].state) {		// Legs
+	if (variables::aim::hitboxes.vector[3].state) {		// Legs TODO: Broken
 		selected_bones.emplace_back(65);
 		selected_bones.emplace_back(66);
 		selected_bones.emplace_back(72);
