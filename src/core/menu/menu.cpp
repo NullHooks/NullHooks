@@ -52,6 +52,13 @@ void menu::render() {
 
 	switch (current_tab) {
 		case 0: {	// Aim
+			const int columns = 2;
+			container_width = (container_width / columns) - (container_margin / columns);
+			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+			item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
+			item_hotkey_w = container_width - container_padding * 2;
+
 			const int part1_items_num = 3;
 			const int part1_h         = (15 * part1_items_num) + (container_padding * 2) - 4;
 			
