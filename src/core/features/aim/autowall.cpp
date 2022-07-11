@@ -89,6 +89,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 	vec3_t start = local_player->get_eye_pos();
 	vec3_t direction = (destination - start);
 	direction /= direction.length();
+	vec3_t end = start + (direction * weapon_data->weapon_range);
 
 	trace_filter filter;
 	filter.skip = local_player;		// Initialize filter for ray before loop
@@ -96,7 +97,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 	int hits_left = 4;
 	while (damage >= 1.0f && hits_left) {
 		ray_t ray;
-		ray.initialize(start, destination);
+		ray.initialize(start, end);
 		
 		static trace_t trace;
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
