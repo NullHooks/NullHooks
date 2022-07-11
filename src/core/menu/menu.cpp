@@ -85,7 +85,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Silent", variables::aim::silent);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Ignore walls", variables::aim::ignore_walls);
+					render::fonts::watermark_font, "Only visible", variables::aim::only_visible);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable non-rifle aim punch", variables::aim::non_rifle_aimpunch);
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 4), item_slider_pos, item_slider_length,

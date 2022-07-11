@@ -11,12 +11,22 @@ namespace variables {
 		inline bool silent = false;
 		inline float aimbot_fov = 0.3f;
 		inline bool draw_fov = false;
-		inline bool ignore_walls = false;
+		inline bool only_visible = true;
 		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
 		inline bool aimbot_noscope = true;
+
+		inline float min_damage = 60.f;
+
+		inline std::vector<multicombo_opt_t> hitboxes_options = {
+			{ "Head",	        true },
+			{ "Chest",			false },
+			{ "Arms",			false },
+			{ "Legs",			false },
+		};
+		inline multicombobox_toggle_t hitboxes(hitboxes_options);
 	}
 
 	namespace player_visuals {

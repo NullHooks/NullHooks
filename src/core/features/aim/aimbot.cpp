@@ -34,11 +34,34 @@ bool aim::aimbot_weapon_check() {
 	return true;
 }
 
-player_t* get_best_target(c_usercmd* cmd) {
-	vec3_t best_angle{};
+vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
+	vec3_t best_target(0,0,0);								// Position of best bone
 	float best_fov{ 180.f * variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
-	player_t* final_player = nullptr;
 
+	// Store selected hitboxes
+	std::vector<int> selected_bones;
+	if (variables::aim::hitboxes.vector[0].state) {		// Head
+		selected_bones.emplace_back(8);
+		selected_bones.emplace_back(7);
+	}
+	if (variables::aim::hitboxes.vector[1].state) {		// Chest
+		selected_bones.emplace_back(6);
+		selected_bones.emplace_back(5);
+		selected_bones.emplace_back(4);
+		selected_bones.emplace_back(3);
+	}
+	if (variables::aim::hitboxes.vector[2].state) {		// Arms
+		selected_bones.emplace_back(12);
+		selected_bones.emplace_back(40);
+	}
+	if (variables::aim::hitboxes.vector[3].state) {		// Legs
+		selected_bones.emplace_back(65);
+		selected_bones.emplace_back(66);
+		selected_bones.emplace_back(72);
+		selected_bones.emplace_back(73);
+	}
+
+	// Check each player
 	for (int n = 1; n <= 64; n++) {
 		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
 		if (!cur_player
@@ -47,28 +70,28 @@ player_t* get_best_target(c_usercmd* cmd) {
 			|| cur_player->dormant()
 			|| cur_player->has_gun_game_immunity()) continue;
 		if (cur_player->team() == csgo::local_player->team() && !variables::aim::target_friends) continue;
-	
+
 		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
-		matrix_t bones[128];
-		if (!cur_player->setup_bones(bones, 128, 256, 0)) continue;
-		vec3_t cur_player_head = bones[8].get_origin();
+		for (const auto bone : selected_bones) {
+			auto bone_pos = cur_player->get_bone_position(bone);
 
-		// Try to trace ray to taget player (check visible)
-		if (!variables::aim::ignore_walls && !csgo::local_player->can_see_player_pos(cur_player, cur_player_head)) continue;
+			if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && !variables::aim::only_visible)
+				|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, active_weapon->get_weapon_data(), variables::aim::min_damage)) continue;
 
-		vec3_t aim_angle = math::calculate_angle(local_eye_pos, cur_player_head);
-		aim_angle.clamp();
+			vec3_t aim_angle = math::calculate_angle(local_eye_pos, bone_pos);
+			aim_angle.clamp();
 
-		// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
-		const float fov = cmd->viewangles.distance_to(aim_angle);
-		if (fov < best_fov) {
-			best_fov = fov;
-			final_player = cur_player;
+			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
+			const float fov = cmd->viewangles.distance_to(aim_angle);
+			if (fov < best_fov) {
+				best_fov = fov;
+				best_target = bone_pos;
+			}
 		}
 	}
 
-	return final_player;
+	return best_target;		// vec3_t position of the best bone
 }
 
 void aim::run_aimbot(c_usercmd* cmd) {
@@ -78,23 +101,18 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (!csgo::local_player) return;
 	if (!aimbot_weapon_check()) return;
 
-	player_t* target = get_best_target(cmd);
-	if (!target) return;
-
-	auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
-
-	matrix_t bones[128];
-	if (!target->setup_bones(bones, 128, 256, 0)) return;
-	vec3_t cur_player_head = bones[8].get_origin();
-
-	vec3_t aim_angle = math::calculate_angle(local_eye_pos, cur_player_head);
-	aim_angle.clamp();
-
-	// We need to get weapon_type for aim_punch anyway so
+	// We need to get weapon_type here too for aim_punch and for autowall
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
 	const auto weapon_data = active_weapon->get_weapon_data();
 	if (!weapon_data) return;
+
+	auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
+	vec3_t target = get_best_target(cmd, active_weapon);
+	if (target.is_zero()) return;
+
+	vec3_t aim_angle = math::calculate_angle(local_eye_pos, target);
+	aim_angle.clamp();
 
 	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 	if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
