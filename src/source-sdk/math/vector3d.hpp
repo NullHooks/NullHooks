@@ -113,6 +113,10 @@ public:
 		return res;
 	}
 
+	bool is_zero() {
+		return (this->x == 0 && this->y == 0 && this->z == 0);
+	}
+
 	void init(float ix, float iy, float iz);
 	void clamp();
 	vec3_t clamped();
