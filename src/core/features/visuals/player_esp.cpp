@@ -141,6 +141,7 @@ void visuals::playeresp() {
 		}
 		/* ------------- INFO ESP ------------- */
 		if (variables::player_visuals::playerinfo) {
+			// Friends
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
 				if (player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
@@ -167,12 +168,14 @@ void visuals::playeresp() {
 
 				auto current_weapon = player->active_weapon();
 				if (!current_weapon) continue;
-
-				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name;
+				auto weapon_data = current_weapon->get_weapon_data();
+				if (!weapon_data) continue;
+				std::string s_weapon_name = weapon_data->weapon_name;
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
 				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer.col);
+			// Enemies
 			} else if (player->team() != csgo::local_player->team()) {
 				if (player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
@@ -199,8 +202,9 @@ void visuals::playeresp() {
 
 				auto current_weapon = player->active_weapon();
 				if (!current_weapon) continue;
-
-				std::string s_weapon_name = current_weapon->get_weapon_data()->weapon_name;
+				auto weapon_data = current_weapon->get_weapon_data();
+				if (!weapon_data) continue;
+				std::string s_weapon_name = weapon_data->weapon_name;
 				
 				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"

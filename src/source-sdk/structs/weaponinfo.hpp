@@ -2,12 +2,14 @@
 
 class weapon_info_t {
 public:
-	char		    u0[20];
+	char		    u0[0x4];
+	char*           weapon_name;
+	char		    u1[0xC];
 	__int32		    weapon_max_clip;
-	char		    u2[112];
-	const char*     weapon_name;
-	char		    u3[60];
-	__int32		    weapon_type;	// See WEAPONTYPE_*
+	char		    u2[96];	// 96?
+	const char*     weapon_name_alt;
+	char		    u3[76];
+	__int32		    weapon_type;			// See WEAPONTYPE_*
 	char		    u4[4];
 	__int32		    weapon_price;
 	char		    u5[8];
