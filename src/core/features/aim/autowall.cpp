@@ -122,7 +122,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
 
-			return damage >= min_damage;
+			return damage >= min_damage;		// Never reaches here
 		}
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 
