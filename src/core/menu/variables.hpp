@@ -9,8 +9,9 @@ namespace variables {
 
 		inline bool aimbot = false;
 		inline bool silent = false;
+		inline bool autofire = false;
+		inline hotkey_t aimbot_key(VK_NEXT);
 		inline float aimbot_fov = 0.3f;
-		inline bool draw_fov = false;
 		inline bool only_visible = true;
 		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
