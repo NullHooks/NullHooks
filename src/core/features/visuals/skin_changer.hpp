@@ -29,7 +29,7 @@ struct skin_info {
 
 namespace skins {
     inline bool apply_skin(DWORD weapon_handle);
-    void loop_skins(client_frame_stage_t stage);
+    void change_skins(client_frame_stage_t stage);
 
     inline std::unordered_map<int, skin_info> custom_skins;
     inline std::unordered_map<int, const char*> custom_models;      // Stores custom model names
@@ -49,9 +49,9 @@ namespace skins {
         custom_skins[WEAPON_GLOCK].paint_kit = 38;
         custom_skins[WEAPON_GLOCK].stattrack = 1337;
 
-        custom_skins[WEAPON_HKP2000].paint_kit = 695;
+        custom_skins[WEAPON_USP_SILENCER].paint_kit = 653;
         
-        custom_skins[WEAPON_DEAGLE].paint_kit = 37;
+        custom_skins[WEAPON_DEAGLE].paint_kit = 962;
 
         custom_skins[WEAPON_AK47].paint_kit = 639;
 
