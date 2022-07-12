@@ -9,7 +9,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_START:                           break;
 		case FRAME_NET_UPDATE_START:                break;
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_START:
-			skins::loop_skins(frame_stage);
+			skins::change_skins(frame_stage);
 			break;
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_END:   break;
 		case FRAME_NET_UPDATE_END:
