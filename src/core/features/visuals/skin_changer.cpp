@@ -16,9 +16,9 @@ bool skins::apply_skin(DWORD weapon_handle) {
 		weapon_index = skins::custom_skins.at(weapon_index).item_definition_index;
 	}
 	
-	const auto active_weapon = csgo::local_player->active_weapon();
+	/*const auto active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return false;
-	if (weapon == active_weapon)
+	if (weapon == active_weapon)*/
 		update_knife_model(weapon);
 
 	// Apply to fallback variables
