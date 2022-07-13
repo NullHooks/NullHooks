@@ -8,7 +8,7 @@ namespace aim {
 	void run_aimbot(c_usercmd* cmd);
 
 	bool can_fire(weapon_t* active_weapon);
-	bool aimbot_weapon_check();
+	bool aimbot_weapon_check(bool check_scope);
 	void draw_fov();
 
 	namespace autowall {
@@ -72,7 +72,9 @@ namespace misc {
 		void pre_pred_jumpbug(c_usercmd* cmd, int old_flags);
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
 
+		void slow_walk(c_usercmd* cmd, int old_flags);
 	}
+
 	namespace speedgraph {
 		void update();
 		void draw();

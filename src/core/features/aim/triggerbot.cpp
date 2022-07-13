@@ -7,7 +7,7 @@ void aim::triggerbot(c_usercmd* cmd) {
 	if (!input::gobal_input.IsHeld(variables::aim::triggerbot_key)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (!aimbot_weapon_check()) return;
+	if (!aimbot_weapon_check(true)) return;
 
 	vec3_t eye_pos = csgo::local_player->get_eye_pos();									// Start
 	vec3_t ang = cmd->viewangles + csgo::local_player->aim_punch_angle() * 2.f;

@@ -109,6 +109,7 @@
     <ClCompile Include="core\features\misc\edgebug.cpp" />
     <ClCompile Include="core\features\misc\infinite_duck.cpp" />
     <ClCompile Include="core\features\misc\jumpbug.cpp" />
+    <ClCompile Include="core\features\misc\slowwalk.cpp" />
     <ClCompile Include="core\features\misc\speedgraph.cpp" />
     <ClCompile Include="core\features\misc\thirdperson.cpp" />
     <ClCompile Include="core\features\visuals\bullet_tracer.cpp" />
