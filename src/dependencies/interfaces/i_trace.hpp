@@ -190,7 +190,7 @@ struct trace_t {
 	bool startSolid;
 	float fractionLeftSolid;
 	csurface_t surface;
-	int hitGroup;
+	int hit_group;
 	short physicsBone;
 	std::uint16_t worldSurfaceIndex;	// Thx cazz
 	player_t* entity;
@@ -232,6 +232,11 @@ public:
 
 	TraceType_t GetTraceType() const {
 		return TRACE_EVERYTHING;
+	}
+
+	trace_filter() {};
+	trace_filter(player_t* ent) {
+		this->skip = ent;
 	}
 
 	const void* skip;

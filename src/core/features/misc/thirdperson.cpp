@@ -57,6 +57,7 @@ void misc::thirdperson() {
     view_angles.z = distance;
     interfaces::input->camera_in_third_person = true;
     interfaces::input->camera_offset = view_angles;
+    interfaces::engine->execute_cmd("cl_updatevisibility");
 }
 
 void misc::reset_thirdperson() {

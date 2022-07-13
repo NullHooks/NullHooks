@@ -6,8 +6,18 @@
 namespace aim {
 	void triggerbot(c_usercmd* cmd);
 	void run_aimbot(c_usercmd* cmd);
-	bool aimbot_weapon_check();
+
+	bool can_fire(weapon_t* active_weapon);
+	bool aimbot_weapon_check(bool check_scope);
 	void draw_fov();
+
+	namespace autowall {
+		float get_damage_multiplier(int hit_group);
+		bool is_armored(int hit_group, bool helmet);
+		bool trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace);
+		static float handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& start, float penetration, float damage);
+		bool is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage);
+	}
 }
 
 namespace visuals {
@@ -62,7 +72,9 @@ namespace misc {
 		void pre_pred_jumpbug(c_usercmd* cmd, int old_flags);
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
 
+		void slow_walk(c_usercmd* cmd);
 	}
+
 	namespace speedgraph {
 		void update();
 		void draw();

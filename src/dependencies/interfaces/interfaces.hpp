@@ -28,6 +28,7 @@
 #include "dependencies/interfaces/i_weapon_system.hpp"
 #include "dependencies/interfaces/i_studio_render.h"
 #include "dependencies/interfaces/i_mdlcache.hpp"
+#include "dependencies/interfaces/i_physics_surface_props.hpp"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
@@ -97,7 +98,8 @@ namespace interfaces {
 	inline player_move_helper* move_helper;
 	inline mdlcache* mdl_cache;
 	inline i_weapon_system* weapon_system;
-	
+	inline physics_surface_props* surface_props_physics;
+
 	// https://github.com/cazzwastaken/based/search?q=keyValuesSystem
 	inline void* key_values_system = nullptr;
 	inline std::uint8_t* key_values_engine = nullptr;
