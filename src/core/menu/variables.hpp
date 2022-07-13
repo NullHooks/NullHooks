@@ -138,6 +138,7 @@ namespace variables {
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
 		inline bool slowwalk = false;
+		inline hotkey_t slowwalk_key(VK_MENU);	// Alt key
 
 		inline std::vector<multicombo_opt_t> speedgraph_options = {
 			{ "Line",		false },
@@ -174,7 +175,7 @@ namespace variables {
 		namespace menu {
 			inline bool opened = false;
 			inline int x = 300, y = 200;
-			inline int w = 500, h = 420;
+			inline int w = 500, h = 440;
 		}
 
 		namespace watermark {
