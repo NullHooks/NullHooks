@@ -31,6 +31,7 @@ namespace skins {
     inline bool apply_skin(DWORD weapon_handle);
     void change_skins(client_frame_stage_t stage);
     void update_knife_model(weapon_t* weapon);
+    //void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence);     // TODO
 
     inline std::unordered_map<int, skin_info> custom_skins;
     inline std::unordered_map<int, const char*> custom_models;      // Stores custom model names
