@@ -383,14 +383,16 @@ void menu::render() {
 			/* ----- Misc - Buttons ----- */
 
 			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container
-			const int button_items_num       = 1;
+			const int button_items_num       = 2;
 			const int button_items_h         = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y          = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
 			const int buttons_items_base_y   = buttons_con_y + container_padding;			// Same as other containers
 
 			gui::group_box(container_left_pos_o, buttons_con_y, container_width_o, button_items_h, render::fonts::watermark_font, "Buttons", false); {
-				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20,	// Bigger "checkbox" as button. TODO: Pass size and pos
-					render::fonts::watermark_font, "Autoexec (callback test)", commands_features::exec_autoexec);
+				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20, render::fonts::watermark_font, // Bigger "checkbox" as button. TODO: Pass size and pos
+					"Update skins (Full update)", button_functions::full_update);
+				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 1), item_checkbox_pos_o - 20, render::fonts::watermark_font,
+					"Exec autoexec", button_functions::exec_autoexec);
 			}
 			break;
 		}
