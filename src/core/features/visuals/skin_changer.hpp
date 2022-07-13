@@ -38,7 +38,7 @@ namespace skins {
         // CT Knife
         custom_skins[WEAPON_KNIFE].item_definition_index = WEAPON_KNIFE_M9_BAYONET;
         custom_models[WEAPON_KNIFE_M9_BAYONET] = "models/weapons/v_knife_m9_bay.mdl";
-        custom_skins[WEAPON_KNIFE_M9_BAYONET].paint_kit = 38;
+        custom_skins[WEAPON_KNIFE_M9_BAYONET].paint_kit = 417;
         custom_skins[WEAPON_KNIFE_M9_BAYONET].seed = 69;
         custom_skins[WEAPON_KNIFE_M9_BAYONET].quality = SKIN_QUALITY_UNUSUAL;
 
