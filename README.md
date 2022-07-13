@@ -39,12 +39,20 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ## Features
 ### Aim
 - Triggerbot
+    - With custom delay
 - Aimbot
     - Snappy
     - Silent
-- Ignore walls
+- Autowall
+    - Only visible
+    - Autowall (Min damage)
+    - Ignore walls
+- Autofire
+    - On key
+    - Auto if key is set to 'None'
 - Aimbot fov
-- Aimbot smoothness (Only on snappy)
+- Aimbot smoothness (Only on snappy aimbot)
+- Aimbot and triggerbot hitboxes
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
 
@@ -106,6 +114,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
+- Slow walk (On key)
 - Speed graph (*With color, height and position options*)
 
 ### Misc
@@ -202,18 +211,19 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 
 - [X] Add aim stuff
     - [X] Triggerbot
-        - [ ] Add delay slider
+        - [X] Add delay slider
     - [X] Aimbot
         - [X] Silent
         - [X] Snappy
     - [ ] Aimbot fov circle (or square)
-    - [ ] Custom aimbot key (autofire)
+    - [X] Custom aimbot key (autofire)
     - [ ] Make aimbot and triggerbot also aim for backtrack (Using `backtrack::records[player][record]`?)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [ ] Longjump
+    - [X] Slowwalk
 - [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
