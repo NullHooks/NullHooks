@@ -58,6 +58,14 @@ void GlobalInput::UpdatePressed() {
 void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
     //static std::array<KeyStateInfo, 256> key_states_alt;
     switch (msg) {
+        /* -------------- Misc -------------- */
+        case WM_KILLFOCUS: {                        // Window just unfocused
+            // Reset alt + tab to avoid false states
+            key_states[VK_MENU].held = false;
+            key_states[VK_MENU].pressed = false;
+            key_states[VK_TAB].held = false;
+            key_states[VK_TAB].pressed = false;
+        }
         /* -------------- Keyboard -------------- */
         case WM_SYSKEYDOWN:                         // Alt + Key
         case WM_KEYDOWN: {                          // Key being held
