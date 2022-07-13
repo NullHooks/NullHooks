@@ -6,6 +6,7 @@ namespace variables {
 	namespace aim {
 		inline bool triggerbot = false;
 		inline hotkey_t triggerbot_key(VK_PRIOR);
+		inline float triggerbot_delay = 0.f;
 
 		inline bool aimbot = false;
 		inline bool silent = false;
