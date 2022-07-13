@@ -34,12 +34,12 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	return true;
 }
 
+// Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
 void skins::change_skins(client_frame_stage_t stage) {
 	if (false /*SKINCHANGER VAR*/) return;
 	if (!csgo::local_player) return;
 
 	// Knife models
-	// TODO: Models https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L203
 	// TODO: Animations https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L970
 	const auto active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
@@ -55,6 +55,7 @@ void skins::change_skins(client_frame_stage_t stage) {
 		viewmodel->set_model_index(interfaces::model_info->get_model_index(custom_models[active_weapon_idx]));
 	}
 
+	// Change every skin in the map
 	auto weapons = csgo::local_player->get_weapons();
 	if (!weapons) return;
 	for (int n = 0; weapons[n]; n++) {
