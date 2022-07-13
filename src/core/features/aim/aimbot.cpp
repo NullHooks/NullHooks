@@ -15,7 +15,7 @@ bool aim::can_fire(weapon_t* active_weapon) {
 }
 
 // Checks if the current weapon can shoot and all that
-bool aim::aimbot_weapon_check() {
+bool aim::aimbot_weapon_check(bool check_scope) {
 	if (csgo::local_player->is_defusing()) return false;
 
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
@@ -33,9 +33,11 @@ bool aim::aimbot_weapon_check() {
 		case WEAPONTYPE_PISTOL: {
 			if (!can_fire(active_weapon)) return false;					// Check if we can fire
 
-			if (weapon_data->weapon_type == WEAPONTYPE_SNIPER_RIFLE
-				&& !csgo::local_player->is_scoped()
-				&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
+			if (check_scope) {
+				if (weapon_data->weapon_type == WEAPONTYPE_SNIPER_RIFLE
+					&& !csgo::local_player->is_scoped()
+					&& !variables::aim::aimbot_noscope) return false;		// We are not scoped and have the noscope option disabled
+			}
 
 			break;
 		}
@@ -118,7 +120,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (!aimbot_weapon_check()) return;
+	if (!aimbot_weapon_check(true)) return;
 
 	// We need to get weapon_type here too for aim_punch and for autowall
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
@@ -163,7 +165,7 @@ void aim::draw_fov() {
 	if (false /*REPLACE VAR*/) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (!aimbot_weapon_check()) return;
+	if (!aimbot_weapon_check(true)) return;
 	
 	// Screen width and height
 	int sw, sh;

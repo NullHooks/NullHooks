@@ -51,6 +51,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 		backtrack::run(cmd);
 		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
+		misc::movement::slow_walk(cmd, old_flags);
 		aim::triggerbot(cmd);
 		aim::run_aimbot(cmd);
 	} prediction::end();

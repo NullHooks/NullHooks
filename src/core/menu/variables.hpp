@@ -137,6 +137,8 @@ namespace variables {
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
+		inline bool slowwalk = false;
+
 		inline std::vector<multicombo_opt_t> speedgraph_options = {
 			{ "Line",		false },
 			{ "Color",		false },
