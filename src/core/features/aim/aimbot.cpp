@@ -91,8 +91,11 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		for (const auto bone : selected_bones) {
 			auto bone_pos = cur_player->get_bone_position(bone);
 
-			if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && variables::aim::only_visible)
-				|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, weapon_data, (int)variables::aim::min_damage)) continue;
+			// Ignore everything if we have "ignore walls" setting (2)
+			if (variables::aim::autowall.idx != 2) {
+				if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && variables::aim::autowall.idx == 0)
+					|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, weapon_data, (int)variables::aim::min_damage)) continue;
+			}
 
 			vec3_t aim_angle = math::calculate_angle(local_eye_pos, bone_pos);
 			aim_angle.clamp();
@@ -110,8 +113,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 }
 
 void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))) return;	// Not holding aimbot key
-	else if (!variables::aim::autofire && !(cmd->buttons & cmd_buttons::in_attack)) return;												// or not attacking
+	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
+		|| (!variables::aim::autofire && !(cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
@@ -131,8 +134,9 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	aim_angle.clamp();
 
 	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
-	if (variables::aim::non_rifle_aimpunch) local_aim_punch = csgo::local_player->aim_punch_angle();
-	else {
+	if (variables::aim::non_rifle_aimpunch) {
+		local_aim_punch = csgo::local_player->aim_punch_angle();
+	} else {
 		switch (weapon_data->weapon_type) {
 			case WEAPONTYPE_RIFLE:
 			case WEAPONTYPE_SUBMACHINEGUN:

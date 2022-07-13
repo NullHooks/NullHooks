@@ -99,8 +99,8 @@ void menu::render() {
 					"Only on key", variables::aim::aimbot_key);
 				gui::check_box(item_left_pos, part3_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
 					"Silent", variables::aim::silent);
-				gui::check_box(item_left_pos, part3_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
-					"Only visible", variables::aim::only_visible);
+				gui::combobox(item_left_pos, part3_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
+					"Autowall", variables::aim::autowall_settings, variables::aim::autowall);
 				gui::multicombobox(item_left_pos, part3_base_item_y + (15 * 5), item_combo_pos, render::fonts::watermark_font,
 					"Aimbot hitboxes", variables::aim::hitboxes);
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 6), item_slider_pos, item_slider_length, render::fonts::watermark_font,
