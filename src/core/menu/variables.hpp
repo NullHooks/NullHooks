@@ -6,17 +6,36 @@ namespace variables {
 	namespace aim {
 		inline bool triggerbot = false;
 		inline hotkey_t triggerbot_key(VK_PRIOR);
+		inline float triggerbot_delay = 0.f;
 
 		inline bool aimbot = false;
 		inline bool silent = false;
+		inline bool autofire = false;
+		inline hotkey_t aimbot_key(VK_NEXT);
+		
+		inline std::vector<std::string> autowall_settings = {
+			"Only visible",
+			"Autowall",
+			"Ignore walls"
+		};
+		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
+
 		inline float aimbot_fov = 0.3f;
-		inline bool draw_fov = false;
-		inline bool ignore_walls = false;
 		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
 		inline bool aimbot_noscope = true;
+
+		inline float min_damage = 60.f;
+
+		inline std::vector<multicombo_opt_t> hitboxes_options = {
+			{ "Head",	        true },
+			{ "Chest",			false },
+			{ "Arms",			false },
+			{ "Legs",			false },
+		};
+		inline multicombobox_toggle_t hitboxes(hitboxes_options);
 	}
 
 	namespace player_visuals {
@@ -118,6 +137,9 @@ namespace variables {
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);	// Alt key
+		inline bool slowwalk = false;
+		inline hotkey_t slowwalk_key(VK_MENU);	// Alt key
+
 		inline std::vector<multicombo_opt_t> speedgraph_options = {
 			{ "Line",		false },
 			{ "Color",		false },
@@ -153,7 +175,7 @@ namespace variables {
 		namespace menu {
 			inline bool opened = false;
 			inline int x = 300, y = 200;
-			inline int w = 500, h = 420;
+			inline int w = 500, h = 440;
 		}
 
 		namespace watermark {

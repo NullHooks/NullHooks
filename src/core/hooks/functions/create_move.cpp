@@ -4,28 +4,25 @@
 #include "core/hooks/hooks.hpp"
 
 void __declspec(naked) hooks::create_move::proxy() {
-
 	__asm {
-
 		push ebp
 		mov  ebp, esp
 
-		push ebx		// move sendpacket to stack
+		push ebx			// Move sendpacket to stack
 
-		push esp		// sendpacket ptr
+		push esp			// sendpacket ptr
 		push[ebp + 0xC]		// usercmd
 		push[ebp + 0x8]		// input_sample_frametime, already in xmm0
 		//movss xmm0, [ebp + 0x8] 
 		call hooks::create_move::hook
 		add esp, 0xC
 
-		pop ebx			// move sendpacket back to ebx
+		pop ebx				// Move sendpacket back to ebx
 
 		mov esp, ebp
 		pop ebp
 
-		ret 0x8			// thiscall stack cleanup
-
+		ret 0x8				// thiscall stack cleanup
 	}
 }
 
@@ -33,13 +30,14 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	const bool result = original(input_sample_frametime, cmd);
 
 	if (!cmd || !cmd->command_number) return result;
-	if (!interfaces::clientstate /*|| interfaces::engine->is_playing_demo()*/) return result;
+	if (!interfaces::clientstate) return result;
 	csgo::local_player = static_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
 	if (!csgo::local_player) return result;
 
 	misc::speedgraph::update();
 	misc::movement::bunny_hop(cmd);
 	misc::movement::infinite_duck(cmd);
+	misc::movement::slow_walk(cmd);
 
 	// old_* for prediction
 	auto old_viewangles = cmd->viewangles;

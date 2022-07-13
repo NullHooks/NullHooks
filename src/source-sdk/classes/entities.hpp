@@ -354,6 +354,55 @@ public:
 	weapon_info_t* get_weapon_data() {
 		return interfaces::weapon_system->get_weapon_data(this->item_definition_index());
 	}
+
+
+	bool is_non_aim() {
+		return this->is_bomb() || this->is_taser() || this->is_knife() || this->is_grenade() || this->clip1_count() == 0;
+	}
+
+	bool is_bomb() {
+		return this->item_definition_index() == WEAPON_C4;
+	}
+
+	bool is_taser() {
+		return this->item_definition_index() == WEAPON_TASER;
+	}
+
+	bool is_knife() {
+		switch (this->item_definition_index()) {
+			case WEAPON_KNIFE:
+			case WEAPON_KNIFE_T:
+			case WEAPON_KNIFEGG:
+			case WEAPON_BAYONET:
+			case WEAPON_KNIFE_BUTTERFLY:
+			case WEAPON_KNIFE_FALCHION:
+			case WEAPON_KNIFE_FLIP:
+			case WEAPON_KNIFE_GUT:
+			case WEAPON_KNIFE_KARAMBIT:
+			case WEAPON_KNIFE_M9_BAYONET:
+			case WEAPON_KNIFE_PUSH:
+			case WEAPON_KNIFE_TACTICAL:
+			case WEAPON_KNIFE_SURVIVAL_BOWIE:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool is_grenade() {
+		switch (this->item_definition_index()) {
+			case WEAPON_FLASHBANG:
+			case WEAPON_HEGRENADE:
+			case WEAPON_SMOKEGRENADE:
+			case WEAPON_MOLOTOV:
+			case WEAPON_INCGRENADE:
+			case WEAPON_DECOY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
 };
 
 class player_t : public entity_t {
