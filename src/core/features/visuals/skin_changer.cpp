@@ -68,3 +68,126 @@ void skins::change_skins(client_frame_stage_t stage) {
 		apply_skin(weapons[n]);
 	}
 }
+
+/* ---------------------------------------------------------------------------- */
+/*
+static int remap_knife_animation(int weaponID, const int sequence) noexcept {
+    enum Sequence {
+        SEQUENCE_DEFAULT_DRAW = 0,
+        SEQUENCE_DEFAULT_IDLE1 = 1,
+        SEQUENCE_DEFAULT_IDLE2 = 2,
+        SEQUENCE_DEFAULT_LIGHT_MISS1 = 3,
+        SEQUENCE_DEFAULT_LIGHT_MISS2 = 4,
+        SEQUENCE_DEFAULT_HEAVY_MISS1 = 9,
+        SEQUENCE_DEFAULT_HEAVY_HIT1 = 10,
+        SEQUENCE_DEFAULT_HEAVY_BACKSTAB = 11,
+        SEQUENCE_DEFAULT_LOOKAT01 = 12,
+
+        SEQUENCE_BUTTERFLY_DRAW = 0,
+        SEQUENCE_BUTTERFLY_DRAW2 = 1,
+        SEQUENCE_BUTTERFLY_LOOKAT01 = 13,
+        SEQUENCE_BUTTERFLY_LOOKAT03 = 15,
+
+        SEQUENCE_FALCHION_IDLE1 = 1,
+        SEQUENCE_FALCHION_HEAVY_MISS1 = 8,
+        SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP = 9,
+        SEQUENCE_FALCHION_LOOKAT01 = 12,
+        SEQUENCE_FALCHION_LOOKAT02 = 13,
+
+        SEQUENCE_DAGGERS_IDLE1 = 1,
+        SEQUENCE_DAGGERS_LIGHT_MISS1 = 2,
+        SEQUENCE_DAGGERS_LIGHT_MISS5 = 6,
+        SEQUENCE_DAGGERS_HEAVY_MISS2 = 11,
+        SEQUENCE_DAGGERS_HEAVY_MISS1 = 12,
+
+        SEQUENCE_BOWIE_IDLE1 = 1,
+    };
+
+    switch (weaponID) {
+    case WeaponId::Butterfly:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_DRAW:
+            return Helpers::random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return Helpers::random(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
+        default:
+            return sequence + 1;
+        }
+    case WeaponId::Falchion:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_DRAW:
+        case SEQUENCE_DEFAULT_IDLE1:
+        case SEQUENCE_DEFAULT_HEAVY_HIT1:
+        case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
+            return sequence;
+        case SEQUENCE_DEFAULT_HEAVY_MISS1:
+            return Helpers::random(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return Helpers::random(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
+        default:
+            return sequence - 1;
+        }
+    case WeaponId::Daggers:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_IDLE2:
+            return SEQUENCE_DAGGERS_IDLE1;
+        case SEQUENCE_DEFAULT_LIGHT_MISS1:
+        case SEQUENCE_DEFAULT_LIGHT_MISS2:
+            return Helpers::random(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
+        case SEQUENCE_DEFAULT_HEAVY_MISS1:
+            return Helpers::random(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
+        case SEQUENCE_DEFAULT_HEAVY_HIT1:
+        case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return sequence + 3;
+        case SEQUENCE_DEFAULT_DRAW:
+        case SEQUENCE_DEFAULT_IDLE1:
+            return sequence;
+        default:
+            return sequence + 2;
+        }
+    case WeaponId::Bowie:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_DRAW:
+        case SEQUENCE_DEFAULT_IDLE1:
+            return sequence;
+        case SEQUENCE_DEFAULT_IDLE2:
+            return SEQUENCE_BOWIE_IDLE1;
+        default:
+            return sequence - 1;
+        }
+    case WeaponId::Ursus:
+    case WeaponId::SkeletonKnife:
+    case WeaponId::NomadKnife:
+    case WeaponId::Paracord:
+    case WeaponId::SurvivalKnife:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_DRAW:
+            return Helpers::random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return Helpers::random(SEQUENCE_BUTTERFLY_LOOKAT01, Sequence(14));
+        default:
+            return sequence + 1;
+        }
+    case WeaponId::Stiletto:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return Helpers::random(12, 13);
+        }
+    case WeaponId::Talon:
+        switch (sequence) {
+        case SEQUENCE_DEFAULT_LOOKAT01:
+            return Helpers::random(14, 15);
+        }
+    default:
+        return sequence;
+    }
+}
+
+void skins::fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence) {
+    if (!csgo::local_player) return;
+    if (!viewmodel_weapon->is_knife()) return;
+
+    sequence = remap_knife_animation(viewmodel_weapon->item_definition_index(), sequence);
+}
+*/
