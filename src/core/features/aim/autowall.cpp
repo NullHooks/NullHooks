@@ -115,9 +115,10 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 		}
 
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
-		if (surface_data->penetrationmodifier < 0.1f) br
+		if (surface_data->penetrationmodifier < 0.1f) break;
+
 		damage = autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage);	// Start is changed from handle_bullet_penetration(). Thank you @hBuffer
-		hits
+		hits_left--;
 	}
 
 	return false;

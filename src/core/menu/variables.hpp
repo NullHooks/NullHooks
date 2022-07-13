@@ -12,8 +12,15 @@ namespace variables {
 		inline bool silent = false;
 		inline bool autofire = false;
 		inline hotkey_t aimbot_key(VK_NEXT);
+		
+		inline std::vector<std::string> autowall_settings = {
+			"Only visible",
+			"Autowall",
+			"Ignore walls"
+		};
+		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
+
 		inline float aimbot_fov = 0.3f;
-		inline bool only_visible = true;
 		inline float aimbot_smoothing = 0.f;
 		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
