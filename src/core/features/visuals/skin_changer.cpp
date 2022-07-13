@@ -6,18 +6,22 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	// Get the weapon entity from the provided handle
 	weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapon_handle);
 	if (!weapon) return false;
-	
+
 	int weapon_index = weapon->item_definition_index();										// Get the weapons item definition index
 	if (skins::custom_skins.find(weapon_index) == skins::custom_skins.end()) return false;	// Check if the weapon is in map
-
+	
+	// Change knife index
+	if (skins::custom_skins.at(weapon_index).item_definition_index != NULL) {
+		weapon->item_definition_index() = skins::custom_skins.at(weapon_index).item_definition_index;
+		weapon_index = skins::custom_skins.at(weapon_index).item_definition_index;
+	}
+	
 	const auto active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return false;
-	const auto active_weapon_idx = active_weapon->item_definition_index();
+	if (weapon == active_weapon)
+		update_knife_model(weapon);
 
 	// Apply to fallback variables
-	if (skins::custom_skins.at(weapon_index).item_definition_index != NULL)
-		weapon->item_definition_index() = skins::custom_skins.at(weapon_index).item_definition_index;
-
 	if (skins::custom_skins.at(weapon_index).paint_kit != NULL) weapon->fallback_paint_kit() = skins::custom_skins.at(weapon_index).paint_kit;
 	if (skins::custom_skins.at(weapon_index).quality != NULL)   weapon->entity_quality()     = skins::custom_skins.at(weapon_index).quality;
 	if (skins::custom_skins.at(weapon_index).seed != NULL)      weapon->fallback_seed()      = skins::custom_skins.at(weapon_index).seed;
@@ -34,26 +38,28 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	return true;
 }
 
+// TODO: Animations https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L970
+void skins::update_knife_model(weapon_t* weapon) {
+	const int weapon_idx = weapon->item_definition_index();
+	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;
+	
+	// Weapon models
+	weapon->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx)));
+	weapon->net_pre_data_update(0);
+
+	// Viewmodel
+	const auto viewmodel = (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(csgo::local_player->view_model());
+	if (!viewmodel) return;
+	const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
+	if (viewmodel_weapon != weapon) return;
+
+	viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx)));
+}
+
 // Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
 void skins::change_skins(client_frame_stage_t stage) {
 	if (false /*SKINCHANGER VAR*/) return;
 	if (!csgo::local_player) return;
-
-	// Knife models
-	// TODO: Animations https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L970
-	const auto active_weapon = csgo::local_player->active_weapon();
-	if (!active_weapon) return;
-	const auto active_weapon_idx = active_weapon->item_definition_index();
-	if (custom_models.find(active_weapon_idx) != custom_models.end()) {
-		active_weapon->set_model_index(interfaces::model_info->get_model_index(custom_models[active_weapon_idx]));
-		active_weapon->net_pre_data_update(0);
-
-		const auto viewmodel = (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(csgo::local_player->view_model());
-		if (!viewmodel) return;
-		const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
-		if (viewmodel_weapon != active_weapon) return;
-		viewmodel->set_model_index(interfaces::model_info->get_model_index(custom_models[active_weapon_idx]));
-	}
 
 	// Change every skin in the map
 	auto weapons = csgo::local_player->get_weapons();

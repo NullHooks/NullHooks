@@ -30,21 +30,23 @@ struct skin_info {
 namespace skins {
     inline bool apply_skin(DWORD weapon_handle);
     void change_skins(client_frame_stage_t stage);
+    void update_knife_model(weapon_t* weapon);
 
     inline std::unordered_map<int, skin_info> custom_skins;
     inline std::unordered_map<int, const char*> custom_models;      // Stores custom model names
     inline void init_skin_config() {
         // CT Knife
-        custom_models[WEAPON_KNIFE] = "models/weapons/v_knife_m9_bay.mdl";
         custom_skins[WEAPON_KNIFE].item_definition_index = WEAPON_KNIFE_M9_BAYONET;
-        custom_skins[WEAPON_KNIFE].paint_kit = 38;
-        custom_skins[WEAPON_KNIFE].quality = SKIN_QUALITY_UNUSUAL;
+        custom_models[WEAPON_KNIFE_M9_BAYONET] = "models/weapons/v_knife_m9_bay.mdl";
+        custom_skins[WEAPON_KNIFE_M9_BAYONET].paint_kit = 38;
+        custom_skins[WEAPON_KNIFE_M9_BAYONET].seed = 69;
+        custom_skins[WEAPON_KNIFE_M9_BAYONET].quality = SKIN_QUALITY_UNUSUAL;
 
         // T Knife
-        custom_models[WEAPON_KNIFE_T] = "models/weapons/v_knife_butterfly.mdl";
         custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_KNIFE_BUTTERFLY;
-        custom_skins[WEAPON_KNIFE_T].paint_kit = 417;
-        custom_skins[WEAPON_KNIFE_T].quality = SKIN_QUALITY_UNUSUAL;
+        custom_models[WEAPON_KNIFE_BUTTERFLY] = "models/weapons/v_knife_butterfly.mdl";
+        custom_skins[WEAPON_KNIFE_BUTTERFLY].paint_kit = 417;
+        custom_skins[WEAPON_KNIFE_BUTTERFLY].quality = SKIN_QUALITY_UNUSUAL;
 
         custom_skins[WEAPON_GLOCK].paint_kit = 38;
         custom_skins[WEAPON_GLOCK].stattrack = 1337;
