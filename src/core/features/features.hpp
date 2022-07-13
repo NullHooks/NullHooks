@@ -72,7 +72,7 @@ namespace misc {
 		void pre_pred_jumpbug(c_usercmd* cmd, int old_flags);
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
 
-		void slow_walk(c_usercmd* cmd, int old_flags);
+		void slow_walk(c_usercmd* cmd);
 	}
 
 	namespace speedgraph {
