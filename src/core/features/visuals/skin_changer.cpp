@@ -189,6 +189,7 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
     }
 }
 
+// Used in viewmodel_sequence hook
 void skins::fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence) {
     if (!csgo::local_player) return;
     if (!viewmodel_weapon->is_knife()) return;
