@@ -52,7 +52,7 @@ bool aim::autowall::trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec
 	return result;
 }
 
-static float aim::autowall::handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& start, float penetration, float damage) {
+static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& start, float penetration, float& damage) {
 	trace_t exit_trace;
 	vec3_t dummy;
 
@@ -79,9 +79,12 @@ static float aim::autowall::handle_bullet_penetration(surface_data* enter_surfac
 	}
 
 	damage -= 11.25f / penetration / penetration_modifier + damage * damage_modifier + (exit_trace.end - enter_trace.end).length_sqr() / 24.0f / penetration_modifier;
+	
 
-	start = exit_trace.end;
-	return damage;
+	start = exit_trace.end;		// Set start of next trace to the current end
+	
+	if (damage < 1.0f) return false;
+	return true;
 }
 
 // Used after is_visible() check in aimbot
@@ -107,7 +110,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
 			distance += trace.flFraction * (weapon_data->weapon_range - distance);
-			damage = get_damage_multiplier(trace.hit_group) * damage * powf(weapon_data->weapon_range_mod, distance / 500.0f);
+			damage = damage * get_damage_multiplier(trace.hit_group)  * powf(weapon_data->weapon_range_mod, distance / 500.0f);
 
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
@@ -118,7 +121,9 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
 
-		damage = autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage);	// Start is changed from handle_bullet_penetration(). Thank you @hBuffer
+		if (!autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage))	// Start and damage are changed from handle_bullet_penetration()
+			return false;
+
 		hits_left--;
 	}
 
