@@ -55,7 +55,6 @@ namespace skins {
 
         // T Knife
         custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_KNIFE_BUTTERFLY;
-        custom_models[WEAPON_KNIFE_BUTTERFLY] = "models/weapons/v_knife_butterfly.mdl";
         custom_skins[WEAPON_KNIFE_BUTTERFLY].paint_kit = 417;
         custom_skins[WEAPON_KNIFE_BUTTERFLY].quality = SKIN_QUALITY_UNUSUAL;
 
