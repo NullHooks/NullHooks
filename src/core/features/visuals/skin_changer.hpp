@@ -44,10 +44,10 @@ namespace skins {
         custom_skins[WEAPON_KNIFE_M9_BAYONET].quality = SKIN_QUALITY_UNUSUAL;
 
         // T Knife
-        custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_KNIFE_BUTTERFLY;
-        custom_models[WEAPON_KNIFE_BUTTERFLY] = "models/weapons/v_knife_butterfly.mdl";
-        custom_skins[WEAPON_KNIFE_BUTTERFLY].paint_kit = 417;
-        custom_skins[WEAPON_KNIFE_BUTTERFLY].quality = SKIN_QUALITY_UNUSUAL;
+        custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_BAYONET;
+        custom_models[WEAPON_BAYONET] = "models/weapons/v_knife_butterfly.mdl";
+        custom_skins[WEAPON_BAYONET].paint_kit = 417;
+        custom_skins[WEAPON_BAYONET].quality = SKIN_QUALITY_UNUSUAL;
 
         custom_skins[WEAPON_GLOCK].paint_kit = 38;
         custom_skins[WEAPON_GLOCK].stattrack = 1337;
