@@ -84,6 +84,7 @@ static float aim::autowall::handle_bullet_penetration(surface_data* enter_surfac
 	return damage;
 }
 
+// Used after is_visible() check in aimbot
 bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage) {
 	float damage = static_cast<float>(weapon_data->weapon_damage);
 	vec3_t start = local_player->get_eye_pos();
@@ -105,7 +106,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 		if (trace.flFraction == 1.0f) break;
 
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
-			distance = trace.flFraction * (weapon_data->weapon_range - distance);
+			distance += trace.flFraction * (weapon_data->weapon_range - distance);
 			damage = get_damage_multiplier(trace.hit_group) * damage * powf(weapon_data->weapon_range_mod, distance / 500.0f);
 
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
