@@ -112,4 +112,10 @@ namespace hooks {
 		inline fn original;
 		void __fastcall hook(void* thisptr, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly);
 	}
+
+	namespace viewmodel_sequence {
+		using fn = void(*)(c_recv_proxy_data *, void *, void *);
+		inline fn original;
+		void hook(c_recv_proxy_data *, void *, void *);
+	}
 }
