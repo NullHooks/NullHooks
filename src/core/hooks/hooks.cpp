@@ -21,6 +21,7 @@ bool hooks::initialize() {
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
 	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
+	const auto viewmodel_sequence_target          = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_viewmodel_sequence));
 
 	menu::init_windows();		// For window positions on smaller screens
 	custom_helpers::state_to_console_color("Init", "Windows initialized!");
@@ -102,6 +103,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(fire_event_target, &fire_event::hook, reinterpret_cast<void**>(&fire_event::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize fire_event.");
 	custom_helpers::state_to_console_color("Hooks", "fire_event initialized!");
+
+	if(MH_CreateHook(viewmodel_sequence_target, &viewmodel_sequence::hook, reinterpret_cast<void **>(&viewmodel_sequence::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize viewmodel_sequence.");
+	custom_helpers::state_to_console_color("Hooks", "viewmodel_sequence initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");

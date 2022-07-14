@@ -168,6 +168,7 @@
     </ClCompile>
     <ClCompile Include="core\hooks\functions\render_smoke_overlay.cpp" />
     <ClCompile Include="core\hooks\functions\supports_resolve_depth.cpp" />
+    <ClCompile Include="core\hooks\functions\viewmodel_sequence.cpp" />
     <ClCompile Include="core\hooks\functions\WndProc_hook.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
