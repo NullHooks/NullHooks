@@ -206,6 +206,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add multicombobox
     - [X] For selecting what parts of the speedgraph we should draw
 - [X] Reset bomb timer on new round (sometimes?)
+- [X] Add <kbd>alt</kbd>+<kbd>tab</kbd> checks to global input
 #
 </details>
 
@@ -217,7 +218,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [X] Snappy
     - [ ] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
-    - [ ] Make aimbot and triggerbot also aim for backtrack (Using `backtrack::records[player][record]`?)
+    - [ ] Make aimbot and triggerbot also aim for backtrack
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -236,10 +237,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
 -->
-- [ ] Add <kbd>alt</kbd>+<kbd>tab</kbd> checks to global input
+- [ ] Add config and all that (json or whatever)
 - [ ] Add "defusing" to bomb timer
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
-- [ ] Add config and all that (json or whatever)
 - [ ] Port to linux <!-- <3 -->
 
 ## Screenshots
