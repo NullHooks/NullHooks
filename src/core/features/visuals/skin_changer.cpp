@@ -16,10 +16,7 @@ bool skins::apply_skin(DWORD weapon_handle) {
 		weapon_index = skins::custom_skins.at(weapon_index).item_definition_index;
 	}
 	
-	/*const auto active_weapon = csgo::local_player->active_weapon();
-	if (!active_weapon) return false;
-	if (weapon == active_weapon)*/
-		update_knife_model(weapon);
+	update_knife_model(weapon);     // Will update the weapon model index and the viewmodel if needed
 
 	// Apply to fallback variables
 	if (skins::custom_skins.at(weapon_index).paint_kit != NULL) weapon->fallback_paint_kit() = skins::custom_skins.at(weapon_index).paint_kit;
@@ -27,18 +24,17 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	if (skins::custom_skins.at(weapon_index).seed != NULL)      weapon->fallback_seed()      = skins::custom_skins.at(weapon_index).seed;
 	if (skins::custom_skins.at(weapon_index).stattrack != NULL) weapon->fallback_stattrack() = skins::custom_skins.at(weapon_index).stattrack;
 	if (skins::custom_skins.at(weapon_index).wear != NULL)      weapon->fallback_wear()      = skins::custom_skins.at(weapon_index).wear;
+	// TODO: Set account id to localplayer id
 	
-	// Custom name crashes
+	// TODO: Custom name crashes :(
 	if (skins::custom_skins.at(weapon_index).custom_name != NULL)
 		sprintf_s(weapon->custom_name(), 32, "%s", skins::custom_skins.at(weapon_index).custom_name);
 
-	// TODO: Set account id to localplayer id
 	weapon->item_id_high() = -1;	// Edit "m_iItemIDHigh" so fallback values will be used
 
 	return true;
 }
 
-// TODO: Animations https://github.com/danielkrupinski/Osiris/blob/master/Source/InventoryChanger/InventoryChanger.cpp#L970
 void skins::update_knife_model(weapon_t* weapon) {
 	const int weapon_idx = weapon->item_definition_index();
 	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;
@@ -52,8 +48,13 @@ void skins::update_knife_model(weapon_t* weapon) {
 	if (!viewmodel) return;
 	const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
 	if (viewmodel_weapon != weapon) return;
-
 	viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx)));
+
+    // Worldmodel
+    if (!(skins::custom_wolrdmodels.find(weapon_idx) != skins::custom_wolrdmodels.end())) return;
+    const auto worldmodel = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel_weapon->weapon_worldmodel());
+    if (!worldmodel) return;
+    worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_wolrdmodels.at(weapon_idx)));
 }
 
 // Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
