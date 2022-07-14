@@ -37,8 +37,8 @@ struct skin_info {
     int seed = 0;							// nFallbackSeed
     int stattrack = -1;						// nFallbackStatTrak	(-1 = disabled, positive value is kill number)
     int quality = 4;						// iEntityQuality       (https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Skin_Changer#m_iEntityQuality)
-    char* custom_name = nullptr;		    // szCustomName
     float wear = 0.001f;			        // flFallbackWear		(Lower = Newer)
+    //char* custom_name = nullptr;		    // TODO: szCustomName
 };
 
 namespace skins {
@@ -76,6 +76,9 @@ namespace skins {
 
         custom_skins[WEAPON_AWP].paint_kit = 344;
         custom_skins[WEAPON_AWP].quality = SKIN_QUALITY_TOURNAMENT;
+
+        custom_skins[WEAPON_SSG08].paint_kit = 868;
+        custom_skins[WEAPON_SSG08].quality = SKIN_QUALITY_SELF_MADE;
     }
 
     // Stores knife model names, no need to change

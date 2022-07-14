@@ -24,11 +24,8 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	if (skins::custom_skins.at(weapon_index).seed != NULL)      weapon->fallback_seed()      = skins::custom_skins.at(weapon_index).seed;
 	if (skins::custom_skins.at(weapon_index).stattrack != NULL) weapon->fallback_stattrack() = skins::custom_skins.at(weapon_index).stattrack;
 	if (skins::custom_skins.at(weapon_index).wear != NULL)      weapon->fallback_wear()      = skins::custom_skins.at(weapon_index).wear;
-	// TODO: Set account id to localplayer id
-	
-	// TODO: Custom name crashes :(
-	if (skins::custom_skins.at(weapon_index).custom_name != NULL)
-		sprintf_s(weapon->custom_name(), 32, "%s", skins::custom_skins.at(weapon_index).custom_name);
+	// TODO: Set account id to localplayer id for stattrack
+	// TODO: Custom name 
 
 	weapon->item_id_high() = -1;	// Edit "m_iItemIDHigh" so fallback values will be used
 

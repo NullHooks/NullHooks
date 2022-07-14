@@ -330,18 +330,17 @@ public:
 	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel",        weapon_worldmodel,           int)
 	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
 	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
-	//NETVAR("DT_BaseCombatWeapon", "m_iEntityQuality",           entity_quality,              int)
 
 	#pragma region BaseAttributableItem
 	NETVAR("DT_BaseAttributableItem", "m_iItemDefinitionIndex", item_definition_index, short)
-	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,       int)
-	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,         int)
-	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,     int)
-	NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,        char*)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit, int)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,      int)
-	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,      float)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak",    fallback_stattrack, int)
+	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,		   int)
+	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,			   int)
+	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,		   int)
+	//NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   char)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit,	   int)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,		   int)
+	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,		   float)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak",    fallback_stattrack,	   int)
 	#pragma endregion
 
 	float inaccuracy() {
