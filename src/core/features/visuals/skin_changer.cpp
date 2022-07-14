@@ -179,7 +179,7 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
         case SEQUENCE_DEFAULT_LOOKAT01:
             return random(12, 13);
         }
-    case WEAPON_KNIFE_TALON:
+    case WEAPON_KNIFE_WIDOWMAKER:
         switch (sequence) {
         case SEQUENCE_DEFAULT_LOOKAT01:
             return random(14, 15);
