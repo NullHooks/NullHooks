@@ -3,6 +3,8 @@
 
 /*
  * More info: https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Skin_Changer
+ * Some skin ids: https://steamcommunity.com/sharedfiles/filedetails/?id=880595913
+ * More skin ids: https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt
  * 
  * First thing that the skin changer will do is change the weapons buy id if there is a different one in the map,
  * so if you want to change your knife, set the item_definition_index of your current knife (default for example)
@@ -51,13 +53,15 @@ namespace skins {
         custom_skins[WEAPON_KNIFE].item_definition_index = WEAPON_KNIFE_M9_BAYONET;
         custom_skins[WEAPON_KNIFE_M9_BAYONET].paint_kit = 417;
         custom_skins[WEAPON_KNIFE_M9_BAYONET].seed = 69;
-        custom_skins[WEAPON_KNIFE_M9_BAYONET].quality = SKIN_QUALITY_UNUSUAL;
+        custom_skins[WEAPON_KNIFE_M9_BAYONET].quality = SKIN_QUALITY_VINTAGE;
 
         // T Knife
         custom_skins[WEAPON_KNIFE_T].item_definition_index = WEAPON_KNIFE_BUTTERFLY;
         custom_skins[WEAPON_KNIFE_BUTTERFLY].paint_kit = 417;
+        custom_skins[WEAPON_KNIFE_BUTTERFLY].seed = 420;
         custom_skins[WEAPON_KNIFE_BUTTERFLY].quality = SKIN_QUALITY_UNUSUAL;
 
+        // Other weapons
         custom_skins[WEAPON_GLOCK].paint_kit = 38;
         custom_skins[WEAPON_GLOCK].stattrack = 1337;
 
