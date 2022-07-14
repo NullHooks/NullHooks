@@ -130,16 +130,16 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
         default:
             return sequence - 1;
         }
-/*
-    case WEAPON_KNIFE_SHADOW_DAGGERS:
+
+    case WEAPON_KNIFE_PUSH:
         switch (sequence) {
         case SEQUENCE_DEFAULT_IDLE2:
             return SEQUENCE_DAGGERS_IDLE1;
         case SEQUENCE_DEFAULT_LIGHT_MISS1:
         case SEQUENCE_DEFAULT_LIGHT_MISS2:
-            return Helpers::random(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
+            return random(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
         case SEQUENCE_DEFAULT_HEAVY_MISS1:
-            return Helpers::random(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
+            return random(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
         case SEQUENCE_DEFAULT_HEAVY_HIT1:
         case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
         case SEQUENCE_DEFAULT_LOOKAT01:
@@ -150,7 +150,7 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
         default:
             return sequence + 2;
         }
-        */
+
     case WEAPON_KNIFE_SURVIVAL_BOWIE:
         switch (sequence) {
         case SEQUENCE_DEFAULT_DRAW:
@@ -162,10 +162,10 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
             return sequence - 1;
         }
     case WEAPON_KNIFE_URSUS:
-    /* case WEAPON_KNIFE_SKELETON: */
-    /* case WEAPON_KNIFE_NOMAD: */
-    /* case WEAPON_KNIFE_PARACORD: */
-    /* case WEAPON_KNIFE_SURVIVAL_KNIFE: */
+    case WEAPON_KNIFE_SKELETON:
+    case WEAPON_KNIFE_NOMAD:
+    case WEAPON_KNIFE_PARACORD:
+    case WEAPON_KNIFE_SURVIVAL:
         switch (sequence) {
         case SEQUENCE_DEFAULT_DRAW:
             return random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
@@ -179,13 +179,11 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
         case SEQUENCE_DEFAULT_LOOKAT01:
             return random(12, 13);
         }
-    /*
     case WEAPON_KNIFE_TALON:
         switch (sequence) {
         case SEQUENCE_DEFAULT_LOOKAT01:
-            return Helpers::random(14, 15);
+            return random(14, 15);
         }
-        */
     default:
         return sequence;
     }
