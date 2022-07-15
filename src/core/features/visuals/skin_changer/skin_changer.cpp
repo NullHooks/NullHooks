@@ -66,6 +66,7 @@ void skins::change_skins(client_frame_stage_t stage) {
 	}
 }
 
+#pragma region ANIMATIONS
 int remap_knife_animation(int weaponID, const int sequence) noexcept {
     enum Sequence {
         SEQUENCE_DEFAULT_DRAW = 0,
@@ -103,85 +104,85 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
     };
 
     switch (weaponID) {
-    case WEAPON_KNIFE_BUTTERFLY:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_DRAW:
-            return random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return random(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
-        default:
-            return sequence + 1;
-        }
-    case WEAPON_KNIFE_FALCHION:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_DRAW:
-        case SEQUENCE_DEFAULT_IDLE1:
-        case SEQUENCE_DEFAULT_HEAVY_HIT1:
-        case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
-            return sequence;
-        case SEQUENCE_DEFAULT_HEAVY_MISS1:
-            return random(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return random(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
-        default:
-            return sequence - 1;
-        }
+        case WEAPON_KNIFE_BUTTERFLY:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_DRAW:
+                    return random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return random(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
+                default:
+                    return sequence + 1;
+            }
+        case WEAPON_KNIFE_FALCHION:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_DRAW:
+                case SEQUENCE_DEFAULT_IDLE1:
+                case SEQUENCE_DEFAULT_HEAVY_HIT1:
+                case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
+                    return sequence;
+                case SEQUENCE_DEFAULT_HEAVY_MISS1:
+                    return random(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return random(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
+                default:
+                    return sequence - 1;
+            }
 
-    case WEAPON_KNIFE_PUSH:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_IDLE2:
-            return SEQUENCE_DAGGERS_IDLE1;
-        case SEQUENCE_DEFAULT_LIGHT_MISS1:
-        case SEQUENCE_DEFAULT_LIGHT_MISS2:
-            return random(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
-        case SEQUENCE_DEFAULT_HEAVY_MISS1:
-            return random(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
-        case SEQUENCE_DEFAULT_HEAVY_HIT1:
-        case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return sequence + 3;
-        case SEQUENCE_DEFAULT_DRAW:
-        case SEQUENCE_DEFAULT_IDLE1:
-            return sequence;
-        default:
-            return sequence + 2;
-        }
+        case WEAPON_KNIFE_PUSH:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_IDLE2:
+                    return SEQUENCE_DAGGERS_IDLE1;
+                case SEQUENCE_DEFAULT_LIGHT_MISS1:
+                case SEQUENCE_DEFAULT_LIGHT_MISS2:
+                    return random(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
+                case SEQUENCE_DEFAULT_HEAVY_MISS1:
+                    return random(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
+                case SEQUENCE_DEFAULT_HEAVY_HIT1:
+                case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return sequence + 3;
+                case SEQUENCE_DEFAULT_DRAW:
+                case SEQUENCE_DEFAULT_IDLE1:
+                    return sequence;
+                default:
+                    return sequence + 2;
+            }
 
-    case WEAPON_KNIFE_SURVIVAL_BOWIE:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_DRAW:
-        case SEQUENCE_DEFAULT_IDLE1:
+        case WEAPON_KNIFE_SURVIVAL_BOWIE:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_DRAW:
+                case SEQUENCE_DEFAULT_IDLE1:
+                    return sequence;
+                case SEQUENCE_DEFAULT_IDLE2:
+                    return SEQUENCE_BOWIE_IDLE1;
+                default:
+                    return sequence - 1;
+            }
+        case WEAPON_KNIFE_URSUS:
+        case WEAPON_KNIFE_SKELETON:
+        case WEAPON_KNIFE_NOMAD:
+        case WEAPON_KNIFE_PARACORD:
+        case WEAPON_KNIFE_SURVIVAL:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_DRAW:
+                    return random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return random(SEQUENCE_BUTTERFLY_LOOKAT01, Sequence(14));
+                default:
+                    return sequence + 1;
+            }
+        case WEAPON_KNIFE_STILETTO:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return random(12, 13);
+            }
+        case WEAPON_KNIFE_WIDOWMAKER:
+            switch (sequence) {
+                case SEQUENCE_DEFAULT_LOOKAT01:
+                    return random(14, 15);
+            }
+        default:
             return sequence;
-        case SEQUENCE_DEFAULT_IDLE2:
-            return SEQUENCE_BOWIE_IDLE1;
-        default:
-            return sequence - 1;
-        }
-    case WEAPON_KNIFE_URSUS:
-    case WEAPON_KNIFE_SKELETON:
-    case WEAPON_KNIFE_NOMAD:
-    case WEAPON_KNIFE_PARACORD:
-    case WEAPON_KNIFE_SURVIVAL:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_DRAW:
-            return random(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return random(SEQUENCE_BUTTERFLY_LOOKAT01, Sequence(14));
-        default:
-            return sequence + 1;
-        }
-    case WEAPON_KNIFE_STILETTO:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return random(12, 13);
-        }
-    case WEAPON_KNIFE_WIDOWMAKER:
-        switch (sequence) {
-        case SEQUENCE_DEFAULT_LOOKAT01:
-            return random(14, 15);
-        }
-    default:
-        return sequence;
     }
 }
 
@@ -192,3 +193,4 @@ void skins::fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence) {
 
     sequence = remap_knife_animation(viewmodel_weapon->item_definition_index(), sequence);
 }
+#pragma endregion
