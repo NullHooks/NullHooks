@@ -47,6 +47,8 @@ namespace skins {
     void update_knife_model(weapon_t* weapon);
     void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence); 
 
+    void read_skins();
+
     inline std::unordered_map<int, skin_info> custom_skins;
     inline void init_skin_config() {
         // CT Knife
@@ -102,5 +104,20 @@ namespace skins {
         { WEAPON_KNIFE_WIDOWMAKER,       { "models/weapons/v_knife_widowmaker.mdl", "models/weapons/w_knife_widowmaker.mdl" } },        // Talon
         { WEAPON_KNIFE_URSUS,            { "models/weapons/v_knife_ursus.mdl", "models/weapons/w_knife_ursus.mdl" } },
         { WEAPON_KNIFE_CSS,              { "models/weapons/v_knife_css.mdl", "models/weapons/w_knife_css.mdl" } }                       // ???
+    };
+
+    // Used for config reading in read_skins.cpp
+    const std::unordered_map<std::string, int> qualities_map = {
+    { "SKIN_QUALITY_NORMAL",        SKIN_QUALITY_NORMAL },
+    { "SKIN_QUALITY_GENUINE",       SKIN_QUALITY_GENUINE },
+    { "SKIN_QUALITY_VINTAGE",       SKIN_QUALITY_VINTAGE },
+    { "SKIN_QUALITY_UNUSUAL",       SKIN_QUALITY_UNUSUAL },
+    { "SKIN_QUALITY_COMMUNITY",     SKIN_QUALITY_COMMUNITY },
+    { "SKIN_QUALITY_DEVELOPER",     SKIN_QUALITY_DEVELOPER },
+    { "SKIN_QUALITY_SELF_MADE",     SKIN_QUALITY_SELF_MADE },
+    { "SKIN_QUALITY_CUSTOMIZED",    SKIN_QUALITY_CUSTOMIZED },
+    { "SKIN_QUALITY_STRANGE",       SKIN_QUALITY_STRANGE },
+    { "SKIN_QUALITY_COMPLETED",     SKIN_QUALITY_COMPLETED },
+    { "SKIN_QUALITY_TOURNAMENT",    SKIN_QUALITY_TOURNAMENT }
     };
 }

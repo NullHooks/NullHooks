@@ -1,5 +1,6 @@
 #include "core/features/features.hpp"
 #include "core/menu/menu.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 
 auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
 	// Background
@@ -383,25 +384,38 @@ void menu::render() {
 			/* ----- Misc - Buttons ----- */
 
 			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container
-			const int button_items_num       = 2;
+			const int button_items_num       = 1;
 			const int button_items_h         = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y          = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
 			const int buttons_items_base_y   = buttons_con_y + container_padding;			// Same as other containers
 
 			gui::group_box(container_left_pos_o, buttons_con_y, container_width_o, button_items_h, render::fonts::watermark_font, "Buttons", false); {
-				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20, render::fonts::watermark_font, // Bigger "checkbox" as button. TODO: Pass size and pos
-					"Update skins (Full update)", button_functions::full_update);
-				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 1), item_checkbox_pos_o - 20, render::fonts::watermark_font,
+				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20, render::fonts::watermark_font,		// Bigger "checkbox" as button. TODO: Pass size and pos
 					"Exec autoexec", button_functions::exec_autoexec);
 			}
 			break;
 		}
 		case 3: {	// Config
-			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
+			const int columns = 2;
+			container_width = (container_width / columns) - (container_margin / columns);
+			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+			item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
+			item_hotkey_w = container_width - container_padding * 2;
+
+			const int part1_items_num = 2;
+			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
+				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Load skin config", skins::read_skins);
+				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Update game skins (Full update)", button_functions::full_update);
+			}
 			break;
 		}
 	}
-	// TODO: If the 2 dragable zones are in top of each other, they both get dragged
+
 	spectator_framework::spec_list_movement(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h);
 	gui::menu_movement(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, 30);
 }
