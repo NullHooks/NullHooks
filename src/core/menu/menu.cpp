@@ -384,39 +384,33 @@ void menu::render() {
 			/* ----- Misc - Buttons ----- */
 
 			const int buttons_con_margin_pos = variables::ui::menu::y + variables::ui::menu::h - container_margin;	// Bottom left corner of container
-			const int button_items_num       = 2;
+			const int button_items_num       = 1;
 			const int button_items_h         = (button_items_num * 15) + (container_padding * 2) - 4;
 			const int buttons_con_y          = buttons_con_margin_pos - button_items_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
 			const int buttons_items_base_y   = buttons_con_y + container_padding;			// Same as other containers
 
 			gui::group_box(container_left_pos_o, buttons_con_y, container_width_o, button_items_h, render::fonts::watermark_font, "Buttons", false); {
-				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20, render::fonts::watermark_font, // Bigger "checkbox" as button. TODO: Pass size and pos
-					"Update skins (Full update)", button_functions::full_update);
-				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 1), item_checkbox_pos_o - 20, render::fonts::watermark_font,
+				gui::button(item_left_pos_o, buttons_items_base_y + (15 * 0), item_checkbox_pos_o - 20, render::fonts::watermark_font,		// Bigger "checkbox" as button. TODO: Pass size and pos
 					"Exec autoexec", button_functions::exec_autoexec);
 			}
 			break;
 		}
 		case 3: {	// Config
 			const int columns = 2;
-			const int container_width_o = container_width;			// Original used for buttons
-			const int container_left_pos_o = container_left_pos;	// Original used for buttons
-			const int item_left_pos_o = item_left_pos;				// Original used for buttons
-			const int item_checkbox_pos_o = item_checkbox_pos;		// Original used for buttons
-			const int item_slider_pos_o = item_slider_pos;			// Original used for buttons
-			const int item_hotkey_w_o = item_hotkey_w;				// Original used for buttons
 			container_width = (container_width / columns) - (container_margin / columns);
 			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
 			item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;
 			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w = container_width - container_padding * 2;
 
-			const int part1_items_num = 1;
+			const int part1_items_num = 2;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Load skin config", skins::read_skins);
+				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Update game skins (Full update)", button_functions::full_update);
 			}
 			break;
 		}
