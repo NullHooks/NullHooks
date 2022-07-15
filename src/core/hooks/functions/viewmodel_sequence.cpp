@@ -1,5 +1,5 @@
 #include "dependencies/utilities/csgo.hpp"
-#include "core/features/visuals/skin_changer.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 #include "core/hooks/hooks.hpp"
 
 void hooks::viewmodel_sequence::hook(c_recv_proxy_data *data, void *out_struct, void *arg3) {
