@@ -47,6 +47,8 @@ namespace skins {
     void update_knife_model(weapon_t* weapon);
     void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence); 
 
+    void read_skins();
+
     inline std::unordered_map<int, skin_info> custom_skins;
     inline void init_skin_config() {
         // CT Knife

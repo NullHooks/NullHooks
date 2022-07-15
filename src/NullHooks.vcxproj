@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\config\config.cpp" />
     <ClCompile Include="core\features\aim\aimbot.cpp" />
     <ClCompile Include="core\features\aim\autowall.cpp" />
     <ClCompile Include="core\features\aim\triggerbot.cpp">
@@ -124,6 +125,7 @@
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\player_esp.cpp" />
+    <ClCompile Include="core\features\visuals\skin_changer\read_skins.cpp" />
     <ClCompile Include="core\features\visuals\skin_changer\skin_changer.cpp" />
     <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -247,6 +249,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\config\config.hpp" />
     <ClInclude Include="core\features\misc\backtrack.hpp" />
     <ClInclude Include="core\features\visuals\skin_changer\skin_changer.hpp" />
     <ClInclude Include="core\hooks\functions\event_globals.hpp" />
