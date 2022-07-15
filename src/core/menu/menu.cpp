@@ -1,5 +1,6 @@
 #include "core/features/features.hpp"
 #include "core/menu/menu.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 
 auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
 	// Background
@@ -397,11 +398,30 @@ void menu::render() {
 			break;
 		}
 		case 3: {	// Config
-			render::draw_text_string(item_left_pos + 2, part1_base_item_y - 1, render::fonts::watermark_font, "Coming soon...", false, color::white(255));
+			const int columns = 2;
+			const int container_width_o = container_width;			// Original used for buttons
+			const int container_left_pos_o = container_left_pos;	// Original used for buttons
+			const int item_left_pos_o = item_left_pos;				// Original used for buttons
+			const int item_checkbox_pos_o = item_checkbox_pos;		// Original used for buttons
+			const int item_slider_pos_o = item_slider_pos;			// Original used for buttons
+			const int item_hotkey_w_o = item_hotkey_w;				// Original used for buttons
+			container_width = (container_width / columns) - (container_margin / columns);
+			item_checkbox_pos = variables::ui::menu::x + container_width - container_margin - item_checkbox_length;
+			item_slider_pos = variables::ui::menu::x + container_width - container_margin - item_slider_length;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
+			item_hotkey_w = container_width - container_padding * 2;
+
+			const int part1_items_num = 1;
+			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
+				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Load skin config", skins::read_skins);
+			}
 			break;
 		}
 	}
-	// TODO: If the 2 dragable zones are in top of each other, they both get dragged
+
 	spectator_framework::spec_list_movement(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h);
 	gui::menu_movement(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, 30);
 }
