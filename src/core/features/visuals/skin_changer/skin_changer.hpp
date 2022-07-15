@@ -106,21 +106,18 @@ namespace skins {
         { WEAPON_KNIFE_CSS,              { "models/weapons/v_knife_css.mdl", "models/weapons/w_knife_css.mdl" } }                       // ???
     };
 
-    inline std::map<std::string, int> definitions {
-        { "WEAPON_BAYONET",               WEAPON_BAYONET },
-        { "WEAPON_KNIFE_M9_BAYONET",      WEAPON_KNIFE_M9_BAYONET },
-        { "WEAPON_KNIFE_KARAMBIT",        WEAPON_KNIFE_KARAMBIT },
-        { "WEAPON_KNIFE_SURVIVAL_BOWIE",  WEAPON_KNIFE_SURVIVAL_BOWIE },
-        { "WEAPON_KNIFE_BUTTERFLY",       WEAPON_KNIFE_BUTTERFLY },
-        { "WEAPON_KNIFE_FALCHION",        WEAPON_KNIFE_FALCHION },
-        { "WEAPON_KNIFE_FLIP",            WEAPON_KNIFE_FLIP },
-        { "WEAPON_KNIFE_GUT",             WEAPON_KNIFE_GUT },
-        { "WEAPON_KNIFE_TACTICAL",        WEAPON_KNIFE_TACTICAL },
-        { "WEAPON_KNIFE_PUSH",            WEAPON_KNIFE_PUSH },
-        { "WEAPON_KNIFE_GYPSY_JACKKNIFE", WEAPON_KNIFE_GYPSY_JACKKNIFE },
-        { "WEAPON_KNIFE_STILETTO",        WEAPON_KNIFE_STILETTO },
-        { "WEAPON_KNIFE_WIDOWMAKER",      WEAPON_KNIFE_WIDOWMAKER },
-        { "WEAPON_KNIFE_URSUS",           WEAPON_KNIFE_URSUS },
-        { "WEAPON_KNIFE_CSS",             WEAPON_KNIFE_CSS }
+    // Used for config reading in read_skins.cpp
+    const std::unordered_map<std::string, int> qualities_map = {
+    { "SKIN_QUALITY_NORMAL",        SKIN_QUALITY_NORMAL },
+    { "SKIN_QUALITY_GENUINE",       SKIN_QUALITY_GENUINE },
+    { "SKIN_QUALITY_VINTAGE",       SKIN_QUALITY_VINTAGE },
+    { "SKIN_QUALITY_UNUSUAL",       SKIN_QUALITY_UNUSUAL },
+    { "SKIN_QUALITY_COMMUNITY",     SKIN_QUALITY_COMMUNITY },
+    { "SKIN_QUALITY_DEVELOPER",     SKIN_QUALITY_DEVELOPER },
+    { "SKIN_QUALITY_SELF_MADE",     SKIN_QUALITY_SELF_MADE },
+    { "SKIN_QUALITY_CUSTOMIZED",    SKIN_QUALITY_CUSTOMIZED },
+    { "SKIN_QUALITY_STRANGE",       SKIN_QUALITY_STRANGE },
+    { "SKIN_QUALITY_COMPLETED",     SKIN_QUALITY_COMPLETED },
+    { "SKIN_QUALITY_TOURNAMENT",    SKIN_QUALITY_TOURNAMENT }
     };
 }
