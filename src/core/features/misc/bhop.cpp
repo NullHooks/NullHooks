@@ -33,12 +33,13 @@ void legit_strafe(c_usercmd* cmd) {
 void rage_strafe(c_usercmd* cmd) {
 	const float speed = csgo::local_player->velocity().length_2d();
 
-	if (cmd->buttons & in_back) cmd->forwardmove = 0.f;
-	else if (cmd->buttons & in_forward) {
-		if (speed <= 60.0f)
-			cmd->forwardmove = 450.0f;
-		else
-			cmd->forwardmove = 0.f;
+	// If pressing forward or back, give a bit of starting speed, then just ignore
+	if (cmd->buttons & in_forward) {
+		if (speed <= 40.0f) cmd->forwardmove = 450.0f;
+		else                cmd->forwardmove = 0.f;
+	} else if (cmd->buttons & in_back) {
+		if (speed <= 40.0f) cmd->forwardmove = -450.0f;
+		else                cmd->forwardmove = 0.f;
 	}
 
 	float yaw_change = 0.0f;
@@ -55,12 +56,22 @@ void rage_strafe(c_usercmd* cmd) {
 	static bool strafe_right;	// For toggling next strafe direction
 	const bool player_strafing = cmd->buttons & in_moveleft || cmd->buttons & in_moveright;
 	if (!(csgo::local_player->flags() & fl_onground) && !player_strafing) {
-		if (strafe_right || cmd->mousedx > 1) {
-			viewangles.y += yaw_change;
-			cmd->sidemove = 450.0f;
-		} else if (!strafe_right || cmd->mousedx < 1) {
-			viewangles.y -= yaw_change;
-			cmd->sidemove = -450.0f;
+		if (cmd->buttons & in_back) {							// Reverse strafe because S is pressed
+			if (strafe_right || cmd->mousedx < 1) {			// Right reverse strafe
+				viewangles.y -= yaw_change;						// (Reverse strafe)
+				cmd->sidemove = 450.0f;							// (Reverse strafe)
+			} else if (!strafe_right || cmd->mousedx > 1) {		// Left reverse strafe
+				viewangles.y += yaw_change;						// (Reverse strafe)
+				cmd->sidemove = -450.0f;						// (Reverse strafe)
+			}
+		} else {												// Normal strafe because S is not pressed
+			if (strafe_right || cmd->mousedx > 1) {				// Right normal strafe
+				viewangles.y += yaw_change;						// (Normal strafe)
+				cmd->sidemove = 450.0f;							// (Normal strafe)
+			} else if (!strafe_right || cmd->mousedx < 1) {		// Right left strafe
+				viewangles.y -= yaw_change;						// (Normal strafe)
+				cmd->sidemove = -450.0f;						// (Normal strafe)
+			}
 		}
 
 		strafe_right = !strafe_right;	// Change strafe dir
