@@ -37,7 +37,7 @@ void skins::update_knife_model(weapon_t* weapon) {
 	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;
 	
 	// Weapon models
-	weapon->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx)));
+	weapon->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel));
 	weapon->net_pre_data_update(0);
 
 	// Viewmodel
@@ -45,13 +45,12 @@ void skins::update_knife_model(weapon_t* weapon) {
 	if (!viewmodel) return;
 	const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
 	if (viewmodel_weapon != weapon) return;
-	viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx)));
+	viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel));
 
     // Worldmodel
-    if (!(skins::custom_wolrdmodels.find(weapon_idx) != skins::custom_wolrdmodels.end())) return;
     const auto worldmodel = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel_weapon->weapon_worldmodel());
     if (!worldmodel) return;
-    worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_wolrdmodels.at(weapon_idx)));
+    worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).worldmodel));
 }
 
 // Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
