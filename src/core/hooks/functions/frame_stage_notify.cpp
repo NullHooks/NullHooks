@@ -1,7 +1,7 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/hooks/hooks.hpp"
 #include "core/features/features.hpp"
-#include "core/features/visuals/skin_changer.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 
 void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage) {
 	switch (frame_stage) {

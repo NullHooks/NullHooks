@@ -2,7 +2,7 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 #include "core/menu/menu.hpp"
-#include "core/features/visuals/skin_changer.hpp"	// For init
+#include "core/features/visuals/skin_changer/skin_changer.hpp"	// For init
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target            = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));

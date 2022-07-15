@@ -1,6 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
-#include "core/features/visuals/skin_changer.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 
 bool skins::apply_skin(DWORD weapon_handle) {
 	// Get the weapon entity from the provided handle
