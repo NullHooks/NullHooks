@@ -24,8 +24,8 @@ void skins::read_skins() {
 	std::string file_contents;
 	if (file.is_open()) {
 		std::string line_buffer;
-		while (std::getline(file, line_buffer)) {  //read data from file object and put it into string.
-			file_contents += line_buffer + "\n";   //print the data of the string
+		while (std::getline(file, line_buffer)) {
+			file_contents += line_buffer + "\n";
 		}
 		file.close();
 	}
@@ -49,8 +49,10 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 		rapidjson::Value& item_definition_index = weapon_obj["item_definition_index"];
 		if (item_definition_index.IsInt())
 			skins::custom_skins[weapon.second].item_definition_index = item_definition_index.GetInt();
-		else if (item_definition_index.IsString() && all_item_definition_indexes.find(item_definition_index.GetString()) != all_item_definition_indexes.end())	// If its a string and in the `all_item_definition_indexes` map
-			skins::custom_skins[weapon.second].item_definition_index = all_item_definition_indexes.at(item_definition_index.GetString());						// Get new weapon idx from `all_item_definition_indexes` map
+		else if (item_definition_index.IsString() && all_item_definition_indexes.find(item_definition_index.GetString()) != all_item_definition_indexes.end()) {	// If its a string and in the `all_item_definition_indexes` map
+			if (doc.HasMember(item_definition_index.GetString()))
+				skins::custom_skins[weapon.second].item_definition_index = all_item_definition_indexes.at(item_definition_index.GetString());							// Get new weapon idx from `all_item_definition_indexes` map
+		}
 	}
 	if (weapon_obj.HasMember("paint_kit")) {
 		rapidjson::Value& paint_kit = weapon_obj["paint_kit"];
