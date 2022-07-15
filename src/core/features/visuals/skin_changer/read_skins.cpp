@@ -7,15 +7,24 @@
 #include "dependencies/rapidjson/writer.h"
 #include "dependencies/rapidjson/stringbuffer.h"
 
+
 void skins::read_skins() {
-	std::ifstream file(config::nullhooks_config_folder);
+	constexpr const char* skin_file_name = "\\skins.json";
+	std::ifstream file;
+	file.open(config::nullhooks_config_folder + std::string(skin_file_name), std::ios::in);
+	
 	std::string file_contents;
+	if (file.is_open()) {
+		std::string line_buffer;
+		while (std::getline(file, line_buffer)) {  //read data from file object and put it into string.
+			file_contents += line_buffer + "\n";   //print the data of the string
+		}
+		file.close();
+	}
 
-	if (file.is_open())
-		file >> file_contents;
+	// File contents as str to dom
+	rapidjson::Document doc;
+	doc.Parse(file_contents.c_str());
 
-	printf("%s\n", config::nullhooks_config_folder);
-	printf("%s\n", file_contents);
-
-	file.close();
+	rapidjson::Value& val = doc["test"];
 }
