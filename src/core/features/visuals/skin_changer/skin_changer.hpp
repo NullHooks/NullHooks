@@ -105,4 +105,22 @@ namespace skins {
         { WEAPON_KNIFE_URSUS,            { "models/weapons/v_knife_ursus.mdl", "models/weapons/w_knife_ursus.mdl" } },
         { WEAPON_KNIFE_CSS,              { "models/weapons/v_knife_css.mdl", "models/weapons/w_knife_css.mdl" } }                       // ???
     };
+
+    inline std::map<std::string, int> definitions {
+        { "WEAPON_BAYONET",               WEAPON_BAYONET },
+        { "WEAPON_KNIFE_M9_BAYONET",      WEAPON_KNIFE_M9_BAYONET },
+        { "WEAPON_KNIFE_KARAMBIT",        WEAPON_KNIFE_KARAMBIT },
+        { "WEAPON_KNIFE_SURVIVAL_BOWIE",  WEAPON_KNIFE_SURVIVAL_BOWIE },
+        { "WEAPON_KNIFE_BUTTERFLY",       WEAPON_KNIFE_BUTTERFLY },
+        { "WEAPON_KNIFE_FALCHION",        WEAPON_KNIFE_FALCHION },
+        { "WEAPON_KNIFE_FLIP",            WEAPON_KNIFE_FLIP },
+        { "WEAPON_KNIFE_GUT",             WEAPON_KNIFE_GUT },
+        { "WEAPON_KNIFE_TACTICAL",        WEAPON_KNIFE_TACTICAL },
+        { "WEAPON_KNIFE_PUSH",            WEAPON_KNIFE_PUSH },
+        { "WEAPON_KNIFE_GYPSY_JACKKNIFE", WEAPON_KNIFE_GYPSY_JACKKNIFE },
+        { "WEAPON_KNIFE_STILETTO",        WEAPON_KNIFE_STILETTO },
+        { "WEAPON_KNIFE_WIDOWMAKER",      WEAPON_KNIFE_WIDOWMAKER },
+        { "WEAPON_KNIFE_URSUS",           WEAPON_KNIFE_URSUS },
+        { "WEAPON_KNIFE_CSS",             WEAPON_KNIFE_CSS }
+    };
 }
