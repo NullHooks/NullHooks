@@ -1,8 +1,14 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/config/config.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 #include<direct.h>
 
 #pragma comment(lib, "shell32.lib")
+
+void config::init() {
+	get_nullhooks_folder();
+	skins::init_skin_config();
+}
 
 void config::get_nullhooks_folder() {
 	CHAR documents[500];
@@ -12,14 +18,33 @@ void config::get_nullhooks_folder() {
 	else                       nullhooks_config_folder = std::string(documents) + std::string("\\NullHooks");	// Use documents folder if possible
 
 	DWORD exitst = GetFileAttributesA(nullhooks_config_folder.c_str());
-	if (exitst == INVALID_FILE_ATTRIBUTES) {		// Path does not exist
+	if (exitst == INVALID_FILE_ATTRIBUTES) {			// Path does not exist
 		if (_mkdir(nullhooks_config_folder.c_str()) == -1)
 			throw std::runtime_error("Failed to create nullhooks folder!");
 		exitst = GetFileAttributesA(nullhooks_config_folder.c_str());	// Get path again
 	}
 
-	if (!(exitst & FILE_ATTRIBUTE_DIRECTORY)) {		// Not a directory
+	if (!(exitst & FILE_ATTRIBUTE_DIRECTORY)) {			// Not a directory
 		if (_mkdir(nullhooks_config_folder.c_str()) == -1)
 			throw std::runtime_error("Failed to create nullhooks folder!");
 	}
+
+	const std::string config_folder = nullhooks_config_folder + "\\config";
+	DWORD config_exitst = GetFileAttributesA(config_folder.c_str());
+	if (config_exitst == INVALID_FILE_ATTRIBUTES) {		// Config path does not exist
+		if (_mkdir(config_folder.c_str()) == -1)
+			throw std::runtime_error("Failed to create config folder!");
+		exitst = GetFileAttributesA(config_folder.c_str());		// Get path again
+	}
+
+	if (!(exitst & FILE_ATTRIBUTE_DIRECTORY)) {			// Not a directory
+		if (_mkdir(config_folder.c_str()) == -1)
+			throw std::runtime_error("Failed to create config folder!");
+	}
+}
+
+void config::load_config(std::string filename) {
+	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
+
+
 }
