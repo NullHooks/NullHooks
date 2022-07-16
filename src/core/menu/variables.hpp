@@ -129,8 +129,14 @@ namespace variables {
 		// Movement
 		inline bool infinite_duck = false;
 		inline bool bhop = true;
-		inline bool autostrafe = false;
-		inline bool ragestrafe = false;
+
+		inline std::vector<std::string> autostrafe_options = {
+			"None",
+			"Legit",
+			"Rage"
+		};
+		inline combobox_toggle_t autostrafe_target(0);
+		
 		inline bool edgejump = false;
 		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
