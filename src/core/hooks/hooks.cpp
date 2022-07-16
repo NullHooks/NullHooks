@@ -24,7 +24,7 @@ bool hooks::initialize() {
 	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
 	const auto viewmodel_sequence_target          = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_viewmodel_sequence));
 
-	config::get_nullhooks_folder();		// TODO: Should go inside config::init() but whatever
+	config::init();						// Initialize config folder and skins
 	custom_helpers::state_to_console_color("Init", "Config initialized!");
 	menu::init_windows();				// For window positions on smaller screens
 	custom_helpers::state_to_console_color("Init", "Windows initialized!");
@@ -32,8 +32,6 @@ bool hooks::initialize() {
 	custom_helpers::state_to_console_color("Init", "Backtrack initialized!");
 	input::gobal_input.Init();			// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Init", "Global input initialized!");
-	skins::init_skin_config();			// Initialize skin map
-	custom_helpers::state_to_console_color("Init", "Custom skins initialized!");
 
 	// WndProc
 	WndProc_hook::csgo_window = FindWindowW(L"Valve001", nullptr);		// Get window for SetWindowLongPtrW()
