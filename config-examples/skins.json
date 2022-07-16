@@ -1,0 +1,71 @@
+{
+	"WEAPON_KNIFE": {
+		"item_definition_index": "WEAPON_KNIFE_M9_BAYONET"
+	},
+	"WEAPON_KNIFE_T": {
+		"item_definition_index": "WEAPON_KNIFE_KARAMBIT"
+	},
+	"WEAPON_KNIFE_M9_BAYONET": {
+		"paint_kit": 417,
+		"seed": 1,
+		"quality": "SKIN_QUALITY_UNUSUAL"
+	},
+	"WEAPON_KNIFE_BUTTERFLY": {
+		"paint_kit": 416,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_VINTAGE"
+	},
+	"WEAPON_KNIFE_WIDOWMAKER": {
+		"paint_kit": 415,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_VINTAGE"
+	},
+	"WEAPON_BAYONET": {
+		"paint_kit": 44,
+		"seed": 555,
+		"quality": "SKIN_QUALITY_CUSTOMIZED"
+	},
+	"WEAPON_KNIFE_SURVIVAL_BOWIE": {
+		"paint_kit": 417,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_GENUINE"
+	},
+	"WEAPON_KNIFE_KARAMBIT": {
+		"paint_kit": 416,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_GENUINE"
+	},
+	"WEAPON_GLOCK" : {
+		"paint_kit": 38
+	},
+	"WEAPON_USP_SILENCER" : {
+		"paint_kit": 102
+	},
+	"WEAPON_DEAGLE" : {
+		"paint_kit": 962,
+		"quality": "SKIN_QUALITY_DEVELOPER"
+	},
+	"WEAPON_AK47" : {
+		"paint_kit": 639
+	},
+	"WEAPON_M4A1" : {
+		"paint_kit": 844
+	},
+	"WEAPON_SCAR20" : {
+		"paint_kit": 597
+	},
+	"WEAPON_AWP" : {
+		"paint_kit": 344,
+		"quality": "SKIN_QUALITY_TOURNAMENT"
+	},
+	"WEAPON_FIVESEVEN" : {
+		"paint_kit": 44,
+		"seed": 872,
+		"quality": "SKIN_QUALITY_COMPLETED"
+	},
+	"WEAPON_SSG08": {
+		"paint_kit": 868,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_SELF_MADE"
+	}
+}
