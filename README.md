@@ -99,9 +99,9 @@ Setting name                | Description
 An example of a skin config file can be found in [example-configs/skins.json](https://github.com/r4v10l1/NullHooks/blob/main/config-examples/skins.json).
 
 The skin chager currently is able to change:
-    - [X] Weapon skins
-    - [X] Knife skins and models
-    - [ ] Globes
+- [X] Weapon skins
+- [X] Knife skins and models
+- [ ] Globes
 
 #### Model changer
 The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp) (`NULL` means it's disabled).
