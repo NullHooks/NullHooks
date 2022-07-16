@@ -266,35 +266,33 @@ void menu::render() {
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
-			const int part2_items_num = 12;
+			const int part2_items_num = 11;
 			const int part2_base_item_y = part2_y + container_padding;
 			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Movement", false); {
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Infinite duck (WARNING: Untrusted)", variables::misc::infinite_duck);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos,
-					render::fonts::watermark_font, "Bhop", variables::misc::bhop);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 2), item_checkbox_pos,
-					render::fonts::watermark_font, "Legit autostrafe", variables::misc::autostrafe);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos,
-					render::fonts::watermark_font, "Rage autostrafe", variables::misc::ragestrafe);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 4), item_checkbox_pos,
-					render::fonts::watermark_font, "Enable edgejump", variables::misc::edgejump);
-				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 5), item_hotkey_w,
-					render::fonts::watermark_font, "Edgejump key", variables::misc::ej_key);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 6), item_checkbox_pos,
-					render::fonts::watermark_font, "Edgebug", variables::misc::edgebug);
-				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 7), item_hotkey_w,
-					render::fonts::watermark_font, "Edgebug key", variables::misc::eb_key);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 8), item_checkbox_pos,
-					render::fonts::watermark_font, "Jumpbug", variables::misc::jumpbug);
-				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 9), item_hotkey_w,
-					render::fonts::watermark_font, "Jumpbug key", variables::misc::jb_key);
-				gui::check_box(item_left_pos, part2_base_item_y + (15 * 10), item_checkbox_pos,
-					render::fonts::watermark_font, "Slowwalk", variables::misc::slowwalk);
-				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 11), item_hotkey_w,
-					render::fonts::watermark_font, "Slowwalk key", variables::misc::slowwalk_key);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"Infinite duck (WARNING: Untrusted)", variables::misc::infinite_duck);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos, render::fonts::watermark_font,
+					"Bhop", variables::misc::bhop);
+				gui::combobox(item_left_pos, part2_base_item_y + (15 * 2), item_combo_pos, render::fonts::watermark_font,
+					"Autostrafe", variables::misc::autostrafe_options, variables::misc::autostrafe_target);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
+					"Enable edgejump", variables::misc::edgejump);
+				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 4), item_hotkey_w, render::fonts::watermark_font,
+					"Edgejump key", variables::misc::ej_key);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
+					"Edgebug", variables::misc::edgebug);
+				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 6), item_hotkey_w, render::fonts::watermark_font,
+					"Edgebug key", variables::misc::eb_key);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
+					"Jumpbug", variables::misc::jumpbug);
+				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 8), item_hotkey_w, render::fonts::watermark_font,
+					"Jumpbug key", variables::misc::jb_key);
+				gui::check_box(item_left_pos, part2_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
+					"Slowwalk", variables::misc::slowwalk);
+				gui::hotkey(item_left_pos, part2_base_item_y + (15 * 10), item_hotkey_w, render::fonts::watermark_font,
+					"Slowwalk key", variables::misc::slowwalk_key);
 			}
 
 			const int part3_y = part2_y + part2_h + container_margin;

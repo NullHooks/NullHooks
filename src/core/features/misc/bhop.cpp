@@ -16,10 +16,11 @@ void misc::movement::bunny_hop(c_usercmd* cmd) {
 	cmd->buttons &= ~in_jump;
 
 	/* ---------- Autostrafe ---------- */
-	if (variables::misc::ragestrafe)		// Rage
-		rage_strafe(cmd);
-	else if (variables::misc::autostrafe)	// Legit
-		legit_strafe(cmd);
+	switch (variables::misc::autostrafe_target.idx) {
+		case 1:		legit_strafe(cmd);		break;		// Legit
+		case 2:		rage_strafe(cmd);		break;		// Rage
+		default:	break;
+	}
 };
 
 void legit_strafe(c_usercmd* cmd) {
