@@ -261,6 +261,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add config and all that (json or whatever)
     - [X] Skins
     - [ ] Global config
+- [ ] Aimbot aims for backtrack if active <!-- Or just bad prediction? -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 - [ ] Port to linux <!-- <3 -->
