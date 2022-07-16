@@ -250,7 +250,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Skinchanger fixes
     - [ ] Get localplayer steam id to fix weapon stattrack.
-    - [ ] Fix talon knife inspect animation.
+    - [X] Fix talon knife inspect animation.
 - [ ] Add worldcolor
 - [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
