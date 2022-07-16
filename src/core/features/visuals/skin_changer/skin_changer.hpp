@@ -73,6 +73,7 @@ namespace skins {
         { WEAPON_KNIFE_GYPSY_JACKKNIFE,  { "models/weapons/v_knife_gypsy_jackknife.mdl",    "models/weapons/w_knife_gypsy_jackknife.mdl" } },
         { WEAPON_KNIFE_STILETTO,         { "models/weapons/v_knife_stiletto.mdl",           "models/weapons/w_knife_stiletto.mdl" } },
         { WEAPON_KNIFE_WIDOWMAKER,       { "models/weapons/v_knife_widowmaker.mdl",         "models/weapons/w_knife_widowmaker.mdl" } },        // Talon
+        { WEAPON_KNIFE_SKELETON,         { "models/weapons/v_knife_skeleton.mdl",           "models/weapons/w_knife_skeleton.mdl" } },
         { WEAPON_KNIFE_URSUS,            { "models/weapons/v_knife_ursus.mdl",              "models/weapons/w_knife_ursus.mdl" } },
         { WEAPON_KNIFE_CSS,              { "models/weapons/v_knife_css.mdl",                "models/weapons/w_knife_css.mdl" } }                // ???
     };
