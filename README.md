@@ -87,23 +87,24 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 #### Skinchanger
 The skinchanger loads a json file called `skins.json`, inside `DOCUMENTS/NullHooks/`, *DOCUMENTS* being your windows documents folder (will be created if it doesn't exist). The json structure is very simple, having the weapon buy index enum name as a string ([weapon name list](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/source-sdk/classes/entities.hpp#L193-L284)), with the weapon [properties](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L34-L42) as strings inside:
-- `"item_definition_index"`: Can have a weapon buy index as int or as enum name (Same names as weapons, like `WEAPON_KNIFE_M9_BAYONET` for example).
-- `"paint_kit"`: The skin id as integer. You can find some skin ids [here](https://steamcommunity.com/sharedfiles/filedetails/?id=880595913) or [here](https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt)
-- `"seed"`: The skin seed as integer.
-- `"stattrack"`: The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
-- `"quality"`: The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
-- `"wear"`: The float corresponding to the weapon wear. From `0.001f` to `1.f`, lower means better.
+Setting name                | Description
+----------------------------|------------------------------------------------------------
+`"item_definition_index"`   | Can have a weapon buy index as int or as enum name (Same names as weapons, like `WEAPON_KNIFE_M9_BAYONET` for example).
+`"paint_kit"`               | The skin id as integer. You can find some skin ids [here](https://steamcommunity.com/sharedfiles/filedetails/?id=880595913) or [here](https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt)
+`"seed"`                    | The skin seed as integer.
+`"stattrack"`               | The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
+`"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
+`"wear"`                    | The float corresponding to the weapon wear. From `0.001f` to `1.f`, lower means better.
 
 An example of a skin config file can be found in [example-configs/skins.json](https://github.com/r4v10l1/NullHooks/blob/main/config-examples/skins.json).
 
 The skin chager currently is able to change:
-- [X] Weapon skins
-- [X] Knife skins and models
-- [ ] Globes
+    - [X] Weapon skins
+    - [X] Knife skins and models
+    - [ ] Globes
 
 #### Model changer
-- Model changer
-*Note: The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp) (`NULL` means it's disabled).*
+The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp) (`NULL` means it's disabled).
 
 #### Misc
 - C4 timer and bar
