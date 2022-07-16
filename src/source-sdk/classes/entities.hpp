@@ -169,10 +169,14 @@ enum item_definition_indexes {
 	WEAPON_KNIFE_SURVIVAL_BOWIE = 514,
 	WEAPON_KNIFE_BUTTERFLY,
 	WEAPON_KNIFE_PUSH,
+	WEAPON_KNIFE_PARACORD,
+	WEAPON_KNIFE_SURVIVAL,
 	WEAPON_KNIFE_URSUS = 519,
 	WEAPON_KNIFE_GYPSY_JACKKNIFE,
+	WEAPON_KNIFE_NOMAD,
 	WEAPON_KNIFE_STILETTO = 522,
 	WEAPON_KNIFE_WIDOWMAKER,
+	WEAPON_KNIFE_SKELETON,
 	GLOVE_STUDDED_BLOODHOUND = 5027,
 	GLOVE_T_SIDE = 5028,
 	GLOVE_CT_SIDE = 5029,
@@ -182,6 +186,101 @@ enum item_definition_indexes {
 	GLOVE_MOTORCYCLE = 5033,
 	GLOVE_SPECIALIST = 5034,
 	GLOVE_HYDRA = 5035
+};
+
+// Array with all the items and names used for iteration and configs.
+// Used in read_skins.cpp
+const std::unordered_map<std::string, int> all_item_definition_indexes = {
+	{ "WEAPON_NONE",					WEAPON_NONE },
+	{ "WEAPON_DEAGLE",					WEAPON_DEAGLE },
+	{ "WEAPON_ELITE",					WEAPON_ELITE },
+	{ "WEAPON_FIVESEVEN",				WEAPON_FIVESEVEN },
+	{ "WEAPON_GLOCK",					WEAPON_GLOCK },
+	{ "WEAPON_AK47",					WEAPON_AK47 },
+	{ "WEAPON_AUG",						WEAPON_AUG },
+	{ "WEAPON_AWP",						WEAPON_AWP },
+	{ "WEAPON_FAMAS",					WEAPON_FAMAS },
+	{ "WEAPON_G3SG1",					WEAPON_G3SG1 },
+	{ "WEAPON_GALILAR",					WEAPON_GALILAR },
+	{ "WEAPON_M249",					WEAPON_M249 },
+	{ "WEAPON_M4A1",					WEAPON_M4A1 },
+	{ "WEAPON_MAC10",					WEAPON_MAC10 },
+	{ "WEAPON_P90",						WEAPON_P90 },
+	{ "WEAPON_MP5SD",					WEAPON_MP5SD },
+	{ "WEAPON_UMP45",					WEAPON_UMP45 },
+	{ "WEAPON_XM1014",					WEAPON_XM1014 },
+	{ "WEAPON_BIZON",					WEAPON_BIZON },
+	{ "WEAPON_MAG7",					WEAPON_MAG7 },
+	{ "WEAPON_NEGEV",					WEAPON_NEGEV },
+	{ "WEAPON_SAWEDOFF",				WEAPON_SAWEDOFF },
+	{ "WEAPON_TEC9",					WEAPON_TEC9 },
+	{ "WEAPON_TASER",					WEAPON_TASER },
+	{ "WEAPON_HKP2000",					WEAPON_HKP2000 },
+	{ "WEAPON_MP7",						WEAPON_MP7 },
+	{ "WEAPON_MP9",						WEAPON_MP9 },
+	{ "WEAPON_NOVA",					WEAPON_NOVA },
+	{ "WEAPON_P250",					WEAPON_P250 },
+	{ "WEAPON_SHIELD",					WEAPON_SHIELD },
+	{ "WEAPON_SCAR20",					WEAPON_SCAR20 },
+	{ "WEAPON_SG556",					WEAPON_SG556 },
+	{ "WEAPON_SSG08",					WEAPON_SSG08 },
+	{ "WEAPON_KNIFEGG",					WEAPON_KNIFEGG },
+	{ "WEAPON_KNIFE",					WEAPON_KNIFE },
+	{ "WEAPON_FLASHBANG",				WEAPON_FLASHBANG },
+	{ "WEAPON_HEGRENADE",				WEAPON_HEGRENADE },
+	{ "WEAPON_SMOKEGRENADE",			WEAPON_SMOKEGRENADE },
+	{ "WEAPON_MOLOTOV",					WEAPON_MOLOTOV },
+	{ "WEAPON_DECOY",					WEAPON_DECOY },
+	{ "WEAPON_INCGRENADE",				WEAPON_INCGRENADE },
+	{ "WEAPON_C4",						WEAPON_C4 },
+	{ "WEAPON_HEALTHSHOT",				WEAPON_HEALTHSHOT },
+	{ "WEAPON_KNIFE_T",					WEAPON_KNIFE_T },
+	{ "WEAPON_M4A1_SILENCER",			WEAPON_M4A1_SILENCER },
+	{ "WEAPON_USP_SILENCER",			WEAPON_USP_SILENCER },
+	{ "WEAPON_CZ75A",					WEAPON_CZ75A },
+	{ "WEAPON_REVOLVER",				WEAPON_REVOLVER },
+	{ "WEAPON_TAGRENADE",				WEAPON_TAGRENADE },
+	{ "WEAPON_FISTS",					WEAPON_FISTS },
+	{ "WEAPON_BREACHCHARGE",			WEAPON_BREACHCHARGE },
+	{ "WEAPON_TABLET",					WEAPON_TABLET },
+	{ "WEAPON_MELEE",					WEAPON_MELEE },
+	{ "WEAPON_AXE",						WEAPON_AXE },
+	{ "WEAPON_HAMMER",					WEAPON_HAMMER },
+	{ "WEAPON_SPANNER",					WEAPON_SPANNER },
+	{ "WEAPON_KNIFE_GHOST",				WEAPON_KNIFE_GHOST },
+	{ "WEAPON_FIREBOMB",				WEAPON_FIREBOMB },
+	{ "WEAPON_DIVERSION",				WEAPON_DIVERSION },
+	{ "WEAPON_FRAG_GRENADE",			WEAPON_FRAG_GRENADE },
+	{ "WEAPON_SNOWBALL",				WEAPON_SNOWBALL },
+	{ "WEAPON_BUMPMINE",				WEAPON_BUMPMINE },
+	{ "WEAPON_BAYONET",					WEAPON_BAYONET },
+	{ "WEAPON_KNIFE_CSS",				WEAPON_KNIFE_CSS },
+	{ "WEAPON_KNIFE_FLIP",				WEAPON_KNIFE_FLIP },
+	{ "WEAPON_KNIFE_GUT",				WEAPON_KNIFE_GUT },
+	{ "WEAPON_KNIFE_KARAMBIT",			WEAPON_KNIFE_KARAMBIT },
+	{ "WEAPON_KNIFE_M9_BAYONET",		WEAPON_KNIFE_M9_BAYONET },
+	{ "WEAPON_KNIFE_TACTICAL",			WEAPON_KNIFE_TACTICAL },
+	{ "WEAPON_KNIFE_FALCHION",			WEAPON_KNIFE_FALCHION },
+	{ "WEAPON_KNIFE_SURVIVAL_BOWIE",	WEAPON_KNIFE_SURVIVAL_BOWIE },
+	{ "WEAPON_KNIFE_BUTTERFLY",			WEAPON_KNIFE_BUTTERFLY },
+	{ "WEAPON_KNIFE_PUSH",				WEAPON_KNIFE_PUSH },
+	{ "WEAPON_KNIFE_PARACORD",			WEAPON_KNIFE_PARACORD },
+	{ "WEAPON_KNIFE_SURVIVAL",			WEAPON_KNIFE_SURVIVAL },
+	{ "WEAPON_KNIFE_URSUS",				WEAPON_KNIFE_URSUS },
+	{ "WEAPON_KNIFE_GYPSY_JACKKNIFE",	WEAPON_KNIFE_GYPSY_JACKKNIFE },
+	{ "WEAPON_KNIFE_NOMAD",				WEAPON_KNIFE_NOMAD },
+	{ "WEAPON_KNIFE_STILETTO",			WEAPON_KNIFE_STILETTO },
+	{ "WEAPON_KNIFE_WIDOWMAKER",		WEAPON_KNIFE_WIDOWMAKER },
+	{ "WEAPON_KNIFE_SKELETON",			WEAPON_KNIFE_SKELETON },
+	{ "GLOVE_STUDDED_BLOODHOUND",		GLOVE_STUDDED_BLOODHOUND },
+	{ "GLOVE_T_SIDE",					GLOVE_T_SIDE },
+	{ "GLOVE_CT_SIDE",					GLOVE_CT_SIDE },
+	{ "GLOVE_SPORTY",					GLOVE_SPORTY },
+	{ "GLOVE_SLICK",					GLOVE_SLICK },
+	{ "GLOVE_LEATHER_WRAP",				GLOVE_LEATHER_WRAP },
+	{ "GLOVE_MOTORCYCLE",				GLOVE_MOTORCYCLE },
+	{ "GLOVE_SPECIALIST",				GLOVE_SPECIALIST },
+	{ "GLOVE_HYDRA",					GLOVE_HYDRA }
 };
 
 struct collideable_t {
@@ -254,7 +353,6 @@ public:
 	void set_position(vec3_t position) {
 		using original_fn = void(__thiscall*)(void*, const vec3_t&);
 		static original_fn set_position_fn = (original_fn)((DWORD)utilities::pattern_scan("client.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8"));
-		//static original_fn set_position_fn = (original_fn)((DWORD)utilities::pattern_scan("client.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8 ? ? ? ? 8B 7D"));
 		set_position_fn(this, position);
 	}
 
@@ -316,15 +414,29 @@ public:
 
 class weapon_t : public entity_t {
 public:
-	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack", next_primary_attack, float)
-	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack", next_secondary_attack, float)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip1", clip1_count, int)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip2", clip2_count, int)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack",      next_primary_attack,         float)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack",    next_secondary_attack,       float)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip1",                   clip1_count,                 int)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip2",                   clip2_count,                 int)
 	NETVAR("DT_BaseCombatWeapon", "m_iPrimaryReserveAmmoCount", primary_reserve_ammo_acount, int)
-	NETVAR("DT_WeaponCSBase", "m_flRecoilIndex", recoil_index, float)
-	NETVAR("DT_WeaponCSBaseGun", "m_zoomLevel", zoom_level, float)
+	NETVAR("DT_BaseCombatWeapon", "m_iViewModelIndex",          viewmodel_index,             int)
+	NETVAR("DT_BaseCombatWeapon", "m_iWorldModelIndex",         worldmodel_index,            int)
+	NETVAR("DT_BaseCombatWeapon", "m_iWorldDroppedModelIndex",  droppedmodel_index,          int)
+	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel",        weapon_worldmodel,           int)
+	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
+	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
+
+	#pragma region BaseAttributableItem
 	NETVAR("DT_BaseAttributableItem", "m_iItemDefinitionIndex", item_definition_index, short)
-	NETVAR("DT_BaseCombatWeapon", "m_iEntityQuality", entity_quality, int)
+	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,		   int)
+	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,			   int)
+	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,		   int)
+	//NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   char)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit,	   int)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,		   int)
+	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,		   float)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak",    fallback_stattrack,	   int)
+	#pragma endregion
 
 	float inaccuracy() {
 		using original_fn = float(__thiscall*)(void*);
@@ -459,6 +571,10 @@ public:
 
 	anim_state* get_anim_state() {
 		return *reinterpret_cast<anim_state * *>(this + 0x3914);
+	}
+
+	base_view_model_t* get_view_model() {
+		return (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(view_model());
 	}
 
 	bool can_see_player_pos(player_t* player, const vec3_t& pos) {

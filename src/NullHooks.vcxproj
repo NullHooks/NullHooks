@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\config\config.cpp" />
     <ClCompile Include="core\features\aim\aimbot.cpp" />
     <ClCompile Include="core\features\aim\autowall.cpp" />
     <ClCompile Include="core\features\aim\triggerbot.cpp">
@@ -124,6 +125,8 @@
     <ClCompile Include="core\features\visuals\no_flash.cpp" />
     <ClCompile Include="core\features\misc\spectator_list.cpp" />
     <ClCompile Include="core\features\visuals\player_esp.cpp" />
+    <ClCompile Include="core\features\visuals\skin_changer\read_skins.cpp" />
+    <ClCompile Include="core\features\visuals\skin_changer\skin_changer.cpp" />
     <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -167,6 +170,7 @@
     </ClCompile>
     <ClCompile Include="core\hooks\functions\render_smoke_overlay.cpp" />
     <ClCompile Include="core\hooks\functions\supports_resolve_depth.cpp" />
+    <ClCompile Include="core\hooks\functions\viewmodel_sequence.cpp" />
     <ClCompile Include="core\hooks\functions\WndProc_hook.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -245,11 +249,93 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\config\config.hpp" />
     <ClInclude Include="core\features\misc\backtrack.hpp" />
+    <ClInclude Include="core\features\visuals\skin_changer\skin_changer.hpp" />
     <ClInclude Include="core\hooks\functions\event_globals.hpp" />
     <ClInclude Include="core\features\visuals\models.hpp" />
+    <ClInclude Include="dependencies\interfaces\c_global_vars_base.hpp" />
+    <ClInclude Include="dependencies\interfaces\glow_manager.hpp" />
+    <ClInclude Include="dependencies\interfaces\imageformats.h" />
+    <ClInclude Include="dependencies\interfaces\interfaces.hpp" />
+    <ClInclude Include="dependencies\interfaces\iv_debug_overlay.hpp" />
+    <ClInclude Include="dependencies\interfaces\iv_engine_client.hpp" />
+    <ClInclude Include="dependencies\interfaces\iv_model_info.hpp" />
+    <ClInclude Include="dependencies\interfaces\iv_model_render.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_app_system.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_base_client_dll.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_client_entity_list.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_client_state.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_console.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_game_event_manager.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_input.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_input_system.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_localize.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_material_system.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_mdlcache.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_panel.hpp" />
     <ClInclude Include="dependencies\interfaces\i_physics_surface_props.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_player_movement.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_render_view.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_studio_render.h" />
+    <ClInclude Include="dependencies\interfaces\i_surface.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_trace.hpp" />
     <ClInclude Include="dependencies\interfaces\i_view_render.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_weapon_system.hpp" />
+    <ClInclude Include="dependencies\math\math.hpp" />
+    <ClInclude Include="dependencies\minhook\buffer.h" />
+    <ClInclude Include="dependencies\minhook\hde\hde32.h" />
+    <ClInclude Include="dependencies\minhook\hde\hde64.h" />
+    <ClInclude Include="dependencies\minhook\hde\pstdint.h" />
+    <ClInclude Include="dependencies\minhook\hde\table32.h" />
+    <ClInclude Include="dependencies\minhook\hde\table64.h" />
+    <ClInclude Include="dependencies\minhook\minhook.h" />
+    <ClInclude Include="dependencies\minhook\trampoline.h" />
+    <ClInclude Include="dependencies\rapidjson\allocators.h" />
+    <ClInclude Include="dependencies\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="dependencies\rapidjson\document.h" />
+    <ClInclude Include="dependencies\rapidjson\encodedstream.h" />
+    <ClInclude Include="dependencies\rapidjson\encodings.h" />
+    <ClInclude Include="dependencies\rapidjson\error\en.h" />
+    <ClInclude Include="dependencies\rapidjson\error\error.h" />
+    <ClInclude Include="dependencies\rapidjson\filereadstream.h" />
+    <ClInclude Include="dependencies\rapidjson\filewritestream.h" />
+    <ClInclude Include="dependencies\rapidjson\fwd.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\clzll.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\itoa.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\meta.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\pow10.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\regex.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\stack.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\strtod.h" />
+    <ClInclude Include="dependencies\rapidjson\internal\swap.h" />
+    <ClInclude Include="dependencies\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="dependencies\rapidjson\memorybuffer.h" />
+    <ClInclude Include="dependencies\rapidjson\memorystream.h" />
+    <ClInclude Include="dependencies\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="dependencies\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="dependencies\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="dependencies\rapidjson\pointer.h" />
+    <ClInclude Include="dependencies\rapidjson\prettywriter.h" />
+    <ClInclude Include="dependencies\rapidjson\rapidjson.h" />
+    <ClInclude Include="dependencies\rapidjson\reader.h" />
+    <ClInclude Include="dependencies\rapidjson\schema.h" />
+    <ClInclude Include="dependencies\rapidjson\stream.h" />
+    <ClInclude Include="dependencies\rapidjson\stringbuffer.h" />
+    <ClInclude Include="dependencies\rapidjson\uri.h" />
+    <ClInclude Include="dependencies\rapidjson\writer.h" />
+    <ClInclude Include="dependencies\utilities\console\console.hpp" />
+    <ClInclude Include="dependencies\utilities\csgo.hpp" />
+    <ClInclude Include="dependencies\utilities\fnv.hpp" />
+    <ClInclude Include="dependencies\utilities\netvars\netvars.hpp" />
+    <ClInclude Include="dependencies\utilities\renderer\renderer.hpp" />
+    <ClInclude Include="dependencies\utilities\singleton.hpp" />
+    <ClInclude Include="dependencies\utilities\utilities.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
