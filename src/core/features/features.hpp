@@ -81,6 +81,11 @@ namespace misc {
 	}
 }
 
+namespace button_functions {
+	void exec_autoexec();
+	void full_update();
+}
+
 namespace prediction {
 	void start(c_usercmd *cmd);
 	void end();
@@ -91,6 +96,3 @@ namespace prediction {
 	inline int *prediction_random_seed;
 };
 
-namespace commands_features {
-	void exec_autoexec();
-}

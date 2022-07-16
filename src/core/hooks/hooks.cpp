@@ -2,6 +2,8 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 #include "core/menu/menu.hpp"
+#include "core/config/config.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"	// For init
 
 bool hooks::initialize() {
 	const auto alloc_key_values_target            = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
@@ -20,13 +22,18 @@ bool hooks::initialize() {
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
 	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
 	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
+	const auto viewmodel_sequence_target          = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_viewmodel_sequence));
 
-	menu::init_windows();		// For window positions on smaller screens
+	config::get_nullhooks_folder();		// TODO: Should go inside config::init() but whatever
+	custom_helpers::state_to_console_color("Init", "Config initialized!");
+	menu::init_windows();				// For window positions on smaller screens
 	custom_helpers::state_to_console_color("Init", "Windows initialized!");
-	backtrack::init();			// Init backtrack cvars
+	backtrack::init();					// Init backtrack cvars
 	custom_helpers::state_to_console_color("Init", "Backtrack initialized!");
-	input::gobal_input.Init();	// Start arrays empty and all that, needed before WndProc
+	input::gobal_input.Init();			// Start arrays empty and all that, needed before WndProc
 	custom_helpers::state_to_console_color("Init", "Global input initialized!");
+	skins::init_skin_config();			// Initialize skin map
+	custom_helpers::state_to_console_color("Init", "Custom skins initialized!");
 
 	// WndProc
 	WndProc_hook::csgo_window = FindWindowW(L"Valve001", nullptr);		// Get window for SetWindowLongPtrW()
@@ -99,6 +106,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(fire_event_target, &fire_event::hook, reinterpret_cast<void**>(&fire_event::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize fire_event.");
 	custom_helpers::state_to_console_color("Hooks", "fire_event initialized!");
+
+	if(MH_CreateHook(viewmodel_sequence_target, &viewmodel_sequence::hook, reinterpret_cast<void **>(&viewmodel_sequence::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize viewmodel_sequence.");
+	custom_helpers::state_to_console_color("Hooks", "viewmodel_sequence initialized!");
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
