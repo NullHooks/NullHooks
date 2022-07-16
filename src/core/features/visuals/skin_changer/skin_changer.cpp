@@ -55,7 +55,6 @@ void skins::update_knife_model(weapon_t* weapon) {
 
 // Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
 void skins::change_skins(client_frame_stage_t stage) {
-	if (false /*SKINCHANGER VAR*/) return;
 	if (!csgo::local_player) return;
 
 	// Change every skin in the map
@@ -127,7 +126,6 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
                 default:
                     return sequence - 1;
             }
-
         case WEAPON_KNIFE_PUSH:
             switch (sequence) {
                 case SEQUENCE_DEFAULT_IDLE2:
@@ -147,7 +145,6 @@ int remap_knife_animation(int weaponID, const int sequence) noexcept {
                 default:
                     return sequence + 2;
             }
-
         case WEAPON_KNIFE_SURVIVAL_BOWIE:
             switch (sequence) {
                 case SEQUENCE_DEFAULT_DRAW:

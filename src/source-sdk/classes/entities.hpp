@@ -485,6 +485,11 @@ public:
 			case WEAPON_KNIFE_PUSH:
 			case WEAPON_KNIFE_TACTICAL:
 			case WEAPON_KNIFE_SURVIVAL_BOWIE:
+			case WEAPON_KNIFE_GYPSY_JACKKNIFE:
+			case WEAPON_KNIFE_STILETTO:
+			case WEAPON_KNIFE_WIDOWMAKER:
+			case WEAPON_KNIFE_URSUS:
+			case WEAPON_KNIFE_CSS:
 				return true;
 			default:
 				return false;
