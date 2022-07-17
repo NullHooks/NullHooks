@@ -87,9 +87,9 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 	return true;
 }
 
-// Used after is_visible() check in aimbot.
-// enabled_hitbox will be used to know what hitboxes are enabled (will scan all with bodyaim_if_lethal)
-bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage, bool enabled_hitbox) {
+// Used to check if target it visible or hittable. Used in aimbot.
+// enabled_hitbox will be used to know what hitboxes are enabled by the user (cuz now its iterating all due to bodyaim_if_lethal)
+bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage, bool enabled_hitbox) {
 	if (!variables::aim::bodyaim_if_lethal && !enabled_hitbox) return false;
 
 	float damage = static_cast<float>(weapon_data->weapon_damage);
@@ -123,6 +123,7 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 			else if (enabled_hitbox)
 				return damage >= min_damage;
 		}
+		if (variables::aim::autowall.idx == 0) return false;
 
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
