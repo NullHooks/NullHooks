@@ -33,7 +33,6 @@ void config::save_config(std::string filename) {
 	save::parse_combobox(doc, allocator,		variables::aim::autowall,								"aim_autowall");
 	save::parse_float(doc, allocator,			variables::aim::aimbot_fov,								"aim_aimbot_fov");
 	save::parse_float(doc, allocator,			variables::aim::aimbot_smoothing,						"aim_aimbot_smoothing");
-	save::parse_bool(doc, allocator,			variables::aim::aimbot_isvisiblecheck,					"aim_aimbot_isvisiblecheck");
 	save::parse_bool(doc, allocator,			variables::aim::target_friends,							"aim_target_friends");
 	save::parse_bool(doc, allocator,			variables::aim::non_rifle_aimpunch,						"aim_non_rifle_aimpunch");
 	save::parse_bool(doc, allocator,			variables::aim::aimbot_noscope,							"aim_aimbot_noscope");

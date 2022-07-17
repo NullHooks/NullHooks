@@ -22,7 +22,6 @@ namespace variables {
 
 		inline float aimbot_fov = 0.3f;
 		inline float aimbot_smoothing = 0.f;
-		inline bool aimbot_isvisiblecheck = true;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
 		inline bool aimbot_noscope = true;
