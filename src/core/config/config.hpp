@@ -7,14 +7,16 @@ namespace config {
 
 	inline std::string nullhooks_config_folder;
 	void get_nullhooks_folder();
+
+	inline int selected_config = -1;
 	inline std::vector<std::string> config_names;
 	void refresh_list();
 
 	void load_config(std::string filename);
-	void test_config();
+	void load_selected_config();
 	
 	void save_config(std::string filename);
-	void test_config2();
+	void save_selected_config();
 
 	namespace load {
 		void parse_bool(rapidjson::Document& doc, bool& target, std::string json_name);
