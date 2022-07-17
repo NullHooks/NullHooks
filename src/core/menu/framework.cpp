@@ -464,6 +464,28 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
+void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, std::vector<std::string>& config_names) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+
+	constexpr int padding = 10;
+	const int h = config_names.size() * 15;		// 15px per line
+	static int selected_idx = -1;
+	
+	if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y) && (cursor.y < y + h) && input::gobal_input.IsHeld(VK_LBUTTON))		// We are holding inside region
+		selected_idx = (cursor.y - y) / 15;		// Get clicked item based on pos
+
+	// Rectangle for selection
+	if (selected_idx != -1)		// Not default
+		render::draw_filled_rect(x + 1, y + selected_idx * 15 - 1, w - 2, 15, color(20, 20, 20, 255));
+
+	// Draw strings after rectangle
+	int item_n = 0;
+	for (std::string item : config_names) {
+		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, color::white());
+		item_n++;
+	}
+}
+
 /* --------------------------- WINDOW MOVEMENT --------------------------- */
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {

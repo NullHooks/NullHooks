@@ -402,13 +402,15 @@ void menu::render() {
 			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w = container_width - container_padding * 2;
 
-			const int part1_items_num = 2;
+			const int part1_items_num = 3;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
-					"Load config1.json", config::test_config);
+					"Refresh configs", config::refresh_list);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Load config1.json", config::test_config);
+				gui::button(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Save config1.json", config::test_config2);
 			}
 
@@ -434,13 +436,14 @@ void menu::render() {
 			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
 			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 
-			const int part1c2_items_num = 5;
+			const int part1c2_items_num = 20;		// In this case max configs
 			const int part1c2_y = part1_y;
 			const int part1c2_base_item_y = part1_base_item_y;
 			const int part1c2_h = (15 * part1c2_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1c2_y, container_width, part1c2_h, render::fonts::watermark_font, "Movement", false); {
-				// TODO: Config selection column
+				gui::config_selection(container_left_pos, part1c2_base_item_y, container_width, render::fonts::watermark_font,
+					config::config_names);
 			}
 
 			break;

@@ -13,6 +13,7 @@
 #pragma region INIT
 void config::init() {
 	get_nullhooks_folder();
+	refresh_list();
 	skins::init_skin_config();
 }
 
@@ -46,6 +47,17 @@ void config::get_nullhooks_folder() {
 	if (!(exitst & FILE_ATTRIBUTE_DIRECTORY)) {			// Not a directory
 		if (_mkdir(config_folder.c_str()) == -1)
 			throw std::runtime_error("Failed to create config folder!");
+	}
+}
+
+void config::refresh_list() {
+	// Clear vector first
+	config_names.clear();
+
+	const std::string path = nullhooks_config_folder + "\\config";
+	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+		std::string full_name = entry.path().filename().string();
+		config_names.push_back(full_name);
 	}
 }
 #pragma endregion
