@@ -56,6 +56,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	if (!weapon_data) return best_target;
 
 	// Store selected hitboxes
+	std::vector<int> all_hitboxes = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
 	if (variables::aim::hitboxes.vector[0].state) {		// Head
 		selected_hitboxes.emplace_back(hitbox_head);
@@ -88,7 +89,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	}
 
 	// Check each player
-	for (int n = 1; n <= 64; n++) {
+	for (int n = 1; n <= interfaces::globals->max_clients; n++) {
 		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
 		if (!cur_player
 			|| cur_player == csgo::local_player
@@ -99,23 +100,24 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
-		for (const auto bone : selected_hitboxes) {
-			auto bone_pos = cur_player->get_hitbox_position(bone);
+		for (const auto hitbox : all_hitboxes) {
+			auto hitbox_pos = cur_player->get_hitbox_position(hitbox);
+			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if ((!csgo::local_player->can_see_player_pos(cur_player, bone_pos) && variables::aim::autowall.idx == 0)
-					|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, bone_pos, weapon_data, (int)variables::aim::min_damage)) continue;
+				if ((!csgo::local_player->can_see_player_pos(cur_player, hitbox_pos) && variables::aim::autowall.idx == 0)
+					|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox)) continue;
 			}
 
-			vec3_t aim_angle = math::calculate_angle(local_eye_pos, bone_pos);
+			vec3_t aim_angle = math::calculate_angle(local_eye_pos, hitbox_pos);
 			aim_angle.clamp();
 
 			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
 			const float fov = cmd->viewangles.distance_to(aim_angle);
 			if (fov < best_fov) {
 				best_fov = fov;
-				best_target = bone_pos;
+				best_target = hitbox_pos;
 			}
 		}
 	}
