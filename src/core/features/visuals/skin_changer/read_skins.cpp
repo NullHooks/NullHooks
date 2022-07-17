@@ -12,14 +12,14 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon);
 
 void skins::read_skins() {
 	constexpr const char* skin_file_name = "\\skins.json";
-	DWORD exitst = GetFileAttributesA(skin_file_name);
-	if (exitst == INVALID_FILE_ATTRIBUTES) {		// Path does not exist
-		if (_mkdir(skin_file_name) == -1)
-			throw std::runtime_error("Failed to create skins config file!");
-	}
+	const std::string skin_file_path = config::nullhooks_config_folder + std::string(skin_file_name);
+
+	DWORD exitst = GetFileAttributesA(skin_file_path.c_str());
+	if (exitst == INVALID_FILE_ATTRIBUTES)		// Path does not exist
+		std::ofstream{ skin_file_path.c_str() };
 	
 	std::ifstream file;
-	file.open(config::nullhooks_config_folder + std::string(skin_file_name), std::ios::in);
+	file.open(skin_file_path, std::ios::in);
 	
 	std::string file_contents;
 	if (file.is_open()) {
