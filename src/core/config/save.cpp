@@ -35,6 +35,7 @@ void config::save_config(std::string filename) {
 	save::parse_bool(doc, allocator,			variables::aim::silent,									"aim_silent");
 	save::parse_bool(doc, allocator,			variables::aim::autofire,								"aim_autofire");
 	save::parse_hotkey(doc, allocator,			variables::aim::aimbot_key,								"aim_aimbot_key");
+	save::parse_bool(doc, allocator,			variables::aim::bodyaim_if_lethal,						"aim_bodyaim_if_lethal");
 	save::parse_combobox(doc, allocator,		variables::aim::autowall,								"aim_autowall");
 	save::parse_float(doc, allocator,			variables::aim::aimbot_fov,								"aim_aimbot_fov");
 	save::parse_float(doc, allocator,			variables::aim::aimbot_smoothing,						"aim_aimbot_smoothing");
