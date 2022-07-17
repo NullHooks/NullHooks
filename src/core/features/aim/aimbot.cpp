@@ -106,8 +106,9 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if ((!csgo::local_player->can_see_player_pos(cur_player, hitbox_pos) && enabled_hitbox && variables::aim::autowall.idx == 0)
-					|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox)) continue;
+				if (!aim::autowall::handle_walls(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox)) continue;
+			} else if (!enabled_hitbox) {
+				continue;	// We are trying to use ignore walls with disabled hitbox
 			}
 
 			vec3_t aim_angle = math::calculate_angle(local_eye_pos, hitbox_pos);
