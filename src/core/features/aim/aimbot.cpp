@@ -56,26 +56,35 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	if (!weapon_data) return best_target;
 
 	// Store selected hitboxes
-	std::vector<int> selected_bones;
+	std::vector<int> selected_hitboxes;
 	if (variables::aim::hitboxes.vector[0].state) {		// Head
-		selected_bones.emplace_back(8);
-		selected_bones.emplace_back(7);
+		selected_hitboxes.emplace_back(hitbox_head);
+		selected_hitboxes.emplace_back(hitbox_neck);
 	}
 	if (variables::aim::hitboxes.vector[1].state) {		// Chest
-		selected_bones.emplace_back(6);
-		selected_bones.emplace_back(5);
-		selected_bones.emplace_back(4);
-		selected_bones.emplace_back(3);
+		selected_hitboxes.emplace_back(hitbox_pelvis);
+		selected_hitboxes.emplace_back(hitbox_stomach);
+		selected_hitboxes.emplace_back(hitbox_lower_chest);
+		selected_hitboxes.emplace_back(hitbox_chest);
+		selected_hitboxes.emplace_back(hitbox_upper_chest);
 	}
-	if (variables::aim::hitboxes.vector[2].state) {		// Arms	TODO: Broken
-		selected_bones.emplace_back(12);
-		selected_bones.emplace_back(40);
+	if (variables::aim::hitboxes.vector[2].state) {		// Arms
+		selected_hitboxes.emplace_back(hitbox_right_hand);
+		selected_hitboxes.emplace_back(hitbox_left_hand);
+		selected_hitboxes.emplace_back(hitbox_right_upper_arm);
+		selected_hitboxes.emplace_back(hitbox_left_upper_arm);
+		selected_hitboxes.emplace_back(hitbox_right_forearm);
+		selected_hitboxes.emplace_back(hitbox_left_forearm);
+
 	}
-	if (variables::aim::hitboxes.vector[3].state) {		// Legs TODO: Broken
-		selected_bones.emplace_back(65);
-		selected_bones.emplace_back(66);
-		selected_bones.emplace_back(72);
-		selected_bones.emplace_back(73);
+	if (variables::aim::hitboxes.vector[3].state) {		// Legs
+		selected_hitboxes.emplace_back(hitbox_right_thigh);
+		selected_hitboxes.emplace_back(hitbox_left_thigh);
+		selected_hitboxes.emplace_back(hitbox_right_calf);
+		selected_hitboxes.emplace_back(hitbox_left_calf);
+		selected_hitboxes.emplace_back(hitbox_right_foot);
+		selected_hitboxes.emplace_back(hitbox_left_foot);
+
 	}
 
 	// Check each player
@@ -90,8 +99,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
-		for (const auto bone : selected_bones) {
-			auto bone_pos = cur_player->get_bone_position(bone);
+		for (const auto bone : selected_hitboxes) {
+			auto bone_pos = cur_player->get_hitbox_position(bone);
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
