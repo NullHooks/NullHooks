@@ -87,8 +87,11 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 	return true;
 }
 
-// Used after is_visible() check in aimbot
-bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage) {
+// Used after is_visible() check in aimbot.
+// enabled_hitbox will be used to know what hitboxes are enabled (will scan all with bodyaim_if_lethal)
+bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage, bool enabled_hitbox) {
+	if (!variables::aim::bodyaim_if_lethal && !enabled_hitbox) return false;
+
 	float damage = static_cast<float>(weapon_data->weapon_damage);
 	vec3_t start = local_player->get_eye_pos();
 	vec3_t direction = (destination - start);
@@ -115,7 +118,10 @@ bool aim::autowall::is_able_to_scan(player_t* local_player, entity_t* entity, co
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
 
-			return damage >= min_damage;
+			if (variables::aim::bodyaim_if_lethal)
+				return reinterpret_cast<player_t*>(entity)->health() < damage;
+			else if (enabled_hitbox)
+				return damage >= min_damage;
 		}
 
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);

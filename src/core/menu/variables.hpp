@@ -12,6 +12,7 @@ namespace variables {
 		inline bool silent = false;
 		inline bool autofire = false;
 		inline hotkey_t aimbot_key(VK_NEXT);
+		inline bool bodyaim_if_lethal = false;
 		
 		inline std::vector<std::string> autowall_settings = {
 			"Only visible",
