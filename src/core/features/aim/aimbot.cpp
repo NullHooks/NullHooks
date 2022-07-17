@@ -56,20 +56,22 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	if (!weapon_data) return best_target;
 
 	// Store selected hitboxes
-	std::vector<int> all_hitboxes = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
+	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
 	if (variables::aim::hitboxes.vector[0].state) {		// Head
 		selected_hitboxes.emplace_back(hitbox_head);
+	}
+	if (variables::aim::hitboxes.vector[1].state) {		// Neck
 		selected_hitboxes.emplace_back(hitbox_neck);
 	}
-	if (variables::aim::hitboxes.vector[1].state) {		// Chest
+	if (variables::aim::hitboxes.vector[2].state) {		// Chest
 		selected_hitboxes.emplace_back(hitbox_pelvis);
 		selected_hitboxes.emplace_back(hitbox_stomach);
 		selected_hitboxes.emplace_back(hitbox_lower_chest);
 		selected_hitboxes.emplace_back(hitbox_chest);
 		selected_hitboxes.emplace_back(hitbox_upper_chest);
 	}
-	if (variables::aim::hitboxes.vector[2].state) {		// Arms
+	if (variables::aim::hitboxes.vector[3].state) {		// Arms
 		selected_hitboxes.emplace_back(hitbox_right_hand);
 		selected_hitboxes.emplace_back(hitbox_left_hand);
 		selected_hitboxes.emplace_back(hitbox_right_upper_arm);
@@ -78,7 +80,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		selected_hitboxes.emplace_back(hitbox_left_forearm);
 
 	}
-	if (variables::aim::hitboxes.vector[3].state) {		// Legs
+	if (variables::aim::hitboxes.vector[4].state) {		// Legs
 		selected_hitboxes.emplace_back(hitbox_right_thigh);
 		selected_hitboxes.emplace_back(hitbox_left_thigh);
 		selected_hitboxes.emplace_back(hitbox_right_calf);
@@ -106,7 +108,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if (!aim::autowall::handle_walls(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox)) continue;
+				if (!aim::autowall::handle_walls(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox))
+					continue;
 			} else if (!enabled_hitbox) {
 				continue;	// We are trying to use ignore walls with disabled hitbox
 			}

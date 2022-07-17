@@ -31,6 +31,7 @@ namespace variables {
 
 		inline std::vector<multicombo_opt_t> hitboxes_options = {
 			{ "Head",	        true },
+			{ "Neck",	        true },
 			{ "Chest",			false },
 			{ "Arms",			false },
 			{ "Legs",			false },
