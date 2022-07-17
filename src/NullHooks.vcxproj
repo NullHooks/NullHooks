@@ -93,6 +93,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\config\config.cpp" />
+    <ClCompile Include="core\config\load.cpp" />
+    <ClCompile Include="core\config\save.cpp" />
     <ClCompile Include="core\features\aim\aimbot.cpp" />
     <ClCompile Include="core\features\aim\autowall.cpp" />
     <ClCompile Include="core\features\aim\triggerbot.cpp">
