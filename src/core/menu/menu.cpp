@@ -407,9 +407,9 @@ void menu::render() {
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
-					"Load test config", config::test_config);
+					"Load config1.json", config::test_config);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
-					"Save test config", config::test_config2);
+					"Save config1.json", config::test_config2);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;
@@ -423,6 +423,26 @@ void menu::render() {
 				gui::button(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Update game skins (Full update)", button_functions::full_update);
 			}
+
+			/* ----- Config - Second column ----- */
+
+			int column_number = 1;
+			container_width--;	// Not the best way to do it, but the margin on the right was always smaller because of (5/2=2)
+			container_left_pos = container_left_pos + (container_width * column_number) + container_margin;
+			item_left_pos = item_left_pos + (container_width * column_number) + container_margin;
+			item_checkbox_pos = item_checkbox_pos + (container_width * column_number) + container_margin;
+			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
+
+			const int part1c2_items_num = 5;
+			const int part1c2_y = part1_y;
+			const int part1c2_base_item_y = part1_base_item_y;
+			const int part1c2_h = (15 * part1c2_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1c2_y, container_width, part1c2_h, render::fonts::watermark_font, "Movement", false); {
+				// TODO: Config selection column
+			}
+
 			break;
 		}
 	}
