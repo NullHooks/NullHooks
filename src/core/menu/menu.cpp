@@ -1,6 +1,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/menu.hpp"
 #include "core/features/visuals/skin_changer/skin_changer.hpp"
+#include "core/config/config.hpp"
 
 auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
 	// Background
@@ -401,13 +402,23 @@ void menu::render() {
 			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 			item_hotkey_w = container_width - container_padding * 2;
 
-			const int part1_items_num = 2;
+			const int part1_items_num = 1;
 			const int part1_h = (15 * part1_items_num) + (container_padding * 2) - 4;
 
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "Skins", false); {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
+					"Load test config", config::test_config);
+			}
+
+			const int part2_y = part1_y + part1_h + container_margin;
+			const int part2_items_num = 2;
+			const int part2_base_item_y = part2_y + container_padding;
+			const int part2_h = (15 * part2_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part2_y, container_width, part2_h, render::fonts::watermark_font, "Skins", false); {
+				gui::button(item_left_pos, part2_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Load skin config", skins::read_skins);
-				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
+				gui::button(item_left_pos, part2_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Update game skins (Full update)", button_functions::full_update);
 			}
 			break;
