@@ -488,6 +488,7 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 	// Draw strings after rectangle
 	int item_n = 0;
 	for (std::string item : config_names) {
+		if (item_n > config::max_configs) break;
 		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, (item_n == config::selected_config) ? color::white() : color::white(100));
 		item_n++;
 	}

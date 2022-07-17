@@ -8,6 +8,7 @@ namespace config {
 	inline std::string nullhooks_config_folder;
 	void get_nullhooks_folder();
 
+	inline const int max_configs = 24;
 	inline int selected_config = -1;
 	inline std::vector<std::string> config_names;
 	void refresh_list();

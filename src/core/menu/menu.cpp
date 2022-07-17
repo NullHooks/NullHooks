@@ -436,7 +436,7 @@ void menu::render() {
 			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
 			item_combo_pos = item_checkbox_pos + item_checkbox_length;
 
-			const int part1c2_items_num = 20;		// In this case max configs
+			const int part1c2_items_num = config::max_configs;		// In this case max config number
 			const int part1c2_y = part1_y;
 			const int part1c2_base_item_y = part1_base_item_y;
 			const int part1c2_h = (15 * part1c2_items_num) + (container_padding * 2) - 4;
