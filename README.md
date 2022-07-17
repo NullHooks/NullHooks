@@ -143,6 +143,19 @@ The model changer uses findmdl to replace the models, and you need to download t
     - <kbd>Delete</kbd> sets the hotkey to `None`, meaning that the hotkey will apear always as held
     - <kbd>Esc</kbd> will cancel the current hotkey selection, restoring it to its original state
 
+### Config system
+Config system for skins and settings (independent for now). The skin configs should be placed under the NullHooks folder which is created in your documents folder, and your setting configs should be placed under the config directory. Example:
+```
+DOCUMENTS
+    └─ NullHooks
+        ├─ config
+        │   ├─ my_config_1.json
+        │   └─ my_name_123.json
+        └─ skins.json
+```
+
+For more information and examples check [`config-examples`](https://github.com/r4v10l1/NullHooks/tree/main/config-examples).
+
 ## Installing
 ### Compiling from source (Recommended)
 I recommend using Visual Studio 2022.
@@ -226,6 +239,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add <kbd>alt</kbd>+<kbd>tab</kbd> checks to global input
 - [X] Add skinchanger
     - [X] Config based
+- [X] Add config and all that (json or whatever)
+    - [X] Skins
+    - [X] Global config
 #
 </details>
 
@@ -238,6 +254,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
     - [ ] Make aimbot and triggerbot also aim for backtrack
+    - [ ] Add bodyaim if lethal
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -251,6 +268,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Skinchanger fixes
     - [ ] Get localplayer steam id to fix weapon stattrack.
     - [X] Fix talon knife inspect animation.
+- [ ] Add textbox to framework for creating new config files from menu
+- [ ] Add can't shoot to player ESP
 - [ ] Add worldcolor
 - [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
@@ -258,9 +277,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add chicken chams
 - [ ] Add custom radar with renderer, why not
 -->
-- [ ] Add config and all that (json or whatever)
-    - [X] Skins
-    - [ ] Global config
 - [ ] Aimbot aims for backtrack if active <!-- Or just bad prediction? -->
 - [ ] Add "defusing" to bomb timer
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
