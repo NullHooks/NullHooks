@@ -106,7 +106,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if ((!csgo::local_player->can_see_player_pos(cur_player, hitbox_pos) && variables::aim::autowall.idx == 0)
+				if ((!csgo::local_player->can_see_player_pos(cur_player, hitbox_pos) && enabled_hitbox && variables::aim::autowall.idx == 0)
 					|| !aim::autowall::is_able_to_scan(csgo::local_player, cur_player, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox)) continue;
 			}
 
