@@ -69,6 +69,7 @@ namespace gui {
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);
+	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
 	void menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
 	inline bool user_dragging_menu = false;		// Used to know if the user is holding the menu window area
 	inline bool should_move_menu = false;		// Used to know when to check the new menu positions

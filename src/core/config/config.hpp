@@ -7,6 +7,8 @@ namespace config {
 
 	inline std::string nullhooks_config_folder;
 	void get_nullhooks_folder();
+	inline std::vector<std::string> config_names;
+	void refresh_list();
 
 	void load_config(std::string filename);
 	void test_config();
