@@ -1,4 +1,5 @@
 #include "core/menu/framework.hpp"
+#include "core/config/config.hpp"
 
 typedef struct CursorCoords {
 	int x;
@@ -469,19 +470,25 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 
 	constexpr int padding = 10;
 	const int h = config_names.size() * 15;		// 15px per line
-	static int selected_idx = -1;
 	
 	if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y) && (cursor.y < y + h) && input::gobal_input.IsHeld(VK_LBUTTON))		// We are holding inside region
-		selected_idx = (cursor.y - y) / 15;		// Get clicked item based on pos
+		config::selected_config = (cursor.y - y) / 15;		// Get clicked item based on pos
+
+	// No configs
+	if (config_names.size() == 0) {
+		render::draw_text_string(x + padding, y, render::fonts::watermark_font_ns,
+			"No configs found...", false, color::white(100));
+		return;
+	}
 
 	// Rectangle for selection
-	if (selected_idx != -1)		// Not default
-		render::draw_filled_rect(x + 1, y + selected_idx * 15 - 1, w - 2, 15, color(20, 20, 20, 255));
+	if (config::selected_config != -1)		// Not default
+		render::draw_filled_rect(x + 1, y + config::selected_config * 15 - 1, w - 2, 15, color(15, 15, 15, 255));
 
 	// Draw strings after rectangle
 	int item_n = 0;
 	for (std::string item : config_names) {
-		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, color::white());
+		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, (item_n == config::selected_config) ? color::white() : color::white(100));
 		item_n++;
 	}
 }

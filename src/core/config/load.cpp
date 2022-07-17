@@ -7,6 +7,11 @@
 #include "dependencies/rapidjson/writer.h"
 #include "dependencies/rapidjson/stringbuffer.h"
 
+void config::load_selected_config() {
+	if (selected_config >= 0 && selected_config < config_names.size())
+		load_config(config_names.at(selected_config));
+}
+
 #pragma region LOAD_CONFIG
 void config::load_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
@@ -141,10 +146,6 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.fallingIntensity,				"motion_blur_falling_intensity");
 	load::parse_float(doc,			variables::motion_blur.rotationIntensity,				"motion_blur_rotation_intensity");
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur_strength");
-}
-
-void config::test_config() {
-	load_config("config1.json");
 }
 #pragma endregion
 

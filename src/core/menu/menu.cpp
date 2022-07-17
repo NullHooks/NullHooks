@@ -409,9 +409,9 @@ void menu::render() {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Refresh configs", config::refresh_list);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos - 20, render::fonts::watermark_font,
-					"Load config1.json", config::test_config);
+					"Load selected config", config::load_selected_config);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos - 20, render::fonts::watermark_font,
-					"Save config1.json", config::test_config2);
+					"Save selected config", config::save_selected_config);
 			}
 
 			const int part2_y = part1_y + part1_h + container_margin;

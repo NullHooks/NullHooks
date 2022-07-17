@@ -7,6 +7,11 @@
 #include "dependencies/rapidjson/writer.h"
 #include "dependencies/rapidjson/stringbuffer.h"
 
+void config::save_selected_config() {
+	if (selected_config >= 0 && selected_config < config_names.size())
+		save_config(config_names.at(selected_config));
+}
+
 #pragma region SAVE_CONFIG
 void config::save_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
@@ -145,10 +150,6 @@ void config::save_config(std::string filename) {
 		file << buffer.GetString();
 		file.close();
 	}
-}
-
-void config::test_config2() {
-	save_config("config1.json");
 }
 #pragma endregion
 
