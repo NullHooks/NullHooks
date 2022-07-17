@@ -269,6 +269,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Get localplayer steam id to fix weapon stattrack.
     - [X] Fix talon knife inspect animation.
 - [ ] Add textbox to framework for creating new config files from menu
+- [ ] Make config system more "nested"
 - [ ] Add can't shoot to player ESP
 - [ ] Add worldcolor
 - [ ] Add antiaim
