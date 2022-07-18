@@ -144,6 +144,7 @@ void config::save_config(std::string filename) {
 		save::parse_color(colors,				allocator,			variables::colors::bt_chams_friend,						"bt_chams_friend");
 		save::parse_color(colors,				allocator,			variables::colors::crosshair_c,							"crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::recoil_crosshair_c,					"recoil_crosshair_c");
+		save::parse_color(colors,				allocator,			variables::colors::aimbot_fov_c,						"aimbot_fov_c");
 	} doc.AddMember("colors", colors, allocator);
 	
 	rapidjson::Value motion_blur(rapidjson::kObjectType); {			// Motion blur
