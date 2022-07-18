@@ -48,12 +48,6 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 }
 
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
-	vec3_t best_target(0,0,0);								// Position of best bone
-	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
-
-	const auto weapon_data = active_weapon->get_weapon_data();
-	if (!weapon_data) return best_target;
-
 	// Store selected hitboxes
 	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
@@ -89,6 +83,11 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	}
 
+	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
+	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return best_target;
+
 	// Check each player
 	for (int n = 1; n <= interfaces::globals->max_clients; n++) {
 		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
@@ -113,7 +112,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 				continue;	// We are trying to use ignore walls with disabled hitbox
 			}
 
-			vec3_t aim_angle = math::calculate_angle(local_eye_pos, hitbox_pos);
+			vec3_t aim_angle = math::calculate_relative_angle(local_eye_pos, hitbox_pos, cmd->viewangles);
 			aim_angle.clamp();
 
 			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair

@@ -43,6 +43,13 @@ vec3_t math::calculate_angle(vec3_t& a, vec3_t& b) {
 	return angles;
 }
 
+vec3_t math::calculate_relative_angle(vec3_t& src, vec3_t& dst, vec3_t& viewangles) {
+	vec3_t result = ((dst - src).to_angle() - viewangles);
+	result.normalize();
+
+	return result;
+}
+
 void math::sin_cos(float r, float* s, float* c) {
 	*s = sin(r);
 	*c = cos(r);

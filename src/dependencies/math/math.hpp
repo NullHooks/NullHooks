@@ -3,6 +3,7 @@
 namespace math {
 	void correct_movement(vec3_t old_angles, c_usercmd* cmd, float old_forwardmove, float old_sidemove);
 	vec3_t calculate_angle(vec3_t& a, vec3_t& b);
+	vec3_t calculate_relative_angle(vec3_t& src, vec3_t& dst, vec3_t& viewangles);
 	void sin_cos(float r, float* s, float* c);
 	vec3_t angle_vector(vec3_t angle);
 	void transform_vector(vec3_t&, matrix_t&, vec3_t&);
