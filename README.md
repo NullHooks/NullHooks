@@ -244,6 +244,8 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add config and all that (json or whatever)
     - [X] Skins
     - [X] Global config
+- [X] Make config system more "nested"
+- [X] Add can't shoot to player ESP
 #
 </details>
 
@@ -271,8 +273,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Get localplayer steam id to fix weapon stattrack.
     - [X] Fix talon knife inspect animation.
 - [ ] Add textbox to framework for creating new config files from menu
-- [ ] Make config system more "nested"
-- [ ] Add can't shoot to player ESP
+- [ ] Add auto revolver hold
 - [ ] Add worldcolor
 - [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
