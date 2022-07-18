@@ -20,12 +20,12 @@ namespace config {
 	void save_selected_config();
 
 	namespace load {
-		void parse_bool(rapidjson::Document& doc, bool& target, std::string json_name);
-		void parse_float(rapidjson::Document& doc, float& target, std::string json_name);
-		void parse_combobox(rapidjson::Document& doc, combobox_toggle_t& target, std::string json_name);
-		void parse_multicombo(rapidjson::Document& doc, multicombobox_toggle_t& target, std::string json_name);
-		void parse_color(rapidjson::Document& doc, colorpicker_col_t& target, std::string json_name);
-		void parse_hotkey(rapidjson::Document& doc, hotkey_t& target, std::string json_name);
+		void parse_bool(rapidjson::Document& doc, bool& target, std::string parent, std::string json_name);
+		void parse_float(rapidjson::Document& doc, float& target, std::string parent, std::string json_name);
+		void parse_combobox(rapidjson::Document& doc, combobox_toggle_t& target, std::string parent, std::string json_name);
+		void parse_multicombo(rapidjson::Document& doc, multicombobox_toggle_t& target, std::string parent, std::string json_name);
+		void parse_color(rapidjson::Document& doc, colorpicker_col_t& target, std::string parent, std::string json_name);
+		void parse_hotkey(rapidjson::Document& doc, hotkey_t& target, std::string parent, std::string json_name);
 	}
 
 	namespace save {
