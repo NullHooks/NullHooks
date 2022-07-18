@@ -62,5 +62,8 @@ void config::refresh_list() {
 		std::string full_name = entry.path().filename().string();
 		config_names.push_back(full_name);
 	}
+
+	if (selected_config >= config_names.size())
+		selected_config = -1;
 }
 #pragma endregion
