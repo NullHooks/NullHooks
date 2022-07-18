@@ -2,14 +2,13 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-bool aim::can_fire(weapon_t* active_weapon) {
-	if (!active_weapon->clip1_count()) return false;			// No ammo so don't aimbot
+bool aim::can_fire(player_t* target) {
+	weapon_t* active_weapon = target->active_weapon();
+	if (!active_weapon) return false;
 
-	if (csgo::local_player->next_attack() > interfaces::globals->cur_time)
-		return false;
-
-	if (active_weapon->next_primary_attack() > interfaces::globals->cur_time)
-		return false;
+	if (active_weapon->is_non_aim()) return false;			// Bad weapon or no ammo so don't aimbot
+	if (target->next_attack() > interfaces::globals->cur_time) return false;
+	if (active_weapon->next_primary_attack() > interfaces::globals->cur_time) return false;
 
 	return true;
 }
@@ -31,7 +30,7 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 		case WEAPONTYPE_SHOTGUN:
 		case WEAPONTYPE_SNIPER_RIFLE:
 		case WEAPONTYPE_PISTOL: {
-			if (!can_fire(active_weapon)) return false;					// Check if we can fire
+			if (!can_fire(csgo::local_player)) return false;					// Check if we can fire
 
 			if (check_scope) {
 				if (weapon_data->weapon_type == WEAPONTYPE_SNIPER_RIFLE
