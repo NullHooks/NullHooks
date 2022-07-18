@@ -29,11 +29,11 @@ namespace config {
 	}
 
 	namespace save {
-		void parse_bool(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, bool& target, std::string json_name);
-		void parse_float(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, float& target, std::string json_name);
-		void parse_combobox(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, combobox_toggle_t& target, std::string json_name);
-		void parse_multicombo(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, multicombobox_toggle_t& target, std::string json_name);
-		void parse_color(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, colorpicker_col_t& target, std::string json_name);
-		void parse_hotkey(rapidjson::Document& doc, rapidjson::Document::AllocatorType& allocator, hotkey_t& target, std::string json_name);
+		void parse_bool(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, bool& target, std::string json_name);
+		void parse_float(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, float& target, std::string json_name);
+		void parse_combobox(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, combobox_toggle_t& target, std::string json_name);
+		void parse_multicombo(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, multicombobox_toggle_t& target, std::string json_name);
+		void parse_color(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, colorpicker_col_t& target, std::string json_name);
+		void parse_hotkey(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, hotkey_t& target, std::string json_name);
 	}
 }
