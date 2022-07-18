@@ -21,7 +21,7 @@ namespace variables {
 		};
 		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
 
-		inline float aimbot_fov = 0.3f;
+		inline float aimbot_fov = 20.f;
 		inline float aimbot_smoothing = 0.f;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;

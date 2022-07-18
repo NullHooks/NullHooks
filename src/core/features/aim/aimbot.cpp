@@ -49,7 +49,7 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	vec3_t best_target(0,0,0);								// Position of best bone
-	float best_fov{ 180.f * variables::aim::aimbot_fov };	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
+	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
 
 	const auto weapon_data = active_weapon->get_weapon_data();
 	if (!weapon_data) return best_target;
@@ -179,14 +179,18 @@ void aim::draw_fov() {
 	if (false /*REPLACE VAR*/) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
-	if (!aimbot_weapon_check(true)) return;
-	
+
+	weapon_t* active_weapon = csgo::local_player->active_weapon();
+	if (active_weapon && active_weapon->is_non_aim()) return;
+
 	// Screen width and height
 	int sw, sh;
 	interfaces::engine->get_screen_size(sw, sh);
-	const int x_mid = sw / 2, y_mid = sh / 2;
 
-	float rad = tanf((DEG2RAD(variables::aim::aimbot_fov)) / 6) / tanf(97)*x_mid;
+	float x1 = tan(DEG2RAD(variables::aim::aimbot_fov) / 2);
+	float x2 = tan(DEG2RAD(106.f) / 2);
+	float deg = x1 / x2;
+	float rad = deg * (sw/2);
 	
-	render::draw_circle(x_mid, y_mid, rad, 255, color::white());
+	render::draw_circle(sw/2, sh/2, rad, 255, color::white());
 }

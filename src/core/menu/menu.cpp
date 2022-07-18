@@ -110,7 +110,7 @@ void menu::render() {
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 7), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Minimum damage", variables::aim::min_damage, 0.f, 100.f);
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 8), item_slider_pos, item_slider_length, render::fonts::watermark_font,
-					"Aimbot fov", variables::aim::aimbot_fov, 0.f, 1.f);
+					"Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 9), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
