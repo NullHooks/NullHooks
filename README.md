@@ -69,8 +69,10 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
     - `A` - Armor
     - `F` - Is flashed
     - `S` - Is scoped
+    - `X` - Can't shoot
     - `D` - Is defusing (soft)
     - `D` - Has defuser (hard)
+    - `B` - Has bomb
 
 #### Glow
 - Player glow
