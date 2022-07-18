@@ -117,7 +117,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 			aim_angle.clamp();
 
 			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
-			const float fov = cmd->viewangles.distance_to(aim_angle);
+			const float fov = std::hypot(aim_angle.x, aim_angle.y);
 			if (fov < best_fov) {
 				best_fov = fov;
 				best_target = hitbox_pos;

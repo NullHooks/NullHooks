@@ -56,12 +56,7 @@ vec3_t vec3_t::normalized(void) {
 }
 
 float vec3_t::length(void) {
-	float root = 0.0f, sqsr = this->length_sqr();
-
-	__asm        sqrtss xmm0, sqsr
-	__asm        movss root, xmm0
-
-	return root;
+	return std::sqrt(x * x + y * y + z * z);
 }
 
 float vec3_t::length_sqr(void) {
