@@ -172,13 +172,12 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		cmd->buttons |= in_attack;
 }
 
-// https://www.unknowncheats.me/forum/counterstrike-global-offensive/129068-draw-aimbot-fov.html
-// TODO: Needs fix
 void aim::draw_fov() {
-	if (false /*REPLACE VAR*/) return;
+	if (!variables::aim::draw_fov) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
+	// Check if the weapon can shoot, if not we dont care about fov
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (active_weapon && active_weapon->is_non_aim()) return;
 
@@ -186,10 +185,12 @@ void aim::draw_fov() {
 	int sw, sh;
 	interfaces::engine->get_screen_size(sw, sh);
 
-	float x1 = tan(DEG2RAD(variables::aim::aimbot_fov) / 2);
-	float x2 = tan(DEG2RAD(106.f) / 2);
-	float deg = x1 / x2;
-	float rad = deg * (sw/2);
+	// Calculate radius
+	constexpr float base_fov = 106.f;
+	const float player_fov = variables::misc_visuals::custom_fov_slider / 90.f * base_fov;
+	float x1 = tan(DEG2RAD(variables::aim::aimbot_fov));
+	float x2 = tan(DEG2RAD(player_fov) / 2);
+	float rad = (x1 / x2) * (sw/2);
 	
-	render::draw_circle(sw/2, sh/2, rad, 255, color::white());
+	render::draw_circle(sw/2, sh/2, rad, 255, variables::colors::aimbot_fov_c);
 }

@@ -22,6 +22,8 @@ namespace variables {
 		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
 
 		inline float aimbot_fov = 20.f;
+		inline bool draw_fov = false;
+
 		inline float aimbot_smoothing = 0.f;
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
@@ -228,7 +230,8 @@ namespace variables {
 
 		// Misc
 		inline colorpicker_col_t crosshair_c(			color(255, 255, 255, 255) );
-		inline colorpicker_col_t recoil_crosshair_c(	color(0, 255, 0, 255) );
+		inline colorpicker_col_t recoil_crosshair_c(	color(0, 255, 0, 255));
+		inline colorpicker_col_t aimbot_fov_c(			color(255, 255, 255, 150) );
 	};
 
 	inline struct MotionBlur {

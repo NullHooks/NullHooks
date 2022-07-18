@@ -87,7 +87,7 @@ void menu::render() {
 					render::fonts::watermark_font, "Triggerbot delay", variables::aim::triggerbot_delay, 0.f, 30.f);
 			}
 
-			const int part3_items_num   = 10;
+			const int part3_items_num   = 11;
 			const int part3_y           = part2_y + part2_h + container_margin;
 			const int part3_base_item_y = part3_y + container_padding;
 			const int part3_h           = (15 * part3_items_num) + (container_padding * 2) - 4;
@@ -111,7 +111,9 @@ void menu::render() {
 					"Minimum damage", variables::aim::min_damage, 0.f, 100.f);
 				gui::slider(item_left_pos, part3_base_item_y + (15 * 8), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Aimbot fov", variables::aim::aimbot_fov, 0.f, 180.f);
-				gui::slider(item_left_pos, part3_base_item_y + (15 * 9), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+				gui::check_box(item_left_pos, part3_base_item_y + (15 * 9), item_checkbox_pos, render::fonts::watermark_font,
+					"Draw fov", variables::aim::draw_fov, variables::colors::aimbot_fov_c);
+				gui::slider(item_left_pos, part3_base_item_y + (15 * 10), item_slider_pos, item_slider_length, render::fonts::watermark_font,
 					"Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
