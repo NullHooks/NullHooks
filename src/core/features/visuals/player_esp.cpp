@@ -148,6 +148,18 @@ void visuals::playeresp() {
 					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
+				// Has bomb
+				bool has_bomb = false;
+				const auto weapons = player->get_weapons();
+				if (!weapons) return;
+				for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
+					weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapons[n]);
+					if (weapon && weapon->is_bomb()) {
+						has_bomb = true;
+						break;
+					}
+				}
+
 				int item_num = 0;
 				if (player->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
@@ -155,7 +167,10 @@ void visuals::playeresp() {
 				} else if (player->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
-				} // TODO: Has c4
+				} else if (has_bomb) {
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "B", true, color(210, 110, 0, 255));
+					item_num++;
+				}
 
 				if (player->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
@@ -163,6 +178,10 @@ void visuals::playeresp() {
 				}
 				if (player->is_flashed()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
+					item_num++;
+				}
+				if (!aim::can_fire(player)) {
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "X", true, color(230, 210, 0, 255));
 					item_num++;
 				}
 
@@ -182,6 +201,18 @@ void visuals::playeresp() {
 					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
+				// Has bomb
+				bool has_bomb = false;
+				const auto weapons = player->get_weapons();
+				if (!weapons) return;
+				for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
+					weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapons[n]);
+					if (weapon && weapon->is_bomb()) {
+						has_bomb = true;
+						break;
+					}
+				}
+
 				int item_num = 0;
 				if (player->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
@@ -189,7 +220,10 @@ void visuals::playeresp() {
 				} else if (player->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
-				} // TODO: Has c4
+				} else if (has_bomb) {
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "B", true, color(210, 110, 0, 255));
+					item_num++;
+				}
 
 				if (player->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
@@ -199,10 +233,14 @@ void visuals::playeresp() {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
 					item_num++;
 				}
+				if (!aim::can_fire(player)) {
+					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "X", true, color(210, 170, 0, 255));
+					item_num++;
+				}
 
-				auto current_weapon = player->active_weapon();
+				const auto current_weapon = player->active_weapon();
 				if (!current_weapon) continue;
-				auto weapon_data = current_weapon->get_weapon_data();
+				const auto weapon_data = current_weapon->get_weapon_data();
 				if (!weapon_data) continue;
 				std::string s_weapon_name = weapon_data->weapon_name;
 				

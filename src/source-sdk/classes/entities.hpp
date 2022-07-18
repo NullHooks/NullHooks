@@ -459,7 +459,7 @@ public:
 
 
 	bool is_non_aim() {
-		return this->is_bomb() || this->is_taser() || this->is_knife() || this->is_grenade() || this->clip1_count() == 0;
+		return this->is_bomb() || this->is_knife() || this->is_grenade() || this->clip1_count() == 0;
 	}
 
 	bool is_bomb() {
