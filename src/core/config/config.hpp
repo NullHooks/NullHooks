@@ -14,6 +14,7 @@ namespace config {
 	void refresh_list();
 
 	inline textbox_t new_config_name("");
+	void create_new_config(std::string filename);
 
 	void load_config(std::string filename);
 	void load_selected_config();
