@@ -83,7 +83,7 @@ void visuals::motion_blur(view_setup_t* setup) noexcept {
             history.noRotationalMotionBlurUntil = interfaces::globals->realtime + 1.0f;
         } else {
             const float horizontalFov = setup->fov;
-            const float verticalFov = (setup->aspectRatio <= 0.0f) ? (setup->fov) : (setup->fov / setup->aspectRatio);
+            const float verticalFov = (setup->aspect_ratio <= 0.0f) ? (setup->fov) : (setup->fov / setup->aspect_ratio);
             const float viewdotMotion = currentForwardVector.dot(positionChange);
 
             if (variables::motion_blur.forwardEnabled)

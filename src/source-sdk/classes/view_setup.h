@@ -10,5 +10,5 @@ struct view_setup_t {
 	std::byte pad2[4];
 	float far_z;
 	std::byte pad3[8];
-	float aspectRatio;
+	float aspect_ratio;
 };
