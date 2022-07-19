@@ -63,6 +63,19 @@ void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
             key_states[VK_MENU].pressed = false;
             key_states[VK_TAB].held = false;
             key_states[VK_TAB].pressed = false;
+            break;
+        }
+        case WM_CHAR: {                             // For gettting characters for textbox
+            if (input::gobal_input.reading_textbox) {
+                if (wparam == 27 || wparam == 8 || wparam == 10) break;                         // Unfocus checks
+                if (wparam >= 32 && wparam < 126) {                                             // Valid characters
+                    input::gobal_input.wndproc_textbox_buffer += static_cast<char>(wparam);     // Add characters if we reading
+                }
+            } else {
+                // Empty otherwise
+                input::gobal_input.wndproc_textbox_buffer = "";
+            }
+            break;
         }
         /* -------------- Keyboard -------------- */
         case WM_SYSKEYDOWN:                         // Alt + Key

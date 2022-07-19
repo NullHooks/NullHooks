@@ -71,6 +71,7 @@ public:
 
 public:
     bool reading_textbox = false;
+    std::string wndproc_textbox_buffer = "";
     bool reading_hotkey = false;
     int latest_hotkey = INPUT_KEY_NONE;      // Used by UpdatePressed() to avoid instantly toggling the pressed key
 
