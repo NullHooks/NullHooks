@@ -465,6 +465,47 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
+void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info) {
+	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
+	
+	constexpr int h = 11;
+	constexpr int button_w = 30;
+	constexpr int margin = 5;
+	const int text_box_w = w - button_w - margin;
+
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+		// If in text area and clicked
+		if ((cursor.x >= x) && (cursor.x <= x + text_box_w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1)) {
+			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
+				input::gobal_input.reading_hotkey = true;
+				textbox_info.reading_this = true;
+			}
+		} else if (textbox_info.reading_this && input::gobal_input.IsPressed(VK_LBUTTON)) {
+			input::gobal_input.reading_hotkey = false;
+			textbox_info.reading_this = false;
+		}
+	}
+
+	if (input::gobal_input.reading_hotkey && textbox_info.reading_this) {
+		const int newkey = input::gobal_input.LatestPressed();
+		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
+			// Delte will remove last char
+			if (newkey == VK_DELETE) {								
+				textbox_info.text.pop_back();
+			// If esc or enter, unfocus
+			} else if (newkey == VK_ESCAPE || newkey == VK_RETURN) {
+				input::gobal_input.reading_hotkey = true;
+				textbox_info.reading_this = false;
+			// If key is valid, add to string
+			} else if (input::gobal_input.GetStringChar(newkey) == INPUT_KEY_NONE) {		// TODO: Getting the character from keys is too inconsistent
+				textbox_info.text.push_back(input::gobal_input.GetStringChar(newkey));		// Add char to string
+			}
+		}
+	}
+
+	// TODO: Should draw textbox background, text on top or placeholder if empty and button left to that
+}
+
 void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, std::vector<std::string>& config_names) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
