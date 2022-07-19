@@ -34,7 +34,6 @@ void GlobalInput::UpdatePressed() {
         // Pressed will be true on the first paint_traverse iteration that the key was pressed
         if (key_states[n].held && !key_states_old[n].held)
             key_states[n].pressed = true;
-            //interfaces::console->color_printf(valve_color_t{0,255,0,255}, "Key pressed: 0x%04x\n", n);
         else
             key_states[n].pressed = false;
 
@@ -44,7 +43,7 @@ void GlobalInput::UpdatePressed() {
                 key_states[n].held = false;
                 key_states[n].pressed = false;
             } else {
-                latest_hotkey = HOTKEY_NONE;        // Reset key to none
+                latest_hotkey = INPUT_KEY_NONE;        // Reset key to none
             }
         }
 
@@ -56,7 +55,6 @@ void GlobalInput::UpdatePressed() {
 
 // Every WndProc iteration
 void GlobalInput::WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam) {
-    //static std::array<KeyStateInfo, 256> key_states_alt;
     switch (msg) {
         /* -------------- Misc -------------- */
         case WM_KILLFOCUS: {                        // Window just unfocused

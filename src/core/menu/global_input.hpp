@@ -7,9 +7,10 @@
  *   https://pastebin.com/KLuSQ5Tz
  */
 
-#define HOTKEY_WAITING -1
-#define HOTKEY_NONE -2
+#define INPUT_KEY_WAITING -1
+#define INPUT_KEY_NONE -2
 
+#pragma region STRUCTS AND CLASSES
 struct KeyStateInfo {
     /*
      * .pressed will store:
@@ -21,6 +22,20 @@ struct KeyStateInfo {
      */
     bool pressed;
     bool held;
+};
+
+class textbox_t {
+public:
+    std::string text;
+    bool reading_this;
+
+    textbox_t(std::string text, const bool reading_this = false) {
+        this->text = text;
+        this->reading_this = reading_this;
+    }
+
+    operator std::string() { return text; }
+    operator bool() { return reading_this; }
 };
 
 // Stores the key and the togge value
@@ -37,7 +52,9 @@ public:
     operator int() { return key; }
     operator bool() { return reading_this; }
 };
+#pragma endregion
 
+#pragma region GLOBALINPUT CLASS
 class GlobalInput {
 public:
     void Init();
@@ -46,8 +63,9 @@ public:
     void WndProcUpdate(UINT msg, WPARAM wparam, LPARAM lparam);
 
 public:
+    bool reading_textbox = false;
     bool reading_hotkey = false;
-    int latest_hotkey = HOTKEY_NONE;          // Used by UpdatePressed() to avoid instantly toggling the pressed key
+    int latest_hotkey = INPUT_KEY_NONE;      // Used by UpdatePressed() to avoid instantly toggling the pressed key
 
     inline int LatestPressed() {
         for (int n = 0; n < 256; n++) {
@@ -55,22 +73,36 @@ public:
                 return n;
         }
 
-        return HOTKEY_WAITING;
+        return INPUT_KEY_WAITING;
+    }
+
+    // Used in textboxes, checks if a key could be used as text
+    inline int GetStringChar(const int vKey) {
+        if (vKey == VK_SPACE) return ' ';
+        if (vKey == VK_DOT) return ' ';
+        if ((vKey < '0' || vKey > 'Z') || (vKey > '9' && vKey < 'A'))      // WinUser.h Line 533
+            return INPUT_KEY_NONE;   
+
+        if (IsHeld(VK_SHIFT)) return vKey;      // Return uppercase
+        else return vKey - 'A' + 'a';           // Convert to lowercase
     }
 
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
         if (vKey < 0) return false;                                         // Keys like HOTKEY_WAITING or HOTKEY_NONE should be checked with IsPressed()
         if (vKey == latest_hotkey) return false;                            // Avoid toggling the key when assigning
-        return (!reading_hotkey) ? key_states[vKey].pressed : false;        // See comment on GlobalInput::WndProcUpdate()
+        if (reading_hotkey || reading_textbox) return false;
+
+        return key_states[vKey].pressed;                                    // See comment on GlobalInput::WndProcUpdate()
     }
 
     // While key is down
     inline bool IsHeld(const int vKey) const {
-        if (vKey == HOTKEY_NONE) return true;       // If a hotkey is set to "None" is the same as always on
+        if (vKey == INPUT_KEY_NONE) return true;        // If a hotkey is set to "None" is the same as always on
 
-        if (vKey < 0) return false;                 // Should not happen
-        if (vKey == latest_hotkey) return false;    // Avoid toggling the key when assigning
+        if (vKey < 0) return false;                     // Should not happen
+        if (vKey == latest_hotkey) return false;        // Avoid toggling the key when assigning
+
         return key_states[vKey].held;
     }
 
@@ -78,7 +110,9 @@ private:
     KeyStateInfo key_states[256];       // Will be updated by WndProc
     KeyStateInfo key_states_old[256];   // Will be updated every paint_traverse iteration with the old key_states[]
 };
+#pragma endregion
 
+#pragma region INPUT NAMESPACE
 namespace input {
     inline GlobalInput gobal_input;
 
@@ -123,4 +157,4 @@ namespace input {
         // Letters and numbers are added in Init();
     };
 }
-
+#pragma endregion
