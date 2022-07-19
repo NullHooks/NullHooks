@@ -13,6 +13,8 @@ namespace config {
 	inline std::vector<std::string> config_names;
 	void refresh_list();
 
+	inline textbox_t new_config_name("");
+
 	void load_config(std::string filename);
 	void load_selected_config();
 	
