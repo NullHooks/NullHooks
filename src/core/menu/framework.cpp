@@ -480,6 +480,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 		// If in text area and clicked
 		if ((cursor.x >= x) && (cursor.x <= x + text_box_w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1)) {
 			if (!input::gobal_input.reading_textbox) {
+				input::gobal_input.wndproc_textbox_buffer = textbox_info.text;		// Move current text to buffer cuz we reading
 				input::gobal_input.reading_textbox = true;
 				textbox_info.reading_this = true;
 			}
@@ -492,6 +493,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	if (input::gobal_input.reading_textbox && textbox_info.reading_this) {
 		// Delte will remove last char
 		if (input::gobal_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
+			input::gobal_input.wndproc_textbox_buffer.pop_back();
 			textbox_info.text.pop_back();
 		// If esc or enter, unfocus
 		} else if (input::gobal_input.IsHeld(VK_ESCAPE) || input::gobal_input.IsHeld(VK_RETURN)) {
@@ -499,33 +501,21 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 			textbox_info.reading_this = false;
 		// If key is valid, add to string. Gotta thank zgui
 		} else if (textbox_info.text.length() < max_txt_len) {
-			for (int i = 32; i <= 222; i++) {
-				if ((i > 32 && i < 48) || (i > 57 && i < 65) || (i > 90 && i < 186)) continue;		// Bad key
-					
-				// Normal letters
-				if (i > 57 && i <= 90) {
-					if (input::gobal_input.IsPressed(i))
-						textbox_info.text += input::gobal_input.IsHeld(VK_SHIFT) ? static_cast<char>(i) : static_cast<char>(i + 32);		// Append lowercase or uppercase to text depending on shift
-				} else {
-					if (input::gobal_input.IsPressed(i)) {
-						// Special characters from the array. Numbers included (because of the characters with shift)
-						for (int j = 0; j < sizeof(input::special_characters); j++) {
-							if (input::special_characters[j].vk == i)
-								textbox_info.text += input::gobal_input.IsHeld(VK_SHIFT) ? input::special_characters[j].shift : input::special_characters[j].regular;		// Check KeyCodeInfo struct in global_input.hpp
-						}
-					}
-				}
-			}
+			textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
 		}
 	}
 
-	// TODO: Should draw textbox background, text on top or placeholder if empty and button left to that
+	// Backgound and text contents
 	render::draw_filled_rect(x, y - 2, text_box_w, 15, color(15, 15, 15, 255));
-	if (textbox_info.text.length() > 0)
-		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, textbox_info.text, false, /*CHANGE DEPENDING ON FOCUSED OR NOT*/ color::white(255));
-	else if (!textbox_info.reading_this)
+	if (textbox_info.text.length() > 0) {
+		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, textbox_info.text, false, (textbox_info.reading_this) ? color::white(255) : color::white(100));
+		// Cursor
+		const int text_w = render::get_text_size(render::fonts::watermark_font, textbox_info.text).x;
+		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());
+	} else if (!textbox_info.reading_this) {
 		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, placeholder, false, color::white(100));
-	
+	}
+
 	// Button
 	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
