@@ -47,6 +47,7 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::aim::bodyaim_if_lethal,						"aim",				"bodyaim_if_lethal");
 	load::parse_combobox(doc,		variables::aim::autowall,								"aim",				"autowall");
 	load::parse_float(doc,			variables::aim::aimbot_fov,								"aim",				"aimbot_fov");
+	load::parse_bool(doc,			variables::aim::draw_fov,								"aim",				"draw_fov");
 	load::parse_float(doc,			variables::aim::aimbot_smoothing,						"aim",				"aimbot_smoothing");
 	load::parse_bool(doc,			variables::aim::target_friends,							"aim",				"target_friends");
 	load::parse_bool(doc,			variables::aim::non_rifle_aimpunch,						"aim",				"non_rifle_aimpunch");
