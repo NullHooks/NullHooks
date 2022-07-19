@@ -522,8 +522,11 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	// Button
 	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
-		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
+		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
 			button_callback(textbox_info.text);
+			textbox_info.text = "";
+			input::gobal_input.wndproc_textbox_buffer = "";
+		}
 	} else {
 		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
 	}
