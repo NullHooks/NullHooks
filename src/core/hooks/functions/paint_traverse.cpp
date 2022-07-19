@@ -35,8 +35,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		break;
 	case fnv::hash("FocusOverlayPanel"):
 		//interfaces::panel->set_keyboard_input_enabled(panel, variables::menu::editing_text);
-		interfaces::input_system->enable_input(!(variables::ui::menu::opened && input::gobal_input.reading_hotkey));				// TODO: Does not restore when unhooking
-		interfaces::panel->set_keyboard_input_enabled(panel, variables::ui::menu::opened && input::gobal_input.reading_hotkey);		// TODO: Does not restore when unhooking
+		interfaces::input_system->enable_input(!(variables::ui::menu::opened && (input::gobal_input.reading_hotkey || input::gobal_input.reading_textbox)));				// TODO: Does not restore when unhooking
+		interfaces::panel->set_keyboard_input_enabled(panel, variables::ui::menu::opened && (input::gobal_input.reading_hotkey || input::gobal_input.reading_textbox));		// TODO: Does not restore when unhooking
 		interfaces::panel->set_mouse_input_enabled(panel, variables::ui::menu::opened);
 		break;
 	case fnv::hash("HudZoom"):	// No sniper scope
