@@ -24,6 +24,13 @@ struct KeyStateInfo {
     bool held;
 };
 
+struct KeyCodeInfo {
+    int vk;
+
+    char regular;
+    char shift;
+};
+
 class textbox_t {
 public:
     std::string text;
@@ -76,22 +83,11 @@ public:
         return INPUT_KEY_WAITING;
     }
 
-    // Used in textboxes, checks if a key could be used as text
-    inline int GetStringChar(const int vKey) {
-        if (vKey == VK_SPACE) return ' ';
-        if (vKey == VK_DOT) return ' ';
-        if ((vKey < '0' || vKey > 'Z') || (vKey > '9' && vKey < 'A'))      // WinUser.h Line 533
-            return INPUT_KEY_NONE;   
-
-        if (IsHeld(VK_SHIFT)) return vKey;      // Return uppercase
-        else return vKey - 'A' + 'a';           // Convert to lowercase
-    }
-
     // Only the first time is pressed
     inline bool IsPressed(const int vKey) const {
         if (vKey < 0) return false;                                         // Keys like HOTKEY_WAITING or HOTKEY_NONE should be checked with IsPressed()
         if (vKey == latest_hotkey) return false;                            // Avoid toggling the key when assigning
-        if (reading_hotkey || reading_textbox) return false;
+        if (reading_hotkey) return false;
 
         return key_states[vKey].pressed;                                    // See comment on GlobalInput::WndProcUpdate()
     }
@@ -117,44 +113,70 @@ namespace input {
     inline GlobalInput gobal_input;
 
     inline std::map<int, std::string> key_names = {
-    /*   Virtual key id                           Key name */
-        { HOTKEY_WAITING,   "..." },
-        { HOTKEY_NONE,      "None" },
-        { VK_LBUTTON,       "LMouse" },
-        { VK_RBUTTON,       "RMouse" },
-        { VK_MBUTTON,       "MMouse" },
-        { VK_XBUTTON1,      "Mouse4" },
-        { VK_XBUTTON2,      "Mouse5" },
-        { VK_TAB,           "Tab" },
-        { VK_RETURN,        "Return" },
-        { VK_SHIFT,         "Shift" },
-        { VK_CONTROL,       "Ctrl" },
-        { VK_MENU,          "Alt" },
-        { VK_PAUSE,         "Pause" },
-        { VK_CAPITAL,       "Caps" },
-        { VK_ESCAPE,        "Esc" },        // Should not be a valid bind
-        { VK_SPACE,         "Space" },
-        { VK_PRIOR,         "Page up" },
-        { VK_NEXT,          "Page down" },
-        { VK_END,           "End" },
-        { VK_HOME,          "Home" },
-        { VK_LEFT,          "Left" },
-        { VK_UP,            "Up" },
-        { VK_RIGHT,         "Right" },
-        { VK_DOWN,          "Down" },
-        { VK_INSERT,        "Insert" },
-        { VK_DELETE,        "Delete" },
-        { VK_NUMPAD0,       "Num0" },
-        { VK_NUMPAD1,       "Num1" },
-        { VK_NUMPAD2,       "Num2" },
-        { VK_NUMPAD3,       "Num3" },
-        { VK_NUMPAD4,       "Num4" },
-        { VK_NUMPAD5,       "Num5" },
-        { VK_NUMPAD6,       "Num6" },
-        { VK_NUMPAD7,       "Num7" },
-        { VK_NUMPAD8,       "Num8" },
-        { VK_NUMPAD9,       "Num9" }
+    /*    Virtual key id            Key name */
+        { INPUT_KEY_WAITING,        "..." },
+        { INPUT_KEY_NONE,           "None" },
+        { VK_LBUTTON,               "LMouse" },
+        { VK_RBUTTON,               "RMouse" },
+        { VK_MBUTTON,               "MMouse" },
+        { VK_XBUTTON1,              "Mouse4" },
+        { VK_XBUTTON2,              "Mouse5" },
+        { VK_TAB,                   "Tab" },
+        { VK_RETURN,                "Return" },
+        { VK_SHIFT,                 "Shift" },
+        { VK_CONTROL,               "Ctrl" },
+        { VK_MENU,                  "Alt" },
+        { VK_PAUSE,                 "Pause" },
+        { VK_CAPITAL,               "Caps" },
+        { VK_ESCAPE,                "Esc" },        // Should not be a valid bind
+        { VK_SPACE,                 "Space" },
+        { VK_PRIOR,                 "Page up" },
+        { VK_NEXT,                  "Page down" },
+        { VK_END,                   "End" },
+        { VK_HOME,                  "Home" },
+        { VK_LEFT,                  "Left" },
+        { VK_UP,                    "Up" },
+        { VK_RIGHT,                 "Right" },
+        { VK_DOWN,                  "Down" },
+        { VK_INSERT,                "Insert" },
+        { VK_DELETE,                "Delete" },
+        { VK_NUMPAD0,               "Num0" },
+        { VK_NUMPAD1,               "Num1" },
+        { VK_NUMPAD2,               "Num2" },
+        { VK_NUMPAD3,               "Num3" },
+        { VK_NUMPAD4,               "Num4" },
+        { VK_NUMPAD5,               "Num5" },
+        { VK_NUMPAD6,               "Num6" },
+        { VK_NUMPAD7,               "Num7" },
+        { VK_NUMPAD8,               "Num8" },
+        { VK_NUMPAD9,               "Num9" }
         // Letters and numbers are added in Init();
+    };
+
+    // Used for textbox
+    static KeyCodeInfo special_characters[22] = {
+        {48,  '0',  ')'},
+        {49,  '1',  '!'},
+        {50,  '2',  '@'},
+        {51,  '3',  '#'},
+        {52,  '4',  '$'},
+        {53,  '5',  '%'},
+        {54,  '6',  '^'},
+        {55,  '7',  '&'},
+        {56,  '8',  '*'},
+        {57,  '9',  '('},
+        {32,  ' ',  ' '},
+        {192, '`',  '~'},
+        {189, '-',  '_'},
+        {187, '=',  '+'},
+        {219, '[',  '{'},
+        {220, '\\', '|'},
+        {221, ']',  '}'},
+        {186, ';',  ':'},
+        {222, '\'', '"'},
+        {188, ',',  '<'},
+        {190, '.',  '>'},
+        {191, '/',  '?'}
     };
 }
 #pragma endregion

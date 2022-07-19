@@ -25,8 +25,9 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Button background (Hover)
 		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON));
+	} else {
+		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Button background
 	}
-	else render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Button background
 
 	return pressed;
 }
@@ -384,16 +385,16 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				reading_this_hotkey				  = true;
 				should_skip_frame				  = true;
 			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				target_key = HOTKEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+				target_key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {							// -1 means there is no new keypress
+		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
-				target_key = HOTKEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
+				target_key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				target_key = newkey;							// Store key
 				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
@@ -407,7 +408,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	}
 
 	// Key text
-	std::string key_name    = (reading_this_hotkey) ? input::key_names[HOTKEY_WAITING] : input::key_names[target_key];		// Defined in global_input.hpp
+	std::string key_name    = (reading_this_hotkey) ? input::key_names[INPUT_KEY_WAITING] : input::key_names[target_key];		// Defined in global_input.hpp
 	std::string display_key = "[" + key_name + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
@@ -432,16 +433,16 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				hotkey_info.reading_this          = true;
 				should_skip_frame                 = true;
 			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				hotkey_info.key = HOTKEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+				hotkey_info.key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::gobal_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
 		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != HOTKEY_WAITING) {							// -1 means there is no new keypress
+		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
-				hotkey_info.key = HOTKEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
+				hotkey_info.key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				hotkey_info.key = newkey;						// Store key
 				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
@@ -455,7 +456,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	}
 
 	// Key text
-	std::string key_name    = (hotkey_info.reading_this) ? input::key_names[HOTKEY_WAITING] : input::key_names[hotkey_info.key];	// Defined in global_input.hpp
+	std::string key_name    = (hotkey_info.reading_this) ? input::key_names[INPUT_KEY_WAITING] : input::key_names[hotkey_info.key];	// Defined in global_input.hpp
 	std::string display_key = "[" + key_name + "]";
 	int tw, th;		// Text's width and height
 	interfaces::surface->get_text_size(font, std::wstring(display_key.begin(), display_key.end()).c_str(), tw, th); // Get w for getting the top left corner of txt
@@ -465,45 +466,74 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
-void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info) {
+void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 	
 	constexpr int h = 11;
+	constexpr int max_txt_len = 255;
 	constexpr int button_w = 30;
 	constexpr int margin = 5;
 	const int text_box_w = w - button_w - margin;
+	const int button_x = x + text_box_w + margin;
 
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
 		// If in text area and clicked
 		if ((cursor.x >= x) && (cursor.x <= x + text_box_w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1)) {
-			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
-				input::gobal_input.reading_hotkey = true;
+			if (!input::gobal_input.reading_textbox) {
+				input::gobal_input.reading_textbox = true;
 				textbox_info.reading_this = true;
 			}
-		} else if (textbox_info.reading_this && input::gobal_input.IsPressed(VK_LBUTTON)) {
-			input::gobal_input.reading_hotkey = false;
+		} else {
+			input::gobal_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		}
 	}
 
-	if (input::gobal_input.reading_hotkey && textbox_info.reading_this) {
-		const int newkey = input::gobal_input.LatestPressed();
-		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
-			// Delte will remove last char
-			if (newkey == VK_DELETE) {								
-				textbox_info.text.pop_back();
-			// If esc or enter, unfocus
-			} else if (newkey == VK_ESCAPE || newkey == VK_RETURN) {
-				input::gobal_input.reading_hotkey = true;
-				textbox_info.reading_this = false;
-			// If key is valid, add to string
-			} else if (input::gobal_input.GetStringChar(newkey) == INPUT_KEY_NONE) {		// TODO: Getting the character from keys is too inconsistent
-				textbox_info.text.push_back(input::gobal_input.GetStringChar(newkey));		// Add char to string
+	if (input::gobal_input.reading_textbox && textbox_info.reading_this) {
+		// Delte will remove last char
+		if (input::gobal_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
+			textbox_info.text.pop_back();
+		// If esc or enter, unfocus
+		} else if (input::gobal_input.IsHeld(VK_ESCAPE) || input::gobal_input.IsHeld(VK_RETURN)) {
+			input::gobal_input.reading_textbox = false;
+			textbox_info.reading_this = false;
+		// If key is valid, add to string. Gotta thank zgui
+		} else if (textbox_info.text.length() < max_txt_len) {
+			for (int i = 32; i <= 222; i++) {
+				if ((i > 32 && i < 48) || (i > 57 && i < 65) || (i > 90 && i < 186)) continue;		// Bad key
+					
+				// Normal letters
+				if (i > 57 && i <= 90) {
+					if (input::gobal_input.IsPressed(i))
+						textbox_info.text += input::gobal_input.IsHeld(VK_SHIFT) ? static_cast<char>(i) : static_cast<char>(i + 32);		// Append lowercase or uppercase to text depending on shift
+				} else {
+					if (input::gobal_input.IsPressed(i)) {
+						// Special characters from the array. Numbers included (because of the characters with shift)
+						for (int j = 0; j < sizeof(input::special_characters); j++) {
+							if (input::special_characters[j].vk == i)
+								textbox_info.text += input::gobal_input.IsHeld(VK_SHIFT) ? input::special_characters[j].shift : input::special_characters[j].regular;		// Check KeyCodeInfo struct in global_input.hpp
+						}
+					}
+				}
 			}
 		}
 	}
 
 	// TODO: Should draw textbox background, text on top or placeholder if empty and button left to that
+	render::draw_filled_rect(x, y - 2, text_box_w, 15, color(15, 15, 15, 255));
+	if (textbox_info.text.length() > 0)
+		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, textbox_info.text, false, /*CHANGE DEPENDING ON FOCUSED OR NOT*/ color::white(255));
+	else if (!textbox_info.reading_this)
+		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, placeholder, false, color::white(100));
+	
+	// Button
+	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
+		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
+		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
+			button_callback(textbox_info.text);
+	} else {
+		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
+	}
 }
 
 void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, std::vector<std::string>& config_names) {

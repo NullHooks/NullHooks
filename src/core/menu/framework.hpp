@@ -54,7 +54,8 @@ public:
 	operator bool() { return toggle; }
 };
 
-class hotkey_t;	// Declared in global input
+class hotkey_t;			// Declared in global input
+class textbox_t;		// Declared in global input
 namespace gui {
 	void group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
 	void tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string, std::int32_t& tab, std::int32_t count);
@@ -69,7 +70,7 @@ namespace gui {
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);
-	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info);
+	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
 	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
 	void menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
 	inline bool user_dragging_menu = false;		// Used to know if the user is holding the menu window area
