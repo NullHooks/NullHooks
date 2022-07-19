@@ -183,7 +183,7 @@ float scale_fov_by_width(float fov, float aspect_ratio) {
 }
 
 void aim::draw_fov() {
-	if (!variables::aim::draw_fov) return;
+	if (!variables::aim::aimbot || !variables::aim::draw_fov) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
