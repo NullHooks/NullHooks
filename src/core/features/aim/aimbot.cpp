@@ -172,6 +172,16 @@ void aim::run_aimbot(c_usercmd* cmd) {
 		cmd->buttons |= in_attack;
 }
 
+float scale_fov_by_width(float fov, float aspect_ratio) {
+	aspect_ratio *= 0.75f;
+	
+	float half_angle_rad = fov * (0.5f * M_PI / 180.0f);
+	float t = tan(half_angle_rad) * aspect_ratio;
+	float retDegrees = (180.0f / M_PI) * atan(t);
+	
+	return retDegrees * 2.0f;
+}
+
 void aim::draw_fov() {
 	if (!variables::aim::draw_fov) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
@@ -185,17 +195,9 @@ void aim::draw_fov() {
 	int sw, sh;
 	interfaces::engine->get_screen_size(sw, sh);
 
-	// Very bad way of doing it but it's the one that works best atm. Feel free to PR.
-	const float aspect_ratio = (float)sw / (float)sh;
-	float aspect_ratio_fov;
-	if (aspect_ratio == 16.f/9.f)			aspect_ratio_fov = 106.3f;
-	else if (aspect_ratio == 16.f/10.f)		aspect_ratio_fov = 100.4f;
-	else if (aspect_ratio == 4.f/3.f)		aspect_ratio_fov = 90.f;
-	else if (aspect_ratio == 5.f/4.f)		aspect_ratio_fov = 86.3f;
-	else									aspect_ratio_fov = 106.3f;		// 16:9 if not in list default
-
 	// Calculate radius
-	const float screen_fov = variables::misc_visuals::custom_fov_slider / 90.f * aspect_ratio_fov;
+	const float aspect_ratio = (float)sw / (float)sh;
+	const float screen_fov = scale_fov_by_width(variables::misc_visuals::custom_fov_slider, aspect_ratio);
 	float x1 = tan(DEG2RAD(variables::aim::aimbot_fov));
 	float x2 = tan(DEG2RAD(screen_fov) / 2);
 	float rad = (x1 / x2) * (sw/2);
