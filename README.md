@@ -51,6 +51,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
     - On key
     - Auto if key is set to 'None'
 - Aimbot fov
+    - Fov circle
 - Aimbot smoothness (Only on snappy aimbot)
 - Aimbot and triggerbot hitboxes
 - Only if scoped
@@ -274,6 +275,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Fix talon knife inspect animation.
 - [ ] Add textbox to framework for creating new config files from menu
 - [ ] Add auto revolver hold
+- [ ] Replace `player_info` esp with multicombobox
 - [ ] Add worldcolor
 - [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
