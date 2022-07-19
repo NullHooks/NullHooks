@@ -413,7 +413,7 @@ void menu::render() {
 				gui::button(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Refresh configs", config::refresh_list);
 				gui::textbox(item_left_pos - 1, part1_base_item_y + (15 * 1), item_hotkey_w, render::fonts::watermark_font,
-					"Config name...", config::new_config_name, config::save_config);
+					"Config name...", config::new_config_name, config::create_new_config);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos - 20, render::fonts::watermark_font,
 					"Load selected config", config::load_selected_config);
 				gui::button(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos - 20, render::fonts::watermark_font,

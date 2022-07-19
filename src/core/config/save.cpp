@@ -13,6 +13,11 @@ void config::save_selected_config() {
 }
 
 #pragma region SAVE_CONFIG
+void config::create_new_config(std::string filename) {
+	save_config(filename);
+	refresh_list();
+}
+
 void config::save_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
