@@ -2,6 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#pragma region AIMBOT CHECKS
 bool aim::can_fire(player_t* target) {
 	weapon_t* active_weapon = target->active_weapon();
 	if (!active_weapon) return false;
@@ -46,7 +47,9 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 	// (We reached here without return so we are good to use aimbot)
 	return true;
 }
+#pragma endregion
 
+#pragma region GET TARGET
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	// Store selected hitboxes
 	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
@@ -126,7 +129,9 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	return best_target;		// vec3_t position of the best bone
 }
+#pragma endregion
 
+#pragma region ACTUAL AIMBOT
 void aim::run_aimbot(c_usercmd* cmd) {
 	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
 		&& !(!variables::aim::autofire && (cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
@@ -176,7 +181,10 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }
+#pragma endregion
 
+#pragma region FOV CIRCLE
+// Used in aim::draw_fov()
 float scale_fov_by_width(float fov, float aspect_ratio) {
 	aspect_ratio *= 0.75f;
 	
@@ -187,6 +195,7 @@ float scale_fov_by_width(float fov, float aspect_ratio) {
 	return retDegrees * 2.0f;
 }
 
+// Used in paint_traverse
 void aim::draw_fov() {
 	if (!variables::aim::aimbot || !variables::aim::draw_fov) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
@@ -212,3 +221,4 @@ void aim::draw_fov() {
 	
 	render::draw_circle(sw/2, sh/2, rad, 255, variables::colors::aimbot_fov_c);
 }
+#pragma endregion
