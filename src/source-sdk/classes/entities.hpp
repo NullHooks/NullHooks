@@ -553,10 +553,55 @@ public:
 	NETVAR("DT_BaseEntity", "m_flShadowCastDistance", fov_time, float)
 	NETVAR("DT_BasePlayer", "m_hObserverTarget", observer_target, unsigned long)
 	NETVAR("DT_BasePlayer", "m_nHitboxSet", hitbox_set, int)
+	NETVAR("DT_BasePlayer", "m_nNextThinkTick", next_think_tick, int)
+	NETVAR("DT_BasePlayer", "m_flFallVelocity", fall_velocity, float)
+	NETVAR("DT_BaseAnimating", "m_nSequence", get_sequence, int)
 	NETVAR("DT_CSPlayer", "m_flDuckAmount", duck_amount, float)
 	NETVAR("DT_CSPlayer", "m_bHasHeavyArmor", has_heavy_armor, bool)
 	NETVAR("DT_SmokeGrenadeProjectile", "m_nSmokeEffectTickBegin", smoke_grenade_tick_begin, int)
 	NETVAR("DT_CSPlayer", "m_nTickBase", get_tick_base, int)
+
+	datamap_t* pred_datamap() {
+		using original_fn = datamap_t * (__thiscall*)(void*);
+		return (*(original_fn**)this)[17](this);
+	}
+
+	FINDDATAMAP(pred_datamap(), "m_hGroundEntity", ground_entity, int)
+	FINDDATAMAP(pred_datamap(), "m_MoveType", move_type, int)
+	FINDDATAMAP(pred_datamap(), "m_nButtons", buttons, int)
+	FINDDATAMAP(pred_datamap(), "m_afButtonLast", button_last, int)
+	FINDDATAMAP(pred_datamap(), "m_afButtonPressed", button_pressed, int)
+	FINDDATAMAP(pred_datamap(), "m_afButtonReleased", button_released, int)
+	FINDDATAMAP(pred_datamap(), "m_nImpulse", impulse, byte)
+
+	c_usercmd** current_command() {
+		auto offset = netvar_manager::get_net_var(fnv::hash("CBasePlayer"), fnv::hash("m_hViewEntity")) - 0x4;
+		return reinterpret_cast<c_usercmd**>(uintptr_t(this) + offset);
+	}
+
+	void set_next_think(int think) {
+		using original_fn = void(__thiscall*)(void*, int);
+		static auto set_next_think_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "55 8B EC 56 57 8B F9 8B B7 ? ? ? ? 8B"));
+		set_next_think_fn(this, think);
+	}
+
+	bool physics_run_think(int think) {
+		using original_fn = bool(__thiscall*)(void*, int);
+		static auto physics_run_think_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "55 8B EC 83 EC 10 53 56 57 8B F9 8B 87"));
+		return physics_run_think_fn(this, think);
+	}
+
+	void post_think_v_physics() {
+		using original_fn = void(__thiscall*)(void*);
+		static auto post_think_v_physics_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "55 8B EC 83 E4 F8 81 EC ? ? ? ? 53 8B D9 56 57 83 BB"));
+		post_think_v_physics_fn(this);
+	}
+
+	void simulate_player_simulated_entities() {
+		using original_fn = void(__thiscall*)(void*);
+		static auto simulate_player_simulated_entities_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "56 8B F1 57 8B BE ? ? ? ? 83 EF 01 78 74"));
+		simulate_player_simulated_entities_fn(this);
+	}
 
 	weapon_t* active_weapon() {
 		auto active_weapon = read<uintptr_t>(netvar_manager::get_net_var(fnv::hash("DT_CSPlayer"), fnv::hash("m_hActiveWeapon"))) & 0xFFF;
@@ -658,13 +703,39 @@ public:
 		using original_fn = vec3_t & (__thiscall*)(void*);
 		return (*(original_fn * *)this)[10](this);;
 	}
+
 	vec3_t& abs_angles() {
 		using original_fn = vec3_t & (__thiscall*)(void*);
 		return (*(original_fn * *)this)[11](this);;
 	}
 
-	int move_type() {
-		static int type = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_nRenderMode")) + 1;
-		return read<int>(type);
+	void select_item(const char* str, int sub_type) {
+		using original_fn = void(__thiscall*)(void*, const char*, int);
+		(*(original_fn**)this)[330](this, str, sub_type);
+	}
+
+	void pre_think() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[318](this);
+	}
+
+	void think() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[139](this);
+	}
+
+	void set_sequence(int sequence) {
+		using original_fn = void(__thiscall*)(void*, int);
+		(*(original_fn**)this)[219](this, sequence);
+	}
+
+	void studio_frame_advance() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[220](this);
+	}
+
+	void update_collision_bounds() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[340](this);
 	}
 };
