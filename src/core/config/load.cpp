@@ -36,11 +36,6 @@ void config::load_config(std::string filename) {
 	if (doc.Parse(file_contents.c_str()).HasParseError()) return;
 
 	/* ------------------------ Read all variables ------------------------ */
-	// antiaim
-	load::parse_bool(doc,			variables::antiaim::antiaim,							"antiaim",			"antiaim");
-	load::parse_float(doc,			variables::antiaim::yaw,								"antiaim",			"antiaim_yaw");
-	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
-
 	// Aim
 	load::parse_bool(doc,			variables::aim::triggerbot,								"aim",				"triggerbot");
 	load::parse_hotkey(doc,			variables::aim::triggerbot_key,							"aim",				"triggerbot_key");
@@ -59,6 +54,10 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::aim::aimbot_noscope,							"aim",				"aimbot_noscope");
 	load::parse_float(doc,			variables::aim::min_damage,								"aim",				"min_damage");
 	load::parse_multicombo(doc,		variables::aim::hitboxes,								"aim",				"hitboxes");
+	// Antiaim
+	load::parse_bool(doc,			variables::antiaim::antiaim,							"antiaim",			"antiaim");
+	load::parse_float(doc,			variables::antiaim::yaw,								"antiaim",			"antiaim_yaw");
+	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
 	// Player visuals
 	load::parse_bool(doc,			variables::player_visuals::showteamesp,					"player_visuals",	"showteamesp");
 	load::parse_bool(doc,			variables::player_visuals::playerglow,					"player_visuals",	"playerglow");
