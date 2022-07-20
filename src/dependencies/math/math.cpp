@@ -27,8 +27,8 @@ void math::correct_movement(vec3_t old_angles, c_usercmd* cmd, float old_forward
 	cmd->sidemove = sin(DEG2RAD(delta_view)) * old_forwardmove + sin(DEG2RAD(delta_view + 90.f)) * old_sidemove;
 }
 
-vec3_t math::calculate_angle(vec3_t& a, vec3_t& b) {
-	vec3_t angles;
+vec3_t math::calculate_angle(vec3_t& in, vec3_t& out) {
+	/*vec3_t angles;
 	vec3_t delta;
 	delta.x = (a.x - b.x);
 	delta.y = (a.y - b.y);
@@ -40,14 +40,28 @@ vec3_t math::calculate_angle(vec3_t& a, vec3_t& b) {
 
 	angles.z = 0.0f;
 	if (delta.x >= 0.0) { angles.y += 180.0f; }
-	return angles;
+	return angles;*/
+	double delta[3] = {
+		(in[0] - out[0]),
+		(in[1] - out[1]),
+		(in[2] - out[2])
+	};
+
+	double hyp = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
+	vec3_t ret = vec3_t();
+	ret.x = (float)(asinf(delta[2] / hyp) * 57.295779513082f);
+	ret.y = (float)(atanf(delta[1] / delta[0]) * 57.295779513082f);
+	ret.z = 0.0f;
+
+	if (delta[0] >= 0.0)
+		ret.y += 180.0f;
+	return ret;
 }
 
 vec3_t math::calculate_relative_angle(vec3_t& src, vec3_t& dst, vec3_t& viewangles) {
-	vec3_t result = ((dst - src).to_angle() - viewangles);
-	result.normalize();
+	vec3_t angles = calculate_angle(src, dst);
 
-	return result;
+	return (angles - viewangles).normalized();
 }
 
 void math::sin_cos(float r, float* s, float* c) {

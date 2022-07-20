@@ -100,12 +100,15 @@ namespace button_functions {
 }
 
 namespace prediction {
-	void start(c_usercmd *cmd);
+	void start(c_usercmd* cmd);
+	void post_think();
 	void end();
 
-	inline player_move_data data;
-	inline float old_cur_time;
-	inline float old_frame_time;
-	inline int *prediction_random_seed;
+	inline player_move_data data{};
+	inline bool custom_inpred{};
+	inline float old_cur_time{};
+	inline float old_frame_time{};
+	inline int* prediction_random_seed{};
+	inline int* prediction_player{};
 };
 
