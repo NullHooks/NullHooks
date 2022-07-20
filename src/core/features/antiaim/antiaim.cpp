@@ -18,7 +18,8 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& sendPacket) {
     weapon_t* active_weapon = csgo::local_player->active_weapon();
     if (!active_weapon) return;
     if ((active_weapon->is_bomb() && cmd->buttons & in_use)
-        || (active_weapon->is_grenade() && cmd->buttons & in_attack)) return;
+        || (active_weapon->is_grenade() && cmd->buttons & in_attack)
+        || (active_weapon->is_knife() && cmd->buttons & in_attack2)) return;
 
     // Pitch down
     cmd->viewangles.x += variables::antiaim::pitch;
