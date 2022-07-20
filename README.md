@@ -247,6 +247,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Global config
 - [X] Make config system more "nested"
 - [X] Add can't shoot to player ESP
+- [X] Add textbox to framework for creating new config files from menu
 #
 </details>
 
@@ -273,7 +274,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Skinchanger fixes
     - [ ] Get localplayer steam id to fix weapon stattrack.
     - [X] Fix talon knife inspect animation.
-- [ ] Add textbox to framework for creating new config files from menu
 - [ ] Add auto revolver hold
 - [ ] Replace `player_info` esp with multicombobox
 - [ ] Add worldcolor
