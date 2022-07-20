@@ -101,6 +101,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="core\features\animations\local.cpp" />
+    <ClCompile Include="core\features\antiaim\antiaim.cpp" />
     <ClCompile Include="core\features\misc\backtrack.cpp" />
     <ClCompile Include="core\features\misc\commands.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -345,7 +347,28 @@
     <ClInclude Include="dependencies\utilities\renderer\renderer.hpp" />
     <ClInclude Include="dependencies\utilities\singleton.hpp" />
     <ClInclude Include="dependencies\utilities\utilities.hpp" />
+    <ClInclude Include="source-sdk\classes\client_class.hpp" />
+    <ClInclude Include="source-sdk\classes\collideable.hpp" />
+    <ClInclude Include="source-sdk\classes\convar.hpp" />
+    <ClInclude Include="source-sdk\classes\c_usercmd.hpp" />
+    <ClInclude Include="source-sdk\classes\entities.hpp" />
+    <ClInclude Include="source-sdk\classes\net_channel.hpp" />
+    <ClInclude Include="source-sdk\classes\recv_props.hpp" />
+    <ClInclude Include="source-sdk\classes\studio.hpp" />
+    <ClInclude Include="source-sdk\classes\view_setup.h" />
+    <ClInclude Include="source-sdk\math\utl_vector.hpp" />
+    <ClInclude Include="source-sdk\math\vector2d.hpp" />
+    <ClInclude Include="source-sdk\math\vector3d.hpp" />
+    <ClInclude Include="source-sdk\math\view_matrix.hpp" />
+    <ClInclude Include="source-sdk\misc\color.hpp" />
     <ClInclude Include="source-sdk\misc\datamap.hpp" />
+    <ClInclude Include="source-sdk\sdk.hpp" />
+    <ClInclude Include="source-sdk\structs\animstate.hpp" />
+    <ClInclude Include="source-sdk\structs\dlight.hpp" />
+    <ClInclude Include="source-sdk\structs\materials.hpp" />
+    <ClInclude Include="source-sdk\structs\models.hpp" />
+    <ClInclude Include="source-sdk\structs\vertex_t.hpp" />
+    <ClInclude Include="source-sdk\structs\weaponinfo.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

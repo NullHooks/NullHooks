@@ -117,6 +117,28 @@ void menu::render() {
 					"Aimbot smoothing", variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
+			int column_number = 1;
+			container_width--;	// Not the best way to do it, but the margin on the right was always smaller because of (5/2=2)
+			container_left_pos = container_left_pos + (container_width * column_number) + container_margin;
+			item_left_pos = item_left_pos + (container_width * column_number) + container_margin;
+			item_checkbox_pos = item_checkbox_pos + (container_width * column_number) + container_margin;
+			item_slider_pos = item_slider_pos + (container_width * column_number) + container_margin;
+			item_combo_pos = item_checkbox_pos + item_checkbox_length;
+
+			const int part1c2_items_num = 3;			// part1c2 => part 1 from column 2
+			const int part1c2_y = part1_y;	// Needs to reset y pos on new col
+			const int part1c2_base_item_y = part1_base_item_y;
+			const int part1c2_h = (15 * part1c2_items_num) + (container_padding * 2) - 4;
+
+			gui::group_box(container_left_pos, part1c2_y, container_width, part1c2_h, render::fonts::watermark_font, "Antiaim", false); {
+				gui::check_box(item_left_pos, part1c2_base_item_y + (15 * 0), item_checkbox_pos, render::fonts::watermark_font,
+					"AntiAim", variables::antiaim::antiaim);
+				gui::slider(item_left_pos, part1c2_base_item_y + (15 * 1), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Pitch (x)", variables::antiaim::pitch, static_cast<float>(-89), static_cast<float>(89));
+				gui::slider(item_left_pos, part1c2_base_item_y + (15 * 2), item_slider_pos, item_slider_length, render::fonts::watermark_font,
+					"Yaw (y)", variables::antiaim::yaw, static_cast<float>(-180), static_cast<float>(180));
+			}
+
 			break;
 		}
 		case 1:	{	// Visuals

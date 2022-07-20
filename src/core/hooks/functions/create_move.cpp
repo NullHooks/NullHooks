@@ -54,6 +54,8 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
 		aim::triggerbot(cmd);
 		aim::run_aimbot(cmd);
+
+		antiaim::run_antiaim(cmd, send_packet);
 	} prediction::end();
 
 	misc::movement::edgejump(cmd, old_flags);
@@ -69,5 +71,5 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	cmd->viewangles.normalize();
 	cmd->viewangles.clamp();
 
-	return (variables::aim::silent) ? false : result;
+	return false;
 }

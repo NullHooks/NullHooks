@@ -41,6 +41,12 @@ namespace variables {
 		inline multicombobox_toggle_t hitboxes(hitboxes_options);
 	}
 
+	namespace antiaim {
+		inline bool antiaim = false;
+		inline float yaw = 0.f;
+		inline float pitch = 0.f;
+	}
+
 	namespace player_visuals {
 		inline bool showteamesp = false;
 		inline bool playerglow = false;

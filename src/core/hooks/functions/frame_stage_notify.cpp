@@ -17,6 +17,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 			break;
 		case FRAME_RENDER_START:
 			visuals::misc::nosmoke(frame_stage);
+			animations::local::run_local_animations();
 			break;
 		case FRAME_RENDER_END:                      break;
 		default:                                    break;
