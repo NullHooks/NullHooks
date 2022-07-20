@@ -164,15 +164,14 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	vec3_t enemy_angle = (aim_angle - (local_aim_punch * recoil_scale)) - cmd->viewangles;
 	enemy_angle.clamp();
 
-	vec3_t final_angle = enemy_angle;	
-	if (!variables::aim::silent) final_angle *= (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing if not silent
+	vec3_t angle_diff = enemy_angle;	
+	if (!variables::aim::silent) angle_diff *= (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing if not silent
 	
-	vec3_t final_angle2 = cmd->viewangles + final_angle;
-
+	vec3_t final_angle = cmd->viewangles + angle_diff;		// The current angle before the aimbot + what we should move
 	if (!variables::aim::silent)
-		interfaces::engine->set_view_angles(final_angle2);
+		interfaces::engine->set_view_angles(final_angle);
 	else
-		cmd->viewangles += final_angle;
+		cmd->viewangles = final_angle;
 
 	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
