@@ -256,42 +256,40 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 #
 </details>
 
+#### Features
 - [X] Add aim stuff
     - [X] Triggerbot
         - [X] Add delay slider
     - [X] Aimbot
         - [X] Silent
         - [X] Snappy
-    - [ ] Aimbot fov circle (or square)
+    - [X] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
+    - [X] Add bodyaim if lethal
     - [ ] Make aimbot and triggerbot also aim for backtrack
-    - [ ] Add bodyaim if lethal
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
-    - [ ] Longjump
     - [X] Slowwalk
+    - [ ] Longjump
 - [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
-- [ ] Skinchanger fixes
-    - [ ] Get localplayer steam id to fix weapon stattrack.
-    - [X] Fix talon knife inspect animation.
 - [ ] Add auto revolver hold
 - [ ] Replace `player_info` esp with multicombobox
 - [ ] Add worldcolor
 - [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
-<!--
-- [ ] Add chicken chams
-- [ ] Add custom radar with renderer, why not
--->
-- [ ] Aimbot aims for backtrack if active <!-- Or just bad prediction? -->
+- [ ] Port to linux
+
+#### Bugs/Fixes
+- [ ] Skinchanger fixes
+    - [X] Fix talon knife inspect animation.
+    - [ ] Get localplayer steam id to fix weapon stattrack.
 - [ ] Add "defusing" to bomb timer
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
-- [ ] Port to linux <!-- <3 -->
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
