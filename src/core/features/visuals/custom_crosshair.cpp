@@ -26,7 +26,7 @@ void visuals::crosshair::custom_crosshair() {
 		if (variables::crosshair::only_engine_crosshair && !variables::crosshair::using_cs_crosshair) {
 			variables::crosshair::using_cs_crosshair = true;
 			interfaces::engine->execute_cmd("crosshair 1");
-			custom_helpers::state_to_console("Crosshair", "Using cs:go crosshair...");
+			helpers::console::state_to_console("Crosshair", "Using cs:go crosshair...");
 		}
 		return;
 	}
@@ -47,7 +47,7 @@ void visuals::crosshair::custom_crosshair() {
 	if (variables::crosshair::only_engine_crosshair && variables::crosshair::using_cs_crosshair) {
 		variables::crosshair::using_cs_crosshair = false;
 		interfaces::engine->execute_cmd("crosshair 0");
-		custom_helpers::state_to_console_color("Crosshair", "Using engine crosshair...");
+		helpers::console::state_to_console_color("Crosshair", "Using engine crosshair...");
 	}
 
 	visuals::crosshair::draw_custom_crosshair(mid_x, mid_y, true, variables::colors::crosshair_c);
