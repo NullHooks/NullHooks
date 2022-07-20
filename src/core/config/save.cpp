@@ -32,6 +32,12 @@ void config::save_config(std::string filename) {
 	size_t sz = allocator.Size();
 
 	/* ------------------------ Read all variables ------------------------ */
+	rapidjson::Value antiaim(rapidjson::kObjectType); {					// Antiaim
+		save::parse_bool(antiaim,				 allocator,			variables::antiaim::antiaim,							"antiaim");
+		save::parse_float(antiaim,				 allocator,			variables::antiaim::pitch,								"antiaim_pitch");
+		save::parse_float(antiaim,				 allocator,			variables::antiaim::yaw,								"antiaim_yaw");
+	} doc.AddMember("antiaim", antiaim, allocator);
+
 	rapidjson::Value aim(rapidjson::kObjectType); {					// Aim
 		save::parse_bool(aim,					allocator,			variables::aim::triggerbot,								"triggerbot");
 		save::parse_hotkey(aim,					allocator,			variables::aim::triggerbot_key,							"triggerbot_key");

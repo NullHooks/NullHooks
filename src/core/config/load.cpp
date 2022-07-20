@@ -36,6 +36,11 @@ void config::load_config(std::string filename) {
 	if (doc.Parse(file_contents.c_str()).HasParseError()) return;
 
 	/* ------------------------ Read all variables ------------------------ */
+	// antiaim
+	load::parse_bool(doc,			variables::antiaim::antiaim,							"antiaim",			"antiaim");
+	load::parse_float(doc,			variables::antiaim::yaw,								"antiaim",			"antiaim_yaw");
+	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
+
 	// Aim
 	load::parse_bool(doc,			variables::aim::triggerbot,								"aim",				"triggerbot");
 	load::parse_hotkey(doc,			variables::aim::triggerbot_key,							"aim",				"triggerbot_key");

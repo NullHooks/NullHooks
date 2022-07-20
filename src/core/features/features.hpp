@@ -1,7 +1,20 @@
 #pragma once
 #include "source-sdk/sdk.hpp"
-#include "core/features/misc/backtrack.hpp"
 #include "misc/backtrack.hpp"					// VIP so uses his own header file
+
+namespace antiaim {
+	void run_antiaim(c_usercmd* cmd, bool& sendPacket);
+}
+
+namespace animations {
+	namespace entity {
+		// @todo: resolver
+	}
+
+	namespace local {
+		void run_local_animations();
+	}
+}
 
 namespace aim {
 	void triggerbot(c_usercmd* cmd);
@@ -88,14 +101,11 @@ namespace button_functions {
 
 namespace prediction {
 	void start(c_usercmd *cmd);
-	void post_think();
 	void end();
 
-	inline player_move_data data{};
-	inline bool custom_inpred{};
-	inline float old_cur_time{};
-	inline float old_frame_time{};
-	inline int* prediction_random_seed{};
-	inline int* prediction_player{};
+	inline player_move_data data;
+	inline float old_cur_time;
+	inline float old_frame_time;
+	inline int *prediction_random_seed;
 };
 
