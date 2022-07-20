@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include "source-sdk/sdk.hpp"
-#include "core/helpers/misc_helpers.hpp"
+#include "core/helpers/helpers.hpp"
 #include "core/menu/framework.hpp"
 
 namespace hooks {

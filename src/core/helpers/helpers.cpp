@@ -1,19 +1,22 @@
-#include "core/helpers/misc_helpers.hpp"
+#include "core/helpers/helpers.hpp"
 
-void custom_helpers::state_to_console(const char* tag,  const char* text) {
+#pragma region CONSOLE
+void helpers::console::state_to_console(const char* tag,  const char* text) {
 	interfaces::console->printf("[NullHooks] [%s] %s\n", tag, text);
 }
 
-void custom_helpers::state_to_console_color(const char* tag, const char* text) {
+void helpers::console::state_to_console_color(const char* tag, const char* text) {
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "[");
 	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "NullHooks");
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] [");
 	interfaces::console->color_printf(valve_color_t{   0, 165, 230, 255 }, tag);
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] %s\n", text);
 }
+#pragma endregion
 
+#pragma region COLORS
 /* hsv2color(int_hsv): Returns color from hsv. Hue in 360 format. */
-color custom_helpers::hsv2color(int_hsv hsv, int alpha) {
+color helpers::colors::hsv2color(int_hsv hsv, int alpha) {
 	float fC = hsv.v * hsv.s;							// Chroma
 	float fHPrime = fmod(hsv.h / 60.0, 6);
 	float fX = fC * (1 - fabs(fmod(fHPrime, 2) - 1));
@@ -36,7 +39,7 @@ color custom_helpers::hsv2color(int_hsv hsv, int alpha) {
 }
 
 /* hsv2color(float_hsv): Returns color from hsv. Hue in 1.f format. */
-color custom_helpers::hsv2color(float_hsv hsv, int alpha) {
+color helpers::colors::hsv2color(float_hsv hsv, int alpha) {
 	int_hsv converted = {
 		hsv.h * 360.f,		// So its in 1.f format
 		hsv.s,
@@ -50,7 +53,7 @@ color custom_helpers::hsv2color(float_hsv hsv, int alpha) {
  * See: https://gist.github.com/r4v10l1/5f559419bb1f27eb22ea5b9da0343b1b
  * Returns hsv from color. Hue in 360 format.
  */
-int_hsv custom_helpers::color2hsv(color col) {
+int_hsv helpers::colors::color2hsv(color col) {
 	int_hsv result;
 
 	float fCMax = max(max(col.r, col.g), col.b);
@@ -81,7 +84,7 @@ int_hsv custom_helpers::color2hsv(color col) {
 }
 
 /* Returns hsv from color. Hue in 1.f format. */
-float_hsv custom_helpers::color2hsv_float(color col) {
+float_hsv helpers::colors::color2hsv_float(color col) {
 	int_hsv int_result = color2hsv(col);
 	float_hsv result = { 
 		int_result.h / 360.f,		// So its in 1.f format
@@ -92,7 +95,7 @@ float_hsv custom_helpers::color2hsv_float(color col) {
 	return result;
 }
 
-color custom_helpers::float2color(float* id) {
+color helpers::colors::float2color(float* id) {
 	if (*id < 1.f)				return color(255, 0, 0);
 	else if (*id < 2.f)			return color(255, 128, 0);
 	else if (*id < 3.f)			return color(255, 255, 0);
@@ -109,8 +112,10 @@ color custom_helpers::float2color(float* id) {
 
 	return color(255, 0, 0);
 }
+#pragma endregion
 
-void custom_helpers::draw_bomb_text(float time) {
+#pragma region MISC
+void helpers::draw_bomb_text(float time) {
 	char exp_time[64];
 	sprintf_s(exp_time, "%.2f", time);
 
@@ -141,3 +146,10 @@ void custom_helpers::draw_bomb_text(float time) {
 	interfaces::surface->set_text_color(bomb_color_text_color.r, bomb_color_text_color.g, bomb_color_text_color.b, bomb_color_text_color.a);
 	interfaces::surface->draw_render_text(c_exp_time_str.c_str(), wcslen(c_exp_time_str.c_str()));
 }
+
+// Get localplayer or the player we are spectating
+player_t* helpers::local_or_spectated() {
+	if (!csgo::local_player) return nullptr;
+	return (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+}
+#pragma endregion
