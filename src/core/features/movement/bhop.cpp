@@ -58,7 +58,7 @@ void rage_strafe(c_usercmd* cmd) {
 	const bool player_strafing = cmd->buttons & in_moveleft || cmd->buttons & in_moveright;
 	if (!(csgo::local_player->flags() & fl_onground) && !player_strafing) {
 		if (cmd->buttons & in_back) {							// Reverse strafe because S is pressed
-			if (strafe_right || cmd->mousedx < 1) {			// Right reverse strafe
+			if (strafe_right || cmd->mousedx < 1) {				// Right reverse strafe
 				viewangles.y -= yaw_change;						// (Reverse strafe)
 				cmd->sidemove = 450.0f;							// (Reverse strafe)
 			} else if (!strafe_right || cmd->mousedx > 1) {		// Left reverse strafe
