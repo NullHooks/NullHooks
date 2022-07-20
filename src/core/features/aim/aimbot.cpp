@@ -187,6 +187,9 @@ void aim::draw_fov() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
 
+	// Check if the aimbot fov is too large to render
+	if (variables::aim::aimbot_fov > 90.f) return;
+
 	// Check if the weapon can shoot, if not we dont care about fov
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (active_weapon && active_weapon->is_non_aim()) return;
