@@ -37,6 +37,7 @@ struct MotionBlurHistory {
 
 void visuals::motion_blur(view_setup_t* setup) noexcept {
     if (!variables::motion_blur.enabled) return;
+    if (variables::antiaim::antiaim) return;        // Very buggy with aa
     if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
     if (!csgo::local_player) return;
 

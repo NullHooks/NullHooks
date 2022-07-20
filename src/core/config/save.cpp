@@ -52,6 +52,12 @@ void config::save_config(std::string filename) {
 		save::parse_multicombo(aim,				allocator,			variables::aim::hitboxes,								"hitboxes");
 	} doc.AddMember("aim", aim, allocator);
 	
+	rapidjson::Value antiaim(rapidjson::kObjectType); {				// Antiaim
+		save::parse_bool(antiaim,				 allocator,			variables::antiaim::antiaim,							"antiaim");
+		save::parse_float(antiaim,				 allocator,			variables::antiaim::pitch,								"antiaim_pitch");
+		save::parse_float(antiaim,				 allocator,			variables::antiaim::yaw,								"antiaim_yaw");
+	} doc.AddMember("antiaim", antiaim, allocator);
+
 	rapidjson::Value player_visuals(rapidjson::kObjectType); {		// Player visuals
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::showteamesp,					"showteamesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::playerglow,					"playerglow");
