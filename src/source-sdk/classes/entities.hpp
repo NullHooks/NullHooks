@@ -711,7 +711,7 @@ public:
 
 	void select_item(const char* str, int sub_type) {
 		using original_fn = void(__thiscall*)(void*, const char*, int);
-		(*(original_fn**)this)[329](this, str, sub_type);
+		(*(original_fn**)this)[330](this, str, sub_type);
 	}
 
 	void pre_think() {
