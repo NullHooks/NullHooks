@@ -172,7 +172,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 			render::draw_rect(screen_width / 2 - bar_w / 2, 85, bar_w, 4, color::black(255));
 			render::draw_filled_rect(screen_width / 2 - bar_w / 2 + 1, 84, (40.f - exp_time) / 40.f * bar_w, 4, color(255, 140, 0, 255));	// Assume bomb is always 40s
 			// Timer
-			custom_helpers::draw_bomb_text(exp_time);
+			helpers::draw_bomb_text(exp_time);
 		}
 
 		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entitytext)

@@ -7,8 +7,8 @@ void legit_strafe(c_usercmd* cmd);
 
 void misc::movement::bunny_hop(c_usercmd* cmd) {
 	if (!variables::misc::bhop) return;
-	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
+	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	const int move_type = csgo::local_player->move_type();
 	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
 

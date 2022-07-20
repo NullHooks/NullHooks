@@ -16,7 +16,7 @@ void shift_and_append(int new_val) {
 
 color speed2color(int speed) {
 	float_hsv hue = { speed / 600.0f, 1.0f, 1.0f };
-	return custom_helpers::hsv2color(hue, 255);
+	return helpers::colors::hsv2color(hue, 255);
 }
 
 // Used by misc::speedgraph::draw()
