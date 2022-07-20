@@ -42,12 +42,14 @@
 #include <future>
 #include <Lmcons.h>
 #include <tchar.h>
+#include "source-sdk/misc/datamap.hpp"
 #include "source-sdk/classes/recv_props.hpp"
 #include "source-sdk/classes/client_class.hpp"
 #include "dependencies/utilities/fnv.hpp"
 
 namespace netvar_manager {
     uintptr_t get_net_var( uint32_t table, uint32_t prop );
+    uintptr_t find_in_datamap(datamap_t* map, uint32_t name_hash);
 }
 
 #define NETVAR( table, prop, func_name, type ) type& func_name() { \
@@ -64,6 +66,14 @@ namespace netvar_manager {
         offset = netvar_manager::get_net_var( fnv::hash( table ), fnv::hash( prop ) ); \
     } \
     return reinterpret_cast< type* >( uintptr_t( this ) + offset ); \
+}
+
+#define FINDDATAMAP(map, prop, func_name, type) type& func_name() { \
+    static uintptr_t offset = 0; \
+    if (!offset) { \
+        offset = netvar_manager::find_in_datamap(map, fnv::hash(prop)); \
+    } \
+    return *reinterpret_cast<type*>(uintptr_t(this) + offset); \
 }
 
 #define OFFSET( type, var, offset ) type& var() { \

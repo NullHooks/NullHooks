@@ -185,7 +185,7 @@ float scale_fov_by_width(float fov, float aspect_ratio) {
 void aim::draw_fov() {
 	if (!variables::aim::aimbot || !variables::aim::draw_fov) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
-	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
+	if (!csgo::local_player) return;
 
 	// Check if the weapon can shoot, if not we dont care about fov
 	weapon_t* active_weapon = csgo::local_player->active_weapon();

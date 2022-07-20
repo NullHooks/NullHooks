@@ -6,5 +6,14 @@
 class mdlcache
 {
 public:
+	// Patoke - too lazy to implement the whole class, XD!
+	void begin_lock() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[33](this);
+	}
 
+	void end_lock() {
+		using original_fn = void(__thiscall*)(void*);
+		(*(original_fn**)this)[34](this);
+	}
 };

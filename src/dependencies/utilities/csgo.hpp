@@ -34,7 +34,8 @@
 
 //misc
 #define sig_set_angles             "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8"
-#define sig_prediction_random_seed "8B 0D ? ? ? ? BA ? ? ? ? E8 ? ? ? ? 83 C4 04"
+#define sig_prediction_player	   "89 35 ? ? ? ? F3 0F 10 48"
+#define sig_prediction_random_seed "A3 ? ? ? ? 66 ? ? 86"
 #define sig_viewmatrix             "0F 10 05 ? ? ? ? 8D 85 ? ? ? ? B9"
 #define sig_trace_to_exit          "55 8B EC 83 EC 4C F3 0F 10 75"					// For autowall
 

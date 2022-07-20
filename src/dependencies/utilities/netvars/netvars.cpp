@@ -23,6 +23,24 @@ namespace netvar_manager {
 		return table_map.at(prop);
 	}
 
+	uintptr_t find_in_datamap(datamap_t* map, uint32_t name_hash) {
+		while (map) {
+			for (int i = 0; i < map->data_num_fields; i++) {
+				if (!map->data_desc[i].field_name)
+					continue;
+
+				if (fnv::hash(map->data_desc[i].field_name) == name_hash)
+					return map->data_desc[i].field_offset[TD_OFFSET_NORMAL];
+
+				if (map->data_desc[i].field_type == FIELD_EMBEDDED && map->data_desc[i].td)
+					if (const uintptr_t offset = find_in_datamap(map->data_desc[i].td, name_hash); offset != 0)
+						return offset;
+			}
+			map = map->base_map;
+		}
+		return 0;
+	}
+
 	void add_props_for_table(netvar_table_map & table_map, const uint32_t table_name_hash, const std::string & table_name, recv_table * table, const bool dump_vars, std::map< std::string, std::map< uintptr_t, std::string > > & var_dump, const size_t child_offset = 0) {
 		for (auto i = 0; i < table->props_count; ++i) {
 			auto& prop = table->props[i];
