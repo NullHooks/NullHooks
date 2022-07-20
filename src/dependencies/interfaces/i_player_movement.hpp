@@ -4,33 +4,19 @@
 
 class player_move_helper {
 public:
-	bool	first_run_of_iunctions : 1;
-	bool	game_code_moved_player : 1;
-	int	player_handle;
-	int	impulse_command;
-	vec3_t	view_angles;
-	vec3_t	abs_view_angles;
-	int	buttons;
-	int	old_buttons;
-	float	forward_move;
-	float	side_move;
-	float	up_move;
-	float	max_speed;
-	float	client_max_speed;
-	vec3_t	velocity;
-	vec3_t	angles;
-	vec3_t	old_angles;
-	float	out_step_height;
-	vec3_t	wish_velocity;
-	vec3_t	jump_velocity;
-	vec3_t	constraint_center;
-	float	constraint_radius;
-	float	constraint_width;
-	float	constraint_speed_factor;
-	float	u0[5];
-	vec3_t	abs_origin;
-	virtual	void u1() = 0;
-	virtual void set_host(player_t *host) = 0;
+	virtual	char const* get_name(/*c_handle handle*/) const = 0;
+	virtual void set_host(player_t* host) = 0;
+	virtual void reset_touch_list(void) = 0;
+	virtual bool pad() = 0;
+	virtual void process_impacts(void) = 0;
+	virtual void con_nprintf(int idx, char const* fmt, ...) = 0;
+	virtual void start_sound(const vec3_t& origin, int channel, char const* sample, float volume, int soundlevel, int fFlags, int pitch) = 0;
+	virtual void start_sound(const vec3_t& origin, const char* soundname) = 0;
+	virtual void playback_event_full(int flags, int clientindex, unsigned short eventindex, float delay, vec3_t& origin, vec3_t& angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2) = 0;
+	virtual bool player_falling_damage(void) = 0;
+	virtual void player_set_animation(/*player_anim_t playerAnim*/) = 0;
+	virtual void* get_surface_props(void) = 0;
+	virtual bool is_world_entity(/*const c_handle& handle*/) = 0;
 };
 
 class player_move_data {
@@ -87,23 +73,30 @@ public:
 
 class player_prediction {
 public:
-	bool in_prediction() {
-		using original_fn = bool(__thiscall*)(void*);
-		return (*(original_fn**)this)[14](this);
-	}
+	virtual ~player_prediction(void) = 0; // destructor
 
-	void run_command(player_t* player, c_usercmd* cmd, player_move_helper* helper) {
-		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*);
-		return (*(original_fn**)this)[19](this, player, cmd, helper);
-	}
-
-	void setup_move(player_t* player, c_usercmd* cmd, player_move_helper* helper, void* data) {
-		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, player_move_helper*, void*);
-		return (*(original_fn**)this)[20](this, player, cmd, helper, data);
-	}
-
-	void finish_move(player_t* player, c_usercmd* cmd, void* data) {
-		using original_fn = void(__thiscall*)(void*, player_t*, c_usercmd*, void*);
-		return (*(original_fn**)this)[21](this, player, cmd, data);
-	}
+	virtual void init(void) = 0;
+	virtual void shutdown(void) = 0;
+	virtual void update(int startframe, bool validframe, int incoming_acknowledged, int outgoing_command) = 0;
+	virtual void pre_entity_packet_received(int commands_acknowledged, int current_world_update_packet) = 0;
+	virtual void post_entity_packet_received(void) = 0;
+	virtual void post_network_data_received(int commands_acknowledged) = 0;
+	virtual void on_received_uncompressed_packet(void) = 0;
+	virtual void get_view_origin(vec3_t& org) = 0;
+	virtual void set_view_origin(vec3_t& org) = 0;
+	virtual void get_view_angles(vec3_t& ang) = 0;
+	virtual void set_view_angles(vec3_t& ang) = 0;
+	virtual void get_local_view_angles(vec3_t& ang) = 0;
+	virtual void set_local_view_angles(vec3_t& ang) = 0;
+	virtual bool in_prediction(void) const = 0;
+	virtual bool is_first_time_predicted(void) const = 0;
+	virtual int get_last_acknowledged_command_number(void) const = 0;
+	virtual int get_incoming_packet_number(void) const = 0;
+	virtual void check_moving_ground(player_t* player, double frametime) = 0;
+	virtual void run_command(player_t* player, c_usercmd* cmd, player_move_helper* moveHelper) = 0;
+	virtual void setup_move(player_t* player, c_usercmd* cmd, player_move_helper* pHelper, player_move_data* move) = 0;
+	virtual void finish_move(player_t* player, c_usercmd* cmd, player_move_data* move) = 0;
+	virtual void set_ideal_pitch(int nSlot, player_t* player, const vec3_t& origin, const vec3_t& angles, const vec3_t& viewheight) = 0;
+	virtual void check_error(int nSlot, player_t* player, int commands_acknowledged) = 0;
+	virtual void _update(int nSlot, bool received_new_world_update, bool validframe, int incoming_acknowledged, int outgoing_command) = 0;
 };
