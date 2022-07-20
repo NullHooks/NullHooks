@@ -706,10 +706,10 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_hue = float(cursor.x - slider_x) / float(slider_w);
 		input_hue = (input_hue == 1.f) ? 0.99 : input_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
-		col_p.target = custom_helpers::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
+		col_p.target = helpers::colors::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
 	}
 	// Render color selector depenging on the color's hue
-	float color_hue = custom_helpers::color2hsv_float(col_p.target).h;		// Get it from the color itself even if we dont change it
+	float color_hue = helpers::colors::color2hsv_float(col_p.target).h;		// Get it from the color itself even if we dont change it
 	render::draw_rect(slider_x + slider_w * color_hue - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
 
 	/* --------------- ALPHA BAR --------------- */

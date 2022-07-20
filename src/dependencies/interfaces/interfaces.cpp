@@ -48,7 +48,7 @@ bool interfaces::initialize() {
 	/* ------------------------------------------------------- */
 
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "\n----------------------------------------------------\n");
-	custom_helpers::state_to_console_color("Setup", "Interfaces initialized!");
+	helpers::console::state_to_console_color("Setup", "Interfaces initialized!");
 
 	return true;
 }
