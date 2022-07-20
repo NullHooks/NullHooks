@@ -167,7 +167,13 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	vec3_t final_angle = enemy_angle;	
 	if (!variables::aim::silent) final_angle *= (1.f - variables::aim::aimbot_smoothing);	// Scale acording to smoothing if not silent
 	
-	cmd->viewangles += final_angle;
+	vec3_t final_angle2 = cmd->viewangles + final_angle;
+
+	if (!variables::aim::silent)
+		interfaces::engine->set_view_angles(final_angle2);
+	else
+		cmd->viewangles += final_angle;
+
 	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }

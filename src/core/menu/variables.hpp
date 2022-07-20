@@ -3,6 +3,12 @@
 #include "framework.hpp"
 
 namespace variables {
+	namespace antiaim {
+		inline bool antiaim = false;
+		inline float yaw = 0.f;
+		inline float pitch = 0.f;
+	}
+
 	namespace aim {
 		inline bool triggerbot = false;
 		inline hotkey_t triggerbot_key(VK_PRIOR);
