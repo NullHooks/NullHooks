@@ -25,6 +25,8 @@ namespace custom_helpers {
 	color float2color(float* id);
 	void draw_bomb_text(float time);
 
+	player_t* local_or_spectated();
+
 	const float rainbow_speed_f = 0.005f;
 	const int rainbow_speed_i = 1;
 };

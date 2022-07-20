@@ -141,3 +141,9 @@ void custom_helpers::draw_bomb_text(float time) {
 	interfaces::surface->set_text_color(bomb_color_text_color.r, bomb_color_text_color.g, bomb_color_text_color.b, bomb_color_text_color.a);
 	interfaces::surface->draw_render_text(c_exp_time_str.c_str(), wcslen(c_exp_time_str.c_str()));
 }
+
+// Get localplayer or the player we are spectating
+player_t* custom_helpers::local_or_spectated() {
+	if (!csgo::local_player) return nullptr;
+	return (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+}

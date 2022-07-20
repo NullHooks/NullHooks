@@ -1,5 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
+#include "core/helpers/misc_helpers.hpp"
 #include "core/menu/variables.hpp"
 
 // https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Bounding_ESP_Boxes
@@ -60,7 +61,7 @@ void visuals::playeresp() {
 	if (!csgo::local_player) return;
 
 	// Will ignore ESP if the player being spectated
-	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+	player_t* local_player_ent = custom_helpers::local_or_spectated();
 
 	for (int i = 1; i <= interfaces::globals->max_clients; i++)
 	{
