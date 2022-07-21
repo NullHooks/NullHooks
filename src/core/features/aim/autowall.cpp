@@ -2,6 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#pragma region MULTIPLIERS
 float aim::autowall::get_damage_multiplier(int hit_group) {
 	switch (hit_group) {
 		case hitgroup_head:			return 4.0f;
@@ -22,7 +23,9 @@ bool aim::autowall::is_armored(int hit_group, bool helmet) {
 		default:					return false;
 	}
 }
+#pragma endregion
 
+#pragma region BULLET PENETRATION
 bool aim::autowall::trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace) {
 	static std::uintptr_t trace_to_exit = reinterpret_cast<std::uintptr_t>(utilities::pattern_scan("client.dll", sig_trace_to_exit));
 	if (!trace_to_exit) return false; 
@@ -86,7 +89,9 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 	if (damage < 1.0f) return false;
 	return true;
 }
+#pragma endregion
 
+#pragma region AUTOWALL
 // Used to check if target it visible or hittable. Used in aimbot.
 // enabled_hitbox will be used to know what hitboxes are enabled by the user (cuz now its iterating all due to bodyaim_if_lethal)
 bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage, bool enabled_hitbox) {
@@ -111,15 +116,16 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
 		if (trace.flFraction == 1.0f) break;
 
+		distance += trace.flFraction * (weapon_data->weapon_range - distance);
+		damage = damage * get_damage_multiplier(trace.hit_group) * powf(weapon_data->weapon_range_mod, distance / 500.0f);
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
-			distance += trace.flFraction * (weapon_data->weapon_range - distance);
-			damage = damage * get_damage_multiplier(trace.hit_group)  * powf(weapon_data->weapon_range_mod, distance / 500.0f);
-
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
-
+			
+			// If we can kill and we have the setting enabled, ignore enabled hitboxes and shoot
 			if (variables::aim::bodyaim_if_lethal && reinterpret_cast<player_t*>(entity)->health() < damage)
-				return true;
+				return true;		
+			// If we can't kill, the best place to shoot is the closest enabled hitbox
 			else if (enabled_hitbox)
 				return damage >= min_damage;
 		}
@@ -128,7 +134,8 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
 
-		if (!autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage))	// Start and damage are changed from handle_bullet_penetration()
+		// Start and damage are changed from handle_bullet_penetration()
+		if (!autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage))
 			return false;
 
 		hits_left--;
@@ -136,3 +143,4 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 
 	return false;
 }
+#pragma endregion
