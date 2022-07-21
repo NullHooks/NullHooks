@@ -11,19 +11,22 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		if (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots) break;
 
-		watermark::draw();
-		watermark::draw_stats();
-
+		#pragma region ESP
 		visuals::entity_esp();
 		visuals::playeresp();
 		visuals::noflash();
+		#pragma endregion
 
+		#pragma region MISC
 		aim::draw_fov();
-
-		// UI
-		visuals::misc::nade_predict();
+		visuals::nade_predict();
 		visuals::crosshair::custom_crosshair();
 		visuals::crosshair::recoil_crosshair();
+		#pragma endregion
+
+		#pragma region GUI
+		watermark::draw();
+		watermark::draw_stats();
 
 		misc::speedgraph::draw();
 		misc::spectator_list();
@@ -31,6 +34,7 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		menu::check_toggle();				// Checks if the insert key was pressed
 		menu::render();
 		popup_system::render_popups();		// Check for popups and render them on top
+		#pragma endregion
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):

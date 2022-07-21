@@ -2,7 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-void visuals::misc::nade_predict() noexcept {
+void visuals::nade_predict() noexcept {
     // TODO: https://www.unknowncheats.me/forum/counterstrike-global-offensive/452030-hijacking-games-nade-prediction.html
 
     if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;

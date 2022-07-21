@@ -36,7 +36,7 @@ void disable_wiresmoke() {
 	}
 }
 
-void visuals::misc::nosmoke(client_frame_stage_t frame_stage) {
+void visuals::nosmoke(client_frame_stage_t frame_stage) {
 	if (frame_stage != FRAME_RENDER_START && frame_stage != FRAME_RENDER_END) return;
 
 	if (variables::misc_visuals::wireframe_smoke)
