@@ -16,7 +16,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 			backtrack::frame_stage_notify();
 			break;
 		case FRAME_RENDER_START:
-			visuals::misc::nosmoke(frame_stage);
+			visuals::nosmoke(frame_stage);
 			animations::local::run_local_animations();
 			break;
 		case FRAME_RENDER_END:                      break;

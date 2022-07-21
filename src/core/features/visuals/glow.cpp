@@ -3,7 +3,7 @@
 #include "core/menu/variables.hpp"
 
 // DoPostScreenSpaceEffects hook
-void visuals::glow::draw_glow() {
+void visuals::glow() {
 	if (!(variables::player_visuals::playerglow
 		|| variables::entity_visuals::entityglow
 		|| variables::misc_visuals::chickenpride)) return;

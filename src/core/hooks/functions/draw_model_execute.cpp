@@ -16,7 +16,7 @@ void __fastcall hooks::draw_model_execute::hook(void* _this, int edx, i_mat_rend
 	if (interfaces::studio_render->is_forced())
 		return original(_this, edx, ctx, state, info, matrix);
 
-	visuals::chams::draw_chams(ctx, state, info, matrix);
+	visuals::draw_chams(ctx, state, info, matrix);
 	original(_this, edx, ctx, state, info, matrix);
 	interfaces::model_render->override_material(nullptr);	// Reset to default materials
 }
