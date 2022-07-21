@@ -1,7 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/hooks/hooks.hpp"
-#include "core/hooks/functions/event_globals.hpp"
 
 void __fastcall hooks::fire_event::hook(void* thisptr, void* edx, i_game_event* gameEvent, bool bServerOnly, bool bClientOnly) {
     if (gameEvent) {    // Nullptr check just incase!
@@ -13,10 +12,10 @@ void __fastcall hooks::fire_event::hook(void* thisptr, void* edx, i_game_event* 
                     visuals::bullet_tracer(gameEvent);
                     break;
             case fnv::hash("round_end"):
-                    event_globals::round_ended = true;
+                    globals::round_ended = true;
                     break;
             case fnv::hash("round_start"):
-                    event_globals::round_ended = false;
+                    globals::round_ended = false;
                     break;
         }
 

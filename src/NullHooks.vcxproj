@@ -257,8 +257,8 @@
     <ClInclude Include="core\features\features.hpp" />
     <ClInclude Include="core\features\misc\backtrack.hpp" />
     <ClInclude Include="core\features\visuals\skin_changer\skin_changer.hpp" />
+    <ClInclude Include="core\helpers\globas.hpp" />
     <ClInclude Include="core\helpers\helpers.hpp" />
-    <ClInclude Include="core\hooks\functions\event_globals.hpp" />
     <ClInclude Include="core\features\visuals\models.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\framework.hpp" />

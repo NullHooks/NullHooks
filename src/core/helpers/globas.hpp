@@ -1,5 +1,5 @@
 #pragma once
 
-namespace event_globals {
+namespace globals {
 	inline bool round_ended = false;
 }

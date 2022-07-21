@@ -24,6 +24,8 @@
 #include "dependencies/utilities/renderer/renderer.hpp"
 #include "dependencies/utilities/console/console.hpp"
 
+#include "core/helpers/globas.hpp"
+
 //interfaces
 #define sig_client_state       "A1 ? ? ? ? 8B 80 ? ? ? ? C3"
 #define sig_directx            "A1 ? ? ? ? 50 8B 08 FF 51 0C"

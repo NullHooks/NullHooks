@@ -1,7 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
-#include "core/hooks/functions/event_globals.hpp"
 
 #pragma region BOMB TIMER STRUCTS
 struct inferno_t : public entity_t {
@@ -164,7 +163,9 @@ void visuals::entity_esp() {
 	}
 }
 
-#pragma region ENTITY INFO FUNCTIONS
+#pragma region PLANTED BOMB FUNCTIONS
+void draw_bomb_text(entity_t* bomb_ent, float time);
+
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	if (!(variables::entity_visuals::entitytext || variables::entity_visuals::bombtimer) || !bomb_ent) return;
 
@@ -176,7 +177,8 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	float flblow = bomb_p->m_flC4Blow();
 	float exp_time = flblow - (csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick);
 
-	if (exp_time > 0 && !bomb_p->m_bBombDefused() && !event_globals::round_ended) {
+	#pragma region BOMB TIMER
+	if (exp_time > 0 && !bomb_p->m_bBombDefused() && !globals::round_ended) {
 		if (variables::entity_visuals::bombtimer) {
 			const int bar_w = 600;
 			int screen_width, screen_height;
@@ -185,14 +187,54 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 			render::draw_rect(screen_width / 2 - bar_w / 2, 85, bar_w, 4, color::black(255));
 			render::draw_filled_rect(screen_width / 2 - bar_w / 2 + 1, 84, (40.f - exp_time) / 40.f * bar_w, 4, color(255, 140, 0, 255));	// Assume bomb is always 40s
 			// Timer
-			helpers::draw_bomb_text(exp_time);
+			draw_bomb_text(bomb_ent, exp_time);
 		}
 
+		// Planted bomb esp
 		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entitytext)
 			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
 	}
+	#pragma endregion
 }
 
+void draw_bomb_text(entity_t* bomb_ent, float time) {
+	char exp_time[64];
+	sprintf_s(exp_time, "%.2f", time);
+
+	const std::string exp_time_str_base = "Bomb will explode in: ";
+	const std::string exp_time_str = std::string(exp_time);
+	const std::string total = exp_time_str_base + exp_time_str;
+	const std::wstring c_exp_time_str_base = std::wstring(exp_time_str_base.begin(), exp_time_str_base.end());
+	const std::wstring c_exp_time_str = std::wstring(exp_time_str.begin(), exp_time_str.end());
+	const std::wstring c_total = std::wstring(total.begin(), total.end());
+
+	const color base_color = color(255, 130, 0, 255);
+	const color bomb_color_text_color = (time > 10.f) ? color(255, 190, 0, 255) : color::red(255);
+
+	int screen_width, screen_height;
+	interfaces::engine->get_screen_size(screen_width, screen_height);
+
+	int width, height;
+	interfaces::surface->draw_text_font(render::fonts::watermark_font);
+	interfaces::surface->get_text_size(render::fonts::watermark_font, c_total.c_str(), width, height);
+	const int x_pos = screen_width / 2 - width / 2;
+	const int y_pos = 95;
+
+	interfaces::surface->draw_text_pos(x_pos, y_pos);
+
+	interfaces::surface->set_text_color(base_color.r, base_color.g, base_color.b, base_color.a);
+	interfaces::surface->draw_render_text(c_exp_time_str_base.c_str(), wcslen(c_exp_time_str_base.c_str()));
+
+	interfaces::surface->set_text_color(bomb_color_text_color.r, bomb_color_text_color.g, bomb_color_text_color.b, bomb_color_text_color.a);
+	interfaces::surface->draw_render_text(c_exp_time_str.c_str(), wcslen(c_exp_time_str.c_str()));
+
+	// Defusing. m_hBombDefuser will be a valid handle while defusing
+	if (bomb_ent->m_hBombDefuser() != 0xFFFFFFFF)
+		render::draw_text_string(screen_width / 2, y_pos + 15, render::fonts::watermark_font, "Defusing", true, color(0, 150, 255, 255));
+}
+#pragma endregion
+
+#pragma region DROPPED ENTITY INFO FUNCTIONS
 void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 	if (!variables::entity_visuals::entitytext || !bomb_ent) return;
 

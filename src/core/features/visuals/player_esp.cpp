@@ -2,6 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#pragma region BOUNDING BOX FUNCTION
 // https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Bounding_ESP_Boxes
 // Can be used for any collideable entity, not just players.
 bool bbox(entity_t *entity, int &x, int &y, int &w, int &h) {
@@ -48,6 +49,7 @@ bool bbox(entity_t *entity, int &x, int &y, int &w, int &h) {
 
 	return true;
 }
+#pragma endregion
 
 void visuals::playeresp() {
 	if (!(variables::player_visuals::boxesp
@@ -80,7 +82,7 @@ void visuals::playeresp() {
 		int x, y, w, h;
 		if (!bbox(player, x, y, w, h)) continue;
 
-		/* ------------- SKELETON ESP ------------- */
+		#pragma region SKELETON ESP
 		if (variables::player_visuals::skeletonesp) {
 			for (int i = 0; i < hdr->bones_count; i++) {
 				studio_bone_t* bone = hdr->bone(i);
@@ -104,7 +106,9 @@ void visuals::playeresp() {
 					render::draw_line(s_child.x, s_child.y, s_parent.x, s_parent.y, variables::colors::enemy_color_soft);
 			}
 		}
-		/* ------------- BOX ESP ------------- */
+		#pragma endregion
+
+		#pragma region BOX ESP
 		if (variables::player_visuals::boxesp) {
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
 				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());		// Outer box outline
@@ -116,7 +120,9 @@ void visuals::playeresp() {
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
 			}
 		}
-		/* ------------- LINE ESP ------------- */
+		#pragma endregion
+
+		#pragma region LINE ESP
 		if (variables::player_visuals::lineesp) {
 			int screen_width, screen_height;
 			interfaces::engine->get_screen_size(screen_width, screen_height);
@@ -127,7 +133,9 @@ void visuals::playeresp() {
 			else if (player->team() != csgo::local_player->team())
 				render::draw_line(x + w / 2, y + h, screen_width / 2, screen_height / 2, variables::colors::enemy_color.col);
 		}
-		/* ------------- NAME ESP ------------- */
+		#pragma endregion
+		
+		#pragma region NAME ESP
 		if (variables::player_visuals::nameesp) {
 			player_info_t playerinfo;
 			interfaces::engine->get_player_info(i, &playerinfo);
@@ -139,7 +147,9 @@ void visuals::playeresp() {
 			else if (player->team() != csgo::local_player->team())
 				render::draw_text_wchar(x + w/2, y + h + 2, render::fonts::watermark_font, w_player_name, true, variables::colors::enemy_color.col);
 		}
-		/* ------------- INFO ESP ------------- */
+		#pragma endregion
+
+		#pragma region INFO ESP
 		if (variables::player_visuals::playerinfo) {
 			// Friends
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
@@ -249,7 +259,9 @@ void visuals::playeresp() {
 				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer.col);
 			}
 		}
-		/* ------------- HEALTH ESP ------------- */
+		#pragma endregion
+
+		#pragma region HEALTH ESP
 		if (variables::player_visuals::healthesp) {
 			int health = player->health();
 			const int health_h = (h * health) / 100;
@@ -267,5 +279,7 @@ void visuals::playeresp() {
 				render::draw_rect(health_x, y, health_w, h, color::black(180));
 			}
 		}
+		#pragma endregion
+
 	}
 }
