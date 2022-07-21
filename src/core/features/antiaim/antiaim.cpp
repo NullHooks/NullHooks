@@ -15,11 +15,10 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
     if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                             // We are shooting
         || (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
         || (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
-        || cmd->buttons & in_use                                                                    // Interacting with door, weapon, bomb, etc.
-        /* @todo: Drop*/) return;
-
+        || cmd->buttons & in_use) return;                                                           // Interacting with door, weapon, bomb, etc.
+        
     // Don't aa when throwing a nade. Not only don't aa but don't even flick. Say thank you to ma man @hBuffer
-    // TODO: Good nade prediction :(
+    // @todo: Good nade prediction :(
     if (active_weapon->is_grenade() && !active_weapon->pin_pulled()) {
         float throw_time = active_weapon->throw_time();
         if (throw_time > 0) {
