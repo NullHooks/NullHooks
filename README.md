@@ -18,6 +18,7 @@
 1. [Description](#description)
 2. [Features](#features)
     - [Aim](#aim)
+    - [Antiaim](#antiaim)
     - [Visuals](#visuals)
         - [Player ESP](#player-esp)
         - [Glow](#glow)
@@ -61,6 +62,9 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Aimbot and triggerbot hitboxes
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
+
+# Antiaim
+- Antiaim with custom pitch and jaw
 
 ### Visuals
 #### Player ESP
@@ -253,6 +257,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Make config system more "nested"
 - [X] Add can't shoot to player ESP
 - [X] Add textbox to framework for creating new config files from menu
+- [X] Add antiaim
 #
 </details>
 
@@ -266,7 +271,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
     - [X] Add bodyaim if lethal
-    - [ ] Make aimbot and triggerbot also aim for backtrack
+    - [ ] Make aimbot and triggerbot also aim for backtrack. (Store hitbox positions?)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -280,15 +285,14 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Add auto revolver hold
 - [ ] Replace `player_info` esp with multicombobox
 - [ ] Add worldcolor
-- [ ] Add antiaim
 - [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 - [ ] Port to linux
 
 #### Bugs/Fixes
 - [ ] Skinchanger fixes
-    - [X] Fix talon knife inspect animation.
-    - [ ] Get localplayer steam id to fix weapon stattrack.
-- [ ] Add "defusing" to bomb timer
+    - [X] Fix talon knife inspect animation
+    - [ ] Get localplayer steam id to fix weapon stattrack
+- [ ] Add "defusing" to bomb timer (When doing player esp? Check first, set bool, then check combobox and render)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 
 ## Screenshots
