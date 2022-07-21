@@ -9,17 +9,16 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& sendPacket) {
     const int move_type = csgo::local_player->move_type();
     if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
 
-    // don't do antiaim when we are shoting
-    // @todo: detect when we shoot instead of click
+    // Don't aa if we are doing any of this
     // @todo: prepare the revolver without flicking
-    if (cmd->buttons & in_attack) return;
-
-    // Don't aa if we are planting or trying to throw a grenade
     weapon_t* active_weapon = csgo::local_player->active_weapon();
     if (!active_weapon) return;
-    if ((active_weapon->is_bomb() && cmd->buttons & in_use)
+    if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                             // We are shooting
+        || (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
         || (active_weapon->is_grenade() && cmd->buttons & in_attack)
-        || (active_weapon->is_knife() && cmd->buttons & in_attack2)) return;
+        || (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
+        || cmd->buttons & in_use                                                                    // Interacting with door, weapon, bomb, etc.
+        /* @todo: Drop*/) return;
 
     // Pitch down
     cmd->viewangles.x += variables::antiaim::pitch;
