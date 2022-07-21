@@ -175,8 +175,8 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	vec3_t final_angle = cmd->viewangles + angle_diff;		// The current angle before the aimbot + what we should move
 	if (!variables::aim::silent)
 		interfaces::engine->set_view_angles(final_angle);
-	else
-		cmd->viewangles = final_angle;
+	
+	cmd->viewangles = final_angle;
 
 	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
