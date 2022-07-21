@@ -161,7 +161,7 @@ void menu::render() {
 					"Skeleton ESP", variables::player_visuals::skeletonesp, variables::colors::enemy_color_soft);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 3), item_checkbox_pos, render::fonts::watermark_font,
 					"Name ESP", variables::player_visuals::nameesp);
-				gui::check_box(item_left_pos, part1_base_item_y + (15 * 4), item_checkbox_pos, render::fonts::watermark_font,
+				gui::multicombobox(item_left_pos, part1_base_item_y + (15 * 4), item_combo_pos, render::fonts::watermark_font,
 					"Player info", variables::player_visuals::playerinfo);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 5), item_checkbox_pos, render::fonts::watermark_font,
 					"Health ESP", variables::player_visuals::healthesp);
