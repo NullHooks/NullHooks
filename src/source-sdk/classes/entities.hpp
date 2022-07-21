@@ -424,6 +424,7 @@ public:
 	NETVAR("DT_BaseCombatWeapon", "m_iWorldDroppedModelIndex",  droppedmodel_index,          int)
 	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel",        weapon_worldmodel,           int)
 	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
+	NETVAR("DT_WeaponCSBase",     "m_fLastShotTime",            last_shot_time,              float)
 	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
 
 	#pragma region BaseAttributableItem
