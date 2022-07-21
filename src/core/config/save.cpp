@@ -65,7 +65,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::lineesp,						"lineesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::skeletonesp,					"skeletonesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::nameesp,						"nameesp");
-		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::playerinfo,					"playerinfo");
+		save::parse_multicombo(player_visuals,		allocator,			variables::player_visuals::playerinfo,					"playerinfo");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::healthesp,					"healthesp");
 	} doc.AddMember("player_visuals", player_visuals, allocator);
 	

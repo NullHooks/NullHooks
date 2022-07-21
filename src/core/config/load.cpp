@@ -65,7 +65,7 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::player_visuals::lineesp,						"player_visuals",	"lineesp");
 	load::parse_bool(doc,			variables::player_visuals::skeletonesp,					"player_visuals",	"skeletonesp");
 	load::parse_bool(doc,			variables::player_visuals::nameesp,						"player_visuals",	"nameesp");
-	load::parse_bool(doc,			variables::player_visuals::playerinfo,					"player_visuals",	"playerinfo");
+	load::parse_multicombo(doc,		variables::player_visuals::playerinfo,					"player_visuals",	"playerinfo");
 	load::parse_bool(doc,			variables::player_visuals::healthesp,					"player_visuals",	"healthesp");
 	// Entity visuals
 	load::parse_bool(doc,			variables::entity_visuals::entityglow,					"entity_visuals",	"entityglow");

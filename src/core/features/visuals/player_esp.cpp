@@ -52,11 +52,20 @@ bool bbox(entity_t *entity, int &x, int &y, int &w, int &h) {
 #pragma endregion
 
 void visuals::playeresp() {
-	if (!(variables::player_visuals::boxesp
+	// Check if there is at least one item enabled
+	bool player_info_enabled = false;
+	for (multicombo_opt_t item : variables::player_visuals::playerinfo.vector) {
+		if (item.state) {
+			player_info_enabled = true;
+			break;
+		}
+	}
+
+	if (!(player_info_enabled
+		|| variables::player_visuals::boxesp
 		|| variables::player_visuals::nameesp
 		|| variables::player_visuals::skeletonesp
 		|| variables::player_visuals::healthesp
-		|| variables::player_visuals::playerinfo
 		|| variables::player_visuals::lineesp)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
@@ -64,8 +73,7 @@ void visuals::playeresp() {
 	// Will ignore ESP if the player being spectated
 	player_t* local_player_ent = helpers::local_or_spectated();
 
-	for (int i = 1; i <= interfaces::globals->max_clients; i++)
-	{
+	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
 		if (!player) continue;
 		if (player == local_player_ent) continue;
@@ -150,62 +158,69 @@ void visuals::playeresp() {
 		#pragma endregion
 
 		#pragma region INFO ESP
-		if (variables::player_visuals::playerinfo) {
+		if (player_info_enabled) {
 			// Friends
-			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
-				if (player->armor() > 0) {
+			if (player->team() != csgo::local_player->team() || variables::player_visuals::showteamesp) {
+				if (variables::player_visuals::playerinfo.vector[1].state && player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
 					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
 				// Has bomb
 				bool has_bomb = false;
-				const auto weapons = player->get_weapons();
-				if (!weapons) return;
-				for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
-					weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapons[n]);
-					if (weapon && weapon->is_bomb()) {
-						has_bomb = true;
-						break;
+				if (variables::player_visuals::playerinfo.vector[3].state) {
+					const auto weapons = player->get_weapons();
+					if (!weapons) return;
+					for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
+						weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapons[n]);
+						if (weapon && weapon->is_bomb()) {
+							has_bomb = true;
+							break;
+						}
 					}
 				}
 
 				int item_num = 0;
-				if (player->is_defusing()) {
+				if (variables::player_visuals::playerinfo.vector[2].state && player->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				} else if (player->has_defuser()) {
+				} else if (variables::player_visuals::playerinfo.vector[2].state && player->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
-				} else if (has_bomb) {
+				} else if (variables::player_visuals::playerinfo.vector[3].state && has_bomb) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "B", true, color(210, 110, 0, 255));
 					item_num++;
 				}
 
-				if (player->is_scoped()) {
+				if (variables::player_visuals::playerinfo.vector[4].state && player->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
 					item_num++;
 				}
-				if (player->is_flashed()) {
+				if (variables::player_visuals::playerinfo.vector[5].state && player->is_flashed()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
 					item_num++;
 				}
-				if (!aim::can_fire(player)) {
+				if (variables::player_visuals::playerinfo.vector[6].state && !aim::can_fire(player)) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "X", true, color(230, 210, 0, 255));
 					item_num++;
 				}
 
-				auto current_weapon = player->active_weapon();
-				if (!current_weapon) continue;
-				auto weapon_data = current_weapon->get_weapon_data();
-				if (!weapon_data) continue;
-				std::string s_weapon_name = weapon_data->weapon_name;
+				// Weapon name
+				if (variables::player_visuals::playerinfo.vector[0].state) {
+					auto current_weapon = player->active_weapon();
+					if (!current_weapon) continue;
+					auto weapon_data = current_weapon->get_weapon_data();
+					if (!weapon_data) continue;
+					std::string s_weapon_name = weapon_data->weapon_name;
 				
-				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
-				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::friendly_color_softer.col);
-			// Enemies
-			} else if (player->team() != csgo::local_player->team()) {
+					int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
+					if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
+
+					const color weapon_name_col = (player->team() == csgo::local_player->team()) ? variables::colors::friendly_color_softer.col : variables::colors::enemy_color_softer.col;
+					render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, weapon_name_col);
+				}
+			
+			} /*else if (player->team() != csgo::local_player->team()) {
 				if (player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
 					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
@@ -258,6 +273,7 @@ void visuals::playeresp() {
 				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
 				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer.col);
 			}
+			*/
 		}
 		#pragma endregion
 

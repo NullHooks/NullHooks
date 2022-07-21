@@ -54,7 +54,18 @@ namespace variables {
 		inline bool lineesp = false;
 		inline bool skeletonesp = false;
 		inline bool nameesp = false;
-		inline bool playerinfo = false;
+
+		inline std::vector<multicombo_opt_t> playerinfo_options = {
+			{ "Weapon",			true },
+			{ "Armor",			true },
+			{ "Defuser",		false },
+			{ "Bomb",			false },
+			{ "Scoped",			false },
+			{ "Flashed",		false },
+			{ "Can fire",		false }
+		};
+		inline multicombobox_toggle_t playerinfo(playerinfo_options);
+
 		inline bool healthesp = false;
 	}
 
