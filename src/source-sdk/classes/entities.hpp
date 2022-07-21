@@ -414,6 +414,7 @@ public:
 
 class weapon_t : public entity_t {
 public:
+	#pragma region BaseCombatWeapon
 	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack",      next_primary_attack,         float)
 	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack",    next_secondary_attack,       float)
 	NETVAR("DT_BaseCombatWeapon", "m_iClip1",                   clip1_count,                 int)
@@ -423,8 +424,12 @@ public:
 	NETVAR("DT_BaseCombatWeapon", "m_iWorldModelIndex",         worldmodel_index,            int)
 	NETVAR("DT_BaseCombatWeapon", "m_iWorldDroppedModelIndex",  droppedmodel_index,          int)
 	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel",        weapon_worldmodel,           int)
+	#pragma endregion
+
 	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
 	NETVAR("DT_WeaponCSBase",     "m_fLastShotTime",            last_shot_time,              float)
+	NETVAR("DT_BaseCSGrenade",    "m_bPinPulled",               pin_pulled,                  bool)
+	NETVAR("DT_BaseCSGrenade",    "m_fThrowTime",               throw_time,                  float)
 	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
 
 	#pragma region BaseAttributableItem
@@ -432,7 +437,7 @@ public:
 	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,		   int)
 	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,			   int)
 	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,		   int)
-	//NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   char)
+	//NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   char)		// Commented cuz crashes
 	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit,	   int)
 	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,		   int)
 	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,		   float)

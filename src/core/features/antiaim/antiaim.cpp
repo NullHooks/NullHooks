@@ -2,12 +2,11 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-void antiaim::run_antiaim(c_usercmd* cmd, bool& sendPacket) {
+void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
     if (!variables::antiaim::antiaim) return;
-    if (!csgo::local_player || !csgo::local_player->is_alive()) return;      // don't do antiaim when we are dead
-    if (cmd->buttons & in_use) return;      // Don't do antiaim when we are in use (open doors, interact etc)
+    if (!csgo::local_player || !csgo::local_player->is_alive()) return;
     const int move_type = csgo::local_player->move_type();
-    if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;
+    if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;     // Ladder or noclip
 
     // Don't aa if we are doing any of this
     // @todo: prepare the revolver without flicking
@@ -15,15 +14,23 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& sendPacket) {
     if (!active_weapon) return;
     if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                             // We are shooting
         || (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
-        || (active_weapon->is_grenade() && cmd->buttons & in_attack)
         || (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
         || cmd->buttons & in_use                                                                    // Interacting with door, weapon, bomb, etc.
         /* @todo: Drop*/) return;
 
+    // Don't aa when throwing a nade. Not only don't aa but don't even flick. Say thank you to ma man @hBuffer
+    // TODO: Good nade prediction :(
+    if (active_weapon->is_grenade() && !active_weapon->pin_pulled()) {
+        float throw_time = active_weapon->throw_time();
+        if (throw_time > 0) {
+            send_packet = false;
+            return;
+        }
+    }
+
     // Pitch down
     cmd->viewangles.x += variables::antiaim::pitch;
-
-    if (sendPacket)
+    if (send_packet)
         cmd->viewangles.y -= variables::antiaim::yaw;       // Set our yaw
     else
         cmd->viewangles.y += variables::antiaim::yaw;       // Again but for fake
