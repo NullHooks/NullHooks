@@ -393,6 +393,7 @@ public:
 	NETVAR("DT_PlantedC4", "m_flC4Blow", m_flC4Blow, float);
 	NETVAR("DT_PlantedC4", "m_flDefuseCountDown", m_flDefuseCountDown, float);
 	NETVAR("DT_PlantedC4", "m_bBombDefused", m_bBombDefused, bool);
+	NETVAR("DT_PlantedC4", "m_hBombDefuser", m_hBombDefuser, unsigned long);	// Handle
 	NETVAR("DT_PlantedC4", "m_flTimerLength", m_flTimerLength, float);
 };
 

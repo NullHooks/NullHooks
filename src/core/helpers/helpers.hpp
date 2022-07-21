@@ -29,6 +29,5 @@ namespace helpers {
 		color float2color(float* id);
 	}
 	
-	void draw_bomb_text(float time);
 	player_t* local_or_spectated();
 };
