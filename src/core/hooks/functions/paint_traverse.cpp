@@ -14,8 +14,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		watermark::draw();
 		watermark::draw_stats();
 
+		visuals::entity_esp();
 		visuals::playeresp();
-		visuals::grenade_projectile_esp();
 		visuals::noflash();
 
 		aim::draw_fov();

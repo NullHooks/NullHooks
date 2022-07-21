@@ -35,7 +35,7 @@ namespace aim {
 
 namespace visuals {
 	void playeresp();
-	void grenade_projectile_esp();
+	void entity_esp();
 	void noflash();
 	void motion_blur(view_setup_t* setup) noexcept;
 	void bullet_tracer(i_game_event *event);
