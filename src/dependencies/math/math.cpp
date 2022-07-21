@@ -28,34 +28,7 @@ void math::correct_movement(vec3_t old_angles, c_usercmd* cmd, float old_forward
 }
 
 vec3_t math::calculate_angle(vec3_t& in, vec3_t& out) {
-	/*vec3_t angles;
-	vec3_t delta;
-	delta.x = (a.x - b.x);
-	delta.y = (a.y - b.y);
-	delta.z = (a.z - b.z);
-
-	double hyp = sqrt(delta.x * delta.x + delta.y * delta.y);
-	angles.x = (float)(atanf(delta.z / hyp) * 57.295779513082f);
-	angles.y = (float)(atanf(delta.y / delta.x) * 57.295779513082f);
-
-	angles.z = 0.0f;
-	if (delta.x >= 0.0) { angles.y += 180.0f; }
-	return angles;*/
-	double delta[3] = {
-		(in[0] - out[0]),
-		(in[1] - out[1]),
-		(in[2] - out[2])
-	};
-
-	double hyp = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
-	vec3_t ret = vec3_t();
-	ret.x = (float)(asinf(delta[2] / hyp) * 57.295779513082f);
-	ret.y = (float)(atanf(delta[1] / delta[0]) * 57.295779513082f);
-	ret.z = 0.0f;
-
-	if (delta[0] >= 0.0)
-		ret.y += 180.0f;
-	return ret;
+	return (out - in).to_angle();		// Based
 }
 
 vec3_t math::calculate_relative_angle(vec3_t& src, vec3_t& dst, vec3_t& viewangles) {
