@@ -2,22 +2,15 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-void animations::local::run_local_animations()
-{
-	// are we alive?
+void animations::local::run_local_animations() {
 	if (!csgo::local_player) return;
+	if (!interfaces::input->camera_in_third_person) return;		// For now we only care about local animations when on thirdperson
 
-	// are we in thirdperson ?
-	if (interfaces::input->camera_in_third_person)
-	{
-		// if we are save the angles
-		auto angles = csgo::local_player->eye_angles();
-		angles.z = 0.f;
+	// Save the angles
+	auto angles = csgo::local_player->eye_angles();
+	angles.z = 0.f;
 
-		// and set them
-		interfaces::prediction->set_local_view_angles(angles);
-
-		// then update to apply
-		csgo::local_player->update_client_side_animations();
-	}
+	// Set them and update to apply
+	interfaces::prediction->set_local_view_angles(angles);
+	csgo::local_player->update_client_side_animations();
 }
