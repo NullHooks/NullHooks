@@ -27,19 +27,24 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
         }
     }
 
-    // Pitch down
+    // Pitch
     cmd->viewangles.x += variables::antiaim::pitch;
+
+    // Yaw
     if (send_packet)
         cmd->viewangles.y -= variables::antiaim::yaw;       // Set our yaw
     else
         cmd->viewangles.y += variables::antiaim::yaw;       // Again but for fake
 
-    // micromovement
-    // definition: the idea of micromovement is it literally "micromoves" so the server is constantly updating your LBY to your real LBY and its not rotating towards your fake one
+    /*
+     * Micromovement
+     *   Definition: the idea of micromovement is it literally "micromoves" so the server is constantly updating your LBY
+     *   to your real LBY and its not rotating towards your fake one.
+     */
     if (fabsf(cmd->sidemove) < 5.0f) {
-        if (cmd->buttons & in_duck)     // if we are ducking make the movement bigger
+        if (cmd->buttons & in_duck)     // If we are ducking make the movement bigger
             cmd->sidemove = cmd->tick_count & 1 ? 3.25f : -3.25f;
-        else                            // else just make it normal
+        else                            // Else just make it normal
             cmd->sidemove = cmd->tick_count & 1 ? 1.1f : -1.1f;
     }
 
