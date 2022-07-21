@@ -3,6 +3,7 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/functions/event_globals.hpp"
 
+#pragma region BOMB TIMER STRUCTS
 struct inferno_t : public entity_t {
 	OFFSET(float, get_spawn_time, 0x20);
 	static float get_expiry_time() {
@@ -16,8 +17,9 @@ struct smoke_t : public entity_t {
 		return 18.f;
 	}
 };
+#pragma endregion
 
-void visuals::grenade_projectile_esp() {
+void visuals::entity_esp() {
 	if (!(variables::entity_visuals::nade_esp
 		|| variables::entity_visuals::entitytext
 		|| variables::entity_visuals::bombtimer
@@ -34,7 +36,8 @@ void visuals::grenade_projectile_esp() {
 		vec3_t origin = entity->origin(), w2s;
 
 		switch (entity->client_class()->class_id) {
-			/* ------------ NADE PROJECTILES ------------ */
+			
+			#pragma region NADE PROJECTILES
 			case cbasecsgrenadeprojectile: {
 				if (!(math::world_to_screen(origin, w2s) && variables::entity_visuals::nade_esp)) break;
 				const model_t* model = entity->model();
@@ -87,10 +90,14 @@ void visuals::grenade_projectile_esp() {
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "decoy", true, color(150, 150, 150, 255));
 				break;
 			}
-			/* ------------ BOMB ------------ */
+			#pragma endregion
+
+			#pragma region BOMB
 			case cplantedc4:				entity_info::bomb(entity);									break;
 			case cc4:						entity_info::dropped_bomb(entity);							break;
-			/* ------------ WEAPONS ------------ */
+			#pragma endregion
+
+			#pragma region DROPPED WEAPONS
 			case cak47:						entity_info::weapon_name(entity, "ak47", 0);				break;
 			case cdeagle:					entity_info::weapon_name(entity, "deagle", 0);				break;
 			case cweaponaug:				entity_info::weapon_name(entity, "aug", 0);					break;
@@ -134,24 +141,30 @@ void visuals::grenade_projectile_esp() {
 			case cweaponusp:				entity_info::weapon_name(entity, "usp", 0);					break;
 			case cweaponxm1014:				entity_info::weapon_name(entity, "xm1014", 0);				break;
 			case cweaponzonerepulsor:		entity_info::weapon_name(entity, "zonerepulsor", 0);		break;
-			/* ------------ DROPPED NADES ------------ */
+			#pragma endregion
+
+			#pragma region DROPPED NADES
 			case cflashbang:				entity_info::weapon_name(entity, "flashbang", 0);			break;
 			case csmokegrenade:				entity_info::weapon_name(entity, "smoke", 0);				break;
 			case cdecoygrenade:				entity_info::weapon_name(entity, "decoy", 0);				break;
 			case cmolotovgrenade:
 			case cincendiarygrenade:		entity_info::weapon_name(entity, "molotov", 0);				break;
 			case chegrenade:				entity_info::weapon_name(entity, "frag nade", 0);			break;
-			/* ------------ MISC ------------ */
+			#pragma endregion
+
+			#pragma region MISC
 			case cchicken:
 				if (!(math::world_to_screen(origin, w2s) && variables::misc_visuals::chickenpride && variables::entity_visuals::entitytext)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
-			/* ------------------------------ */
+			#pragma endregion
+
 			default: break;
 		}
 	}
 }
 
+#pragma region ENTITY INFO FUNCTIONS
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	if (!(variables::entity_visuals::entitytext || variables::entity_visuals::bombtimer) || !bomb_ent) return;
 
@@ -207,3 +220,4 @@ void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y
 	if (math::world_to_screen(origin, entPosScreen))
 		render::draw_text_string(entPosScreen.x, entPosScreen.y + y_ofset, render::fonts::watermark_font, text, true, color::white(255));
 }
+#pragma endregion
