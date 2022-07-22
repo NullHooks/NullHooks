@@ -93,8 +93,8 @@ bool hooks::initialize() {
 	helpers::console::state_to_console_color("Hooks", "loose_files_allowed initialized!");
 
 	if (MH_CreateHook(CL_CheckForPureServerWhitelist_target, &CL_CheckForPureServerWhitelist::hook, reinterpret_cast<void**>(&CL_CheckForPureServerWhitelist::original)) != MH_OK)
-		throw std::runtime_error("failed to initialize loose_files_allowed.");
-	helpers::console::state_to_console_color("Hooks", "loose_files_allowed initialized!");
+		throw std::runtime_error("failed to initialize CL_CheckForPureServerWhitelist.");
+	helpers::console::state_to_console_color("Hooks", "CL_CheckForPureServerWhitelist initialized!");
 
 	if (MH_CreateHook(on_screen_size_changed_target, &on_screen_size_changed::hook, reinterpret_cast<void**>(&on_screen_size_changed::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize on_screen_size_changed.");
