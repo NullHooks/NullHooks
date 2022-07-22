@@ -16,6 +16,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 			backtrack::frame_stage_notify();
 			break;
 		case FRAME_RENDER_START:
+			skins::change_skins(frame_stage);		// Run here too to avoid model flickering online
 			visuals::nosmoke(frame_stage);
 			animations::local::run_local_animations();
 			break;
