@@ -27,7 +27,8 @@ void misc::thirdperson() {
 
     // Change observer mode
     if (csgo::local_player && player != csgo::local_player) {
-        csgo::local_player->observer_mode() = OBS_MODE_CHASE;
+        if (csgo::local_player->observer_mode() != OBS_MODE_CHASE)
+            csgo::local_player->observer_mode() = OBS_MODE_CHASE;
         return;
     }
 
@@ -79,8 +80,6 @@ void misc::reset_thirdperson() {
     if (csgo::local_player) {
         if (csgo::local_player->is_alive())
             csgo::local_player->observer_mode() = OBS_MODE_NONE;
-        else
-            csgo::local_player->observer_mode() = OBS_MODE_IN_EYE;
     }
 
     interfaces::input->camera_in_third_person = false;
