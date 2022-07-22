@@ -53,6 +53,7 @@ namespace skins {
     void change_skins(client_frame_stage_t stage);
     void update_model(weapon_t* weapon);
     void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence); 
+    bool custom_kill_icons(i_game_event* game_event);
 
     inline std::unordered_map<int, skin_info> custom_skins;
     void read_skins();
@@ -82,6 +83,28 @@ namespace skins {
     };
     // Custom models will get appended or overwriten
     inline std::unordered_map<int, model> custom_models = default_models;
+
+    // Used for kill icons
+    inline std::unordered_map<int, std::string> default_kill_icons {
+        { WEAPON_KNIFE,                     "knife" },
+        { WEAPON_KNIFE_T,                   "knife_t" },
+        { WEAPON_BAYONET,                   "bayonet" },
+        { WEAPON_KNIFE_M9_BAYONET,          "knife_m9_bayonet" },
+        { WEAPON_KNIFE_KARAMBIT,            "knife_karambit" },
+        { WEAPON_KNIFE_SURVIVAL_BOWIE,      "knife_survival_bowie" },
+        { WEAPON_KNIFE_BUTTERFLY,           "knife_butterfly" },
+        { WEAPON_KNIFE_FALCHION,            "knife_falchion" },
+        { WEAPON_KNIFE_FLIP,                "knife_flip" },
+        { WEAPON_KNIFE_GUT,                 "knife_gut" },
+        { WEAPON_KNIFE_TACTICAL,            "knife_tactical" },          // Huntsman
+        { WEAPON_KNIFE_PUSH,                "knife_push" },
+        { WEAPON_KNIFE_GYPSY_JACKKNIFE,     "knife_gypsy_jackknife" },
+        { WEAPON_KNIFE_STILETTO,            "knife_stiletto" },
+        { WEAPON_KNIFE_WIDOWMAKER,          "knife_widowmaker" },        // Talon
+        { WEAPON_KNIFE_SKELETON,            "knife_skeleton" },
+        { WEAPON_KNIFE_URSUS,               "knife_ursus" },
+        { WEAPON_KNIFE_CSS,                 "knife_css" }                // Classic
+    };
 
     // Used for config reading in read_skins.cpp
     const std::unordered_map<std::string, int> qualities_map = {
