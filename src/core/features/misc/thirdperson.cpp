@@ -10,6 +10,7 @@ void misc::thirdperson() {
     if (!variables::misc::thirdperson
         || !player
         || !player->is_alive()
+        || globals::forcing_update
         || (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots)) {
         reset_thirdperson();
         return;
@@ -70,7 +71,8 @@ void misc::thirdperson() {
 
     using  fn = void(__thiscall*)(entity_t*);
     static fn update_visibility = (fn)utilities::pattern_scan("client.dll", sig_update_visibility);
-    update_visibility(csgo::local_player);      // Update visibility this way to allow thirdperson while spectating
+    update_visibility(csgo::local_player);      // Update visibility this way to fix crashes.
+                                                // @todo: Still crashes if doing full_update() in thirdperson.
 }
 
 void misc::reset_thirdperson() {

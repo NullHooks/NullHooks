@@ -25,11 +25,11 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 				interfaces::clientstate->full_update();
 				globals::forcing_update = false;
 			}
-
+			
 			skins::change_misc_models();
 			skins::change_skins(frame_stage);		// Run here too to avoid model flickering online
 			visuals::nosmoke(frame_stage);
-			animations::local::run_local_animations();
+			animations::local::run_local_animations();		// @todo: Crashes with custom models/full_update() on thirdperson
 			break;
 		case FRAME_RENDER_END:                      break;
 		default:                                    break;
