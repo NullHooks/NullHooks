@@ -305,7 +305,7 @@ const std::unordered_map<std::string, int> all_item_definition_indexes = {
 };
 
 const std::unordered_map<std::string, int> all_custom_models = {
-	{ "LOCAL_PLAYER",					LOCAL_PLAYER  },
+	{ "LOCAL_PLAYER",					LOCAL_PLAYER },
 	{ "PLAYER_ALLY",					PLAYER_ALLY },
 	{ "PLAYER_ENEMY",					PLAYER_ENEMY },
 	//{ "ARMS",							ARMS }
