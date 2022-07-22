@@ -25,6 +25,19 @@ enum cs_weapon_type {
 	WEAPONTYPE_UNKNOWN
 };
 
+enum observer_modes {
+	OBS_MODE_NONE = 0,	// not in spectator mode
+	OBS_MODE_DEATHCAM,	// special mode for death cam animation
+	OBS_MODE_FREEZECAM,	// zooms to a target, and freeze-frames on them
+	OBS_MODE_FIXED,		// view from a fixed camera position
+	OBS_MODE_IN_EYE,	// follow a player in first person view
+	OBS_MODE_CHASE,		// follow a player in third person view
+	OBS_MODE_ROAMING,	// free roaming
+
+	NUM_OBSERVER_MODES,
+};
+
+
 enum client_frame_stage_t {
 	FRAME_UNDEFINED = -1,			// (haven't run any frames yet)
 	FRAME_START,
@@ -552,13 +565,13 @@ public:
 	NETVAR("DT_CSPlayer", "m_iHealth", health, int)
 	NETVAR("DT_CSPlayer", "m_lifeState", life_state, int)
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int)
-	NETVAR("DT_CSPlayer", "m_iPlayerC4", c4_player, int)	// It broky
 	NETVAR("DT_BasePlayer", "m_viewPunchAngle", punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_aimPunchAngle", aim_punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_vecVelocity[0]", velocity, vec3_t)
 	NETVAR("DT_BasePlayer", "m_flMaxspeed", max_speed, float)
 	NETVAR("DT_BaseEntity", "m_flShadowCastDistance", fov_time, float)
 	NETVAR("DT_BasePlayer", "m_hObserverTarget", observer_target, unsigned long)
+	NETVAR("DT_BasePlayer", "m_iObserverMode", observer_mode, int)
 	NETVAR("DT_BasePlayer", "m_nHitboxSet", hitbox_set, int)
 	NETVAR("DT_BasePlayer", "m_nNextThinkTick", next_think_tick, int)
 	NETVAR("DT_BasePlayer", "m_flFallVelocity", fall_velocity, float)
