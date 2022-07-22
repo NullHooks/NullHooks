@@ -9,6 +9,7 @@
 #include "dependencies/rapidjson/stringbuffer.h"
 
 void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon);
+void load_custom_models(rapidjson::Document& doc, std::pair<std::string, int> item);
 
 void skins::read_skins() {
 	constexpr const char* skin_file_name = "\\skins.json";
@@ -38,11 +39,16 @@ void skins::read_skins() {
 	for (std::pair<std::string, int> weapon : all_item_definition_indexes) {
 		load_skin(doc, weapon);
 	}
+
+	for (std::pair<std::string, int> item : all_custom_models) {
+		load_custom_models(doc, item);	// For other models like players and arms
+	}
 }
 
 void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 	if (!doc.HasMember(weapon.first.c_str())) return;			// Enum name is in json ("WEAPON_KNIFE" for example)
 	rapidjson::Value& weapon_obj = doc[weapon.first.c_str()];	// weapon_obj will be each json entry of the weapon
+	if (!weapon_obj.IsObject()) return;
 
 	// Read each skinchanger value
 	if (weapon_obj.HasMember("item_definition_index")) {		// Can be str or int (Enum name or id)
@@ -99,6 +105,28 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 			skins::custom_models[weapon.second].precache = skins::default_models[weapon.second].precache;
 			skins::custom_models[weapon.second].viewmodel = skins::default_models[weapon.second].viewmodel;
 			skins::custom_models[weapon.second].worldmodel = skins::default_models[weapon.second].worldmodel;
-		}				
+		}
+	}
+}
+
+void load_custom_models(rapidjson::Document& doc, std::pair<std::string, int> item) {
+	if (doc.HasMember(item.first.c_str())) {				// Enum name is in json ("PLAYER_ALLY" for example)
+		rapidjson::Value& item_obj = doc[item.first.c_str()];	// weapon_obj will be each json entry of the weapon
+	
+		if (item_obj.IsString()) {
+			skins::custom_models[item.second].worldmodel = item_obj.GetString();		// We only set worldmodel
+		} else if (item_obj.IsObject() && item_obj.HasMember("worldmodel")) {			// Instead of string is an object. Check if it has worldmodel inside
+			rapidjson::Value& worldmodel = item_obj["worldmodel"];
+			if (worldmodel.IsString())
+				skins::custom_models[item.second].worldmodel = worldmodel.GetString();
+		} else {
+			return;
+		}
+
+		skins::custom_models[item.second].precache = true;
+	} else if (skins::custom_models.find(item.second) != skins::custom_models.end() && skins::custom_models[item.second].precache) {		// Item is no longer in config, remove from map
+		skins::custom_models[item.second].precache = false;
+		skins::custom_models[item.second].viewmodel = "";
+		skins::custom_models[item.second].worldmodel = "";
 	}
 }

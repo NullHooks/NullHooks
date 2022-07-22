@@ -49,6 +49,7 @@ struct model {
 
 namespace skins {
     inline bool apply_skin(DWORD weapon_handle);
+    void change_misc_models();
     void change_skins(client_frame_stage_t stage);
     void update_model(weapon_t* weapon);
     void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence); 
