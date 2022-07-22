@@ -694,7 +694,9 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		{ 255, 0,   0   }
 	};
 
-	/* --------------- HUE BAR --------------- */
+	float_hsv color_hsv = helpers::colors::color2hsv_float(col_p.target);
+
+	#pragma region HUE BAR
 	// Draw hsv fades (6 segments)
 	for (auto n = 0; n < 6; n++) {
 		const int fade_w = slider_w / 6;
@@ -702,27 +704,55 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 
 		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
+	
 	// Check selected hue (mouse in slider)
+	float color_hue = color_hsv.h;
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
-		float input_hue = float(cursor.x - slider_x) / float(slider_w);
-		input_hue = (input_hue == 1.f) ? 0.99 : input_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
-		col_p.target = helpers::colors::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
+		color_hue = float(cursor.x - slider_x) / float(slider_w);
+		color_hue = (color_hue == 1.f) ? 0.99 : color_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
 	}
+	
 	// Render color selector depenging on the color's hue
-	float color_hue = helpers::colors::color2hsv_float(col_p.target).h;		// Get it from the color itself even if we dont change it
 	render::draw_rect(slider_x + slider_w * color_hue - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
 
-	/* --------------- ALPHA BAR --------------- */
+	#pragma region SATURATION BAR
 	slider_y += win_padding + slider_h;
+	
+	const color lowest_sat = helpers::colors::hsv_float2color(float_hsv{ color_hue, 0.f, 1.f }, 255);
+	const color highest_sat = helpers::colors::hsv_float2color(float_hsv{ color_hue, 1.f, 1.f }, 255);
+	render::draw_fade(slider_x, slider_y, slider_w, slider_h, lowest_sat, highest_sat, true);
+	
+
+	// Check selected hue (mouse in slider)
+	float color_sat = color_hsv.s;
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+		color_sat = float(cursor.x - slider_x) / float(slider_w);
+		color_sat = (color_sat == 0.f) ? 0.01 : color_sat;
+	}
+
+	// Render color selector depenging on the color's hue
+	render::draw_rect(slider_x + slider_w * color_sat - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
+
+	#pragma region ALPHA BAR
+	slider_y += win_padding + slider_h;
+
 	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.target.get_custom_alpha(0), col_p.target.get_custom_alpha(255), true);
+	
 	// Check selected hue (mouse in slider)
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_alpha = float(cursor.x - slider_x) / float(slider_w);
 		col_p.target.a = input_alpha * 255.f;
 	}
+
 	// Render color selector depenging on the color's hue
 	float color_alpha = col_p.target.a / 255.f;
 	render::draw_rect(slider_x + slider_w * color_alpha - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
+
+	// Set new color replacing changed values
+	col_p.target = helpers::colors::hsv_float2color(float_hsv{ color_hue, color_sat, color_hsv.v }, col_p.target.a);
 }
 
 void popup_system::combobox_popup(combo_popup_info combo_p) {
