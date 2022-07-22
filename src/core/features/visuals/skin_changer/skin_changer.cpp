@@ -266,3 +266,31 @@ void skins::fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence) {
     sequence = remap_knife_animation(viewmodel_weapon->item_definition_index(), sequence);
 }
 #pragma endregion
+
+#pragma region ICONS
+// Used in fireevent
+bool skins::custom_kill_icons(i_game_event* game_event) {
+    int nUserID = game_event->get_int("attacker");      // Get the user ID of the attacker
+    if (!nUserID) return false;
+    
+    if (interfaces::engine->get_player_for_user_id(nUserID) != interfaces::engine->get_local_player())      // Only if we attack
+        return false;
+
+    const char* original_weapon = game_event->get_string("weapon");     // Get the original weapon used to kill.
+
+    for (std::pair<int, std::string> icon_pair : skins::default_kill_icons) {
+        if (!strcmp(original_weapon, icon_pair.second.c_str())) {               // We found the weapon that we are using to kill
+            if (skins::custom_skins.find(icon_pair.first) == skins::custom_skins.end())     // Is not in map
+                continue;
+            if (skins::custom_skins.at(icon_pair.first).item_definition_index == NULL)      // Using custom weapon
+                continue;
+
+            // Replace with the knife icon with the one at the new item_definition_index
+            game_event->set_string("weapon", skins::default_kill_icons.at(skins::custom_skins.at(icon_pair.first).item_definition_index).c_str());
+            break;
+        }
+    }
+
+    return true;
+}
+#pragma endregion

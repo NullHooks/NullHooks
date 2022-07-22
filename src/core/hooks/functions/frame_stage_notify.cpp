@@ -35,5 +35,5 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		default:                                    break;
 	}
 
-	original(interfaces::client, frame_stage);		// @todo: Crashes if disconnecting in thirdperson
+	original(interfaces::client, frame_stage);				// @todo: Crashes if disconnecting in thirdperson
 }

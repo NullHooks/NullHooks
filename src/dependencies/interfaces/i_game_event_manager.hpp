@@ -23,13 +23,15 @@ public:
 	virtual float           get_float( const char *name = nullptr, float def = 0.0f ) = 0;
 	virtual const char		*get_string( const char *name = nullptr, const char *def = "" ) = 0;
 	virtual const wchar_t	*get_wstring( const char *name, const wchar_t *def = L"" ) = 0;
-
+	virtual const void*		get_ptr(const char* szKeyName = nullptr) const = 0;
+	
 	virtual void            set_bool( const char *name, bool value ) = 0;
 	virtual void            set_int( const char *name, int value ) = 0;
 	virtual void            set_uint_64( const char *name, unsigned long value ) = 0;
 	virtual void            set_float( const char *name, float value ) = 0;
 	virtual void            set_string( const char *name, const char *value ) = 0;
 	virtual void            set_wstring( const char *name, const wchar_t *value ) = 0;
+	virtual void			set_ptr(const char* szKeyName, const void* pValue) = 0;
 };
 
 class i_game_event_listener2 {
