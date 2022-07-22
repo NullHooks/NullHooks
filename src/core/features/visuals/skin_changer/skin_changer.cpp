@@ -2,6 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/features/visuals/skin_changer/skin_changer.hpp"
 
+#pragma region SKINS
 bool skins::apply_skin(DWORD weapon_handle) {
 	// Get the weapon entity from the provided handle
 	weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapon_handle);
@@ -16,7 +17,9 @@ bool skins::apply_skin(DWORD weapon_handle) {
 		weapon_index = skins::custom_skins.at(weapon_index).item_definition_index;
 	}
 	
-	update_knife_model(weapon);     // Will update the weapon model index and the viewmodel if needed
+    // Custom models or custom knifes
+    if (skins::custom_models.find(weapon_index) != skins::custom_models.end())
+	    update_model(weapon);     // Will update the weapon model index and the viewmodel if needed
 
 	// Apply to fallback variables
 	if (skins::custom_skins.at(weapon_index).paint_kit != NULL) weapon->fallback_paint_kit() = skins::custom_skins.at(weapon_index).paint_kit;
@@ -32,38 +35,67 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	return true;
 }
 
-void skins::update_knife_model(weapon_t* weapon) {
-	const int weapon_idx = weapon->item_definition_index();
-	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;
-	
-	// Weapon models
-	weapon->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel));
-	weapon->net_pre_data_update(0);
-
-	// Viewmodel
-	const auto viewmodel = (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(csgo::local_player->view_model());
-	if (!viewmodel) return;
-	const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
-	if (viewmodel_weapon != weapon) return;
-	viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel));
-
-    // Worldmodel
-    const auto worldmodel = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel_weapon->weapon_worldmodel());
-    if (!worldmodel) return;
-    worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).worldmodel));
-}
-
 // Used in FRAME_NET_UPDATE_POSTDATAUPDATE_START inside FrameStageNotify
 void skins::change_skins(client_frame_stage_t stage) {
-	if (!csgo::local_player) return;
+    if (!csgo::local_player) return;
 
-	// Change every skin in the map
-	auto weapons = csgo::local_player->get_weapons();
-	if (!weapons) return;
-	for (int n = 0; weapons[n]; n++) {
-		apply_skin(weapons[n]);
-	}
+    // Change every skin in the map
+    auto weapons = csgo::local_player->get_weapons();
+    if (!weapons) return;
+    for (int n = 0; weapons[n]; n++) {
+        apply_skin(weapons[n]);
+    }
 }
+#pragma endregion
+
+#pragma region MODELS
+bool precache_model(const char* model_path) {
+    i_network_string_table* m_pModelPrecacheTable = interfaces::client_string_table_container->find_table("modelprecache");
+
+    if (model_path == NULL) return false;
+    if (m_pModelPrecacheTable) {
+        interfaces::model_info->find_or_load_model(model_path);
+        int idx = m_pModelPrecacheTable->AddString(false, model_path);
+        if (idx == INVALID_STRING_INDEX)
+            return false;
+    }
+    return true;
+}
+
+void skins::update_model(weapon_t* weapon) {
+	const int weapon_idx = weapon->item_definition_index();
+	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;     // Just to make sure if we use it somewhere else
+    
+    if (skins::custom_models.at(weapon_idx).viewmodel != "") {
+        // Precache if we need to
+        if (skins::custom_models.at(weapon_idx).precache)
+            precache_model(skins::custom_models.at(weapon_idx).viewmodel.c_str());
+
+	    // Weapon models
+	    weapon->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel.c_str()));
+	    weapon->net_pre_data_update(0);
+
+	    // Viewmodel
+	    const auto viewmodel = (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(csgo::local_player->view_model());
+	    if (!viewmodel) return;
+	    const auto viewmodel_weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel->weapon());
+	    if (viewmodel_weapon != weapon) return;
+	    viewmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).viewmodel.c_str()));
+        
+        // You need a viewmodel to change the worldmodel
+        if (skins::custom_models.at(weapon_idx).worldmodel != "") {
+            // Precache if we need to
+            if (skins::custom_models.at(weapon_idx).precache)
+                precache_model(skins::custom_models.at(weapon_idx).worldmodel.c_str());
+
+            // Worldmodel
+            const auto worldmodel = (weapon_t*)interfaces::entity_list->get_client_entity_handle(viewmodel_weapon->weapon_worldmodel());
+            if (!worldmodel) return;
+            worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).worldmodel.c_str()));
+        }
+    }
+}
+#pragma endregion
 
 #pragma region ANIMATIONS
 int remap_knife_animation(int weaponID, const int sequence) noexcept {

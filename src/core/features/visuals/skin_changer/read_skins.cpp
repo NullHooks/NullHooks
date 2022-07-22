@@ -83,4 +83,22 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 		else if (wear.IsInt())
 			skins::custom_skins[weapon.second].wear = static_cast<float>(wear.GetInt());	// Just in case
 	}
+
+	if (weapon_obj.HasMember("viewmodel") && weapon_obj.HasMember("worldmodel")) {
+		rapidjson::Value& viewmodel = weapon_obj["viewmodel"];
+		if (!viewmodel.IsString()) return;
+		rapidjson::Value& worldmodel = weapon_obj["worldmodel"];
+		if (!worldmodel.IsString()) return;
+		
+		skins::custom_models[weapon.second].viewmodel = viewmodel.GetString();
+		skins::custom_models[weapon.second].worldmodel = worldmodel.GetString();
+		skins::custom_models[weapon.second].precache = true;		// Tell the model changer that we want to precache the models on custom ones
+	} else {
+		// If not in config and there is a precached entry, restore to default entry
+		if (skins::custom_models.find(weapon.second) != skins::custom_models.end() && skins::custom_models[weapon.second].precache) {
+			skins::custom_models[weapon.second].precache = skins::default_models[weapon.second].precache;
+			skins::custom_models[weapon.second].viewmodel = skins::default_models[weapon.second].viewmodel;
+			skins::custom_models[weapon.second].worldmodel = skins::default_models[weapon.second].worldmodel;
+		}				
+	}
 }
