@@ -56,8 +56,8 @@ namespace variables {
 		inline bool nameesp = false;
 
 		inline std::vector<multicombo_opt_t> playerinfo_options = {
-			{ "Weapon",			true },
-			{ "Armor",			true },
+			{ "Weapon",			false },
+			{ "Armor",			false },
 			{ "Defuser",		false },
 			{ "Bomb",			false },
 			{ "Scoped",			false },
