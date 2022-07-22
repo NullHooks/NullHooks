@@ -14,16 +14,15 @@ const auto g_maxs = vec3_t(g_max_coord, g_max_coord, g_max_coord);
 
 int __fastcall hooks::list_leaves_in_box::hook(void *ecx, void *edx, const vec3_t *mins, const vec3_t *maxs, uint16_t *list, int listmax) {
 	static auto ret_addr = utilities::pattern_scan("client.dll", "56 52 FF 50 18") + 5;
+	using fn_t = entity_t *(__thiscall *)(void *);
 
 	if (_ReturnAddress() == ret_addr) {
 		auto frame_addr  = reinterpret_cast<uint8_t *>(_AddressOfReturnAddress());
 		auto info        = *reinterpret_cast<renderable_info_t **>(frame_addr + 0x14);
-		auto base_entity = reinterpret_cast<uint8_t *>(info->renderable) - 0x4;
+		auto unknown     = (**(fn_t **)info->renderable)(info->renderable);
 
-		if (info != nullptr && base_entity != nullptr) {
-			using fn_t  = entity_t *(__thiscall *)(void *);
-			auto fn     = (*(fn_t **)base_entity)[7];
-			auto entity = fn(base_entity);
+		if (info != nullptr && unknown != nullptr) {
+			auto entity = (*(fn_t **)unknown)[7](unknown);
 
 			if(entity != nullptr && entity->is_player()) {
 				info->flags  &= ~0x100;
