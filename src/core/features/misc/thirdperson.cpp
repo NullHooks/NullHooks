@@ -5,7 +5,7 @@
 void misc::thirdperson() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
     
-    // TODO: Thirdperson on spectated player
+    // @todo: Thirdperson on localplayer or spectated player
     player_t* player = csgo::local_player;
     if (!variables::misc::thirdperson
         || !player
@@ -60,7 +60,10 @@ void misc::thirdperson() {
     view_angles.z = distance;
     interfaces::input->camera_in_third_person = true;
     interfaces::input->camera_offset = view_angles;
-    interfaces::engine->execute_cmd("cl_updatevisibility");
+
+    using  fn = void(__thiscall*)(entity_t*);
+    static fn update_visibility = (fn)utilities::pattern_scan("client.dll", sig_update_visibility);
+    update_visibility(player);      // Update visibility this way to allow thirdperson while spectating
 }
 
 void misc::reset_thirdperson() {
