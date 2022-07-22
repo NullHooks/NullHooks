@@ -2,6 +2,7 @@
 #include "dependencies/utilities/csgo.hpp"
 
 bool interfaces::initialize() {
+	// https://gitlab.com/KittenPopo/csgo-2018-source/-/blob/main/public/interfaces/interfaces.h
 	client                        = get_interface<i_base_client_dll, interface_type::index>("client.dll", "VClient018");
 	entity_list                   = get_interface<i_client_entity_list, interface_type::index>("client.dll", "VClientEntityList003");
 	engine                        = get_interface<iv_engine_client, interface_type::index>("engine.dll", "VEngineClient014");
@@ -23,6 +24,7 @@ bool interfaces::initialize() {
 	mdl_cache                     = get_interface<mdlcache, interface_type::index>("datacache.dll", "MDLCache004");
 	surface_props_physics         = get_interface<physics_surface_props, interface_type::index>("vphysics.dll", "VPhysicsSurfaceProps001");
 	client_string_table_container = get_interface<i_client_string_table_container, interface_type::index>("engine.dll", "VEngineClientStringTable001");
+	filesystem                    = get_interface<i_filesystem, interface_type::index>("filesystem_stdio.dll", "VFileSystem017");
 
 	/* ------------------ Custom interfaces ------------------ */
 
