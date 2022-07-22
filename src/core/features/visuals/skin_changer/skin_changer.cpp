@@ -99,6 +99,7 @@ void skins::update_model(weapon_t* weapon) {
 
 // Always uses worldmodel
 void custom_precached_model(entity_t* ent, int map_idx) {
+    if (!csgo::local_player) return;
     if (!ent) return;
     if (skins::custom_models.find(map_idx) == skins::custom_models.end()) return;
     
@@ -119,16 +120,17 @@ void custom_precached_model(entity_t* ent, int map_idx) {
 
 void skins::change_misc_models() {
     if (!csgo::local_player) return;
-
-    if (csgo::local_player->is_alive())
-        custom_precached_model(csgo::local_player, LOCAL_PLAYER);
     
-    for (int i = 1; i <= interfaces::globals->max_clients; i++) {
+    for (int i = 0; i <= interfaces::globals->max_clients; i++) {
         player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-        if (player && player != csgo::local_player) {
+        if (!player) continue;
+
+        if (player == csgo::local_player && csgo::local_player->is_alive()) {
+            custom_precached_model(csgo::local_player, LOCAL_PLAYER);
+        } else if (player != csgo::local_player) {
             if (player->team() == csgo::local_player->team())
                 custom_precached_model(player, PLAYER_ALLY);
-            else
+            else if (player->team() != csgo::local_player->team())
                 custom_precached_model(player, PLAYER_ENEMY);
         }
     }

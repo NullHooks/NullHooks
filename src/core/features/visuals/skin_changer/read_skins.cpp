@@ -120,6 +120,9 @@ void load_custom_models(rapidjson::Document& doc, std::pair<std::string, int> it
 			if (worldmodel.IsString())
 				skins::custom_models[item.second].worldmodel = worldmodel.GetString();
 		} else {
+			skins::custom_models[item.second].precache = false;
+			skins::custom_models[item.second].viewmodel = "";
+			skins::custom_models[item.second].worldmodel = "";
 			return;
 		}
 
