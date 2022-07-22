@@ -115,18 +115,20 @@ void load_custom_models(rapidjson::Document& doc, std::pair<std::string, int> it
 	
 		if (item_obj.IsString()) {
 			skins::custom_models[item.second].worldmodel = item_obj.GetString();		// We only set worldmodel
+			skins::custom_models[item.second].precache = true;
 		} else if (item_obj.IsObject() && item_obj.HasMember("worldmodel")) {			// Instead of string is an object. Check if it has worldmodel inside
 			rapidjson::Value& worldmodel = item_obj["worldmodel"];
-			if (worldmodel.IsString())
+			if (worldmodel.IsString()) {
 				skins::custom_models[item.second].worldmodel = worldmodel.GetString();
+				skins::custom_models[item.second].precache = true;
+			}
+
 		} else {
 			skins::custom_models[item.second].precache = false;
 			skins::custom_models[item.second].viewmodel = "";
 			skins::custom_models[item.second].worldmodel = "";
 			return;
 		}
-
-		skins::custom_models[item.second].precache = true;
 	} else if (skins::custom_models.find(item.second) != skins::custom_models.end() && skins::custom_models[item.second].precache) {		// Item is no longer in config, remove from map
 		skins::custom_models[item.second].precache = false;
 		skins::custom_models[item.second].viewmodel = "";

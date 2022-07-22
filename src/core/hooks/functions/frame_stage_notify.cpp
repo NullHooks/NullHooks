@@ -19,6 +19,9 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_RENDER_START:
 			// Force update on thread safe manner to avoid crashes
 			if (globals::forcing_update) {
+				if (interfaces::input->camera_in_third_person)
+					misc::reset_thirdperson();
+
 				interfaces::clientstate->full_update();
 				globals::forcing_update = false;
 			}
@@ -31,8 +34,6 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_RENDER_END:                      break;
 		default:                                    break;
 	}
-
-	
 
 	original(interfaces::client, frame_stage);		// @todo: Crashes if disconnecting in thirdperson
 }

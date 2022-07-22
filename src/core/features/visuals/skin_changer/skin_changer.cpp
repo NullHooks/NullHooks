@@ -103,13 +103,15 @@ void custom_precached_model(entity_t* ent, int map_idx) {
     if (!ent) return;
     if (skins::custom_models.find(map_idx) == skins::custom_models.end()) return;
     
+    std::string model_path = "csgo/";
+    
     // Change model
-    if (skins::custom_models.at(map_idx).worldmodel != "") {
+    if (skins::custom_models.at(map_idx).worldmodel != "" /*&& std::filesystem::exists(model_path.append(skins::custom_models.at(map_idx).worldmodel))*/) {
         // Precache
         precache_model(skins::custom_models.at(map_idx).worldmodel.c_str());
 
         const int model_idx = interfaces::model_info->get_model_index(skins::custom_models.at(map_idx).worldmodel.c_str());
-            
+
         // We need to check the model to avoid crashes when doing full_update()
         const model_t* model = interfaces::model_info->get_model(model_idx);
         if (!model) return;

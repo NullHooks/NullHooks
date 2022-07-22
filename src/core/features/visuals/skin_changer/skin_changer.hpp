@@ -78,7 +78,7 @@ namespace skins {
         { WEAPON_KNIFE_WIDOWMAKER,          { "models/weapons/v_knife_widowmaker.mdl",          "models/weapons/w_knife_widowmaker.mdl",            false } },      // Talon
         { WEAPON_KNIFE_SKELETON,            { "models/weapons/v_knife_skeleton.mdl",            "models/weapons/w_knife_skeleton.mdl",              false } },      
         { WEAPON_KNIFE_URSUS,               { "models/weapons/v_knife_ursus.mdl",               "models/weapons/w_knife_ursus.mdl",                 false } },      
-        { WEAPON_KNIFE_CSS,                 { "models/weapons/v_knife_css.mdl",                 "models/weapons/w_knife_css.mdl",                   false } },      // ???
+        { WEAPON_KNIFE_CSS,                 { "models/weapons/v_knife_css.mdl",                 "models/weapons/w_knife_css.mdl",                   false } }       // ???
     };
     // Custom models will get appended or overwriten
     inline std::unordered_map<int, model> custom_models = default_models;
