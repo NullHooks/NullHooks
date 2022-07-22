@@ -5,8 +5,8 @@
 void misc::thirdperson() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
     
-    // @todo: Thirdperson on localplayer or spectated player
-    player_t* player = csgo::local_player;
+    // Thirdperson on localplayer or spectated player
+    player_t* player = helpers::local_or_spectated();
     if (!variables::misc::thirdperson
         || !player
         || !player->is_alive()
@@ -21,6 +21,12 @@ void misc::thirdperson() {
 
     if (!thirdperson_toggled) {
         reset_thirdperson();
+        return;
+    }
+
+    // Change observer mode
+    if (csgo::local_player && player != csgo::local_player) {
+        csgo::local_player->observer_mode() = OBS_MODE_CHASE;
         return;
     }
 
@@ -67,6 +73,12 @@ void misc::thirdperson() {
 }
 
 void misc::reset_thirdperson() {
+    if (csgo::local_player) {
+        if (csgo::local_player->is_alive())
+            csgo::local_player->observer_mode() = OBS_MODE_NONE;
+        else
+            csgo::local_player->observer_mode() = OBS_MODE_IN_EYE;
+    }
     interfaces::input->camera_in_third_person = false;
     interfaces::input->camera_offset.z = 0.f;
 }
