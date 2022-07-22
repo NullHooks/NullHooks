@@ -201,6 +201,14 @@ enum item_definition_indexes {
 	GLOVE_HYDRA = 5035
 };
 
+// Misc models
+enum {
+	LOCAL_PLAYER = 10000,
+	PLAYER_ALLY,
+	PLAYER_ENEMY,
+	ARMS
+};
+
 // Array with all the items and names used for iteration and configs.
 // Used in read_skins.cpp
 const std::unordered_map<std::string, int> all_item_definition_indexes = {
@@ -294,6 +302,13 @@ const std::unordered_map<std::string, int> all_item_definition_indexes = {
 	{ "GLOVE_MOTORCYCLE",				GLOVE_MOTORCYCLE },
 	{ "GLOVE_SPECIALIST",				GLOVE_SPECIALIST },
 	{ "GLOVE_HYDRA",					GLOVE_HYDRA }
+};
+
+const std::unordered_map<std::string, int> all_custom_models = {
+	{ "LOCAL_PLAYER",					LOCAL_PLAYER  },
+	{ "PLAYER_ALLY",					PLAYER_ALLY },
+	{ "PLAYER_ENEMY",					PLAYER_ENEMY },
+	//{ "ARMS",							ARMS }
 };
 
 struct collideable_t {
@@ -451,7 +466,7 @@ public:
 	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,		   int)
 	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,			   int)
 	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,		   int)
-	//NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   char)		// Commented cuz crashes
+	NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   const char*)
 	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit,	   int)
 	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,		   int)
 	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,		   float)
@@ -565,6 +580,7 @@ public:
 	NETVAR("DT_CSPlayer", "m_iHealth", health, int)
 	NETVAR("DT_CSPlayer", "m_lifeState", life_state, int)
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int)
+	NETVAR("DT_CSPlayer", "m_szArmsModel", arms_model, const char*)
 	NETVAR("DT_BasePlayer", "m_viewPunchAngle", punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_aimPunchAngle", aim_punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_vecVelocity[0]", velocity, vec3_t)

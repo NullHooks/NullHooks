@@ -82,7 +82,9 @@ void visuals::playeresp() {
 
 		vec3_t chest = player->get_hitbox_position(hitbox_upper_chest);
 
-		auto hdr = interfaces::model_info->get_studio_model(player->model());
+		const auto player_model = player->model();
+		if (!player_model) continue;
+		auto hdr = interfaces::model_info->get_studio_model(player_model);
 		if (!hdr) continue;
 		static matrix_t bones[128];
 		if (!player->setup_bones(bones, 128, 256, 0)) continue;

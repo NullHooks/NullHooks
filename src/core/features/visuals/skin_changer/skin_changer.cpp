@@ -63,6 +63,7 @@ bool precache_model(const char* model_path) {
 }
 
 void skins::update_model(weapon_t* weapon) {
+    if (!weapon) return;
 	const int weapon_idx = weapon->item_definition_index();
 	if (!(skins::custom_models.find(weapon_idx) != skins::custom_models.end())) return;     // Just to make sure if we use it somewhere else
     
@@ -94,6 +95,44 @@ void skins::update_model(weapon_t* weapon) {
             worldmodel->set_model_index(interfaces::model_info->get_model_index(skins::custom_models.at(weapon_idx).worldmodel.c_str()));
         }
     }
+}
+
+// Always uses worldmodel
+void custom_precached_model(entity_t* ent, int map_idx) {
+    if (!ent) return;
+    if (skins::custom_models.find(map_idx) == skins::custom_models.end()) return;
+    
+    // Change model
+    if (skins::custom_models.at(map_idx).worldmodel != "") {
+        // Precache
+        precache_model(skins::custom_models.at(map_idx).worldmodel.c_str());
+
+        const int model_idx = interfaces::model_info->get_model_index(skins::custom_models.at(map_idx).worldmodel.c_str());
+            
+        // We need to check the model to avoid crashes when doing full_update()
+        const model_t* model = interfaces::model_info->get_model(model_idx);
+        if (!model) return;
+
+        ent->set_model_index(model_idx);
+    }
+}
+
+void skins::change_misc_models() {
+    if (!csgo::local_player) return;
+
+    if (csgo::local_player->is_alive())
+        custom_precached_model(csgo::local_player, LOCAL_PLAYER);
+    
+    for (int i = 1; i <= interfaces::globals->max_clients; i++) {
+        player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
+        if (player && player != csgo::local_player) {
+            if (player->team() == csgo::local_player->team())
+                custom_precached_model(player, PLAYER_ALLY);
+            else
+                custom_precached_model(player, PLAYER_ENEMY);
+        }
+    }
+    //custom_precached_model(csgo::local_player->arms_model(), ARMS);
 }
 #pragma endregion
 
