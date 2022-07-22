@@ -10,6 +10,7 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_NET_UPDATE_START:                break;
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_START:
 			skins::change_skins(frame_stage);
+			// @todo: Other models like localplayer, players and hands
 			break;
 		case FRAME_NET_UPDATE_POSTDATAUPDATE_END:   break;
 		case FRAME_NET_UPDATE_END:
@@ -24,5 +25,5 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		default:                                    break;
 	}
 
-	original(interfaces::client, frame_stage);
+	original(interfaces::client, frame_stage);		// @todo: Crashes if disconnecting in thirdperson
 }
