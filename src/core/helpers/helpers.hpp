@@ -15,6 +15,12 @@ struct float_hsv {
 	float v;	// Max: 1.f
 };
 
+struct float_color {
+	float r;	// Max: 1.f
+	float g;	// Max: 1.f
+	float b;	// Max: 1.f
+};
+
 namespace helpers {
 	namespace console {
 		void state_to_console(const char* tag, const char* text);
@@ -23,7 +29,7 @@ namespace helpers {
 
 	namespace colors {
 		color hsv2color(int_hsv, int alpha = 255);
-		color hsv2color(float_hsv, int alpha = 255);
+		color hsv_float2color(float_hsv, int alpha = 255);
 		int_hsv color2hsv(color col);
 		float_hsv color2hsv_float(color col);
 		color float2color(float* id);
