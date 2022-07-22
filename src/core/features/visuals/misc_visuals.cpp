@@ -11,5 +11,5 @@ void visuals::nade_predict() noexcept {
     static auto nadeVar{ interfaces::console->get_convar("cl_grenadepreview") };
     
     nadeVar->callbacks.size = 0;
-    nadeVar->set_value(variables::misc_visuals::nade_predict ? 1 : 0);
+    nadeVar->set_value((variables::misc_visuals::nade_predict && !variables::antiaim::antiaim) ? 1 : 0);
 }
