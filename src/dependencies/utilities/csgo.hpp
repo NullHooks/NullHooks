@@ -51,6 +51,7 @@
 #define sig_fire_event                  "55 8B EC 83 E4 F8 83 EC 0C 53 8B D9 56 57 89 5C 24 0C"
 #define sig_view_render                 "8B 0D ? ? ? ? FF 75 0C 8B 45 08"
 #define sig_viewmodel_sequence          "55 8B EC 53 8B 5D 08 57 8B 7D 0C 8B"
+#define sig_update_visibility			"55 8B EC 83 E4 F8 83 EC 24 53 56 57 8B F9 8D"
 
 namespace csgo {
 	extern player_t* local_player;
