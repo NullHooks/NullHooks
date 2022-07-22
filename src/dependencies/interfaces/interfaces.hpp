@@ -31,6 +31,7 @@
 #include "dependencies/interfaces/i_physics_surface_props.hpp"
 #include "dependencies/interfaces/i_client_string_table_container.hpp"
 #include "dependencies/interfaces/i_filesystem.hpp"
+#include "dependencies/interfaces/i_engine_sound.hpp"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
@@ -103,6 +104,7 @@ namespace interfaces {
 	inline physics_surface_props* surface_props_physics;
 	inline i_client_string_table_container* client_string_table_container;
 	inline i_filesystem* filesystem;
+	inline i_engine_sound* engine_sound;
 
 	// https://github.com/cazzwastaken/based/search?q=keyValuesSystem
 	inline void* key_values_system = nullptr;
