@@ -732,7 +732,7 @@ public:
 
 	void update_client_side_animations() {
 		using original_fn = void(__thiscall*)(void*);
-		(*(original_fn * *)this)[224](this);
+		(*(original_fn**)this)[224](this);
 	}
 
 	vec3_t& abs_origin() {
