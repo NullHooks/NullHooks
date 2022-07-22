@@ -18,6 +18,7 @@ bool hooks::initialize() {
 	const auto frame_stage_notify_target             = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
 	const auto render_smoke_overlay_target           = reinterpret_cast<void*>(get_virtual(interfaces::view_render, 41));
 	const auto on_screen_size_changed_target         = reinterpret_cast<void*>(get_virtual(interfaces::surface, 116));
+	const auto emit_sound_target                     = reinterpret_cast<void*>(get_virtual(interfaces::engine_sound, 5));
 	const auto loose_files_allowed_target            = reinterpret_cast<void*>(get_virtual(interfaces::filesystem, 128));
 	const auto CL_CheckForPureServerWhitelist_target = reinterpret_cast<void*>(utilities::pattern_scan("engine", sig_CheckForPureServerWhitelist));
 	const auto is_depth_of_field_enabled_target      = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
@@ -98,6 +99,10 @@ bool hooks::initialize() {
 	if (MH_CreateHook(on_screen_size_changed_target, &on_screen_size_changed::hook, reinterpret_cast<void**>(&on_screen_size_changed::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize on_screen_size_changed.");
 	helpers::console::state_to_console_color("Hooks", "on_screen_size_changed initialized!");
+
+	if (MH_CreateHook(emit_sound_target, &emit_sound::hook, reinterpret_cast<void**>(&emit_sound::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize emit_sound.");
+	helpers::console::state_to_console_color("Hooks", "emit_sound initialized!");
 
 	if (MH_CreateHook(is_depth_of_field_enabled_target, &is_depth_of_field_enabled::hook, reinterpret_cast<void**>(&is_depth_of_field_enabled::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize is_depth_of_field_enabled.");

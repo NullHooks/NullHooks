@@ -145,6 +145,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="core\hooks\functions\emit_sound.cpp" />
     <ClCompile Include="core\hooks\functions\find_mdl.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -280,6 +281,7 @@
     <ClInclude Include="dependencies\interfaces\i_client_state.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_string_table_container.hpp" />
     <ClInclude Include="dependencies\interfaces\i_console.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_engine_sound.hpp" />
     <ClInclude Include="dependencies\interfaces\i_filesystem.hpp" />
     <ClInclude Include="dependencies\interfaces\i_game_event_manager.hpp" />
     <ClInclude Include="dependencies\interfaces\i_input.hpp" />
