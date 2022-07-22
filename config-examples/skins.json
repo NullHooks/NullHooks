@@ -7,7 +7,7 @@
 	},
 	"WEAPON_KNIFE_M9_BAYONET": {
 		"paint_kit": 417,
-		"seed": 1,
+		"seed": 5,
 		"quality": "SKIN_QUALITY_UNUSUAL"
 	},
 	"WEAPON_KNIFE_BUTTERFLY": {
@@ -16,8 +16,8 @@
 		"quality": "SKIN_QUALITY_VINTAGE"
 	},
 	"WEAPON_KNIFE_WIDOWMAKER": {
-		"paint_kit": 415,
-		"seed": 69,
+		"paint_kit": 44,
+		"seed": 923,
 		"quality": "SKIN_QUALITY_VINTAGE"
 	},
 	"WEAPON_BAYONET": {
@@ -35,11 +35,17 @@
 		"seed": 69,
 		"quality": "SKIN_QUALITY_GENUINE"
 	},
+	"WEAPON_KNIFE_SKELETON": {
+		"paint_kit": 44,
+		"seed": 403,
+		"quality": "SKIN_QUALITY_CUSTOMIZED"
+	},
 	"WEAPON_GLOCK" : {
 		"paint_kit": 38
 	},
 	"WEAPON_USP_SILENCER" : {
-		"paint_kit": 102
+		"paint_kit": 1142,
+		"quality": "SKIN_QUALITY_UNUSUAL"
 	},
 	"WEAPON_DEAGLE" : {
 		"paint_kit": 962,
@@ -50,6 +56,9 @@
 	},
 	"WEAPON_M4A1" : {
 		"paint_kit": 844
+	},
+	"WEAPON_M4A1_SILENCER" : {
+		"paint_kit": 984
 	},
 	"WEAPON_SCAR20" : {
 		"paint_kit": 597
@@ -63,9 +72,20 @@
 		"seed": 872,
 		"quality": "SKIN_QUALITY_COMPLETED"
 	},
+	"WEAPON_REVOLVER" : {
+		"paint_kit": 522,
+		"seed": 1,
+		"quality": "SKIN_QUALITY_DEVELOPER"
+	},
 	"WEAPON_SSG08": {
 		"paint_kit": 868,
 		"seed": 420,
 		"quality": "SKIN_QUALITY_SELF_MADE"
+	},
+	"WEAPON_P250": {
+		"paint_kit": 551
+	},
+	"WEAPON_FAMAS": {
+		"paint_kit": 919
 	}
 }
