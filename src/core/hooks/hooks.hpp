@@ -89,6 +89,12 @@ namespace hooks {
 		void __fastcall hook(void* thisptr, void* edx, int old_width, int old_height);
 	}
 
+	namespace emit_sound {
+		using fn = void(__thiscall*)(void*, int&, int, int, const char*, unsigned int, const char*, float, int, float, int, int, const vec3_t*, const vec3_t*, void*, bool, float, int, StartSoundParams_t&);
+		inline fn original;
+		void __fastcall hook(void* thisptr, void* edx, int& filter, int ent_index, int channel, const char* sound_entry, unsigned int sound_entry_hash, const char* sample, float volume, int seed, float attenuation, int flags, int pitch, const vec3_t* origin, const vec3_t* direction, void* utl_vec_origins, bool update_positions, float soundtime, int speakerentity, StartSoundParams_t& params);
+	}
+
 	namespace get_client_model_renderable {
 		using fn = void*(__stdcall *)();
 		inline fn original;

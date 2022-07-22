@@ -22,6 +22,7 @@ bool interfaces::initialize() {
 	prediction            = get_interface<player_prediction, interface_type::index>("client.dll", "VClientPrediction001");
 	mdl_cache             = get_interface<mdlcache, interface_type::index>("datacache.dll", "MDLCache004");
 	surface_props_physics = get_interface<physics_surface_props, interface_type::index>("vphysics.dll", "VPhysicsSurfaceProps001");
+	engine_sound          = get_interface<i_engine_sound, interface_type::index>("engine.dll", "IEngineSoundClient003");
 
 	/* ------------------ Custom interfaces ------------------ */
 
