@@ -67,7 +67,8 @@ void debug::draw_angles() {
 }
 
 void debug::log::puts(std::string str) {
-	strs.push_front(str);
+	strs.push_front({str, interfaces::globals->cur_time});
+
 	while(strs.size() > MAX_SIZE)
 		strs.pop_back();
 }
@@ -80,7 +81,13 @@ void debug::log::draw() {
 	int x = w / 2;
 	int y = h / 2;
 
-	for(auto &str : strs)
-		render::draw_text_string(x, y += 12, render::fonts::watermark_font, str, false, color::white());
+	for(auto &str : strs) {
+		color col = color::white();
+		col.a = ((MAX_TIME - (interfaces::globals->cur_time - str.time)) / MAX_TIME) * 255.0f;
+		render::draw_text_string(x, y += 12, render::fonts::watermark_font, str.label, false, col);
+	}
+
+	while(!strs.empty() && interfaces::globals->cur_time - strs.back().time > MAX_TIME)
+		strs.pop_back();
 
 }

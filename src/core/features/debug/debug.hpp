@@ -30,8 +30,15 @@ namespace debug {
 	inline float cl_yaw = 0.0f;
 
 	namespace log {
+
+		struct log_t {
+			std::string label;
+			float time;
+		};
+
 		constexpr size_t MAX_SIZE = 10;
-		inline std::deque<std::string> strs;
+		constexpr float  MAX_TIME = 5.0f;
+		inline std::deque<log_t> strs;
 		void puts(std::string);
 		void draw();
 	}
