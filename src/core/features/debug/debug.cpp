@@ -37,6 +37,35 @@ void debug::draw_autowall_traces() {
 
 }
 
+void debug::draw_angles() {
+	if(!csgo::local_player) return;
+	vec3_t engine_angles;
+	vec3_t origin = csgo::local_player->abs_origin();
+	interfaces::engine->get_view_angles(engine_angles);
+	float eye = csgo::local_player->eye_angles().y;
+	float eng = engine_angles.y;
+	float lby = csgo::local_player->lower_body_yaw();
+	float abs = csgo::local_player->abs_angles().y;
+
+	auto draw_angle = [origin](float angle, std::string label, color col) {
+		vec3_t a = { 0.0f, angle, 0.0f };
+		vec3_t v = math::angle_vector(a);
+		v *= 100.0f;
+		vec3_t s_start, s_end;
+		if(!(math::world_to_screen(origin, s_start) && math::world_to_screen(v + origin, s_end)))
+			return;
+		render::draw_line(s_start.x, s_start.y, s_end.x, s_end.y, col);
+		render::draw_text_string(s_end.x, s_end.y, render::fonts::watermark_font, label, false, col);
+	};
+
+	draw_angle(sv_yaw, "SV",  helpers::colors::hsv2color(int_hsv(42,  255, 255), 255));
+	draw_angle(cl_yaw, "CL",  helpers::colors::hsv2color(int_hsv(84,  255, 255), 255));
+	draw_angle(abs,    "ABS", helpers::colors::hsv2color(int_hsv(126, 255, 255), 255));
+	draw_angle(eye,    "EYE", helpers::colors::hsv2color(int_hsv(168, 255, 255), 255));
+	draw_angle(eng,    "ENG", helpers::colors::hsv2color(int_hsv(210, 255, 255), 255));
+	draw_angle(lby,    "LBY", helpers::colors::hsv2color(int_hsv(255, 255, 255), 255));
+}
+
 void debug::log::puts(std::string str) {
 	strs.push_front(str);
 	while(strs.size() > MAX_SIZE)

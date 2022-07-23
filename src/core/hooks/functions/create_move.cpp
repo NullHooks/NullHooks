@@ -3,6 +3,10 @@
 #include "core/menu/variables.hpp"
 #include "core/hooks/hooks.hpp"
 
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
+
 void __declspec(naked) hooks::create_move::proxy() {
 	__asm {
 		push ebp
@@ -71,6 +75,13 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	
 	cmd->viewangles.normalize();
 	cmd->viewangles.clamp();
+
+	#ifdef _DEBUG
+	debug::cl_yaw = cmd->viewangles.y;
+	if(send_packet)
+		debug::sv_yaw = cmd->viewangles.y;
+	#endif // _DEBUG
+	
 
 	return false;
 }

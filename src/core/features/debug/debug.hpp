@@ -26,6 +26,8 @@ namespace debug {
 	inline std::vector<shot_t>  shots;
 	inline player_record best_record;
 	inline int best_target_idx = 0;
+	inline float sv_yaw = 0.0f;
+	inline float cl_yaw = 0.0f;
 
 	namespace log {
 		constexpr size_t MAX_SIZE = 10;
@@ -34,6 +36,7 @@ namespace debug {
 		void draw();
 	}
 
+	void draw_angles();
 	void draw_aimbot_targets();
 	void draw_autowall_traces();
 
