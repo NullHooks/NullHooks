@@ -1,5 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/debug/debug.hpp"
+#include "core/menu/variables.hpp"
 
 void debug::draw_aimbot_targets() {
 	
@@ -30,11 +31,12 @@ void debug::draw_autowall_traces() {
 			render::draw_line(s_start.x, s_start.y, s_end.x, s_end.y, col);
 
 			render::draw_text_string(s_end.x, s_end.y, render::fonts::watermark_font, std::to_string(trace.damage_dropoff), false, color::white());
-
 		}
 
-		if(!shot.traces.empty())
-			render::draw_text_string(s_end.x, s_end.y + 12, render::fonts::watermark_font, std::to_string(shot.estimated_damage), false, color::red());
+		if(!shot.traces.empty()) {
+			color col = shot.estimated_damage >= variables::aim::min_damage ? color::green() : color::red();
+			render::draw_text_string(s_end.x, s_end.y + 12, render::fonts::watermark_font, std::to_string(shot.estimated_damage), false, col);
+		}
 
 	}
 
