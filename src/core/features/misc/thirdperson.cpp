@@ -70,10 +70,10 @@ void misc::thirdperson() {
     interfaces::input->camera_in_third_person = true;
     interfaces::input->camera_offset = view_angles;
 
-    using  fn = void(__thiscall*)(entity_t*);
-    static fn update_visibility = (fn)utilities::pattern_scan("client.dll", sig_update_visibility);
-    update_visibility(csgo::local_player);      // Update visibility this way to fix crashes.
-                                                // @todo: Still crashes if doing full_update() in thirdperson.
+    using  fn = void(__thiscall*)(entity_t*);               // Pass entity_t because the function is a member of C_BaseEntity, so we replace thisptr with our own entity
+    static fn update_visibility_all_entities = (fn)utilities::pattern_scan("client.dll", sig_update_visibility_all_enttities);
+    update_visibility_all_entities(csgo::local_player);     // Update visibility this way to fix crashes.
+                                                            // @todo: Still crashes if doing full_update() in thirdperson.
 }
 
 void misc::reset_thirdperson() {
