@@ -30,7 +30,7 @@ namespace debug {
 	namespace log {
 		constexpr size_t MAX_SIZE = 10;
 		inline std::deque<std::string> strs;
-		void puts(const char *);
+		void puts(std::string);
 		void draw();
 	}
 

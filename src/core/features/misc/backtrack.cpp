@@ -185,6 +185,10 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 		debug::best_record.simulation_time = best.simulation_time;
 		memcpy(debug::best_record.matrix, best.matrix, sizeof(matrix_t) * MAXSTUDIOBONES);
 		debug::best_target_idx = besst_target_index;
+		if(cmd->buttons & in_attack && aim::can_fire(csgo::local_player)) {
+			int tick = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());
+			debug::log::puts(std::string("BT: ") + std::to_string(cmd->tick_count - tick));
+		}
 	}
 	else
 		debug::best_target_idx = 0;

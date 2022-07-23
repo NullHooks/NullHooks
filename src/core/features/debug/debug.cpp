@@ -37,7 +37,7 @@ void debug::draw_autowall_traces() {
 
 }
 
-void debug::log::puts(const char *str) {
+void debug::log::puts(std::string str) {
 	strs.push_front(str);
 	while(strs.size() > MAX_SIZE)
 		strs.pop_back();
@@ -52,6 +52,6 @@ void debug::log::draw() {
 	int y = h / 2;
 
 	for(auto &str : strs)
-		render::draw_text_string(x, y += 12, render::fonts::watermark_font, str, false, color::red());
+		render::draw_text_string(x, y += 12, render::fonts::watermark_font, str, false, color::white());
 
 }
