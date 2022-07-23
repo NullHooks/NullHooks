@@ -308,7 +308,7 @@ const std::unordered_map<std::string, int> all_custom_models = {
 	{ "LOCAL_PLAYER",					LOCAL_PLAYER },
 	{ "PLAYER_ALLY",					PLAYER_ALLY },
 	{ "PLAYER_ENEMY",					PLAYER_ENEMY },
-	//{ "ARMS",							ARMS }
+	{ "ARMS",							ARMS }
 };
 
 struct collideable_t {
@@ -462,15 +462,15 @@ public:
 	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
 
 	#pragma region BaseAttributableItem
-	NETVAR("DT_BaseAttributableItem", "m_iItemDefinitionIndex", item_definition_index, short)
-	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh",          item_id_high,		   int)
-	NETVAR("DT_BaseAttributableItem", "m_iAccountID",           account_id,			   int)
-	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality",       entity_quality,		   int)
-	NETVAR("DT_BaseAttributableItem", "m_szCustomName",         custom_name,		   const char*)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit",    fallback_paint_kit,	   int)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed",        fallback_seed,		   int)
-	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear",       fallback_wear,		   float)
-	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak",    fallback_stattrack,	   int)
+	NETVAR("DT_BaseAttributableItem",		"m_iItemDefinitionIndex",	item_definition_index, short)
+	NETVAR("DT_BaseAttributableItem",		"m_iItemIDHigh",			item_id_high,		   int)
+	NETVAR("DT_BaseAttributableItem",		"m_iAccountID",				account_id,			   int)
+	NETVAR("DT_BaseAttributableItem",		"m_iEntityQuality",			entity_quality,		   int)
+	NETVAR_PTR("DT_BaseAttributableItem",	"m_szCustomName",			custom_name,		   char)
+	NETVAR("DT_BaseAttributableItem",		"m_nFallbackPaintKit",		fallback_paint_kit,	   int)
+	NETVAR("DT_BaseAttributableItem",		"m_nFallbackSeed",			fallback_seed,		   int)
+	NETVAR("DT_BaseAttributableItem",		"m_flFallbackWear",			fallback_wear,		   float)
+	NETVAR("DT_BaseAttributableItem",		"m_nFallbackStatTrak",		fallback_stattrack,	   int)
 	#pragma endregion
 
 	float inaccuracy() {
@@ -580,7 +580,7 @@ public:
 	NETVAR("DT_CSPlayer", "m_iHealth", health, int)
 	NETVAR("DT_CSPlayer", "m_lifeState", life_state, int)
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int)
-	NETVAR("DT_CSPlayer", "m_szArmsModel", arms_model, const char*)
+	NETVAR_PTR("DT_CSPlayer", "m_szArmsModel", arms_model, char)
 	NETVAR("DT_BasePlayer", "m_viewPunchAngle", punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_aimPunchAngle", aim_punch_angle, vec3_t)
 	NETVAR("DT_BasePlayer", "m_vecVelocity[0]", velocity, vec3_t)

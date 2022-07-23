@@ -27,8 +27,8 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	if (skins::custom_skins.at(weapon_index).seed != NULL)      weapon->fallback_seed()      = skins::custom_skins.at(weapon_index).seed;
 	if (skins::custom_skins.at(weapon_index).stattrack != NULL) weapon->fallback_stattrack() = skins::custom_skins.at(weapon_index).stattrack;
 	if (skins::custom_skins.at(weapon_index).wear != NULL)      weapon->fallback_wear()      = skins::custom_skins.at(weapon_index).wear;
-	// TODO: Set account id to localplayer id for stattrack
-	// TODO: Custom name 
+    if (skins::custom_skins.at(weapon_index).custom_name != "") strcpy(weapon->custom_name(), skins::custom_skins.at(weapon_index).custom_name.c_str());        // Custom name
+    // @todo: Set account id to localplayer id for stattrack
 
 	weapon->item_id_high() = -1;	// Edit "m_iItemIDHigh" so fallback values will be used
 
@@ -97,16 +97,14 @@ void skins::update_model(weapon_t* weapon) {
     }
 }
 
-// Always uses worldmodel
+// For entities. Always uses worldmodel from array
 void custom_precached_model(entity_t* ent, int map_idx) {
     if (!csgo::local_player) return;
     if (!ent) return;
     if (skins::custom_models.find(map_idx) == skins::custom_models.end()) return;
     
-    std::string model_path = "csgo/";
-    
     // Change model
-    if (skins::custom_models.at(map_idx).worldmodel != "" /*&& std::filesystem::exists(model_path.append(skins::custom_models.at(map_idx).worldmodel))*/) {
+    if (skins::custom_models.at(map_idx).worldmodel != "") {
         // Precache
         precache_model(skins::custom_models.at(map_idx).worldmodel.c_str());
 
@@ -117,6 +115,24 @@ void custom_precached_model(entity_t* ent, int map_idx) {
         if (!model) return;
 
         ent->set_model_index(model_idx);
+    }
+}
+
+void replace_arms_model() {
+    if (!csgo::local_player) return;
+    if (skins::custom_models.find(ARMS) == skins::custom_models.end()) return;
+
+    // Change model
+    if (skins::custom_models.at(ARMS).worldmodel != "") {
+        // Precache
+        precache_model(skins::custom_models.at(ARMS).worldmodel.c_str());
+
+        // We need to check the model to avoid crashes when doing full_update()
+        const int model_idx = interfaces::model_info->get_model_index(skins::custom_models.at(ARMS).worldmodel.c_str());
+        const model_t* model = interfaces::model_info->get_model(model_idx);
+        if (!model) return;
+
+        strcpy_s(csgo::local_player->arms_model(), 256, skins::custom_models.at(ARMS).worldmodel.c_str());
     }
 }
 
@@ -136,7 +152,8 @@ void skins::change_misc_models() {
                 custom_precached_model(player, PLAYER_ENEMY);
         }
     }
-    //custom_precached_model(csgo::local_player->arms_model(), ARMS);
+
+    replace_arms_model();
 }
 #pragma endregion
 

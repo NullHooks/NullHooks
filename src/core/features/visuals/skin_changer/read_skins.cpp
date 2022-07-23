@@ -89,6 +89,11 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 		else if (wear.IsInt())
 			skins::custom_skins[weapon.second].wear = static_cast<float>(wear.GetInt());	// Just in case
 	}
+	if (weapon_obj.HasMember("custom_name")) {
+		rapidjson::Value& custom_name = weapon_obj["custom_name"];
+		if (custom_name.IsString())
+			skins::custom_skins[weapon.second].custom_name = custom_name.GetString();
+	}
 
 	if (weapon_obj.HasMember("viewmodel") && weapon_obj.HasMember("worldmodel")) {
 		rapidjson::Value& viewmodel = weapon_obj["viewmodel"];
