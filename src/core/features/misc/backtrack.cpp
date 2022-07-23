@@ -1,7 +1,11 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
-#include "backtrack.hpp"
+#include "core/features/misc/backtrack.hpp"
+
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
 
 /*
  * NOTE:
@@ -173,6 +177,18 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 			}
 		}
 	}
+
+	#ifdef _DEBUG
+	if(best_record) {
+		auto &best = records[besst_target_index][best_record];
+		debug::best_record.head = best.head;
+		debug::best_record.simulation_time = best.simulation_time;
+		memcpy(debug::best_record.matrix, best.matrix, sizeof(matrix_t) * MAXSTUDIOBONES);
+		debug::best_target_idx = besst_target_index;
+	}
+	else
+		debug::best_target_idx = 0;
+	#endif // _DEBUG
 
 	if (best_record && cmd->buttons & in_attack)	// We got the target we are shooting and we are shooting lol
 		cmd->tick_count = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());	// Epic matrix glitch

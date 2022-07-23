@@ -3,6 +3,10 @@
 #include "core/menu/variables.hpp"
 #include "core/features/misc/backtrack.hpp"
 
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
+
  std::vector<const char*> materials = {
 	"vgui/screens/transparent",														// "Transparent"
 	"debug/debugambientcube",														// "Textured"
@@ -57,6 +61,15 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 			if (variables::chams::draw_chams_on_top) hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 		} else {
+
+			#ifdef _DEBUG
+			if(player->index() == debug::best_target_idx) {
+				override_material(false, false, color::green(), materials[1]);
+				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, debug::best_record.matrix);
+				interfaces::model_render->override_material(nullptr);
+			}
+			#endif // _DEBUG
+
 			// Backtrack chams
 			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
 				if (!variables::chams::player_chams)
