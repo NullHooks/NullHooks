@@ -41,10 +41,12 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		#pragma endregion
 
 		#ifdef _DEBUG
-		debug::draw_angles();
-		debug::draw_autowall_traces();
-		debug::draw_aimbot_targets();
-		debug::log::draw();
+		if(csgo::local_player && interfaces::engine->is_in_game() && interfaces::engine->is_connected()) {
+			debug::draw_angles();
+			debug::draw_autowall_traces();
+			debug::draw_aimbot_targets();
+			debug::log::draw();
+		}
 		#endif // _DEBUG
 
 		break;
