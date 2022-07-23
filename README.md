@@ -118,6 +118,16 @@ The skin chager currently is able to change:
 #### Model changer
 There are currently 2 model changer methods. `find_mdl` and precached models. `sv_pure` bypass is integrated in the cheat.
 
+The model changer is currently able to change:
+- [X] Weapons
+    - [X] Normal weapons
+    - [X] Knifes
+- [X] Players
+    - [X] Localplayer
+    - [X] Allies
+    - [X] Enemies
+- [ ] Arms
+
 :warning: All the models need to be downloaded manually.
 
 - When using `find_mdl`, it will hook to the function, and when the game tries to load a model, we will replace it with our own. `find_mdl` model paths are hardcoded in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp). In that file explains where to put the models and all that. If an item is `NULL` it will be ignored.
@@ -133,6 +143,10 @@ A good example of a json file for replacing the knives usin precached models wou
     
 ```json
 {
+    "LOCAL_PLAYER": "models/player/custom_player/kuristaja/hitler/hitler.mdl",
+	"PLAYER_ALLY": "models/player/custom_player/kolka/master_chief/master_chief.mdl",
+	"PLAYER_ENEMY": "models/player/custom_player/nier_2b/nier_2b.mdl",
+
 	"WEAPON_KNIFE": {
 		"item_definition_index": "WEAPON_KNIFE_KARAMBIT"
 	},
@@ -160,6 +174,8 @@ A good example of a json file for replacing the knives usin precached models wou
 	}
 }
 ```
+
+The first 3 lines are for changing special models. In this case ally players, enemy players and localplayer. See special models here: [Link](https://github.com/r4v10l1/NullHooks/blob/824b745d9fc17f139d6e6a223fa5533f52664e8c/src/source-sdk/classes/entities.hpp#L307-L312).
 
 Changes the default ct knife index to the karambit one, automatically changing the models and applaying the skins of the karambit. Since there is a custom viewmodel and worlmodel, the model will change but the rarity, skin name, kill icon, etc. will be the same.
 
