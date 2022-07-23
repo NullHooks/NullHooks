@@ -14,5 +14,5 @@ void animations::local::run_local_animations() {
 
 	// Set them and update to apply
 	interfaces::prediction->set_local_view_angles(angles);
-	csgo::local_player->update_client_side_animations();
+	//csgo::local_player->update_client_side_animations();
 }
