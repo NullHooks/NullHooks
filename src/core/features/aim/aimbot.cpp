@@ -100,6 +100,10 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	const auto weapon_data = active_weapon->get_weapon_data();
 	if (!weapon_data) return best_target;
 
+	#ifdef _DEBUG
+	int best_hitbox = 0;
+	#endif // _DEBUG
+
 	// Check each player
 	for (int n = 1; n <= interfaces::globals->max_clients; n++) {
 		auto cur_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(n));
@@ -136,9 +140,41 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 			if (fov < best_fov) {
 				best_fov = fov;
 				best_target = hitbox_pos;
+				#ifdef _DEBUG
+				best_hitbox = hitbox;
+				#endif // _DEBUG
 			}
 		}
 	}
+
+	#ifdef _DEBUG
+	if(!best_target.is_zero()) {
+		auto hitbox_str = [](int hitbox) -> std::string {
+			switch(hitbox) {
+			case hitbox_head:            return "HEAD";
+			case hitbox_neck:            return "NECK";
+			case hitbox_pelvis:          return "PELVIS";
+			case hitbox_stomach:         return "STOMACH";
+			case hitbox_lower_chest:     return "LOWER CHEST";
+			case hitbox_chest:           return "CHEST";
+			case hitbox_upper_chest:     return "UPPER CHEST";
+			case hitbox_right_hand:      return "RIGHT HAND";
+			case hitbox_left_hand:       return "LEFT HAND";
+			case hitbox_right_upper_arm: return "RIGHT UPPER ARM";
+			case hitbox_left_upper_arm:  return "LEFT UPPER ARM";
+			case hitbox_right_forearm:   return "RIGHT FOREARM";
+			case hitbox_left_forearm:    return "LEFT FOREARM";
+			case hitbox_right_thigh:     return "RIGHT THIGH";
+			case hitbox_left_thigh:      return "LEFT THIGH";
+			case hitbox_right_calf:      return "RIGHT CALF";
+			case hitbox_left_calf:       return "LEFT CALF";
+			case hitbox_right_foot:      return "RIGHT FOOT";
+			case hitbox_left_foot:       return "LEFT FOOT";
+			}
+		};
+		debug::log::puts(std::string("HB: ") + hitbox_str(best_hitbox));
+	}
+	#endif // _DEBUG
 
 	return best_target;		// vec3_t position of the best bone
 }
