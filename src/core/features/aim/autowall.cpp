@@ -2,6 +2,10 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
+
 #pragma region MULTIPLIERS
 float aim::autowall::get_damage_multiplier(int hit_group) {
 	switch (hit_group) {
@@ -60,7 +64,7 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 	vec3_t dummy;
 
 	if (!trace_to_exit(enter_trace, enter_trace.end, direction, dummy, exit_trace))
-		return -1.0f;
+		return false;
 
 	auto exit_surface_data = interfaces::surface_props_physics->get_surface_data(exit_trace.surface.surfaceProps);
 
@@ -82,7 +86,6 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 	}
 
 	damage -= 11.25f / penetration / penetration_modifier + damage * damage_modifier + (exit_trace.end - enter_trace.end).length_sqr() / 24.0f / penetration_modifier;
-	
 
 	start = exit_trace.end;		// Set start of next trace to the current end
 	
@@ -107,6 +110,14 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 	trace_filter filter;
 	filter.skip = local_player;		// Initialize filter for ray before loop
 
+	#ifdef _DEBUG
+	//allocate a new shot.
+	debug::shots.push_back({});
+	debug::shots.back().entity = nullptr;
+	debug::shots.back().estimated_damage = 0.0f;
+	float old_damage;
+	#endif // _DEBUG
+
 	int hits_left = 4;
 	while (damage >= 1.0f && hits_left) {
 		vec3_t end = start + (direction * (weapon_data->weapon_range - distance));
@@ -116,12 +127,27 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		interfaces::trace_ray->trace_ray(ray, 0x4600400B, &filter, &trace);
 		if (trace.flFraction == 1.0f) break;
 
+		#ifdef _DEBUG
+		old_damage = damage;
+		#endif // _DEBUG
+
 		distance += trace.flFraction * (weapon_data->weapon_range - distance);
-		damage = damage * get_damage_multiplier(trace.hit_group) * powf(weapon_data->weapon_range_mod, distance / 500.0f);
+		damage   *= powf(weapon_data->weapon_range_mod, distance / 500.0f);
+
+		#ifdef _DEBUG
+		debug::shots.back().traces.push_back({ trace.start, trace.end, damage - old_damage, false});
+		#endif // _DEBUG
+
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
+			damage *= get_damage_multiplier(trace.hit_group);
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
 			
+			#ifdef _DEBUG
+			debug::shots.back().entity           = entity;
+			debug::shots.back().estimated_damage = damage;
+			#endif // _DEBUG
+
 			// If we can kill and we have the setting enabled, ignore enabled hitboxes and shoot
 			if (variables::aim::bodyaim_if_lethal && reinterpret_cast<player_t*>(entity)->health() < damage)
 				return true;		
@@ -134,9 +160,17 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
 
+		#ifdef _DEBUG
+		old_damage = damage;
+		#endif // _DEBUG
+
 		// Start and damage are changed from handle_bullet_penetration()
 		if (!autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage))
 			return false;
+
+		#ifdef _DEBUG
+		debug::shots.back().traces.push_back({ trace.end, start, damage - old_damage, true });
+		#endif // _DEBUG
 
 		hits_left--;
 	}

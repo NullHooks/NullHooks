@@ -2,6 +2,10 @@
 #include "core/hooks/hooks.hpp"
 #include "core/menu/menu.hpp"
 
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
+
 void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repaint, bool allow_force) {
 	auto panel_to_draw = fnv::hash(interfaces::panel->get_panel_name(panel));
 
@@ -35,6 +39,12 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		menu::render();
 		popup_system::render_popups();		// Check for popups and render them on top
 		#pragma endregion
+
+		#ifdef _DEBUG
+		debug::draw_autowall_traces();
+		debug::draw_aimbot_targets();
+		debug::log::draw();
+		#endif // _DEBUG
 
 		break;
 	case fnv::hash("FocusOverlayPanel"):

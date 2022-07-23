@@ -103,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="core\features\animations\local.cpp" />
     <ClCompile Include="core\features\antiaim\antiaim.cpp" />
+    <ClCompile Include="core\features\debug\debug.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="core\features\misc\backtrack.cpp" />
     <ClCompile Include="core\features\misc\commands.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -255,6 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\config\config.hpp" />
+    <ClInclude Include="core\features\debug\debug.hpp" />
     <ClInclude Include="core\features\features.hpp" />
     <ClInclude Include="core\features\misc\backtrack.hpp" />
     <ClInclude Include="core\features\visuals\skin_changer\skin_changer.hpp" />

@@ -2,6 +2,10 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+#ifdef _DEBUG
+#include "core/features/debug/debug.hpp"
+#endif // _DEBUG
+
 #pragma region AIMBOT CHECKS
 bool aim::can_fire(player_t* target) {
 	weapon_t* active_weapon = target->active_weapon();
@@ -86,6 +90,11 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	}
 
+	#ifdef _DEBUG
+	debug::points.clear();
+	debug::shots.clear();
+	#endif // _DEBUG
+
 	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
 	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
 	const auto weapon_data = active_weapon->get_weapon_data();
@@ -106,6 +115,10 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		for (const auto hitbox : all_hitboxes) {
 			auto hitbox_pos = cur_player->get_hitbox_position(hitbox);
 			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
+
+			#ifdef _DEBUG
+			debug::points.push_back({hitbox_pos, enabled_hitbox});
+			#endif // _DEBUG
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
