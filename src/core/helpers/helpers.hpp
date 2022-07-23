@@ -19,6 +19,7 @@ namespace helpers {
 	namespace console {
 		void state_to_console(const char* tag, const char* text);
 		void state_to_console_color(const char* tag, const char* text);
+		void error_to_console(const char* text);
 	}
 
 	namespace colors {
