@@ -110,15 +110,37 @@ void load_skin(rapidjson::Document& doc, std::pair<std::string, int> weapon) {
 }
 
 void load_custom_models(rapidjson::Document& doc, std::pair<std::string, int> item) {
+	std::string model_path = "csgo/";		// Used for checking if the file exists
+
 	if (doc.HasMember(item.first.c_str())) {				// Enum name is in json ("PLAYER_ALLY" for example)
 		rapidjson::Value& item_obj = doc[item.first.c_str()];	// weapon_obj will be each json entry of the weapon
 	
 		if (item_obj.IsString()) {
+			const std::string worlmodel_str = item_obj.GetString();
+
+			// Could not find path, log to console
+			if (!std::filesystem::exists(model_path.append(worlmodel_str))) {
+				std::string error("Failed to find custom model: ");
+				error += worlmodel_str;
+				helpers::console::error_to_console(error.c_str());
+				return;
+			}
+
 			skins::custom_models[item.second].worldmodel = item_obj.GetString();		// We only set worldmodel
 			skins::custom_models[item.second].precache = true;
 		} else if (item_obj.IsObject() && item_obj.HasMember("worldmodel")) {			// Instead of string is an object. Check if it has worldmodel inside
 			rapidjson::Value& worldmodel = item_obj["worldmodel"];
 			if (worldmodel.IsString()) {
+				const std::string worlmodel_str = item_obj.GetString();
+
+				// Could not find path, log to console
+				if (!std::filesystem::exists(model_path.append(worlmodel_str))) {
+					std::string error("Failed to find custom model: ");
+					error += worlmodel_str;
+					helpers::console::error_to_console(error.c_str());
+					return;
+				}
+
 				skins::custom_models[item.second].worldmodel = worldmodel.GetString();
 				skins::custom_models[item.second].precache = true;
 			}
