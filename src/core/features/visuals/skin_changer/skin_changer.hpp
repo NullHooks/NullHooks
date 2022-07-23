@@ -38,7 +38,7 @@ struct skin_info {
     int stattrack = -1;						// nFallbackStatTrak	(-1 = disabled, positive value is kill number)
     int quality = 4;						// iEntityQuality       (https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Skin_Changer#m_iEntityQuality)
     float wear = 0.001f;			        // flFallbackWear		(Lower = Newer)
-    //char* custom_name = nullptr;		    // TODO: szCustomName
+    std::string custom_name = "";		    // szCustomName
 };
 
 struct model {
