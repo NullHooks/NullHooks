@@ -19,17 +19,16 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		case FRAME_RENDER_START:
 			// Force update on thread safe manner to avoid crashes
 			if (globals::forcing_update) {
-				if (interfaces::input->camera_in_third_person)
-					misc::reset_thirdperson();
+				misc::reset_thirdperson();
 
 				interfaces::clientstate->full_update();
 				globals::forcing_update = false;
 			}
 			
 			skins::change_misc_models();
-			skins::change_skins(frame_stage);		// Run here too to avoid model flickering online
-			visuals::nosmoke(frame_stage);
-			animations::local::run_local_animations();		// @todo: Crashes with custom models/full_update() on thirdperson
+			skins::change_skins(frame_stage);				// Run here too to avoid model flickering online
+			visuals::nosmoke(frame_stage);					// Disables smoke, not the overlay. The overlay is disabled by hooking render_smoke_overlay
+			animations::local::run_local_animations();		// @todo: Crashes when doing full_update() on thirdperson
 			break;
 		case FRAME_RENDER_END:                      break;
 		default:                                    break;
