@@ -8,7 +8,8 @@
 	"WEAPON_KNIFE_M9_BAYONET": {
 		"paint_kit": 417,
 		"seed": 5,
-		"quality": "SKIN_QUALITY_UNUSUAL"
+		"quality": "SKIN_QUALITY_UNUSUAL",
+		"custom_name": "Cumshot"
 	},
 	"WEAPON_KNIFE_BUTTERFLY": {
 		"paint_kit": 416,
@@ -65,7 +66,9 @@
 	},
 	"WEAPON_AWP" : {
 		"paint_kit": 344,
-		"quality": "SKIN_QUALITY_TOURNAMENT"
+		"quality": "SKIN_QUALITY_TOURNAMENT",
+		"wear": 0.80,
+		"custom_name": "Cock"
 	},
 	"WEAPON_FIVESEVEN" : {
 		"paint_kit": 44,
