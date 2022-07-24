@@ -63,7 +63,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
 
-# Antiaim
+### Antiaim
 - Antiaim with custom pitch and jaw
 
 ### Visuals
@@ -107,6 +107,7 @@ Setting name                | Description
 `"stattrack"`               | The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
 `"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
 `"wear"`                    | The float corresponding to the weapon wear. From `0.001f` to `1.f`, lower means better.
+`"custom_name"`             | String containing the custom name for the weapon.
 
 An example of a skin config file can be found in [example-configs/skins.json](https://github.com/r4v10l1/NullHooks/blob/main/config-examples/skins.json).
 
@@ -126,7 +127,7 @@ The model changer is currently able to change:
     - [X] Localplayer
     - [X] Allies
     - [X] Enemies
-- [ ] Arms
+- [X] Arms
 
 :warning: All the models need to be downloaded manually.
 
@@ -146,6 +147,7 @@ A good example of a json file for replacing the knives usin precached models wou
     	"LOCAL_PLAYER": "models/player/custom_player/kuristaja/hitler/hitler.mdl",
 	"PLAYER_ALLY": "models/player/custom_player/kolka/master_chief/master_chief.mdl",
 	"PLAYER_ENEMY": "models/player/custom_player/nier_2b/nier_2b.mdl",
+	"ARMS": "models/player/custom_player/nier_2b/nier_2b_arms.mdl",
 
 	"WEAPON_KNIFE": {
 		"item_definition_index": "WEAPON_KNIFE_KARAMBIT"
@@ -169,6 +171,7 @@ A good example of a json file for replacing the knives usin precached models wou
 		"paint_kit": 416,
 		"seed": 69,
 		"quality": "SKIN_QUALITY_GENUINE",
+		"custom_name": "Banana knife",
 		"viewmodel": "models/weapons/eminem/bananabit/v_bananabit.mdl",
 		"worldmodel": "models/weapons/eminem/bananabit/w_bananabit.mdl"
 	}
@@ -339,7 +342,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
     - [X] Add bodyaim if lethal
-    - [ ] Make aimbot and triggerbot also aim for backtrack. (Store hitbox positions?)
+    - [ ] Make aimbot and triggerbot also aim for backtrack. (Get hitbox positions from matrix)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
