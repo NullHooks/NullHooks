@@ -9,6 +9,7 @@ typedef struct CursorCoords {
 cursor_coords cursor;
 cursor_coords cursor_corrected;
 
+#pragma region GUI ITEMS
 // Returns true if pressed
 bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
@@ -560,7 +561,75 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 		item_n++;
 	}
 }
+#pragma endregion
 
+#pragma region DYNAMIC GUI
+/* --------------------------- DYNAMIC GUI --------------------------- */
+
+// Updates item positions with new menu positons and all that. Called before the tab switch statement
+void gui::update_positions() {
+	vars::o_container_left_pos = variables::ui::menu::x + vars::container_margin;		// Will change when adding more columns
+	vars::o_container_width    = variables::ui::menu::w - vars::container_margin * 2;	// Will get divided when adding more columns
+	vars::o_item_left_pos      = vars::container_left_pos + vars::container_padding;			// Base top left pos for all items (label text position)
+	
+	vars::o_item_combo_pos     = variables::ui::menu::x + vars::container_width - vars::container_margin;		// Max right pos
+	vars::o_item_checkbox_pos  = vars::o_item_combo_pos - vars::item_checkbox_length;
+	vars::o_item_slider_pos    = vars::o_item_combo_pos - vars::item_slider_length;				// Top left corner of the actual slider
+	vars::o_item_hotkey_w      = vars::container_width - vars::container_padding * 2;
+
+	// Goupbox vars
+	vars::cur_part_items = 0;		// Will get updated on the add_group_box() calls anyway
+	vars::cur_part_y           = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
+	vars::cur_base_item_y      = vars::cur_part_y + vars::container_padding;
+}
+
+// Reset values to its original ones
+void gui::init_tab() {
+	vars::container_left_pos	= vars::o_container_left_pos;
+	vars::container_width		= (vars::o_container_width / vars::columns) - (vars::container_margin / vars::columns);
+	vars::item_left_pos			= vars::o_item_left_pos;
+	vars::item_combo_pos		= vars::o_item_combo_pos;
+	vars::item_checkbox_pos		= vars::o_item_checkbox_pos;
+	vars::item_slider_pos		= vars::o_item_slider_pos;
+	vars::item_hotkey_w			= vars::o_item_hotkey_w;
+
+	vars::cur_part_y            = vars::o_cur_part_y;
+	vars::cur_base_item_y       = vars::o_cur_base_item_y;
+}
+
+// Adds a column and changes values depending on current column
+void gui::add_column() {
+	vars::column_number++;
+
+	if (vars::column_number > 0) {		// Only if we are not on the first col
+		vars::container_width--;
+
+		vars::container_left_pos	= vars::container_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_left_pos			= vars::item_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_checkbox_pos		= vars::item_checkbox_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_slider_pos		= vars::item_slider_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_combo_pos		= vars::item_checkbox_pos + vars::item_checkbox_length;
+
+		vars::cur_part_y = vars::o_cur_part_y;				// We reset the y positions of the goupbox so they start on top of the second column
+		vars::cur_base_item_y = vars::o_cur_base_item_y;
+	}
+}
+
+void gui::add_group_box(int item_number) {
+	vars::cur_part_items  = item_number;
+	vars::cur_part_y     += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
+	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
+	vars::cur_part_h      = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
+}
+
+void add_checkbox() {
+	// @todo: Should update cur_part_h with += item_h
+}
+
+
+#pragma endregion
+
+#pragma region WINDOW MOVEMENT
 /* --------------------------- WINDOW MOVEMENT --------------------------- */
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
@@ -614,7 +683,9 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 		should_move_spec = false;
 	}
 }
+#pragma endregion
 
+#pragma region POPUPS
 /* --------------------------- POPUPS --------------------------- */
 
 // Will call each check_popups()
@@ -769,3 +840,4 @@ void popup_system::multicombobox_popup(multicombo_popup_info combo_p) {
 		combo_p.target_vec.at(clicked_idx).state = !combo_p.target_vec.at(clicked_idx).state;
 	}
 }
+#pragma endregion
