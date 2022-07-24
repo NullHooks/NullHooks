@@ -38,14 +38,22 @@ struct skin_info {
     int stattrack = -1;						// nFallbackStatTrak	(-1 = disabled, positive value is kill number)
     int quality = 4;						// iEntityQuality       (https://www.unknowncheats.me/wiki/Counter_Strike_Global_Offensive:Skin_Changer#m_iEntityQuality)
     float wear = 0.001f;			        // flFallbackWear		(Lower = Newer)
-    //char* custom_name = nullptr;		    // TODO: szCustomName
+    std::string custom_name = "";		    // szCustomName
+};
+
+struct model {
+    std::string viewmodel = "";
+    std::string worldmodel = "";
+    bool precache = false;
 };
 
 namespace skins {
     inline bool apply_skin(DWORD weapon_handle);
+    void change_misc_models();
     void change_skins(client_frame_stage_t stage);
-    void update_knife_model(weapon_t* weapon);
+    void update_model(weapon_t* weapon);
     void fix_knife_animation(weapon_t* viewmodel_weapon, long& sequence); 
+    bool custom_kill_icons(i_game_event* game_event);
 
     inline std::unordered_map<int, skin_info> custom_skins;
     void read_skins();
@@ -55,27 +63,47 @@ namespace skins {
 
     #pragma region SKIN_MAPS
     // Stores knife model names, no need to change
-    struct model {
-        const char* viewmodel;
-        const char* worldmodel;
+    inline std::unordered_map<int, model> default_models {
+        { WEAPON_BAYONET,                   { "models/weapons/v_knife_bayonet.mdl",             "models/weapons/w_knife_bayonet.mdl",               false } },
+        { WEAPON_KNIFE_M9_BAYONET,          { "models/weapons/v_knife_m9_bay.mdl",              "models/weapons/w_knife_m9_bay.mdl",                false } },
+        { WEAPON_KNIFE_KARAMBIT,            { "models/weapons/v_knife_karam.mdl",               "models/weapons/w_knife_karam.mdl",                 false } },
+        { WEAPON_KNIFE_SURVIVAL_BOWIE,      { "models/weapons/v_knife_survival_bowie.mdl",      "models/weapons/w_knife_survival_bowie.mdl",        false } },
+        { WEAPON_KNIFE_BUTTERFLY,           { "models/weapons/v_knife_butterfly.mdl",           "models/weapons/w_knife_butterfly.mdl",             false } },
+        { WEAPON_KNIFE_FALCHION,            { "models/weapons/v_knife_falchion_advanced.mdl",   "models/weapons/w_knife_falchion_advanced.mdl",     false } },
+        { WEAPON_KNIFE_FLIP,                { "models/weapons/v_knife_flip.mdl",                "models/weapons/w_knife_flip.mdl",                  false } },
+        { WEAPON_KNIFE_GUT,                 { "models/weapons/v_knife_gut.mdl",                 "models/weapons/w_knife_gut.mdl",                   false } },
+        { WEAPON_KNIFE_TACTICAL,            { "models/weapons/v_knife_tactical.mdl",            "models/weapons/w_knife_tactical.mdl",              false } },      // Huntsman
+        { WEAPON_KNIFE_PUSH,                { "models/weapons/v_knife_push.mdl",                "models/weapons/w_knife_push.mdl",                  false } },      
+        { WEAPON_KNIFE_GYPSY_JACKKNIFE,     { "models/weapons/v_knife_gypsy_jackknife.mdl",     "models/weapons/w_knife_gypsy_jackknife.mdl",       false } },      
+        { WEAPON_KNIFE_STILETTO,            { "models/weapons/v_knife_stiletto.mdl",            "models/weapons/w_knife_stiletto.mdl",              false } },      
+        { WEAPON_KNIFE_WIDOWMAKER,          { "models/weapons/v_knife_widowmaker.mdl",          "models/weapons/w_knife_widowmaker.mdl",            false } },      // Talon
+        { WEAPON_KNIFE_SKELETON,            { "models/weapons/v_knife_skeleton.mdl",            "models/weapons/w_knife_skeleton.mdl",              false } },      
+        { WEAPON_KNIFE_URSUS,               { "models/weapons/v_knife_ursus.mdl",               "models/weapons/w_knife_ursus.mdl",                 false } },      
+        { WEAPON_KNIFE_CSS,                 { "models/weapons/v_knife_css.mdl",                 "models/weapons/w_knife_css.mdl",                   false } }       // ???
     };
-    inline std::unordered_map<int, model> custom_models {
-        { WEAPON_BAYONET,                { "models/weapons/v_knife_bayonet.mdl",            "models/weapons/w_knife_bayonet.mdl" } },
-        { WEAPON_KNIFE_M9_BAYONET,       { "models/weapons/v_knife_m9_bay.mdl",             "models/weapons/w_knife_m9_bay.mdl" } },
-        { WEAPON_KNIFE_KARAMBIT,         { "models/weapons/v_knife_karam.mdl",              "models/weapons/w_knife_karam.mdl" } },
-        { WEAPON_KNIFE_SURVIVAL_BOWIE,   { "models/weapons/v_knife_survival_bowie.mdl",     "models/weapons/w_knife_survival_bowie.mdl" } },
-        { WEAPON_KNIFE_BUTTERFLY,        { "models/weapons/v_knife_butterfly.mdl",          "models/weapons/w_knife_butterfly.mdl" } },
-        { WEAPON_KNIFE_FALCHION,         { "models/weapons/v_knife_falchion_advanced.mdl",  "models/weapons/w_knife_falchion_advanced.mdl" } },
-        { WEAPON_KNIFE_FLIP,             { "models/weapons/v_knife_flip.mdl",               "models/weapons/w_knife_flip.mdl" } },
-        { WEAPON_KNIFE_GUT,              { "models/weapons/v_knife_gut.mdl",                "models/weapons/w_knife_gut.mdl" } },
-        { WEAPON_KNIFE_TACTICAL,         { "models/weapons/v_knife_tactical.mdl",           "models/weapons/w_knife_tactical.mdl" } },          // Huntsman
-        { WEAPON_KNIFE_PUSH,             { "models/weapons/v_knife_push.mdl",               "models/weapons/w_knife_push.mdl" } },
-        { WEAPON_KNIFE_GYPSY_JACKKNIFE,  { "models/weapons/v_knife_gypsy_jackknife.mdl",    "models/weapons/w_knife_gypsy_jackknife.mdl" } },
-        { WEAPON_KNIFE_STILETTO,         { "models/weapons/v_knife_stiletto.mdl",           "models/weapons/w_knife_stiletto.mdl" } },
-        { WEAPON_KNIFE_WIDOWMAKER,       { "models/weapons/v_knife_widowmaker.mdl",         "models/weapons/w_knife_widowmaker.mdl" } },        // Talon
-        { WEAPON_KNIFE_SKELETON,         { "models/weapons/v_knife_skeleton.mdl",           "models/weapons/w_knife_skeleton.mdl" } },
-        { WEAPON_KNIFE_URSUS,            { "models/weapons/v_knife_ursus.mdl",              "models/weapons/w_knife_ursus.mdl" } },
-        { WEAPON_KNIFE_CSS,              { "models/weapons/v_knife_css.mdl",                "models/weapons/w_knife_css.mdl" } }                // ???
+    // Custom models will get appended or overwriten
+    inline std::unordered_map<int, model> custom_models = default_models;
+
+    // Used for kill icons
+    inline std::unordered_map<int, std::string> default_kill_icons {
+        { WEAPON_KNIFE,                     "knife" },
+        { WEAPON_KNIFE_T,                   "knife_t" },
+        { WEAPON_BAYONET,                   "bayonet" },
+        { WEAPON_KNIFE_M9_BAYONET,          "knife_m9_bayonet" },
+        { WEAPON_KNIFE_KARAMBIT,            "knife_karambit" },
+        { WEAPON_KNIFE_SURVIVAL_BOWIE,      "knife_survival_bowie" },
+        { WEAPON_KNIFE_BUTTERFLY,           "knife_butterfly" },
+        { WEAPON_KNIFE_FALCHION,            "knife_falchion" },
+        { WEAPON_KNIFE_FLIP,                "knife_flip" },
+        { WEAPON_KNIFE_GUT,                 "knife_gut" },
+        { WEAPON_KNIFE_TACTICAL,            "knife_tactical" },          // Huntsman
+        { WEAPON_KNIFE_PUSH,                "knife_push" },
+        { WEAPON_KNIFE_GYPSY_JACKKNIFE,     "knife_gypsy_jackknife" },
+        { WEAPON_KNIFE_STILETTO,            "knife_stiletto" },
+        { WEAPON_KNIFE_WIDOWMAKER,          "knife_widowmaker" },        // Talon
+        { WEAPON_KNIFE_SKELETON,            "knife_skeleton" },
+        { WEAPON_KNIFE_URSUS,               "knife_ursus" },
+        { WEAPON_KNIFE_CSS,                 "knife_css" }                // Classic
     };
 
     // Used for config reading in read_skins.cpp
