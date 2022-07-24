@@ -1,7 +1,9 @@
 #pragma once
 #include "dependencies/utilities/csgo.hpp"
+#include "core/menu/variables.hpp"
 #include "core/menu/global_input.hpp"
 
+#pragma region STRUCTS
 struct multicombo_opt_t {
 	std::string text;
 	bool state;
@@ -53,12 +55,17 @@ public:
 	operator std::vector<multicombo_opt_t>() { return vector; }
 	operator bool() { return toggle; }
 };
+#pragma endregion
 
+#pragma region GUI
 class hotkey_t;			// Declared in global input
 class textbox_t;		// Declared in global input
 namespace gui {
+	// Categories
 	void group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
 	void tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string, std::int32_t& tab, std::int32_t count);
+	
+	// Gui items
 	void check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, int click_area_id = 2);
 	void check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col);
 	void check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col1, colorpicker_col_t& col2);
@@ -72,9 +79,62 @@ namespace gui {
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);
 	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
 	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
+	
+	// Menu movement
 	void menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
 	inline bool user_dragging_menu = false;		// Used to know if the user is holding the menu window area
 	inline bool should_move_menu = false;		// Used to know when to check the new menu positions
+
+	// Dynamic menu
+	void update_positions();
+	void init_tab();
+	void add_column();
+	void add_group_box(int item_number);
+
+	void add_checkbox();
+
+	// Dynamic menu variables
+	namespace vars {
+		constexpr int top_margin = 30;
+		constexpr int tab_height = 24;
+		constexpr int top_margin_with_tabs = top_margin + tab_height + 1;	// See first column comment (container_width--)
+		constexpr int container_margin = 5;									// Empty space between containers
+		constexpr int container_padding = 10;								// Space before and after item list (top and bottom)
+
+		constexpr int item_slider_length = 80;
+		constexpr int item_checkbox_length = 11;
+	
+		constexpr int columns = 2;			// Max columns per tab (Columns the menu will be divided)
+		inline int column_number = 0;		// Current column. Will change when calling add_column()
+	
+		// o_* variables are the original ones with 0 columns (all menu width)
+		inline int o_container_left_pos = variables::ui::menu::x + container_margin;		// Will change when adding more columns
+		inline int o_container_width    = variables::ui::menu::w - container_margin * 2;	// Will get divided when adding more columns
+		inline int o_item_left_pos      = container_left_pos + container_padding;			// Base top left pos for all items (label text position)
+
+		inline int o_item_combo_pos     = variables::ui::menu::x + container_width - container_margin;		// Max right pos
+		inline int o_item_checkbox_pos  = o_item_combo_pos - item_checkbox_length;
+		inline int o_item_slider_pos    = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
+		inline int o_item_hotkey_w      = container_width - container_padding * 2;
+
+		// Actual vars. Updated in init_tab() and add_column()
+		inline int container_left_pos	= o_container_left_pos;
+		inline int container_width		= o_container_width;
+		inline int item_left_pos		= o_item_left_pos;
+		inline int item_combo_pos		= o_item_combo_pos;
+		inline int item_checkbox_pos	= o_item_checkbox_pos;
+		inline int item_slider_pos		= o_item_slider_pos;
+		inline int item_hotkey_w		= o_item_hotkey_w;
+
+		// Vars for groupbox
+		inline int o_cur_part_y           = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
+		inline int o_cur_base_item_y      = o_cur_part_y + container_padding;		// Base y position of the items (position of the first item of the groupbox)
+
+		inline int cur_part_items       = 0;			// Will be changed when adding groupbox
+		inline int cur_part_y           = o_cur_part_y;
+		inline int cur_base_item_y      = o_cur_base_item_y;
+		inline int cur_part_h           = 0;			// Will update with each item added
+	}
 }
 
 namespace spectator_framework {
@@ -82,9 +142,9 @@ namespace spectator_framework {
 	inline bool user_dragging_spec = false;		// Used to know if the user is holding the spectator list window area
 	inline bool should_move_spec = false;		// Used to know when to check the new spectator list positions
 }
+#pragma endregion
 
-/* --------------------------- POPUPS --------------------------- */
-
+#pragma region POPUPS
 struct color_popup_info {
 	std::int32_t x;
 	std::int32_t y;
@@ -140,3 +200,4 @@ namespace popup_system {
 	void check_multicombo_popups();											// Will check for popups in the active_multicombo_popups vector
 	void multicombobox_popup(multicombo_popup_info combo_popup);			// Will render the actual popup
 }
+#pragma endregion
