@@ -143,7 +143,7 @@ A good example of a json file for replacing the knives usin precached models wou
     
 ```json
 {
-    "LOCAL_PLAYER": "models/player/custom_player/kuristaja/hitler/hitler.mdl",
+    	"LOCAL_PLAYER": "models/player/custom_player/kuristaja/hitler/hitler.mdl",
 	"PLAYER_ALLY": "models/player/custom_player/kolka/master_chief/master_chief.mdl",
 	"PLAYER_ENEMY": "models/player/custom_player/nier_2b/nier_2b.mdl",
 
