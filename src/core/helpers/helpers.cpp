@@ -115,9 +115,24 @@ color helpers::colors::float2color(float* id) {
 #pragma endregion
 
 #pragma region MISC
+template <typename T>
+static constexpr auto relativeToAbsolute(uint8_t* address) noexcept {
+	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
+}
+
 // Get localplayer or the player we are spectating
 player_t* helpers::local_or_spectated() {
 	if (!csgo::local_player) return nullptr;
 	return (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+}
+
+// Checks if its enemy from localplayer
+bool helpers::is_enemy(player_t* player) {
+	if (!csgo::local_player || !player) return false;
+
+	using fn = bool(__thiscall*)(player_t*, player_t*);
+	static fn isOtherEnemy = relativeToAbsolute<fn>(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
+
+	isOtherEnemy(csgo::local_player, player);
 }
 #pragma endregion

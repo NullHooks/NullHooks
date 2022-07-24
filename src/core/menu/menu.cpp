@@ -66,7 +66,7 @@ void menu::render() {
 			
 			gui::group_box(container_left_pos, part1_y, container_width, part1_h, render::fonts::watermark_font, "General", false); {
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 0), item_checkbox_pos,
-					render::fonts::watermark_font, "Also target teammates (for deathmatch)", variables::aim::target_friends);
+					render::fonts::watermark_font, "Also target teammates", variables::aim::target_friends);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 1), item_checkbox_pos,
 					render::fonts::watermark_font, "Enable noscope aimbot on snipers", variables::aim::aimbot_noscope);
 				gui::check_box(item_left_pos, part1_base_item_y + (15 * 2), item_checkbox_pos,
