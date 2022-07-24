@@ -694,6 +694,14 @@ public:
 		return vec3_t{};
 	}
 
+	// Checks if target is enemy from `this`
+	bool is_enemy(player_t* target) {
+		if (!target) return false;
+		using fn = bool(__thiscall*)(player_t*, player_t*);
+		static fn isOtherEnemy = (fn)(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
+		isOtherEnemy(this, target);
+	}
+
 	bool is_alive() {
 		if ( !this ) return false;
 		return this->health() > 0;
