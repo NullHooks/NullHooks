@@ -264,6 +264,7 @@ void menu::render() {
 				gui::check_box(item_left_pos, part3c2_base_item_y + (15 * 7), item_checkbox_pos, render::fonts::watermark_font,
 					"Recoil crosshair", variables::misc_visuals::recoil_crosshair, variables::colors::recoil_crosshair_c);
 			}
+
 			break;
 		}
 		case 2: {	// Misc
