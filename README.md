@@ -355,6 +355,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Add auto revolver hold
 - [ ] Add worldcolor
+- [ ] Add player list <!-- Big flowhooks fan, sorry -->
+	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
+	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
 - [ ] Port to linux
 
 #### Bugs/Fixes
