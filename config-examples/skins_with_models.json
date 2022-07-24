@@ -1,0 +1,108 @@
+{
+	"LOCAL_PLAYER": "models/player/custom_player/legacy/santa/santa.mdl",
+	"PLAYER_ALLY": "models/player/custom_player/kolka/master_chief/master_chief.mdl",
+	"PLAYER_ENEMY": "models/player/custom_player/kodua/chocola/chocola.mdl",
+	"ARMS": "models/player/custom_player/bbs_93x_net_2016/coconut/update_2016_12_30/coconuthands.mdl",
+	
+	"WEAPON_KNIFE": {
+		"item_definition_index": "WEAPON_BAYONET"
+	},
+	"WEAPON_KNIFE_T": {
+		"item_definition_index": "WEAPON_KNIFE_WIDOWMAKER"
+	},
+	"WEAPON_KNIFE_M9_BAYONET": {
+		"paint_kit": 417,
+		"seed": 5,
+		"quality": "SKIN_QUALITY_UNUSUAL"
+	},
+	"WEAPON_KNIFE_BUTTERFLY": {
+		"paint_kit": 416,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_VINTAGE"
+	},
+	"WEAPON_KNIFE_WIDOWMAKER": {
+		"paint_kit": 416,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_VINTAGE"
+	},
+	"WEAPON_BAYONET": {
+		"paint_kit": 93,
+		"seed": 1,
+		"quality": "SKIN_QUALITY_CUSTOMIZED",
+		"custom_name": "Screwdriver",
+		"viewmodel": "models/weapons/caleon1/screwdriver/v_knife_screwdriver.mdl",
+		"worldmodel": "models/weapons/caleon1/screwdriver/w_knife_screwdriver.mdl"
+	},
+	"WEAPON_KNIFE_SURVIVAL_BOWIE": {
+		"paint_kit": 417,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_GENUINE"
+	},
+	"WEAPON_KNIFE_KARAMBIT": {
+		"paint_kit": 416,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_GENUINE",
+		"viewmodel": "models/weapons/eminem/bananabit/v_bananabit.mdl",
+		"worldmodel": "models/weapons/eminem/bananabit/w_bananabit.mdl"
+	},
+	"WEAPON_KNIFE_SKELETON": {
+		"paint_kit": 44,
+		"seed": 403,
+		"quality": "SKIN_QUALITY_CUSTOMIZED"
+	},
+	"WEAPON_GLOCK" : {
+		"paint_kit": 38
+	},
+	"WEAPON_USP_SILENCER" : {
+		"paint_kit": 1142,
+		"quality": "SKIN_QUALITY_CUSTOMIZED"
+	},
+	"WEAPON_DEAGLE" : {
+		"paint_kit": 962,
+		"quality": "SKIN_QUALITY_DEVELOPER"
+	},
+	"WEAPON_AK47" : {
+		"paint_kit": 639
+	},
+	"WEAPON_M4A1" : {
+		"paint_kit": 844
+	},
+	"WEAPON_M4A1_SILENCER" : {
+		"paint_kit": 984
+	},
+	"WEAPON_SCAR20" : {
+		"paint_kit": 597
+	},
+	"WEAPON_AWP" : {
+		"paint_kit": 344,
+		"wear": 0.7,
+		"quality": "SKIN_QUALITY_TOURNAMENT"
+	},
+	"WEAPON_FIVESEVEN" : {
+		"paint_kit": 44,
+		"seed": 872,
+		"quality": "SKIN_QUALITY_COMPLETED",
+		"custom_name": "Tapped"
+	},
+	"WEAPON_REVOLVER" : {
+		"paint_kit": 522,
+		"seed": 1,
+		"quality": "SKIN_QUALITY_DEVELOPER"
+	},
+	"WEAPON_SSG08": {
+		"paint_kit": 868,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_SELF_MADE"
+	},
+	"WEAPON_P250": {
+		"paint_kit": 551
+	},
+	"WEAPON_FAMAS": {
+		"paint_kit": 919
+	},
+	"WEAPON_NOVA": {
+		"paint_kit": 919,
+		"viewmodel": "models/weapons/eminem/gold_fararm_atf_12/v_gold_fararm_atf_12.mdl",
+		"worldmodel": "models/weapons/eminem/gold_fararm_atf_12/w_gold_fararm_atf_12.mdl"
+	}
+}
