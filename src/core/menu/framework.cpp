@@ -606,6 +606,24 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 	int item_n = 0;
 	for (std::string item : config_names) {
 		if (item_n > config::max_configs) break;
+
+		// Make sure we dont overflow. *1.5 to leave a bit of margin at the end
+		if (render::get_text_size(render::fonts::watermark_font_ns, item).x >= w - padding * 1.5) {
+			std::string buffer = "";
+
+			// Keep adding chars until we reach the maximum w
+			for (char c : item) {
+				buffer.push_back(c);
+				if (render::get_text_size(render::fonts::watermark_font_ns, buffer + "...").x >= w - padding * 1.5) {
+					buffer.pop_back();		// Remove last char cuz it is too long already
+					buffer += "...";		// Add 3 dots to indicate the filename is longer
+					break;					// We are done
+				}
+			}
+
+			item = buffer;					// Set the new string
+		}
+
 		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, (item_n == config::selected_config) ? color::white() : color::white(100));
 		item_n++;
 	}
