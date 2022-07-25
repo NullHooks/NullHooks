@@ -530,17 +530,28 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	}
 
 	if (input::gobal_input.reading_textbox && textbox_info.reading_this) {
-		// Delte will remove last char
+		// Delete will remove last char
 		if (input::gobal_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
-			input::gobal_input.wndproc_textbox_buffer.pop_back();
-			textbox_info.text.pop_back();
+			// Ctrl + Del will clear the textbox
+			if (input::gobal_input.IsHeld(VK_CONTROL)) {
+				input::gobal_input.wndproc_textbox_buffer = "";
+				textbox_info.text = "";
+			} else {
+				input::gobal_input.wndproc_textbox_buffer.pop_back();
+				textbox_info.text.pop_back();
+			}
 		// If esc or enter, unfocus
 		} else if (input::gobal_input.IsHeld(VK_ESCAPE) || input::gobal_input.IsHeld(VK_RETURN)) {
 			input::gobal_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		// If key is valid, add to string. Gotta thank zgui
 		} else if (textbox_info.text.length() < max_txt_len) {
-			textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
+			// Only add if we are not overflowing text input
+			if (render::get_text_size(render::fonts::watermark_font, input::gobal_input.wndproc_textbox_buffer).x < text_box_w - margin)
+				textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
+			// If we are overflowing, reset buffer to current text
+			else
+				input::gobal_input.wndproc_textbox_buffer = textbox_info.text;
 		}
 	}
 
@@ -555,7 +566,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	// Cursor
 	if (textbox_info.reading_this) {
 		const int text_w = render::get_text_size(render::fonts::watermark_font, textbox_info.text).x;
-		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());		// TODO: +1?
+		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());
 	}
 
 	// Button
