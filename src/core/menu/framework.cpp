@@ -547,7 +547,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 		// If key is valid, add to string. Gotta thank zgui
 		} else if (textbox_info.text.length() < max_txt_len) {
 			// Only add if we are not overflowing text input
-			if (render::get_text_size(render::fonts::watermark_font, input::gobal_input.wndproc_textbox_buffer).x < text_box_w - margin)
+			if (render::get_text_size(render::fonts::watermark_font, input::gobal_input.wndproc_textbox_buffer).x < text_box_w - margin - 2)	// -2 for cursor
 				textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
 			// If we are overflowing, reset buffer to current text
 			else
