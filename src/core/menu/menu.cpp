@@ -73,10 +73,12 @@ void menu::render() {
 			/* -------- Aim - Second column -------- */
 			gui::add_column();
 
-			gui::add_groupbox("Antiaim", 3); {
+			gui::add_groupbox("Antiaim", 5); {
 				gui::add_checkbox	("AntiAim",			variables::antiaim::antiaim);
-				gui::add_slider		("Pitch (x)",		variables::antiaim::pitch, static_cast<float>(-89), static_cast<float>(89));
-				gui::add_slider		("Yaw (y)",			variables::antiaim::yaw, static_cast<float>(-180), static_cast<float>(180));
+				gui::add_slider		("Pitch (x)",		variables::antiaim::pitch, -89.f, 89.f);
+				gui::add_slider		("Yaw (y)",			variables::antiaim::yaw, -180.f, 180.f);
+				gui::add_checkbox	("Spinbot",			variables::antiaim::spinbot);
+				gui::add_slider		("Spinbot speed",	variables::antiaim::spinbot_speed, 0.f, 100.f);
 			}
 			break;
 		}
