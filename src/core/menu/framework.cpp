@@ -617,9 +617,9 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 
 // Updates item positions with new menu positons and all that. Called before the tab switch statement
 void gui::update_positions() {
-	vars::o_container_left_pos = variables::ui::menu::x + vars::container_margin;		// Will change when adding more columns
-	vars::o_container_width    = variables::ui::menu::w - vars::container_margin * 2;	// Will get divided when adding more columns
-	vars::o_item_left_pos      = vars::o_container_left_pos + vars::container_padding;			// Base top left pos for all items (label text position)
+	vars::o_container_left_pos = variables::ui::menu::x + vars::container_margin;			// Will change when adding more columns
+	vars::o_container_width    = variables::ui::menu::w - vars::container_margin * 2;		// Will get divided when adding more columns
+	vars::o_item_left_pos      = vars::o_container_left_pos + vars::container_padding;		// Base top left pos for all items (label text position)
 	
 	vars::o_item_combo_pos     = variables::ui::menu::x + vars::o_container_width - vars::container_margin;		// Max right pos
 	vars::o_item_checkbox_pos  = vars::o_item_combo_pos - vars::item_checkbox_length;
@@ -640,13 +640,17 @@ void gui::update_positions() {
 
 // Reset values to its original ones
 void gui::init_tab() {
+	vars::column_number = 0;
+
 	vars::container_left_pos	= vars::o_container_left_pos;
 	vars::container_width		= (vars::o_container_width / vars::columns) - (vars::container_margin / vars::columns);
-	vars::item_left_pos			= vars::o_item_left_pos;
-	vars::item_combo_pos		= vars::o_item_combo_pos;
-	vars::item_checkbox_pos		= vars::o_item_checkbox_pos;
-	vars::item_slider_pos		= vars::o_item_slider_pos;
-	vars::item_hotkey_w			= vars::o_item_hotkey_w;
+
+	// We need to assign them again instead of using the originals because the container widht changed
+	vars::item_left_pos			= vars::container_left_pos + vars::container_padding;
+	vars::item_combo_pos		= variables::ui::menu::x + vars::container_width - vars::container_margin;
+	vars::item_checkbox_pos		= vars::item_combo_pos - vars::item_checkbox_length;
+	vars::item_slider_pos		= vars::item_combo_pos - vars::item_slider_length;
+	vars::item_hotkey_w			= vars::container_width - vars::container_padding * 2;
 
 	vars::cur_part_y            = vars::o_cur_part_y;
 	vars::cur_base_item_y       = vars::o_cur_base_item_y;
@@ -658,6 +662,7 @@ void gui::add_column() {
 
 	if (vars::column_number > 0) {		// Only if we are not on the first col
 		vars::container_width--;
+		vars::cur_part_h            = 0;
 
 		vars::container_left_pos	= vars::container_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
 		vars::item_left_pos			= vars::item_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
