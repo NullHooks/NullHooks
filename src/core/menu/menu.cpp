@@ -300,7 +300,7 @@ void menu::render() {
 			/* ----- Misc - Buttons ----- */
 
 			gui::add_bottom_groupbox(1);
-			gui::group_box(gui::vars::container_left_pos, gui::vars::button_part_y, gui::vars::o_container_width, gui::vars::button_part_h, render::fonts::watermark_font, "Buttons", false); {
+			gui::group_box(gui::vars::o_container_left_pos, gui::vars::button_part_y, gui::vars::o_container_width, gui::vars::button_part_h, render::fonts::watermark_font, "Buttons", false); {
 				gui::button(gui::vars::o_item_left_pos, gui::vars::button_base_item_y + (15 * 0), gui::vars::o_item_checkbox_pos - 20, render::fonts::watermark_font,		// Bigger "checkbox" as button
 					"Exec autoexec", button_functions::exec_autoexec);																										// @todo: Pass size and pos
 			}
