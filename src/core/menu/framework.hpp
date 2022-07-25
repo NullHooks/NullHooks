@@ -89,7 +89,8 @@ namespace gui {
 	void update_positions();
 	void init_tab();
 	void add_column();
-	void add_group_box(int item_number);
+	void add_groupbox(int item_number);
+	void add_bottom_groupbox(int item_number);
 
 	void add_checkbox();
 
@@ -117,7 +118,7 @@ namespace gui {
 		inline int o_item_slider_pos    = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
 		inline int o_item_hotkey_w      = container_width - container_padding * 2;
 
-		// Actual vars. Updated in init_tab() and add_column()
+		// Actual vars for items and containers. Updated in init_tab() and add_column()
 		inline int container_left_pos	= o_container_left_pos;
 		inline int container_width		= o_container_width;
 		inline int item_left_pos		= o_item_left_pos;
@@ -134,6 +135,11 @@ namespace gui {
 		inline int cur_part_y           = o_cur_part_y;
 		inline int cur_base_item_y      = o_cur_base_item_y;
 		inline int cur_part_h           = 0;			// Will update with each item added
+
+		inline int button_part_item     = 0;
+		inline int button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
+		inline int button_part_y        = variables::ui::menu::y + variables::ui::menu::h - container_margin;
+		inline int button_base_item_y   = button_part_y + container_padding;
 	}
 }
 

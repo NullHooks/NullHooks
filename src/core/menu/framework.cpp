@@ -578,9 +578,14 @@ void gui::update_positions() {
 	vars::o_item_hotkey_w      = vars::container_width - vars::container_padding * 2;
 
 	// Goupbox vars
-	vars::cur_part_items = 0;		// Will get updated on the add_group_box() calls anyway
+	vars::cur_part_items       = 0;		// Will get updated on the add_group_box() calls anyway
 	vars::cur_part_y           = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
 	vars::cur_base_item_y      = vars::cur_part_y + vars::container_padding;
+
+	vars::button_part_item     = 0;
+	vars::button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
+	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin;
+	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;
 }
 
 // Reset values to its original ones
@@ -615,11 +620,20 @@ void gui::add_column() {
 	}
 }
 
-void gui::add_group_box(int item_number) {
+void gui::add_groupbox(int item_number) {
 	vars::cur_part_items  = item_number;
 	vars::cur_part_y     += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
 	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
 	vars::cur_part_h      = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
+	
+	// @todo: Should call group_box()
+}
+
+void gui::add_bottom_groupbox(int item_number) {
+	vars::button_part_item     = item_number;
+	vars::button_part_h        = (vars::button_part_item * 15) + (vars::container_padding * 2) - 4;
+	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin - button_items_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
+	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;			// Same as other containers
 }
 
 void add_checkbox() {
