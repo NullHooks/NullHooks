@@ -65,6 +65,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 ### Antiaim
 - Antiaim with custom pitch and jaw
+- Spinbot with custom speed
 
 ### Visuals
 #### Player ESP
