@@ -632,7 +632,7 @@ void gui::add_groupbox(int item_number) {
 void gui::add_bottom_groupbox(int item_number) {
 	vars::button_part_item     = item_number;
 	vars::button_part_h        = (vars::button_part_item * 15) + (vars::container_padding * 2) - 4;
-	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin - button_items_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
+	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin - vars::button_part_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
 	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;			// Same as other containers
 }
 
