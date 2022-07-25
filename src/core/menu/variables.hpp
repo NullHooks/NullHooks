@@ -1,6 +1,6 @@
 #pragma once
 #include "core/menu/global_input.hpp"
-#include "core/menu/framework.hpp"
+#include "core/menu/framework_structs.hpp"
 
 namespace variables {
 	namespace aim {
