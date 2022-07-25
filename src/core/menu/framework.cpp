@@ -781,7 +781,7 @@ void gui::add_button(const std::string label, void(*callback)()) {
 }
 
 void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font) {
-	gui::textbox(gui::vars::item_left_pos - 1, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, placeholder, config::new_config_name, config::create_new_config); 
+	gui::textbox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, placeholder, config::new_config_name, config::create_new_config); 
 	gui::vars::cur_base_item_y += 15;
 }
 
