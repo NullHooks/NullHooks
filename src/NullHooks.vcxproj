@@ -264,7 +264,6 @@
     <ClInclude Include="core\features\visuals\models.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\framework.hpp" />
-    <ClInclude Include="core\menu\framework_structs.hpp" />
     <ClInclude Include="core\menu\global_input.hpp" />
     <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="core\menu\variables.hpp" />
