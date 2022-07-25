@@ -1,4 +1,5 @@
 #include "core/menu/framework.hpp"
+#include "core/menu/variables.hpp"
 #include "core/config/config.hpp"
 
 typedef struct CursorCoords {
@@ -8,6 +9,43 @@ typedef struct CursorCoords {
 
 cursor_coords cursor;
 cursor_coords cursor_corrected;
+
+#pragma region GUI EXTERNS
+int gui::vars::column_number = 0;			// Current column. Will change when calling add_column()
+
+// o_* variables are the original ones with 0 columns (all menu width)
+int gui::vars::o_container_left_pos = variables::ui::menu::x + container_margin;		// Will change when adding more columns
+int gui::vars::o_container_width = variables::ui::menu::w - container_margin * 2;	// Will get divided when adding more columns
+int gui::vars::o_item_left_pos = o_container_left_pos + container_padding;			// Base top left pos for all items (label text position)
+
+int gui::vars::o_item_combo_pos = variables::ui::menu::x + o_container_width - container_margin;		// Max right pos
+int gui::vars::o_item_checkbox_pos = o_item_combo_pos - item_checkbox_length;
+int gui::vars::o_item_slider_pos = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
+int gui::vars::o_item_hotkey_w = o_container_width - container_padding * 2;
+
+// Actual vars for items and containers. Updated in init_tab() and add_column()
+int gui::vars::container_left_pos = o_container_left_pos;
+int gui::vars::container_width = o_container_width;
+int gui::vars::item_left_pos = o_item_left_pos;
+int gui::vars::item_combo_pos = o_item_combo_pos;
+int gui::vars::item_checkbox_pos = o_item_checkbox_pos;
+int gui::vars::item_slider_pos = o_item_slider_pos;
+int gui::vars::item_hotkey_w = o_item_hotkey_w;
+
+// Vars for groupbox
+int gui::vars::o_cur_part_y = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
+int gui::vars::o_cur_base_item_y = o_cur_part_y + container_padding;		// Base y position of the items (position of the first item of the groupbox)
+
+int gui::vars::cur_part_items = 0;			// Will be changed when adding groupbox
+int gui::vars::cur_part_y = o_cur_part_y;
+int gui::vars::cur_base_item_y = o_cur_base_item_y;
+int gui::vars::cur_part_h = 0;			// Will update with each item added
+
+int gui::vars::button_part_item = 0;
+int gui::vars::button_part_h = 0;			// Need to get h first to subtract it from bottom to get top pos
+int gui::vars::button_part_y = variables::ui::menu::y + variables::ui::menu::h - container_margin;
+int gui::vars::button_base_item_y = button_part_y + container_padding;
+#pragma endregion
 
 #pragma region GUI ITEMS
 // Returns true if pressed
@@ -579,8 +617,9 @@ void gui::update_positions() {
 
 	// Goupbox vars
 	vars::cur_part_items       = 0;		// Will get updated on the add_group_box() calls anyway
-	vars::cur_part_y           = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
-	vars::cur_base_item_y      = vars::cur_part_y + vars::container_padding;
+	vars::cur_part_h           = 0;
+	vars::o_cur_part_y         = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
+	vars::o_cur_base_item_y    = vars::cur_part_y + vars::container_padding;
 
 	vars::button_part_item     = 0;
 	vars::button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
@@ -615,7 +654,7 @@ void gui::add_column() {
 		vars::item_slider_pos		= vars::item_slider_pos + (vars::container_width * vars::column_number) + vars::container_margin;
 		vars::item_combo_pos		= vars::item_checkbox_pos + vars::item_checkbox_length;
 
-		vars::cur_part_y = vars::o_cur_part_y;				// We reset the y positions of the goupbox so they start on top of the second column
+		vars::cur_part_y      = vars::o_cur_part_y;				// We reset the y positions of the goupbox so they start on top of the second column
 		vars::cur_base_item_y = vars::o_cur_base_item_y;
 	}
 }

@@ -1,61 +1,7 @@
 #pragma once
 #include "dependencies/utilities/csgo.hpp"
 #include "core/menu/global_input.hpp"
-#include "core/menu/variables.hpp"
-
-#pragma region STRUCTS
-struct multicombo_opt_t {
-	std::string text;
-	bool state;
-};
-
-class colorpicker_col_t {
-public:
-	color col;
-	bool toggle;
-
-	colorpicker_col_t(colorpicker_col_t& col_picker) {
-		this->col = col_picker.col;
-		this->toggle = col_picker.toggle;
-	}
-
-	colorpicker_col_t(const color col, const bool toggle = false) {
-		this->col = col;
-		this->toggle = toggle;
-	}
-
-	operator color() { return col; }
-	operator bool() { return toggle; }
-};
-
-class combobox_toggle_t {
-public:
-	int idx;		// The selected idx of the vector
-	bool toggle;	// For toggling combobox popup
-
-	combobox_toggle_t(const int idx, const bool toggle = false) {
-		this->idx = idx;
-		this->toggle = toggle;
-	}
-
-	operator int() { return idx; }
-	operator bool() { return toggle; }
-};
-
-class multicombobox_toggle_t {
-public:
-	std::vector<multicombo_opt_t> vector;		// The selected idx of the vector. We don't need an address here cuz we will pass the whole &multicombobox_toggle_t
-	bool toggle;	// For toggling combobox popup
-
-	multicombobox_toggle_t(std::vector<multicombo_opt_t> vector, const bool toggle = false) {
-		this->vector = vector;
-		this->toggle = toggle;
-	}
-
-	operator std::vector<multicombo_opt_t>() { return vector; }
-	operator bool() { return toggle; }
-};
-#pragma endregion
+#include "core/menu/framework_structs.hpp"
 
 #pragma region GUI
 class hotkey_t;			// Declared in global input
@@ -105,41 +51,41 @@ namespace gui {
 		constexpr int item_slider_length = 80;
 		constexpr int item_checkbox_length = 11;
 	
-		constexpr int columns = 2;			// Max columns per tab (Columns the menu will be divided)
-		inline int column_number = 0;		// Current column. Will change when calling add_column()
+		constexpr int columns = 2;				// Max columns per tab (Columns the menu will be divided)
+		extern int column_number;				// Current column. Will change when calling add_column()
 	
 		// o_* variables are the original ones with 0 columns (all menu width)
-		inline int o_container_left_pos = variables::ui::menu::x + container_margin;		// Will change when adding more columns
-		inline int o_container_width    = variables::ui::menu::w - container_margin * 2;	// Will get divided when adding more columns
-		inline int o_item_left_pos      = o_container_left_pos + container_padding;			// Base top left pos for all items (label text position)
+		extern int o_container_left_pos; 		// Will change when adding more columns
+		extern int o_container_width;    		// Will get divided when adding more columns
+		extern int o_item_left_pos;      		// Base top left pos for all items (label text position)
 
-		inline int o_item_combo_pos     = variables::ui::menu::x + o_container_width - container_margin;		// Max right pos
-		inline int o_item_checkbox_pos  = o_item_combo_pos - item_checkbox_length;
-		inline int o_item_slider_pos    = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
-		inline int o_item_hotkey_w      = o_container_width - container_padding * 2;
+		extern int o_item_combo_pos;			// Max right pos
+		extern int o_item_checkbox_pos;
+		extern int o_item_slider_pos;			// Top left corner of the actual slider
+		extern int o_item_hotkey_w;
 
 		// Actual vars for items and containers. Updated in init_tab() and add_column()
-		inline int container_left_pos	= o_container_left_pos;
-		inline int container_width		= o_container_width;
-		inline int item_left_pos		= o_item_left_pos;
-		inline int item_combo_pos		= o_item_combo_pos;
-		inline int item_checkbox_pos	= o_item_checkbox_pos;
-		inline int item_slider_pos		= o_item_slider_pos;
-		inline int item_hotkey_w		= o_item_hotkey_w;
+		extern int container_left_pos;
+		extern int container_width;
+		extern int item_left_pos;
+		extern int item_combo_pos;
+		extern int item_checkbox_pos;
+		extern int item_slider_pos;
+		extern int item_hotkey_w;
 
 		// Vars for groupbox
-		inline int o_cur_part_y           = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
-		inline int o_cur_base_item_y      = o_cur_part_y + container_padding;		// Base y position of the items (position of the first item of the groupbox)
+		extern int o_cur_part_y;
+		extern int o_cur_base_item_y;		// Base y position of the items (position of the first item of the groupbox)
 
-		inline int cur_part_items       = 0;			// Will be changed when adding groupbox
-		inline int cur_part_y           = o_cur_part_y;
-		inline int cur_base_item_y      = o_cur_base_item_y;
-		inline int cur_part_h           = 0;			// Will update with each item added
+		extern int cur_part_items;			// Will be changed when adding groupbox
+		extern int cur_part_y;
+		extern int cur_base_item_y;
+		extern int cur_part_h;				// Will update with each item added
 
-		inline int button_part_item     = 0;
-		inline int button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
-		inline int button_part_y        = variables::ui::menu::y + variables::ui::menu::h - container_margin;
-		inline int button_base_item_y   = button_part_y + container_padding;
+		extern int button_part_item;
+		extern int button_part_h;			// Need to get h first to subtract it from bottom to get top pos
+		extern int button_part_y;
+		extern int button_base_item_y;
 	}
 }
 
