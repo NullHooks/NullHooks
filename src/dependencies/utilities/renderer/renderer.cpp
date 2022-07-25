@@ -1,12 +1,5 @@
 #include "dependencies/utilities/renderer/renderer.hpp"
 
-unsigned long render::fonts::watermark_font;
-unsigned long render::fonts::watermark_font_m;		// Medium size
-unsigned long render::fonts::watermark_font_ns;		// No shadow
-unsigned long render::fonts::playername_font;		// wchar support
-unsigned long render::fonts::weapon_icon_font;		// No worky
-unsigned long render::fonts::dina_font;				// Love it 2 much
-
 void render::initialize() {
 	render::fonts::watermark_font = interfaces::surface->font_create();
 	render::fonts::watermark_font_m = interfaces::surface->font_create();
