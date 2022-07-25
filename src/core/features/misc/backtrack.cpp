@@ -74,7 +74,7 @@ void backtrack::update() noexcept {
 			|| entity == csgo::local_player
 			|| entity->dormant()
 			|| !entity->is_alive()
-			|| (entity->team() == csgo::local_player->team() && !variables::misc::backtrack_team)) {
+			|| (!helpers::is_enemy(entity) && !variables::misc::backtrack_team)) {
 			records[i].clear();		// Clear current player
 			continue;				// And go to the next one
 		}
