@@ -229,7 +229,6 @@ void menu::render() {
 				gui::config_selection(gui::vars::container_left_pos, gui::vars::cur_base_item_y, gui::vars::container_width, render::fonts::watermark_font,
 					config::config_names);
 			}
-
 			break;
 		}
 	}
