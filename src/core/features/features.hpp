@@ -7,10 +7,7 @@ namespace antiaim {
 }
 
 namespace animations {
-	namespace entity {
-		// @todo: resolver
-	}
-
+	// @todo: resolver
 	namespace local {
 		void run_local_animations();
 	}

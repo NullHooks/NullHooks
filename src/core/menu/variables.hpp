@@ -45,6 +45,8 @@ namespace variables {
 		inline bool antiaim = false;
 		inline float yaw = 0.f;
 		inline float pitch = 0.f;
+		inline bool spinbot = false;
+		inline float spinbot_speed = 0.f;
 	}
 
 	namespace player_visuals {
