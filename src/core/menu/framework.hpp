@@ -1,7 +1,7 @@
 #pragma once
 #include "dependencies/utilities/csgo.hpp"
-#include "core/menu/variables.hpp"
 #include "core/menu/global_input.hpp"
+#include "core/menu/variables.hpp"
 
 #pragma region STRUCTS
 struct multicombo_opt_t {
@@ -111,12 +111,12 @@ namespace gui {
 		// o_* variables are the original ones with 0 columns (all menu width)
 		inline int o_container_left_pos = variables::ui::menu::x + container_margin;		// Will change when adding more columns
 		inline int o_container_width    = variables::ui::menu::w - container_margin * 2;	// Will get divided when adding more columns
-		inline int o_item_left_pos      = container_left_pos + container_padding;			// Base top left pos for all items (label text position)
+		inline int o_item_left_pos      = o_container_left_pos + container_padding;			// Base top left pos for all items (label text position)
 
-		inline int o_item_combo_pos     = variables::ui::menu::x + container_width - container_margin;		// Max right pos
+		inline int o_item_combo_pos     = variables::ui::menu::x + o_container_width - container_margin;		// Max right pos
 		inline int o_item_checkbox_pos  = o_item_combo_pos - item_checkbox_length;
 		inline int o_item_slider_pos    = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
-		inline int o_item_hotkey_w      = container_width - container_padding * 2;
+		inline int o_item_hotkey_w      = o_container_width - container_padding * 2;
 
 		// Actual vars for items and containers. Updated in init_tab() and add_column()
 		inline int container_left_pos	= o_container_left_pos;
