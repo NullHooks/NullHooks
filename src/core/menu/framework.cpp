@@ -608,18 +608,18 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 void gui::update_positions() {
 	vars::o_container_left_pos = variables::ui::menu::x + vars::container_margin;		// Will change when adding more columns
 	vars::o_container_width    = variables::ui::menu::w - vars::container_margin * 2;	// Will get divided when adding more columns
-	vars::o_item_left_pos      = vars::container_left_pos + vars::container_padding;			// Base top left pos for all items (label text position)
+	vars::o_item_left_pos      = vars::o_container_left_pos + vars::container_padding;			// Base top left pos for all items (label text position)
 	
-	vars::o_item_combo_pos     = variables::ui::menu::x + vars::container_width - vars::container_margin;		// Max right pos
+	vars::o_item_combo_pos     = variables::ui::menu::x + vars::o_container_width - vars::container_margin;		// Max right pos
 	vars::o_item_checkbox_pos  = vars::o_item_combo_pos - vars::item_checkbox_length;
 	vars::o_item_slider_pos    = vars::o_item_combo_pos - vars::item_slider_length;				// Top left corner of the actual slider
-	vars::o_item_hotkey_w      = vars::container_width - vars::container_padding * 2;
+	vars::o_item_hotkey_w      = vars::o_container_width - vars::container_padding * 2;
 
 	// Goupbox vars
 	vars::cur_part_items       = 0;		// Will get updated on the add_group_box() calls anyway
 	vars::cur_part_h           = 0;
-	vars::o_cur_part_y         = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
-	vars::o_cur_base_item_y    = vars::cur_part_y + vars::container_padding;
+	vars::o_cur_part_y         = variables::ui::menu::y + vars::top_margin_with_tabs;		// No container margin because we will add it in add_groupbox()
+	vars::o_cur_base_item_y    = vars::o_cur_part_y + vars::container_padding;
 
 	vars::button_part_item     = 0;
 	vars::button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
