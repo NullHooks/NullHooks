@@ -114,7 +114,7 @@ An example of a skin config file can be found in [example-configs/skins.json](ht
 The skin chager currently is able to change:
 - [X] Weapon skins
 - [X] Knife skins and models
-- [ ] Globes
+- [ ] Gloves
 
 #### Model changer
 There are currently 2 model changer methods. `find_mdl` and precached models. `sv_pure` bypass is integrated in the cheat.
