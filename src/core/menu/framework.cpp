@@ -507,7 +507,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
-	
+
 	constexpr int h = 11;
 	constexpr int max_txt_len = 255;
 	constexpr int button_w = 30;
@@ -799,7 +799,8 @@ void gui::add_button(const std::string label, void(*callback)()) {
 }
 
 void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font) {
-	gui::textbox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, placeholder, config::new_config_name, config::create_new_config); 
+	// The -2 and +2 are to move the textbox area a bit, just personal preference
+	gui::textbox(gui::vars::item_left_pos - 2, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w + 2, font, placeholder, config::new_config_name, config::create_new_config); 
 	gui::vars::cur_base_item_y += 15;
 }
 
