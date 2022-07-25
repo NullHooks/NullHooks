@@ -54,7 +54,8 @@ namespace visuals {
 	void bullet_tracer(i_game_event *event);
 	void nade_predict() noexcept;
 	void nosmoke(client_frame_stage_t frame_stage);
-	
+	void apply_models();
+
 	namespace custom_models {
 		void replace_model(char* path);
 	}

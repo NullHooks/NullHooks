@@ -26,9 +26,9 @@ void aim::triggerbot(c_usercmd* cmd) {
 		|| trace.entity->dormant()
 		|| trace.entity->has_gun_game_immunity()) return;
 
-	if (!trace.entity->is_alive() || (!variables::aim::target_friends && trace.entity->team() == csgo::local_player->team())) return;
+	if (!trace.entity->is_alive() || (!variables::aim::target_friends && !helpers::is_enemy(trace.entity))) return;
 
-	static int cur_delay = 0;		// ms
+	static int cur_delay = 0;			// ms
 	if (cur_delay >= (int)variables::aim::triggerbot_delay) {
 		cur_delay = 0;	// Reset and shoot
 		cmd->buttons |= in_attack;		// Shoot

@@ -12,6 +12,14 @@ void helpers::console::state_to_console_color(const char* tag, const char* text)
 	interfaces::console->color_printf(valve_color_t{   0, 165, 230, 255 }, tag);
 	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] %s\n", text);
 }
+
+void helpers::console::error_to_console(const char* text) {
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "[");
+	interfaces::console->color_printf(valve_color_t{ 200,   0,   0, 255 }, "NullHooks");
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] [");
+	interfaces::console->color_printf(valve_color_t{ 230, 130,  50, 255 }, "Error");
+	interfaces::console->color_printf(valve_color_t{ 255, 255, 255, 255 }, "] %s\n", text);
+}
 #pragma endregion
 
 #pragma region COLORS
@@ -115,9 +123,24 @@ color helpers::colors::float2color(float* id) {
 #pragma endregion
 
 #pragma region MISC
+template <typename T>
+static constexpr auto relativeToAbsolute(uint8_t* address) noexcept {
+	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
+}
+
 // Get localplayer or the player we are spectating
 player_t* helpers::local_or_spectated() {
 	if (!csgo::local_player) return nullptr;
 	return (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+}
+
+// Checks if its enemy from localplayer
+bool helpers::is_enemy(player_t* player) {
+	if (!csgo::local_player || !player) return false;
+
+	using fn = bool(__thiscall*)(player_t*, player_t*);
+	static fn isOtherEnemy = relativeToAbsolute<fn>(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
+
+	isOtherEnemy(csgo::local_player, player);
 }
 #pragma endregion

@@ -19,6 +19,7 @@ namespace helpers {
 	namespace console {
 		void state_to_console(const char* tag, const char* text);
 		void state_to_console_color(const char* tag, const char* text);
+		void error_to_console(const char* text);
 	}
 
 	namespace colors {
@@ -30,4 +31,5 @@ namespace helpers {
 	}
 	
 	player_t* local_or_spectated();
+	bool is_enemy(player_t* player);
 };

@@ -7,5 +7,5 @@ void button_functions::exec_autoexec() {
 }
 
 void button_functions::full_update() {
-	interfaces::clientstate->full_update();
+	globals::forcing_update = true;		// Will be used in frame_stage_notify to run full_update() on a safer way
 }

@@ -63,7 +63,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Only if scoped
 - Aimpunch only on rifles (Looks more legit)
 
-# Antiaim
+### Antiaim
 - Antiaim with custom pitch and jaw
 
 ### Visuals
@@ -107,6 +107,7 @@ Setting name                | Description
 `"stattrack"`               | The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
 `"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
 `"wear"`                    | The float corresponding to the weapon wear. From `0.001f` to `1.f`, lower means better.
+`"custom_name"`             | String containing the custom name for the weapon.
 
 An example of a skin config file can be found in [example-configs/skins.json](https://github.com/r4v10l1/NullHooks/blob/main/config-examples/skins.json).
 
@@ -116,7 +117,73 @@ The skin chager currently is able to change:
 - [ ] Globes
 
 #### Model changer
-The model changer uses findmdl to replace the models, and you need to download them manually. Because of this, the models are not enabled by default (at least for now). You need change your custom path in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp) (`NULL` means it's disabled).
+There are currently 2 model changer methods. `find_mdl` and precached models. `sv_pure` bypass is integrated in the cheat.
+
+The model changer is currently able to change:
+- [X] Weapons
+    - [X] Normal weapons
+    - [X] Knifes
+- [X] Players
+    - [X] Localplayer
+    - [X] Allies
+    - [X] Enemies
+- [X] Arms
+
+:warning: All the models need to be downloaded manually.
+
+- When using `find_mdl`, it will hook to the function, and when the game tries to load a model, we will replace it with our own. `find_mdl` model paths are hardcoded in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp). In that file explains where to put the models and all that. If an item is `NULL` it will be ignored.
+- Precached models are a way better alternative, because with my json config system you can edit and load the file any time you want during a match. For adding models to a weapon, simply add to the skin json the following options:
+    - `"viewmodel"`: The viewmodel path from the csgo directory. The viewmodel files usually start with `v_`.  
+    *Example: `"models/weapons/eminem/bananabit/v_bananabit.mdl"`*
+    - `"worldmodel"`: The worldmodel path from the csgo directory. The worldmodel files usually start with `w_`.  
+    *Example: `"models/weapons/eminem/bananabit/w_bananabit.mdl"`*
+
+A good example of a json file for replacing the knives usin precached models would be like this:
+<details>
+    <summary>Example skins.json file and explanation</summary>
+    
+```json
+{
+    	"LOCAL_PLAYER": "models/player/custom_player/kuristaja/hitler/hitler.mdl",
+	"PLAYER_ALLY": "models/player/custom_player/kolka/master_chief/master_chief.mdl",
+	"PLAYER_ENEMY": "models/player/custom_player/nier_2b/nier_2b.mdl",
+	"ARMS": "models/player/custom_player/nier_2b/nier_2b_arms.mdl",
+
+	"WEAPON_KNIFE": {
+		"item_definition_index": "WEAPON_KNIFE_KARAMBIT"
+	},
+	"WEAPON_KNIFE_T": {
+		"item_definition_index": "WEAPON_KNIFE_WIDOWMAKER"
+	},
+	"WEAPON_KNIFE_WIDOWMAKER": {
+		"paint_kit": 416,
+		"seed": 420,
+		"quality": "SKIN_QUALITY_VINTAGE"
+	},
+	"WEAPON_BAYONET": {
+		"paint_kit": 44,
+		"seed": 555,
+		"quality": "SKIN_QUALITY_CUSTOMIZED",
+		"viewmodel": "models/weapons/caleon1/screwdriver/v_knife_screwdriver.mdl",
+		"worldmodel": "models/weapons/caleon1/screwdriver/w_knife_screwdriver.mdl"
+	},
+	"WEAPON_KNIFE_KARAMBIT": {
+		"paint_kit": 416,
+		"seed": 69,
+		"quality": "SKIN_QUALITY_GENUINE",
+		"custom_name": "Banana knife",
+		"viewmodel": "models/weapons/eminem/bananabit/v_bananabit.mdl",
+		"worldmodel": "models/weapons/eminem/bananabit/w_bananabit.mdl"
+	}
+}
+```
+
+The first 3 lines are for changing special models. In this case ally players, enemy players and localplayer. See special models here: [Link](https://github.com/r4v10l1/NullHooks/blob/824b745d9fc17f139d6e6a223fa5533f52664e8c/src/source-sdk/classes/entities.hpp#L307-L312).
+
+Changes the default ct knife index to the karambit one, automatically changing the models and applaying the skins of the karambit. Since there is a custom viewmodel and worlmodel, the model will change but the rarity, skin name, kill icon, etc. will be the same.
+
+You can add viewmodels to weapons that you are not currently using like the bayonet in this case. Right now we are replacing the terrorist knife with a *Vintage Talon Knife Zaphire*, but if we wanted to change that, we could just edit the file, replace the `"item_definition_index"` of the terrorist knife to the `WEAPON_BAYONET`, load the skins config from the config tab and press the full update button.
+</details>
 
 #### Misc
 - C4 timer and bar
@@ -258,6 +325,10 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add can't shoot to player ESP
 - [X] Add textbox to framework for creating new config files from menu
 - [X] Add antiaim
+- [X] Add killicons to knife skinchanger
+- [X] Replace `player_info` esp with multicombobox
+- [X] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+- [X] Add "defusing" to bomb timer
 #
 </details>
 
@@ -271,7 +342,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Aimbot fov circle (or square)
     - [X] Custom aimbot key (autofire)
     - [X] Add bodyaim if lethal
-    - [ ] Make aimbot and triggerbot also aim for backtrack. (Store hitbox positions?)
+    - [ ] Make aimbot and triggerbot also aim for backtrack. (Get hitbox positions from matrix)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
@@ -282,18 +353,17 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
-- [ ] Add killicons to knife skinchanger
 - [ ] Add auto revolver hold
-- [ ] Replace `player_info` esp with multicombobox
 - [ ] Add worldcolor
-- [ ] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
+- [ ] Add player list <!-- Big flowhooks fan, sorry -->
+	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
+	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
 - [ ] Port to linux
 
 #### Bugs/Fixes
 - [ ] Skinchanger fixes
     - [X] Fix talon knife inspect animation
     - [ ] Get localplayer steam id to fix weapon stattrack
-- [ ] Add "defusing" to bomb timer (When doing player esp? Check first, set bool, then check combobox and render)
 - [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 
 ## Screenshots
@@ -301,6 +371,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 
 ![Screenshot 14](screenshots/screenshot14.png)
 ![Screenshot 15](screenshots/screenshot15.png)
+![Screenshot 16](screenshots/screenshot16.png)
 ![Screenshot 13](screenshots/screenshot13.png)
 ![Screenshot 8](screenshots/screenshot8.png)
 ![Screenshot 9](screenshots/screenshot9.png)

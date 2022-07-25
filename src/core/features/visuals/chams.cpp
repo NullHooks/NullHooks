@@ -2,6 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 #include "core/features/misc/backtrack.hpp"
+#include "core/features/visuals/skin_changer/skin_changer.hpp"
 
 #ifdef _DEBUG
 #include "core/features/debug/debug.hpp"
@@ -50,7 +51,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 	const auto mdl = info.model;
 	if (!mdl) return;
 
-	// Players
+	#pragma region PLAYER
 	if (strstr(mdl->name, "models/player") && (variables::chams::player_chams || variables::chams::localplayer_chams || variables::chams::backtrack_chams)) {
 		const char* player_material = (variables::chams::player_chams_mat_id.idx < materials.size()) ? materials.at(variables::chams::player_chams_mat_id.idx) : materials.at(materials.size() - 1);
 
@@ -118,20 +119,28 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 			}
 		}
 	}
+	#pragma endregion
 
-	// Viewmodel
+	#pragma region VIEWMODEL
+	// Sleeve
 	if (strstr(mdl->name, "sleeve")) {
 		if (variables::chams::vm_sleeve_chams) {
 			if (variables::chams::draw_chams_on_top)
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_sleeve_c, materials.at(variables::chams::sleeve_chams_mat_id.idx));
 		}
-	} else if (strstr(mdl->name + 17, "arms")) {		// Also replaces some player model's arms (worldmodel arms)
-		if (variables::chams::vm_arm_chams) {
+	// Arms
+	} else if (strstr(mdl->name + 17, "arms")) {
+		// Remove normal arms if we have a custom model and alive
+		if (csgo::local_player->is_alive() && skins::custom_models.find(ARMS) != skins::custom_models.end() && strstr(csgo::local_player->arms_model(), skins::custom_models.at(ARMS).worldmodel.c_str())) {
+			override_material(false, variables::chams::wireframe_chams, color{0,0,0,0}, materials.at(1));
+		// Normal arms
+		} else if (variables::chams::vm_arm_chams) {
 			if (variables::chams::draw_chams_on_top)
 				hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_arms_c, materials.at(variables::chams::arm_chams_mat_id.idx));
 		}
+	// Viewmodel weapon
 	} else if (strstr(mdl->name, "models/weapons/v")) {
 		if (variables::chams::vm_weapon_chams && !csgo::local_player->is_scoped()) {
 			if (variables::chams::draw_chams_on_top)
@@ -139,6 +148,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 			override_material(false, variables::chams::wireframe_chams, variables::colors::chams_weapon_c, materials.at(variables::chams::weapon_chams_mat_id.idx));
 		}
 	}
+	#pragma endregion
 
 	hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
 }
