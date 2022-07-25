@@ -334,7 +334,7 @@ void menu::render() {
 
 			gui::add_groupbox(config::max_configs);
 			gui::group_box(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, "Movement", false); {
-				gui::config_selection(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::container_width, render::fonts::watermark_font,
+				gui::config_selection(gui::vars::container_left_pos, gui::vars::cur_base_item_y, gui::vars::container_width, render::fonts::watermark_font,
 					config::config_names);
 			}
 
