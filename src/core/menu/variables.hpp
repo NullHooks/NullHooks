@@ -1,6 +1,6 @@
 #pragma once
-#include "global_input.hpp"
-#include "framework.hpp"
+#include "core/menu/global_input.hpp"
+#include "core/menu/framework.hpp"
 
 namespace variables {
 	namespace aim {
@@ -20,7 +20,7 @@ namespace variables {
 			"Ignore walls"
 		};
 		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
-
+		
 		inline float aimbot_fov = 20.f;
 		inline bool draw_fov = false;
 
