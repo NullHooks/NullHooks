@@ -116,7 +116,7 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
 }
 
-void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
+void gui::groupbox(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
 	// Groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
 
@@ -680,8 +680,15 @@ void gui::add_groupbox(int item_number) {
 	vars::cur_part_y     += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
 	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
 	vars::cur_part_h      = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
-	
-	// @todo: Should call group_box()
+}
+
+void gui::add_groupbox(std::string name, int item_number) {
+	vars::cur_part_items = item_number;
+	vars::cur_part_y += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
+	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
+	vars::cur_part_h = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
+
+	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, false);
 }
 
 void gui::add_bottom_groupbox(int item_number) {
@@ -691,11 +698,96 @@ void gui::add_bottom_groupbox(int item_number) {
 	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;			// Same as other containers
 }
 
-void add_checkbox() {
+void gui::add_checkbox(std::string label, bool& target, unsigned long font) {
 	// @todo: Should update cur_part_h with += item_h
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target);
+	gui::vars::cur_base_item_y += 15;		// Add 15 to the variable
 }
 
+void gui::add_checkbox(std::string label, bool& target) {
+	add_checkbox(label, target, render::fonts::watermark_font);
+}
 
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color, unsigned long font) {
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target, color);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color) {
+	add_checkbox(label, target, color, render::fonts::watermark_font);
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2, unsigned long font) {
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target, color1, color2);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2) {
+	add_checkbox(label, target, color1, color2, render::fonts::watermark_font);
+}
+
+void gui::add_slider(std::string label, float& target, float min_value, float max_value, unsigned long font) {
+	gui::slider(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_slider_pos, gui::vars::item_slider_length, font, label, target, min_value, max_value);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_slider(std::string label, float& target, float min_value, float max_value) {
+	add_slider(label, target, min_value, max_value, render::fonts::watermark_font);
+}
+
+void gui::add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target, unsigned long font) {
+	gui::combobox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos, font, label, option_vector, target);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target) {
+	add_combobox(label, option_vector, target, render::fonts::watermark_font);
+}
+
+void gui::add_multicombobox(std::string label, multicombobox_toggle_t& target, unsigned long font) {
+	gui::multicombobox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos, font, label, target);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_multicombobox(std::string label, multicombobox_toggle_t& target) {
+	add_multicombobox(label, target, render::fonts::watermark_font);
+}
+
+void gui::add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this, unsigned long font) {
+	gui::hotkey(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, label, target, reading_this);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this) {
+	add_hotkey(label, target_key, target, reading_this, render::fonts::watermark_font);
+}
+
+void gui::add_hotkey(const std::string label, hotkey_t& hotkey_info, unsigned long font) {
+	gui::hotkey(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, label, hotkey_info);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_hotkey(const std::string label, hotkey_t& hotkey_info) {
+	add_hotkey(label, hotkey_info, render::fonts::watermark_font);
+}
+
+void gui::add_button(const std::string label, void(*callback)(), unsigned long font) {
+	gui::button(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos - vars::item_button_w, font, label, callback);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_button(const std::string label, void(*callback)()) {
+	add_button(label, callback, render::fonts::watermark_font);
+}
+
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font) {
+	gui::textbox(gui::vars::item_left_pos - 1, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, placeholder, config::new_config_name, config::create_new_config); 
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
+	add_textbox(placeholder, textbox_info, button_callback, render::fonts::watermark_font);
+}
 #pragma endregion
 
 #pragma region WINDOW MOVEMENT

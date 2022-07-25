@@ -1,14 +1,68 @@
 #pragma once
 #include "dependencies/utilities/csgo.hpp"
 #include "core/menu/global_input.hpp"
-#include "core/menu/framework_structs.hpp"
+#include "dependencies/utilities/renderer/renderer.hpp"
+
+#pragma region STRUCTS
+struct multicombo_opt_t {
+	std::string text;
+	bool state;
+};
+
+class colorpicker_col_t {
+public:
+	color col;
+	bool toggle;
+
+	colorpicker_col_t(colorpicker_col_t& col_picker) {
+		this->col = col_picker.col;
+		this->toggle = col_picker.toggle;
+	}
+
+	colorpicker_col_t(const color col, const bool toggle = false) {
+		this->col = col;
+		this->toggle = toggle;
+	}
+
+	operator color() { return col; }
+	operator bool() { return toggle; }
+};
+
+class combobox_toggle_t {
+public:
+	int idx;		// The selected idx of the vector
+	bool toggle;	// For toggling combobox popup
+
+	combobox_toggle_t(const int idx, const bool toggle = false) {
+		this->idx = idx;
+		this->toggle = toggle;
+	}
+
+	operator int() { return idx; }
+	operator bool() { return toggle; }
+};
+
+class multicombobox_toggle_t {
+public:
+	std::vector<multicombo_opt_t> vector;		// The selected idx of the vector. We don't need an address here cuz we will pass the whole &multicombobox_toggle_t
+	bool toggle;	// For toggling combobox popup
+
+	multicombobox_toggle_t(std::vector<multicombo_opt_t> vector, const bool toggle = false) {
+		this->vector = vector;
+		this->toggle = toggle;
+	}
+
+	operator std::vector<multicombo_opt_t>() { return vector; }
+	operator bool() { return toggle; }
+};
+#pragma endregion
 
 #pragma region GUI
 class hotkey_t;			// Declared in global input
 class textbox_t;		// Declared in global input
 namespace gui {
 	// Categories
-	void group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
+	void groupbox(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label);
 	void tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string, std::int32_t& tab, std::int32_t count);
 	
 	// Gui items
@@ -21,8 +75,8 @@ namespace gui {
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey);
 	void hotkey(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, hotkey_t& hinfo);
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
-	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);
-	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);
+	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);		// Unused
+	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);	// Unused
 	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
 	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
 	
@@ -36,20 +90,41 @@ namespace gui {
 	void init_tab();
 	void add_column();
 	void add_groupbox(int item_number);
+	void add_groupbox(std::string name, int item_number);
 	void add_bottom_groupbox(int item_number);
 
-	void add_checkbox();
+	void add_checkbox(std::string label, bool& target);		// Default font
+	void add_checkbox(std::string label, bool& target, unsigned long font);
+	void add_checkbox(std::string label, bool& target, colorpicker_col_t& color);
+	void add_checkbox(std::string label, bool& target, colorpicker_col_t& color, unsigned long font);
+	void add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2);
+	void add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2, unsigned long font);
+	void add_slider(std::string label, float& target, float min_value, float max_value);
+	void add_slider(std::string label, float& target, float min_value, float max_value, unsigned long font);
+	void add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target);
+	void add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target, unsigned long font);
+	void add_multicombobox(std::string label, multicombobox_toggle_t& target);
+	void add_multicombobox(std::string label, multicombobox_toggle_t& target, unsigned long font);
+	void add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this);
+	void add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this, unsigned long font);
+	void add_hotkey(const std::string label, hotkey_t& hotkey_info);
+	void add_hotkey(const std::string label, hotkey_t& hotkey_info, unsigned long font);
+	void add_button(const std::string label, void(*callback)());
+	void add_button(const std::string label, void(*callback)(), unsigned long font);
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font);
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
 
 	// Dynamic menu variables
 	namespace vars {
-		constexpr int top_margin = 30;
-		constexpr int tab_height = 24;
-		constexpr int top_margin_with_tabs = top_margin + tab_height + 1;	// See first column comment (container_width--)
-		constexpr int container_margin = 5;									// Empty space between containers
-		constexpr int container_padding = 10;								// Space before and after item list (top and bottom)
+		constexpr int top_margin			= 30;
+		constexpr int tab_height			= 24;
+		constexpr int top_margin_with_tabs	= top_margin + tab_height + 1;		// See first column comment (container_width--)
+		constexpr int container_margin		= 5;								// Empty space between containers
+		constexpr int container_padding		= 10;								// Space before and after item list (top and bottom)
 
-		constexpr int item_slider_length = 80;
-		constexpr int item_checkbox_length = 11;
+		constexpr int item_slider_length	= 80;
+		constexpr int item_checkbox_length	= 11;
+		constexpr int item_button_w			= 30;
 	
 		constexpr int columns = 2;				// Max columns per tab (Columns the menu will be divided)
 		extern int column_number;				// Current column. Will change when calling add_column()

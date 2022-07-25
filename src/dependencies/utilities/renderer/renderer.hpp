@@ -34,11 +34,11 @@ namespace render {
 	void draw_fade(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, color color1, color color2, bool horizontal);
 
 	namespace fonts {
-		extern unsigned long watermark_font;
-		extern unsigned long watermark_font_m;
-		extern unsigned long watermark_font_ns;		// No shadow
-		extern unsigned long playername_font;		// wchar support
-		extern unsigned long weapon_icon_font;		// No worky
-		extern unsigned long dina_font;				// A personal favourite https://www.dcmembers.com/jibsen/download/61/
+		inline unsigned long watermark_font = 0;		// Default font used through the cheat
+		inline unsigned long watermark_font_m = 0;		// Medium size
+		inline unsigned long watermark_font_ns = 0;		// No shadow
+		inline unsigned long playername_font = 0;		// wchar support
+		inline unsigned long weapon_icon_font = 0;		// No worky
+		inline unsigned long dina_font = 0;				// A personal favourite https://www.dcmembers.com/jibsen/download/61/
 	};
 }
