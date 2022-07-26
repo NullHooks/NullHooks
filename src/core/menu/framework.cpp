@@ -214,7 +214,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	// Push to vector to render after menu
 	if (col.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, col.col, col.f_hsv, col.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, col });
 }
 
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col1, colorpicker_col_t& col2) {
@@ -262,9 +262,9 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	// Push to vector to render after menu
 	if (col1.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1.col, col1.f_hsv, col1.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1 });
 	if (col2.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2.col, col2.f_hsv, col2.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2 });
 }
 
 // Thanks to https://github.com/bobloxmonke
@@ -879,7 +879,7 @@ void popup_system::render_popups() {
 bool popup_system::mouse_in_popup(int x, int y) {
 	// For each color popup in the active_color_popups vector
 	for (const color_popup_info& pinfo : active_color_popups) {
-		if ( pinfo.toggle_color && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
+		if ( pinfo.col_t.toggle && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
 			return true;
 	}
 
@@ -925,7 +925,7 @@ void popup_system::check_multicombo_popups() {
 
 // Actual popup for the color picker hue and all that
 void popup_system::color_picker_popup(color_popup_info col_p) {
-	if (!col_p.toggle_color) return;
+	if (!col_p.col_t.toggle) return;
 	
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
@@ -945,6 +945,8 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		{ 255, 0,   0   }
 	};
 
+	float_hsv hsv_buffer = col_p.col_t.f_hsv;
+
 	#pragma region HUE BAR
 	// Draw hsv fades (6 segments)
 	for (auto n = 0; n < 6; n++) {
@@ -955,11 +957,11 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	}
 	
 	// Check selected hue (mouse in slider)
-	float color_hue = col_p.target_hsv.h;
+	float color_hue = hsv_buffer.h;
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		color_hue = float(cursor.x - slider_x) / float(slider_w);
 		color_hue = (color_hue == 1.f) ? 0.99 : color_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
-		col_p.target_hsv.h = color_hue;
+		hsv_buffer.h = color_hue;
 	}
 	
 	// Render color selector depenging on the color's hue
@@ -974,11 +976,11 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	render::draw_fade(slider_x, slider_y, slider_w, slider_h, lowest_sat, highest_sat, true);
 
 	// Check selected hue (mouse in slider)
-	float color_sat = col_p.target_hsv.s;
+	float color_sat = hsv_buffer.s;
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		color_sat = float(cursor.x - slider_x) / float(slider_w);
 		color_sat = (color_sat == 0.f) ? 0.01 : color_sat;
-		col_p.target_hsv.s = color_sat;
+		hsv_buffer.s = color_sat;
 	}
 
 	// Render color selector depenging on the color's hue
@@ -993,11 +995,11 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	render::draw_fade(slider_x, slider_y, slider_w, slider_h, lowest_val, highest_val, true);
 
 	// Check selected hue (mouse in slider)
-	float color_val = col_p.target_hsv.v;
+	float color_val = hsv_buffer.v;
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		color_val = float(cursor.x - slider_x) / float(slider_w);
 		color_val = (color_val == 0.f) ? 0.01 : color_val;
-		col_p.target_hsv.v = color_val;
+		hsv_buffer.v = color_val;
 	}
 
 	// Render color selector depenging on the color's hue
@@ -1007,21 +1009,22 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	#pragma region ALPHA BAR
 	slider_y += win_padding + slider_h;
 
-	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.target.get_custom_alpha(0), col_p.target.get_custom_alpha(255), true);
+	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.col_t.col.get_custom_alpha(0), col_p.col_t.col.get_custom_alpha(255), true);
 	
 	// Check selected hue (mouse in slider)
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_alpha = float(cursor.x - slider_x) / float(slider_w);
-		col_p.target.a = input_alpha * 255.f;
+		col_p.col_t.col.a = input_alpha * 255.f;
 	}
 
 	// Render color selector depenging on the color's hue
-	float color_alpha = col_p.target.a / 255.f;
+	float color_alpha = col_p.col_t.col.a / 255.f;
 	render::draw_rect(slider_x + slider_w * color_alpha - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
 	#pragma endregion
 
 	// Set new color replacing changed values
-	col_p.target = helpers::colors::hsv_float2color(col_p.target_hsv, col_p.target.a);
+	col_p.col_t.f_hsv = hsv_buffer;
+	col_p.col_t.col = helpers::colors::hsv_float2color(hsv_buffer, col_p.col_t.col.a);
 }
 
 void popup_system::combobox_popup(combo_popup_info combo_p) {
