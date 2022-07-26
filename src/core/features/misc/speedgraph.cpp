@@ -15,7 +15,7 @@ void shift_and_append(int new_val) {
 }
 
 color speed2color(int speed) {
-	float_hsv hue = { speed / 600.0f, 1.0f, 1.0f };
+	float_hsv hue(speed / 600.0f, 1.0f, 1.0f);
 	return helpers::colors::hsv_float2color(hue, 255);
 }
 

@@ -1,3 +1,4 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/helpers/helpers.hpp"
 
 #pragma region CONSOLE
@@ -55,11 +56,11 @@ color helpers::colors::hsv2color(int_hsv hsv, int alpha) {
 
 /* hsv2color(float_hsv): Returns color from hsv. Hue in 1.f format. */
 color helpers::colors::hsv_float2color(float_hsv hsv, int alpha) {
-	int_hsv converted = {
+	int_hsv converted(
 		hsv.h * 360.f,		// So its in 1.f format
 		hsv.s,
 		hsv.v
-	};
+	);
 
 	return hsv2color(converted, alpha);
 }
