@@ -264,7 +264,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	if (col1.toggle)
 		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1.col, col1.f_hsv, col1.toggle });
 	if (col2.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2.col, col1.f_hsv, col2.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2.col, col2.f_hsv, col2.toggle });
 }
 
 // Thanks to https://github.com/bobloxmonke
