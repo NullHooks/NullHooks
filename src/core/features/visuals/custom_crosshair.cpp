@@ -11,10 +11,10 @@ void visuals::crosshair::draw_custom_crosshair(int x, int y, int outline, color 
 	const int left = x - len - gap;
 	const int right = x + len + gap;
 
-	// Draw outline
+	// Draw outline with color's opacity
 	if (outline) {
-		render::draw_rect(x - 1, top - 1, 3, (len + gap)*2 + 3, color::black(255));
-		render::draw_rect(left - 1, y - 1, (len + gap)*2 + 3, 3, color::black(255));
+		render::draw_rect(x - 1, top - 1, 3, (len + gap)*2 + 3, color::black(cross_color.a));
+		render::draw_rect(left - 1, y - 1, (len + gap)*2 + 3, 3, color::black(cross_color.a));
 	}
 	// Draw 1px crosshair
 	render::draw_filled_rect(x, top, 1, bottom - top + 1, cross_color);
