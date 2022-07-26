@@ -25,6 +25,8 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 			
 			skins::change_misc_models();
 			skins::change_skins(frame_stage);				// Run here too to avoid model flickering online
+			
+			visuals::worldcolor();
 			visuals::nosmoke(frame_stage);					// Disables smoke, not the overlay. The overlay is disabled by hooking render_smoke_overlay
 			animations::local::run_local_animations();		// Fix aa animations
 			break;

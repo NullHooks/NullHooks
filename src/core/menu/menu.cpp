@@ -127,11 +127,12 @@ void menu::render() {
 				gui::add_checkbox("Entity info",			variables::entity_visuals::entitytext);
 			}
 
-			gui::add_groupbox("Misc", 8); {
+			gui::add_groupbox("Misc", 9); {
 				gui::add_slider			("No flash",				variables::misc_visuals::noflash_alpha, 0.f, 1.f);
 				gui::add_checkbox		("Wireframe smoke",			variables::misc_visuals::wireframe_smoke);
 				gui::add_checkbox		("Nade prediction",			variables::misc_visuals::nade_predict);
 				gui::add_checkbox		("No sniper scope",			variables::misc_visuals::noscope);
+				gui::add_checkbox		("Worldcolor",				variables::misc_visuals::worldcolor, variables::colors::worldcolor_c);
 				gui::add_multicombobox	("Bullet tracers",			variables::misc_visuals::bulletracer_draw_target);
 				gui::add_multicombobox	("Bullet tracer teams",		variables::misc_visuals::bulletracer_team_target);
 				gui::add_checkbox		("Custom crosshair",		variables::misc_visuals::crosshair, variables::colors::crosshair_c);
