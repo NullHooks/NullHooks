@@ -134,7 +134,6 @@ void config::load_config(std::string filename) {
 	load::parse_color(doc,			variables::colors::enemy_color,							"colors",			"enemy_color");
 	load::parse_color(doc,			variables::colors::enemy_color_soft,					"colors",			"enemy_color_soft");
 	load::parse_color(doc,			variables::colors::enemy_color_softer,					"colors",			"enemy_color_softer");
-	load::parse_color(doc,			variables::colors::enemy_color_softer,					"colors",			"enemy_color_softer");
 	load::parse_color(doc,			variables::colors::chams_localplayer,					"colors",			"chams_localplayer");
 	load::parse_color(doc,			variables::colors::chams_vis_enemy_c,					"colors",			"chams_vis_enemy_c");
 	load::parse_color(doc,			variables::colors::chams_inv_enemy_c,					"colors",			"chams_inv_enemy_c");
