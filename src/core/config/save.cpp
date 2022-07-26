@@ -56,6 +56,8 @@ void config::save_config(std::string filename) {
 		save::parse_bool(antiaim,				 allocator,			variables::antiaim::antiaim,							"antiaim");
 		save::parse_float(antiaim,				 allocator,			variables::antiaim::pitch,								"antiaim_pitch");
 		save::parse_float(antiaim,				 allocator,			variables::antiaim::yaw,								"antiaim_yaw");
+		save::parse_bool(antiaim,				 allocator,			variables::antiaim::spinbot,							"spinbot");
+		save::parse_float(antiaim,				 allocator,			variables::antiaim::spinbot_speed,						"spinbot_speed");
 	} doc.AddMember("antiaim", antiaim, allocator);
 
 	rapidjson::Value player_visuals(rapidjson::kObjectType); {		// Player visuals
