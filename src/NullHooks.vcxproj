@@ -101,7 +101,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="core\features\animations\local.cpp" />
+    <ClCompile Include="core\features\misc\animations.cpp" />
     <ClCompile Include="core\features\antiaim\antiaim.cpp" />
     <ClCompile Include="core\features\misc\backtrack.cpp" />
     <ClCompile Include="core\features\misc\commands.cpp">
@@ -131,6 +131,7 @@
     <ClCompile Include="core\features\visuals\player_esp.cpp" />
     <ClCompile Include="core\features\visuals\skin_changer\read_skins.cpp" />
     <ClCompile Include="core\features\visuals\skin_changer\skin_changer.cpp" />
+    <ClCompile Include="core\features\visuals\worldcolor.cpp" />
     <ClCompile Include="core\hooks\functions\alloc_key_values_memory.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -175,6 +176,7 @@
     </ClCompile>
     <ClCompile Include="core\hooks\functions\render_smoke_overlay.cpp" />
     <ClCompile Include="core\hooks\functions\supports_resolve_depth.cpp" />
+    <ClCompile Include="core\hooks\functions\sv_pure.cpp" />
     <ClCompile Include="core\hooks\functions\viewmodel_sequence.cpp" />
     <ClCompile Include="core\hooks\functions\WndProc_hook.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -278,8 +280,10 @@
     <ClInclude Include="dependencies\interfaces\i_base_client_dll.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_entity_list.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_state.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_client_string_table_container.hpp" />
     <ClInclude Include="dependencies\interfaces\i_console.hpp" />
     <ClInclude Include="dependencies\interfaces\i_engine_sound.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_filesystem.hpp" />
     <ClInclude Include="dependencies\interfaces\i_game_event_manager.hpp" />
     <ClInclude Include="dependencies\interfaces\i_input.hpp" />
     <ClInclude Include="dependencies\interfaces\i_input_system.hpp" />

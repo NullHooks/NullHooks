@@ -124,4 +124,18 @@ namespace hooks {
 		inline fn original;
 		void hook(c_recv_proxy_data *, void *, void *);
 	}
+
+	#pragma region sv_pure
+	namespace loose_files_allowed {
+		using fn = void(__thiscall*)(void*);
+		inline fn original;
+		bool __stdcall hook();
+	}
+
+	namespace CL_CheckForPureServerWhitelist {
+		using fn = void(__thiscall*)(void*);
+		inline fn original;
+		void __fastcall hook(void* edx, void* ecx);
+	}
+	#pragma endregion
 }
