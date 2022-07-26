@@ -2,6 +2,7 @@
 #include "dependencies/interfaces/imageformats.h"
 //#include "../math/vector3d.hpp"
 
+#pragma region ENUMS AND FORWARD DECLARATIONS
 enum material_var_flags_t {
 	material_var_debug = (1 << 0),
 	material_var_no_debug_override = (1 << 1),
@@ -67,6 +68,7 @@ typedef void* studio_decal_handle_t;
 typedef int material_property_types_t;
 typedef unsigned short model_instance_handle_t;
 using material_handle_t = unsigned short;
+#pragma endregion
 
 class vec3_t;
 class i_material {
@@ -130,6 +132,11 @@ public:
 	virtual bool was_reloaded_from_whitelist() = 0;
 	virtual bool set_temp_excluded(bool set, int excluded_dimension_limit) = 0;
 	virtual int get_reference_count() const = 0;
+
+	bool is_precached() {
+		using original_fn = bool(__thiscall*)(void*);
+		return (*(original_fn**)this)[70](this);
+	}
 };
 
 class i_material_var {
