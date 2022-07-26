@@ -195,6 +195,7 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - No flash
 - No scope
 - Wireframe smoke (Open an issue if you want NoSmoke)
+- Worldcolor
 - Custom crosshair
 - Recoil crosshair
 - Bullet tracers (:warning: Broken in online matches. Check [todo](#todo))
@@ -330,6 +331,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Replace `player_info` esp with multicombobox
 - [X] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 - [X] Add "defusing" to bomb timer
+- [X] Add worldcolor
 #
 </details>
 
@@ -355,7 +357,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Add auto revolver hold
-- [ ] Add worldcolor
 - [ ] Add player list <!-- Big flowhooks fan, sorry -->
 	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
