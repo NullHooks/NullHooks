@@ -27,15 +27,15 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
         }
     }
 
+    // Pitch
+    cmd->viewangles.x = variables::antiaim::pitch;
+
     // Use different var for yaw in case we are spinning
     static float yaw = 0.f;
     if (variables::antiaim::spinbot)
         yaw += variables::antiaim::spinbot_speed / 2;       // Half speed for more control
     else
         yaw = variables::antiaim::yaw;
-
-    // Pitch
-    cmd->viewangles.x += variables::antiaim::pitch;
 
     // Yaw
     if (send_packet)
