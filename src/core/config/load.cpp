@@ -58,6 +58,8 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::antiaim::antiaim,							"antiaim",			"antiaim");
 	load::parse_float(doc,			variables::antiaim::yaw,								"antiaim",			"antiaim_yaw");
 	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
+	load::parse_bool(doc,			variables::antiaim::spinbot,							"antiaim",			"spinbot");
+	load::parse_float(doc,			variables::antiaim::spinbot_speed,						"antiaim",			"spinbot_speed");
 	// Player visuals
 	load::parse_bool(doc,			variables::player_visuals::showteamesp,					"player_visuals",	"showteamesp");
 	load::parse_bool(doc,			variables::player_visuals::playerglow,					"player_visuals",	"playerglow");
@@ -99,6 +101,7 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::misc_visuals::chickenpride,					"misc_visuals",		"chickenpride");
 	load::parse_float(doc,			variables::misc_visuals::custom_fov_slider,				"misc_visuals",		"custom_fov_slider");
 	load::parse_float(doc,			variables::misc_visuals::custom_vmfov_slider,			"misc_visuals",		"custom_vmfov_slider");
+	load::parse_bool(doc,			variables::misc_visuals::worldcolor,					"misc_visuals",		"worldcolor");
 	// Misc
 	load::parse_bool(doc,			variables::misc::infinite_duck,							"misc",				"infinite_duck");
 	load::parse_bool(doc,			variables::misc::bhop,									"misc",				"bhop");
@@ -145,6 +148,7 @@ void config::load_config(std::string filename) {
 	load::parse_color(doc,			variables::colors::crosshair_c,							"colors",			"crosshair_c");
 	load::parse_color(doc,			variables::colors::recoil_crosshair_c,					"colors",			"recoil_crosshair_c");
 	load::parse_color(doc,			variables::colors::aimbot_fov_c,						"colors",			"aimbot_fov_c");
+	load::parse_color(doc,			variables::colors::worldcolor_c,						"colors",			"worldcolor_c");
 	// Motion blur
 	load::parse_bool(doc,			variables::motion_blur.enabled,							"motion_blur",		"enabled");
 	load::parse_bool(doc,			variables::motion_blur.forwardEnabled,					"motion_blur",		"forward_enabled");

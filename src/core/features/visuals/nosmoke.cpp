@@ -36,6 +36,7 @@ void disable_wiresmoke() {
 	}
 }
 
+// Used in frame_stage_notify - FRAME_RENDER_START
 void visuals::nosmoke(client_frame_stage_t frame_stage) {
 	if (frame_stage != FRAME_RENDER_START && frame_stage != FRAME_RENDER_END) return;
 

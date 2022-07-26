@@ -6,24 +6,26 @@
 #include "core/features/visuals/skin_changer/skin_changer.hpp"	// For init
 
 bool hooks::initialize() {
-	const auto alloc_key_values_target            = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
-	const auto create_move_target                 = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
-	const auto paint_traverse_target              = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
-	const auto post_screen_space_effects_target   = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
-	const auto get_viewmodel_fov_target           = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
-	const auto override_view_target               = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
-	const auto draw_model_execute_target          = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
-	const auto findmdl_target                     = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
-	const auto list_leaves_in_box_target          = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
-	const auto frame_stage_notify_target          = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
-	const auto render_smoke_overlay_target        = reinterpret_cast<void*>(get_virtual(interfaces::view_render, 41));
-	const auto on_screen_size_changed_target      = reinterpret_cast<void*>(get_virtual(interfaces::surface, 116));
-	const auto emit_sound_target                  = reinterpret_cast<void*>(get_virtual(interfaces::engine_sound, 5));
-	const auto is_depth_of_field_enabled_target   = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
-	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
-	const auto supports_resolve_depth_target      = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
-	const auto fire_event_target                  = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
-	const auto viewmodel_sequence_target          = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_viewmodel_sequence));
+	const auto alloc_key_values_target               = reinterpret_cast<void*>(get_virtual(interfaces::key_values_system, 2));
+	const auto create_move_target                    = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 24));
+	const auto paint_traverse_target                 = reinterpret_cast<void*>(get_virtual(interfaces::panel, 41));
+	const auto post_screen_space_effects_target      = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 44));
+	const auto get_viewmodel_fov_target              = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 35));
+	const auto override_view_target                  = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 18));
+	const auto draw_model_execute_target             = reinterpret_cast<void*>(get_virtual(interfaces::model_render, 21));	// 29 - DrawModel | 21 - DrawModelExecute
+	const auto findmdl_target                        = reinterpret_cast<void*>(get_virtual(interfaces::mdl_cache, 10));
+	const auto list_leaves_in_box_target             = reinterpret_cast<void*>(get_virtual(interfaces::engine->get_bsp_tree_query(), 6));
+	const auto frame_stage_notify_target             = reinterpret_cast<void*>(get_virtual(interfaces::client, 37));
+	const auto render_smoke_overlay_target           = reinterpret_cast<void*>(get_virtual(interfaces::view_render, 41));
+	const auto on_screen_size_changed_target         = reinterpret_cast<void*>(get_virtual(interfaces::surface, 116));
+	const auto emit_sound_target                     = reinterpret_cast<void*>(get_virtual(interfaces::engine_sound, 5));
+	const auto loose_files_allowed_target            = reinterpret_cast<void*>(get_virtual(interfaces::filesystem, 128));
+	const auto CL_CheckForPureServerWhitelist_target = reinterpret_cast<void*>(utilities::pattern_scan("engine", sig_CheckForPureServerWhitelist));
+	const auto is_depth_of_field_enabled_target      = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
+	const auto get_client_model_renderable_target    = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
+	const auto supports_resolve_depth_target         = reinterpret_cast<void*>(utilities::pattern_scan("shaderapidx9.dll", sig_supports_resolve_depth));
+	const auto fire_event_target                     = reinterpret_cast<void*>(utilities::pattern_scan("engine.dll", sig_fire_event));
+	const auto viewmodel_sequence_target             = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_viewmodel_sequence));
 
 	config::init();						// Initialize config folder and skins
 	helpers::console::state_to_console_color("Init", "Config initialized!");
@@ -85,6 +87,14 @@ bool hooks::initialize() {
 	if (MH_CreateHook(render_smoke_overlay_target, &render_smoke_overlay::hook, reinterpret_cast<void**>(&render_smoke_overlay::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize render_smoke_overlay.");
 	helpers::console::state_to_console_color("Hooks", "render_smoke_overlay initialized!");
+
+	if (MH_CreateHook(loose_files_allowed_target, &loose_files_allowed::hook, reinterpret_cast<void**>(&loose_files_allowed::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize loose_files_allowed.");
+	helpers::console::state_to_console_color("Hooks", "loose_files_allowed initialized!");
+
+	if (MH_CreateHook(CL_CheckForPureServerWhitelist_target, &CL_CheckForPureServerWhitelist::hook, reinterpret_cast<void**>(&CL_CheckForPureServerWhitelist::original)) != MH_OK)
+		throw std::runtime_error("failed to initialize CL_CheckForPureServerWhitelist.");
+	helpers::console::state_to_console_color("Hooks", "CL_CheckForPureServerWhitelist initialized!");
 
 	if (MH_CreateHook(on_screen_size_changed_target, &on_screen_size_changed::hook, reinterpret_cast<void**>(&on_screen_size_changed::original)) != MH_OK)
 		throw std::runtime_error("failed to initialize on_screen_size_changed.");
