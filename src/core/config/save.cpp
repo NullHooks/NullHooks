@@ -189,7 +189,7 @@ void config::save_config(std::string filename) {
 
 #pragma region SAVE_FUNCTIONS
 void config::save::parse_bool(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, bool& target, std::string json_name) {
-	rapidjson::Value name(json_name.c_str(), allocator);
+	rapidjson::Value name(json_name.c_str(), allocator);		// Name used by rapidjson for the item ("name": 123)
 	parent.AddMember(name, target, allocator);
 }
 
@@ -207,7 +207,7 @@ void config::save::parse_multicombo(rapidjson::Value& parent, rapidjson::Documen
 	rapidjson::Value name(json_name.c_str(), allocator);
 	rapidjson::Value arr(rapidjson::kArrayType);
 
-	for (int n = 0; n < target.vector.size(); n++) {					// Each target vector item
+	for (int n = 0; n < target.vector.size(); n++) {			// Each target vector item
 		arr.PushBack(target.vector.at(n).state, allocator);		// Add item to array
 	}
 
@@ -216,17 +216,28 @@ void config::save::parse_multicombo(rapidjson::Value& parent, rapidjson::Documen
 }
 
 void config::save::parse_color(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, colorpicker_col_t& target, std::string json_name) {
-	rapidjson::Value name(json_name.c_str(), allocator);
-	rapidjson::Value arr(rapidjson::kArrayType);
+	rapidjson::Value name(json_name.c_str(), allocator);	// Name used by rapidjson for the item ("name": 123)
+	rapidjson::Value col_obj(rapidjson::kObjectType);		// The color object containing the rgb and the hsv arrays
+	rapidjson::Value rgb_arr(rapidjson::kArrayType);
+	rapidjson::Value hsv_arr(rapidjson::kArrayType);
 
-	// Add colors to array in order
-	arr.PushBack(target.col.r, allocator);
-	arr.PushBack(target.col.g, allocator);
-	arr.PushBack(target.col.b, allocator);
-	arr.PushBack(target.col.a, allocator);
+	// Add colors to rgb array in order
+	rgb_arr.PushBack(target.col.r, allocator);
+	rgb_arr.PushBack(target.col.g, allocator);
+	rgb_arr.PushBack(target.col.b, allocator);
+	rgb_arr.PushBack(target.col.a, allocator);
+
+	// Add colors to hsv array in order
+	hsv_arr.PushBack(target.f_hsv.h, allocator);
+	hsv_arr.PushBack(target.f_hsv.s, allocator);
+	hsv_arr.PushBack(target.f_hsv.v, allocator);
+
+	// Add arrays to color object
+	col_obj.AddMember("rgb", rgb_arr, allocator);
+	col_obj.AddMember("hsv", hsv_arr, allocator);
 
 	// Add array to main doc
-	parent.AddMember(name, arr, allocator);
+	parent.AddMember(name, col_obj, allocator);
 }
 
 void config::save::parse_hotkey(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, hotkey_t& target, std::string json_name) {
