@@ -205,20 +205,42 @@ void config::load::parse_multicombo(rapidjson::Document& doc, multicombobox_togg
 }
 
 void config::load::parse_color(rapidjson::Document& doc, colorpicker_col_t& target, std::string parent, std::string json_name) {
-	if (!doc.HasMember(parent.c_str())) return;					// Check if parent in doc
-	rapidjson::Value& parent_obj = doc[parent.c_str()];			// Get json object from parent
-	if (!parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
-	rapidjson::Value& value = parent_obj[json_name.c_str()];	// value will be each json entry of the item
+	if (!doc.HasMember(parent.c_str())) return;											// Check if parent in doc
+	rapidjson::Value& parent_obj = doc[parent.c_str()];									// Get json object from parent
+	if (!parent_obj.IsObject() || !parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
+	rapidjson::Value& color_obj = parent_obj[json_name.c_str()];						// color_obj will be the obj containing the rgb and hsv arrays
+	if (!color_obj.IsObject()) return;													// Check if the color object is an object
+	
+	if (color_obj.HasMember("rgb")) {								// Get rgb array from color obj
+		rapidjson::Value& rgb_arr = color_obj["rgb"];				// rgb_arr will be the array containing the rgb integers
 
-	if (value.IsArray()) {											// Check item is array
-		if (value.Size() > 0 && value[0].IsInt())					// Json array is good and json value is a bool
-			target.col.r = value[0].GetInt();						// (R) Assign to color parameter
-		if (value.Size() > 1 && value[1].IsInt())
-			target.col.g = value[1].GetInt();						// (G)
-		if (value.Size() > 2 && value[2].IsInt())
-			target.col.b = value[2].GetInt();						// (B)
-		if (value.Size() > 3 && value[3].IsInt())
-			target.col.a = value[3].GetInt();						// (A)
+		if (rgb_arr.IsArray()) {									// Check item is array
+			if (rgb_arr.Size() > 0 && rgb_arr[0].IsInt())			// Json array is good and json value is an int
+				target.col.r = rgb_arr[0].GetInt();					// (R) Assign to color parameter
+			if (rgb_arr.Size() > 1 && rgb_arr[1].IsInt())
+				target.col.g = rgb_arr[1].GetInt();					// (G)
+			if (rgb_arr.Size() > 2 && rgb_arr[2].IsInt())
+				target.col.b = rgb_arr[2].GetInt();					// (B)
+			if (rgb_arr.Size() > 3 && rgb_arr[3].IsInt())
+				target.col.a = rgb_arr[3].GetInt();					// (A)
+		}
+	}
+
+	if (color_obj.HasMember("hsv")) {							// Get hsv array from color obj
+		rapidjson::Value& hsv_arr = color_obj["hsv"];			// hsv_arr will be the array containing the hsv floats
+
+		if (hsv_arr.IsArray()) {								// Check item is array
+			if (hsv_arr.Size() > 0) {							// Json array is good and json value is float (float_hsv)
+				if (hsv_arr[0].IsFloat())		target.f_hsv.h = hsv_arr[0].GetFloat();		// (H) Assign to float_hsv parameter
+				else if (hsv_arr[0].IsInt())	target.f_hsv.h = hsv_arr[0].GetInt();		// Int check just in case
+			} else if (hsv_arr.Size() > 1) {
+				if (hsv_arr[1].IsFloat())		target.f_hsv.s = hsv_arr[1].GetFloat();		// (S)
+				else if (hsv_arr[1].IsInt())	target.f_hsv.h = hsv_arr[1].GetInt();
+			} else if (hsv_arr.Size() > 2) {
+				if (hsv_arr[2].IsFloat())		target.f_hsv.v = hsv_arr[2].GetFloat();		// (V)
+				else if (hsv_arr[2].IsInt())	target.f_hsv.h = hsv_arr[2].GetInt();
+			}
+		}
 	}
 }
 
