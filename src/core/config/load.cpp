@@ -232,12 +232,14 @@ void config::load::parse_color(rapidjson::Document& doc, colorpicker_col_t& targ
 			if (hsv_arr.Size() > 0) {							// Json array is good and json value is float (float_hsv)
 				if (hsv_arr[0].IsFloat())		target.f_hsv.h = hsv_arr[0].GetFloat();		// (H) Assign to float_hsv parameter
 				else if (hsv_arr[0].IsInt())	target.f_hsv.h = hsv_arr[0].GetInt();		// Int check just in case
-			} else if (hsv_arr.Size() > 1) {
+			}
+			if (hsv_arr.Size() > 1) {
 				if (hsv_arr[1].IsFloat())		target.f_hsv.s = hsv_arr[1].GetFloat();		// (S)
-				else if (hsv_arr[1].IsInt())	target.f_hsv.h = hsv_arr[1].GetInt();
-			} else if (hsv_arr.Size() > 2) {
+				else if (hsv_arr[1].IsInt())	target.f_hsv.s = hsv_arr[1].GetInt();
+			}
+			if (hsv_arr.Size() > 2) {
 				if (hsv_arr[2].IsFloat())		target.f_hsv.v = hsv_arr[2].GetFloat();		// (V)
-				else if (hsv_arr[2].IsInt())	target.f_hsv.h = hsv_arr[2].GetInt();
+				else if (hsv_arr[2].IsInt())	target.f_hsv.v = hsv_arr[2].GetInt();
 			}
 		}
 	}

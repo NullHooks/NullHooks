@@ -179,9 +179,7 @@ namespace spectator_framework {
 struct color_popup_info {
 	std::int32_t x;
 	std::int32_t y;
-	color& target;
-	float_hsv& target_hsv;
-	bool& toggle_color;
+	colorpicker_col_t& col_t;
 };
 
 struct combo_popup_info {

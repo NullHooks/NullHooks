@@ -36,6 +36,11 @@ struct float_hsv {
 		this->s = s;
 		this->v = v;
 	}
+
+	// For comparing colors
+	bool operator != (float_hsv other) {
+		return (other.h == h && other.s == s && other.v == v);
+	}
 };
 
 struct float_color {
