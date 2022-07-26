@@ -107,6 +107,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::chickenpride,					"chickenpride");
 		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_fov_slider,				"custom_fov_slider");
 		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_vmfov_slider,			"custom_vmfov_slider");
+		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::worldcolor,					"worldcolor");
 	} doc.AddMember("misc_visuals", misc_visuals, allocator);
 	
 	rapidjson::Value misc(rapidjson::kObjectType); {				// Misc
@@ -159,6 +160,7 @@ void config::save_config(std::string filename) {
 		save::parse_color(colors,				allocator,			variables::colors::crosshair_c,							"crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::recoil_crosshair_c,					"recoil_crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::aimbot_fov_c,						"aimbot_fov_c");
+		save::parse_color(colors,				allocator,			variables::colors::worldcolor_c,						"worldcolor_c");
 	} doc.AddMember("colors", colors, allocator);
 	
 	rapidjson::Value motion_blur(rapidjson::kObjectType); {			// Motion blur
