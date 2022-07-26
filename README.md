@@ -371,8 +371,10 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
 
-![Screenshot 14](screenshots/screenshot14.png)
-![Screenshot 15](screenshots/screenshot15.png)
+<!-- Ignore the low fps in some of the screenshots, I had to tab out of the game to make them -->
+![Screenshot 17](screenshots/screenshot17.png)
+![Screenshot 18](screenshots/screenshot19.png)
+![Screenshot 18](screenshots/screenshot18.png)
 ![Screenshot 16](screenshots/screenshot16.png)
 ![Screenshot 13](screenshots/screenshot13.png)
 ![Screenshot 8](screenshots/screenshot8.png)
