@@ -379,6 +379,5 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 ![Screenshot 13](screenshots/screenshot13.png)
 ![Screenshot 8](screenshots/screenshot8.png)
 ![Screenshot 9](screenshots/screenshot9.png)
-![Screenshot 11](screenshots/screenshot11.png)
 ![Screenshot 12](screenshots/screenshot12.png)
 
