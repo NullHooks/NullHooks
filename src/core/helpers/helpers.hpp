@@ -1,24 +1,58 @@
 #pragma once
-#include "dependencies/utilities/csgo.hpp"
 
 // Hue in 360 format
 struct int_hsv {
 	int h;		// Max: 360
 	float s;	// Max: 1.f
 	float v;	// Max: 1.f
+
+	int_hsv( ) = default;
+	int_hsv(int_hsv& hsv) {
+		this->h = hsv.h;
+		this->s = hsv.s;
+		this->v = hsv.v;
+	}
+
+	int_hsv(int h, float s, float v) {
+		this->h = h;
+		this->s = s;
+		this->v = v;
+	}
 };
 
 // Hue in 1.f format
 struct float_hsv {
-	float h;	// Max: 1.f
-	float s;	// Max: 1.f
-	float v;	// Max: 1.f
+	float h, s, v;	// Max: 1.f
+
+	float_hsv( ) = default;
+	float_hsv(float_hsv& hsv) {
+		this->h = hsv.h;
+		this->s = hsv.s;
+		this->v = hsv.v;
+	}
+
+	float_hsv(float h, float s, float v) {
+		this->h = h;
+		this->s = s;
+		this->v = v;
+	}
 };
 
 struct float_color {
-	float r;	// Max: 1.f
-	float g;	// Max: 1.f
-	float b;	// Max: 1.f
+	float r, g, b;	// Max: 1.f
+
+	float_color( ) = default;
+	float_color(float_color& hsv) {
+		this->r = hsv.r;
+		this->g = hsv.g;
+		this->b = hsv.b;
+	}
+
+	float_color(float r, float g, float b) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+	}
 };
 
 namespace helpers {

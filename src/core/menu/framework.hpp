@@ -1,6 +1,7 @@
 #pragma once
 #include "dependencies/utilities/csgo.hpp"
-#include "core/menu/global_input.hpp"
+#include "core/helpers/helpers.hpp"							// For float_hsv
+#include "core/menu/global_input.hpp"						// For hotkey_t and textbox_t
 #include "dependencies/utilities/renderer/renderer.hpp"
 
 #pragma region STRUCTS
@@ -12,15 +13,18 @@ struct multicombo_opt_t {
 class colorpicker_col_t {
 public:
 	color col;
+	float_hsv f_hsv;		// Used for color pickers
 	bool toggle;
 
 	colorpicker_col_t(colorpicker_col_t& col_picker) {
 		this->col = col_picker.col;
+		this->f_hsv = col_picker.f_hsv;
 		this->toggle = col_picker.toggle;
 	}
 
 	colorpicker_col_t(const color col, const bool toggle = false) {
 		this->col = col;
+		this->f_hsv = helpers::colors::color2hsv_float(col);
 		this->toggle = toggle;
 	}
 
@@ -176,6 +180,7 @@ struct color_popup_info {
 	std::int32_t x;
 	std::int32_t y;
 	color& target;
+	float_hsv& target_hsv;
 	bool& toggle_color;
 };
 
@@ -209,7 +214,7 @@ namespace popup_system {
 	const int win_padding = 10;
 	const int slider_w = 127, slider_h = 15;					// w has to be divisible by 6 in order for the fade to be clean
 	const int win_w = slider_w + win_padding * 2;
-	const int win_h = slider_h * 3 + win_padding * 4;			// +1 slider and margin for alpha slider
+	const int win_h = slider_h * 4 + win_padding * 5;			// +1 slider and margin for each slider
 
 	inline std::vector<color_popup_info> active_color_popups;	// Menu buttons will store here information about the popup that will be rendered
 	void check_color_popups();									// Will check for popups in the active_color_popups vector
