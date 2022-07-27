@@ -35,6 +35,7 @@ void override_material(bool ignorez, bool wireframe, const color& rgba, const ch
 	interfaces::model_render->override_material(material);
 }
 
+// Used in draw_model_execute
 void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& state, const model_render_info_t& info, matrix_t* matrix) {
 	if (!csgo::local_player) return;
 	if (!(variables::chams::player_chams
@@ -63,17 +64,17 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 				if (!variables::chams::player_chams || !player->is_moving())
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);	// Draw original player before backtrack if normal player chams are disabled. Probably a bad way of doing it
 
-				// TODO: Maybe make the color a fade from player chams color to backtrack chams color
-				// TODO: Backtrack color at max opacity glitches a bit with normal chams
 				const color chams_col = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend : variables::colors::bt_chams_enemy;
+				const color chams_col_fade = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend_fade : variables::colors::bt_chams_enemy_fade;
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
 					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
 						|| backtrack::records[player->index()][i].matrix == nullptr)
 						continue;
 
-					override_material(false, false, color::interpolate(chams_col, color(255, 255, 255, 255), std::clamp(1 * (i) / (64.f), 0.f, 1.f) * 5), materials[1]);
+					override_material(false, false, color::interpolate(chams_col, chams_col_fade, std::clamp(1 * (i) / (64.f), 0.f, 1.f) * 5), materials[1]);
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);		// Use backtrack's matrix
 				}
+				interfaces::model_render->override_material(nullptr);		// Reset material to avoid replacing the player material itself
 			}
 
 			// For thirdperson
