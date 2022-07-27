@@ -15,7 +15,8 @@ inline void apply_worldcolor(color col) {
 }
 
 void visuals::worldcolor() {
-    static bool using_worldcolor = false;       // If true it means we just used worldcolor, so if we disable the menu var, it will apply default worldcolor to reset 
+    static bool using_worldcolor = true;        // If true it means we just used worldcolor, so if we disable the menu var, it will apply default worldcolor to reset.
+                                                // Default is true in case we load a the cheat in a match with worldcolor enabled
 
     if (!variables::misc_visuals::worldcolor) {
         if (using_worldcolor) {
