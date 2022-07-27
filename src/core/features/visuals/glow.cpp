@@ -24,15 +24,17 @@ void visuals::glow() {
 			case ccsplayer: {
 				if (!variables::player_visuals::playerglow || glowEnt == local_player_ent) break;
 				
-				if (glowEnt->has_gun_game_immunity()) {		// TODO: White glow if gun inmunity (same as chams)
-					glowObj.set(0.9f, 0.9f, 0.9f, 0.8f);	// Does not work
+				if (glowEnt->has_gun_game_immunity()) {
+					glowObj.set(0.9f, 0.9f, 0.8f);
 				} else {
-					if (glowEnt->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
-						glowObj.set(0.0f, 0.3f, 1.f, 0.8f);
-					else if (glowEnt->team() != csgo::local_player->team())
-						glowObj.set(0.9f, 0.0f, 0.0f, 0.8f);
+					if (glowEnt->team() != csgo::local_player->team()) {
+						float_color f_col(variables::colors::enemy_glow_c.col);
+						glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::enemy_glow_c.col.a / 255.f);
+					} else if (variables::player_visuals::showteamesp) {
+						float_color f_col(variables::colors::friendly_glow_c.col);
+						glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::friendly_glow_c.col.a / 255.f);
+					}
 				}
-
 				break;
 			}
 			/* ------------ BOMB ------------ */
@@ -56,14 +58,11 @@ void visuals::glow() {
 			case cincendiarygrenade:
 			case chegrenade: {
 				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
-				glowObj.set(0.95f, 0.95f, 0.85f, 0.8f);
+				float_color f_col(variables::colors::entity_glow_c.col);
+				glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::entity_glow_c.col.a / 255.f);
 				break;
 			}
 			/* ------------ WEAPONS ------------ */
-			/*
-			case cweaponcsbase:
-			case cweaponcsbasegun:
-			*/
 			case cak47:
 			case cdeagle:
 			case cweaponaug:
@@ -108,7 +107,8 @@ void visuals::glow() {
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
 				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
-				glowObj.set(0.95f, 0.95f, 0.95f, 0.8f);
+				float_color f_col(variables::colors::entity_glow_c.col);
+				glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::entity_glow_c.col.a / 255.f);
 				break;
 			}
 			default: break;

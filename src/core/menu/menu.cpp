@@ -116,8 +116,8 @@ void menu::render() {
 			gui::add_column();
 
 			gui::add_groupbox("Glow", 3); {
-				gui::add_checkbox("Player glow",		variables::player_visuals::playerglow);
-				gui::add_checkbox("Entity glow",		variables::entity_visuals::entityglow);
+				gui::add_checkbox("Player glow",		variables::player_visuals::playerglow, variables::colors::friendly_glow_c, variables::colors::enemy_glow_c);
+				gui::add_checkbox("Entity glow",		variables::entity_visuals::entityglow, variables::colors::entity_glow_c);
 				gui::add_checkbox("Chicken pride",		variables::misc_visuals::chickenpride);
 			}
 
