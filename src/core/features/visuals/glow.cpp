@@ -4,9 +4,12 @@
 
 // DoPostScreenSpaceEffects hook
 void visuals::glow() {
+	static bool applied_entity_glow = true;		// Same as worldcolor bool, used to reset colors to fully disable
+
 	if (!(variables::player_visuals::playerglow
 		|| variables::entity_visuals::entityglow
-		|| variables::misc_visuals::chickenpride)) return;
+		|| variables::misc_visuals::chickenpride
+		|| applied_entity_glow)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
@@ -21,49 +24,65 @@ void visuals::glow() {
 		if (!glowEnt) continue;
 
 		switch (glowEnt->client_class()->class_id) {
+			
+			#pragma region PLAYER
 			case ccsplayer: {
 				if (!variables::player_visuals::playerglow || glowEnt == local_player_ent) break;
 				
-				if (glowEnt->has_gun_game_immunity()) {		// TODO: White glow if gun inmunity (same as chams)
-					glowObj.set(0.9f, 0.9f, 0.9f, 0.8f);	// Does not work
+				if (glowEnt->has_gun_game_immunity()) {
+					glowObj.set(0.9f, 0.9f, 0.8f);
 				} else {
-					if (glowEnt->team() == csgo::local_player->team() && variables::player_visuals::showteamesp)
-						glowObj.set(0.0f, 0.3f, 1.f, 0.8f);
-					else if (glowEnt->team() != csgo::local_player->team())
-						glowObj.set(0.9f, 0.0f, 0.0f, 0.8f);
+					if (glowEnt->team() != csgo::local_player->team()) {
+						float_color f_col(variables::colors::enemy_glow_c.col);
+						glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::enemy_glow_c.col.a / 255.f);
+					} else if (variables::player_visuals::showteamesp) {
+						float_color f_col(variables::colors::friendly_glow_c.col);
+						glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::friendly_glow_c.col.a / 255.f);
+					}
 				}
-
 				break;
 			}
-			/* ------------ BOMB ------------ */
+			#pragma endregion
+
+			#pragma region BOMB
 			case cplantedc4: 
 			case cc4: {
 				if (!variables::entity_visuals::entityglow) break;
 				glowObj.set(1.f, 0.5f, 0.0f, 0.8f);
 				break;
 			}
-			/* ------------ MISC ------------ */
+			#pragma endregion
+
+			#pragma region MISC
 			case cchicken: {
 				if (!variables::misc_visuals::chickenpride) break;
 				glowObj.set(1.f, 0.f, 1.f, 0.9f);
 				break;
 			}
-			/* ------------ NADES ------------ */
+			#pragma endregion
+
+			#pragma region NADES
 			case cflashbang:
 			case csmokegrenade:
 			case cdecoygrenade:
 			case cmolotovgrenade:
 			case cincendiarygrenade:
 			case chegrenade: {
-				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
-				glowObj.set(0.95f, 0.95f, 0.85f, 0.8f);
+				if (!variables::entity_visuals::entityglow) {
+					if (applied_entity_glow)
+						glowObj.set(1.f, 1.f, 1.f, 0.f);
+
+					break;
+				}
+
+				float_color f_col(variables::colors::entity_glow_c.col);
+				glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::entity_glow_c.col.a / 255.f);
+
 				break;
 			}
-			/* ------------ WEAPONS ------------ */
-			/*
-			case cweaponcsbase:
-			case cweaponcsbasegun:
-			*/
+			#pragma endregion
+
+			#pragma region WEAPONS
 			case cak47:
 			case cdeagle:
 			case cweaponaug:
@@ -107,11 +126,23 @@ void visuals::glow() {
 			case cweaponusp:
 			case cweaponxm1014:
 			case cweaponzonerepulsor: {
-				if (!variables::entity_visuals::entityglow) break;		// TODO: Glow only disables if another glow is enabled
-				glowObj.set(0.95f, 0.95f, 0.95f, 0.8f);
+				if (!variables::entity_visuals::entityglow) {
+					if (applied_entity_glow)
+						glowObj.set(1.f, 1.f, 1.f, 0.f);
+
+					break;
+				}
+
+				float_color f_col(variables::colors::entity_glow_c.col);
+				glowObj.set(f_col.r, f_col.g, f_col.b, variables::colors::entity_glow_c.col.a / 255.f);
+
 				break;
 			}
+			#pragma endregion
+
 			default: break;
 		}
 	}
+
+	applied_entity_glow = variables::entity_visuals::entityglow;
 }
