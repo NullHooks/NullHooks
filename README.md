@@ -333,10 +333,12 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add "defusing" to bomb timer
 - [X] Add worldcolor
 - [X] Entity glow won't turn off on weapons (will turn off if another glow is on)
+- [X] Skinchanger fixes
+    - [X] Fix talon knife inspect animation
+    - [X] Get localplayer steam id to fix weapon stattrack
 #
 </details>
 
-#### Features
 - [X] Add aim stuff
     - [X] Triggerbot
         - [X] Add delay slider
@@ -363,10 +365,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
 - [ ] Port to linux
 
-#### Bugs/Fixes
-- [ ] Skinchanger fixes
-    - [X] Fix talon knife inspect animation
-    - [ ] Get localplayer steam id to fix weapon stattrack
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
