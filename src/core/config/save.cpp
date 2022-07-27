@@ -67,7 +67,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::lineesp,						"lineesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::skeletonesp,					"skeletonesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::nameesp,						"nameesp");
-		save::parse_multicombo(player_visuals,		allocator,			variables::player_visuals::playerinfo,					"playerinfo");
+		save::parse_multicombo(player_visuals,	allocator,			variables::player_visuals::playerinfo,					"playerinfo");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::healthesp,					"healthesp");
 	} doc.AddMember("player_visuals", player_visuals, allocator);
 	
@@ -157,6 +157,8 @@ void config::save_config(std::string filename) {
 		save::parse_color(colors,				allocator,			variables::colors::chams_sleeve_c,						"chams_sleeve_c");
 		save::parse_color(colors,				allocator,			variables::colors::bt_chams_enemy,						"bt_chams_enemy");
 		save::parse_color(colors,				allocator,			variables::colors::bt_chams_friend,						"bt_chams_friend");
+		save::parse_color(colors,				allocator,			variables::colors::bt_chams_enemy_fade,					"bt_chams_enemy_fade");
+		save::parse_color(colors,				allocator,			variables::colors::bt_chams_friend_fade,				"bt_chams_friend_fade");
 		save::parse_color(colors,				allocator,			variables::colors::crosshair_c,							"crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::recoil_crosshair_c,					"recoil_crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::aimbot_fov_c,						"aimbot_fov_c");

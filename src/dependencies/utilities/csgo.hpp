@@ -52,7 +52,7 @@
 #define sig_view_render							"8B 0D ? ? ? ? FF 75 0C 8B 45 08"
 #define sig_viewmodel_sequence					"55 8B EC 53 8B 5D 08 57 8B 7D 0C 8B"
 #define sig_filesystem							"8B 0D ? ? ? ? 8D 95 ? ? ? ? 6A 00 C6"
-#define sig_CheckForPureServerWhitelist			"8B 0D ? ? ? ? 56 83 B9 ? ? ? ? ? 7E 6E"
+#define sig_check_for_pure_server_white_list			"8B 0D ? ? ? ? 56 83 B9 ? ? ? ? ? 7E 6E"
 #define sig_update_visibility					"55 8B EC 83 E4 F8 83 EC 24 53 56 57 8B F9 8D"
 #define sig_update_visibility_all_enttities		"53 56 66 8B 35 ? ? ? ? BB ? ? ? ? 57 90 66 3B F3 74 ? A1"
 

@@ -132,7 +132,7 @@ namespace hooks {
 		bool __stdcall hook();
 	}
 
-	namespace CL_CheckForPureServerWhitelist {
+	namespace check_for_pure_server_white_list {
 		using fn = void(__thiscall*)(void*);
 		inline fn original;
 		void __fastcall hook(void* edx, void* ecx);
