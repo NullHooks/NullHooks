@@ -10,6 +10,8 @@ void prediction::start(c_usercmd* cmd) {
 	custom_inpred = true;
 
 	*csgo::local_player->current_command() = cmd;
+	csgo::local_player->last_command( ) = *cmd;
+
 	// last_command
 	*reinterpret_cast<c_usercmd**>(uintptr_t(csgo::local_player) + 0x3298) = cmd;
 
