@@ -58,6 +58,12 @@ struct float_color {
 		this->g = g;
 		this->b = b;
 	}
+
+	float_color(color col) {
+		this->r = (float)col.r / 255.f;
+		this->g = (float)col.g / 255.f;
+		this->b = (float)col.b / 255.f;
+	}
 };
 
 namespace helpers {
