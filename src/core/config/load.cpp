@@ -144,6 +144,8 @@ void config::load_config(std::string filename) {
 	load::parse_color(doc,			variables::colors::chams_sleeve_c,						"colors",			"chams_sleeve_c");
 	load::parse_color(doc,			variables::colors::bt_chams_enemy,						"colors",			"bt_chams_enemy");
 	load::parse_color(doc,			variables::colors::bt_chams_friend,						"colors",			"bt_chams_friend");
+	load::parse_color(doc,			variables::colors::bt_chams_enemy_fade,					"colors",			"bt_chams_enemy_fade");
+	load::parse_color(doc,			variables::colors::bt_chams_friend_fade,				"colors",			"bt_chams_friend_fade");
 	load::parse_color(doc,			variables::colors::crosshair_c,							"colors",			"crosshair_c");
 	load::parse_color(doc,			variables::colors::recoil_crosshair_c,					"colors",			"recoil_crosshair_c");
 	load::parse_color(doc,			variables::colors::aimbot_fov_c,						"colors",			"aimbot_fov_c");
