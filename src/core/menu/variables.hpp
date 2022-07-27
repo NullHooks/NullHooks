@@ -250,7 +250,9 @@ namespace variables {
 		inline colorpicker_col_t chams_sleeve_c			(color(100, 0, 255, 255));
 
 		inline colorpicker_col_t bt_chams_enemy			(chams_vis_enemy_c.col.get_custom_alpha(30));		// Backtrack enemy
-		inline colorpicker_col_t bt_chams_friend		(chams_vis_friend_c.col.get_custom_alpha(30));	// Backtrack friendly
+		inline colorpicker_col_t bt_chams_friend		(chams_vis_friend_c.col.get_custom_alpha(30));		// Backtrack friendly
+		inline colorpicker_col_t bt_chams_enemy_fade	(color::white(200));		// Used for the color transition
+		inline colorpicker_col_t bt_chams_friend_fade	(color::white(200));		// Used for the color transition
 
 		// Misc
 		inline colorpicker_col_t crosshair_c			(color(255, 255, 255, 255));

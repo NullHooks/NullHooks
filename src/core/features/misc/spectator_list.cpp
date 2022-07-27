@@ -56,7 +56,7 @@ void misc::spectator_list() {
 		wchar_t w_player_name[255];
 		if (MultiByteToWideChar(CP_UTF8, 0, pinfo.name, -1, w_player_name, 128) < 0) continue;
 
-		if (strstr(pinfo.name, "GOTV")) continue;	// Compare .name cuz we cant wstring
+		if (pinfo.ishltv) continue;	// Compare .name cuz we cant wstring
 
 		if (!csgo::local_player || !spec) continue;
 		if (spec->index() == spec_player->index()) {
@@ -73,7 +73,7 @@ void misc::spectator_list() {
 		const int wname_h = 25;
 		variables::ui::spectators::w = 100;
 		variables::ui::spectators::h = 5 + (15 * spec_count) + 5 + wname_h;
-			
+
 		draw_spec_frame(variables::ui::spectators::x, variables::ui::spectators::y, cur_name_w, variables::ui::spectators::h, wname_h, 5,
 			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
 

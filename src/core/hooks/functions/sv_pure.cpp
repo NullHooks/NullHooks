@@ -8,6 +8,6 @@ bool __stdcall hooks::loose_files_allowed::hook() {
 	return true;	// Allow the files :think:
 }
 
-void __fastcall hooks::CL_CheckForPureServerWhitelist::hook(void* edx, void* ecx) {
+void __fastcall hooks::check_for_pure_server_white_list::hook(void* edx, void* ecx) {
 	return;			// Stop the game from checking the whitelist lmao
 }
