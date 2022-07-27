@@ -26,6 +26,7 @@ bool interfaces::initialize() {
 	client_string_table_container = get_interface<i_client_string_table_container, interface_type::index>("engine.dll", "VEngineClientStringTable001");
 	filesystem                    = get_interface<i_filesystem, interface_type::index>("filesystem_stdio.dll", "VFileSystem017");
 	engine_sound = get_interface<i_engine_sound, interface_type::index>("engine.dll", "IEngineSoundClient003");
+	panorama_engine = get_interface<i_panoramaui_engine, interface_type::index>("panorama.dll", "PanoramaUIEngine001");
 
 	/* ------------------ Custom interfaces ------------------ */
 

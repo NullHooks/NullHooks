@@ -291,6 +291,7 @@
     <ClInclude Include="dependencies\interfaces\i_material_system.hpp" />
     <ClInclude Include="dependencies\interfaces\i_mdlcache.hpp" />
     <ClInclude Include="dependencies\interfaces\i_panel.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_panoramaui_engine.hpp" />
     <ClInclude Include="dependencies\interfaces\i_physics_surface_props.hpp" />
     <ClInclude Include="dependencies\interfaces\i_player_movement.hpp" />
     <ClInclude Include="dependencies\interfaces\i_render_view.hpp" />

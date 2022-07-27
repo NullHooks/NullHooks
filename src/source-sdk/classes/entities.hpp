@@ -615,6 +615,13 @@ public:
 		return reinterpret_cast<c_usercmd**>(uintptr_t(this) + offset);
 	}
 
+	c_usercmd& last_command( )
+	{
+		static const std::uintptr_t last_command_fn =
+			*reinterpret_cast< std::uintptr_t* >( utilities::pattern_scan( "client.dll",  "8D 8E ? ? ? ? 89 5C 24 3C" ) + 2 );
+		return *reinterpret_cast< c_usercmd* >( reinterpret_cast< std::uintptr_t >( this ) + last_command_fn );
+	}
+
 	void set_next_think(int think) {
 		using original_fn = void(__thiscall*)(void*, int);
 		static auto set_next_think_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "55 8B EC 56 57 8B F9 8B B7 ? ? ? ? 8B"));

@@ -32,6 +32,7 @@
 #include "dependencies/interfaces/i_client_string_table_container.hpp"
 #include "dependencies/interfaces/i_filesystem.hpp"
 #include "dependencies/interfaces/i_engine_sound.hpp"
+#include "dependencies/interfaces/i_panoramaui_engine.hpp"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
@@ -105,6 +106,7 @@ namespace interfaces {
 	inline i_client_string_table_container* client_string_table_container;
 	inline i_filesystem* filesystem;
 	inline i_engine_sound* engine_sound;
+	inline i_panoramaui_engine* panorama_engine;
 
 	// https://github.com/cazzwastaken/based/search?q=keyValuesSystem
 	inline void* key_values_system = nullptr;
