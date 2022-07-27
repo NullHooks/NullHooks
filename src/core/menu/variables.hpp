@@ -182,6 +182,7 @@ namespace variables {
 		// Network
 		inline bool backtrack = false;
 		inline bool backtrack_team = false;
+		inline float backtrack_ticks = 200.f;
 
 		// Thirdperson
 		inline bool thirdperson = false;

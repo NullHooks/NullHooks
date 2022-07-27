@@ -93,10 +93,11 @@ void backtrack::update() noexcept {
 		entity->setup_bones(record.matrix, 128, 0x7FF00, interfaces::globals->cur_time);	// We can't add the matrix to the record declaration cuz we need to use a ptr in setup_bones()
 		records[i].push_front(record);
 
-		while (records[i].size() > 3 && records[i].size() > static_cast<size_t>(TIME_TO_TICKS(0.2f)))
+		// Iterate through records and only keep the ones that match our backtrack time
+		while (records[i].size() > 3 && records[i].size() > static_cast<size_t>(TIME_TO_TICKS(variables::misc::backtrack_ticks / 1000.f)))
 			records[i].pop_back();
 		
-		// I have no idea what the next 5 lines are for. If you want you can make an issue explaining it :)
+		// The following lines determine if the tick is valid or not. We erase all the invalid ones
 		auto invalid = std::find_if(std::cbegin(records[i]), std::cend(records[i]), [](const player_record& rec) {
 			return !valid_tick(rec.simulation_time, 0.2f);
 		});
