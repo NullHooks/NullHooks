@@ -143,10 +143,11 @@ void menu::render() {
 		case 2: {	// Misc
 			gui::init_tab();
 
-			gui::add_groupbox("Network", 3); {
-				gui::add_checkbox("Backtrack",			variables::misc::backtrack);
-				gui::add_checkbox("Also teammates",		variables::misc::backtrack_team, variables::colors::bt_chams_friend_fade, variables::colors::bt_chams_friend);
-				gui::add_checkbox("Backtrack chams",	variables::chams::backtrack_chams, variables::colors::bt_chams_enemy_fade, variables::colors::bt_chams_enemy);
+			gui::add_groupbox("Network", 4); {
+				gui::add_checkbox	("Backtrack",			variables::misc::backtrack);
+				gui::add_slider		("Backtrack ms",			variables::misc::backtrack_ticks, 0.f, 400.f);
+				gui::add_checkbox	("Also teammates",		variables::misc::backtrack_team, variables::colors::bt_chams_friend_fade, variables::colors::bt_chams_friend);
+				gui::add_checkbox	("Backtrack chams",		variables::chams::backtrack_chams, variables::colors::bt_chams_enemy_fade, variables::colors::bt_chams_enemy);
 			}
 
 			gui::add_groupbox("Movement", 11); {
