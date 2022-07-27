@@ -109,6 +109,7 @@ void backtrack::update() noexcept {
 void backtrack::run(c_usercmd* cmd) noexcept {
 	if (!variables::misc::backtrack) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
+	if (!(cmd->buttons & in_attack)) return;
 
 	auto weapon = csgo::local_player->active_weapon();
 	if (!weapon) return;
@@ -174,7 +175,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 		}
 	}
 
-	if (best_record && cmd->buttons & in_attack)	// We got the target we are shooting and we are shooting lol
+	if (best_record)	// We got the target we are shooting and we are shooting lol
 		cmd->tick_count = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());	// Epic matrix glitch
 }
 
