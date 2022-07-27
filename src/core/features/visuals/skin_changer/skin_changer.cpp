@@ -28,7 +28,10 @@ bool skins::apply_skin(DWORD weapon_handle) {
 	if (skins::custom_skins.at(weapon_index).stattrack != NULL) weapon->fallback_stattrack() = skins::custom_skins.at(weapon_index).stattrack;
 	if (skins::custom_skins.at(weapon_index).wear != NULL)      weapon->fallback_wear()      = skins::custom_skins.at(weapon_index).wear;
     if (skins::custom_skins.at(weapon_index).custom_name != "") strcpy(weapon->custom_name(), skins::custom_skins.at(weapon_index).custom_name.c_str());        // Custom name
-    // @todo: Set account id to localplayer id for stattrack
+    
+    // Set account id to localplayer id for stattrack
+    static std::uint64_t localplayer_steam_id = csgo::local_player->get_steam_id();
+    weapon->account_id() = localplayer_steam_id;
 
 	weapon->item_id_high() = -1;	// Edit "m_iItemIDHigh" so fallback values will be used
 

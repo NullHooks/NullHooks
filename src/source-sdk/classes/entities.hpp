@@ -664,6 +664,12 @@ public:
 		return (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(view_model());
 	}
 
+	std::uint64_t get_steam_id() {
+		if (player_info_t player_info; interfaces::engine->get_player_info(index(), &player_info))
+			return player_info.xuid;
+		return 0;
+	}
+
 	bool can_see_player_pos(player_t* player, const vec3_t& pos) {
 		trace_filter filter;					// trace_filter derived from i_trace_filter
 		filter.skip = this;						// Add the origin player_t to skip filter

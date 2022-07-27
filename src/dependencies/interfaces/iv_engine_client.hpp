@@ -47,8 +47,8 @@ public:
 		return (*(original_fn**)this)[9](this, user_id);
 	}
 	
-	void get_player_info(int index, player_info_t* info) {
-		using original_fn = void(__thiscall*)(iv_engine_client*, int, player_info_t*);
+	bool get_player_info(int index, player_info_t* info) {
+		using original_fn = bool(__thiscall*)(iv_engine_client*, int, player_info_t*);
 		return (*(original_fn**)this)[8](this, index, info);
 	}
 	
