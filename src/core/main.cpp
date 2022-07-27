@@ -2,6 +2,8 @@
 #include "core/menu/variables.hpp"
 #include "dependencies/utilities/renderer/renderer.hpp"
 
+// i love bladee and i listen to him all day - memory (bitcheat) 
+
 volatile constexpr const char fuck_skids[] = /* :^) */
 	"Hey! If you are reading this maybe you looked through the source code or maybe you are reversing this DLL! "
 	"Either way you need to know that this project is open source and you can find the code at: "
