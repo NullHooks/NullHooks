@@ -43,6 +43,14 @@ struct color {
 		return D3DCOLOR_ARGB( col.a, col.r, col.g, col.b );
 	}
 	
+	static color interpolate( const color& first_color, const color& second_color, const float multiplier )
+	{
+		return color( first_color.r  + std::clamp( multiplier, 0.f, 1.f ) * ( second_color.r  - first_color.r  ),
+			first_color.g  + std::clamp( multiplier, 0.f, 1.f ) * ( second_color.g - first_color.g  ),
+			first_color.b  + std::clamp( multiplier, 0.f, 1.f ) * ( second_color.b - first_color.b  ),
+			first_color.a  + std::clamp( multiplier, 0.f, 1.f ) * ( second_color.a - first_color.a  ) );
+	}
+
 	// For comparing colors
 	bool operator != (color other) {
 		return (other.r == r && other.g == g && other.b == b && other.a == a);
