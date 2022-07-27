@@ -4,7 +4,7 @@
 #include "core/features/misc/backtrack.hpp"
 #include "core/features/visuals/skin_changer/skin_changer.hpp"
 
- std::vector<const char*> materials = {
+std::vector<const char*> materials = {
 	"vgui/screens/transparent",														// "Transparent"
 	"debug/debugambientcube",														// "Textured"
 	"debug/debugdrawflat",															// "Flat"
@@ -26,7 +26,7 @@
 
 void override_material(bool ignorez, bool wireframe, const color& rgba, const char* mat_name) {
 	auto material = interfaces::material_system->find_material(mat_name, TEXTURE_GROUP_MODEL);
-	
+
 	interfaces::render_view->set_blend(1.f);
 	material->set_material_var_flag(material_var_ignorez, ignorez);
 	material->set_material_var_flag(material_var_wireframe, wireframe);
@@ -71,7 +71,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 						|| backtrack::records[player->index()][i].matrix == nullptr)
 						continue;
 
-					override_material(false, false, color::interpolate(chams_col, color(255, 255, 255, 255 ), std::clamp( 1 * ( i ) / ( 64.f ), 0.f, 1.f ) * 5 ), materials[ 1 ] );
+					override_material(false, false, color::interpolate(chams_col, color(255, 255, 255, 255), std::clamp(1 * (i) / (64.f), 0.f, 1.f) * 5), materials[1]);
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, backtrack::records[player->index()][i].matrix);		// Use backtrack's matrix
 				}
 			}
@@ -80,7 +80,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 			if (player == csgo::local_player && variables::misc::thirdperson && variables::chams::localplayer_chams) {
 				if (variables::chams::draw_chams_on_top)
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
-				
+
 				const float localplayer_col_a = (csgo::local_player->is_scoped()) ? 30 : variables::colors::chams_localplayer.col.a;
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id.idx]);
 			// Enemies
@@ -120,7 +120,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 	} else if (strstr(mdl->name + 17, "arms")) {
 		// Remove normal arms if we have a custom model and alive
 		if (csgo::local_player->is_alive() && skins::custom_models.find(ARMS) != skins::custom_models.end() && strstr(csgo::local_player->arms_model(), skins::custom_models.at(ARMS).worldmodel.c_str())) {
-			override_material(false, variables::chams::wireframe_chams, color{0,0,0,0}, materials.at(1));
+			override_material(false, variables::chams::wireframe_chams, color{ 0,0,0,0 }, materials.at(1));
 		// Normal arms
 		} else if (variables::chams::vm_arm_chams) {
 			if (variables::chams::draw_chams_on_top)
