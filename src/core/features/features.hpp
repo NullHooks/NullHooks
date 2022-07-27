@@ -77,7 +77,7 @@ namespace misc {
 		
 		void bunny_hop(c_usercmd* cmd);
 		void edgejump(c_usercmd* cmd, int old_flags);
-		void edgebug(c_usercmd* cmd, int old_flags);
+		void edgebug(c_usercmd* cmd);
 		
 		void pre_pred_jumpbug(c_usercmd* cmd, int old_flags);
 		void post_pred_jumpbug(c_usercmd* cmd, int old_flags);
