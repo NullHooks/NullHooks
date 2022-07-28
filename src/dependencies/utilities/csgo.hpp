@@ -24,9 +24,9 @@
 #include "dependencies/utilities/renderer/renderer.hpp"
 #include "dependencies/utilities/console/console.hpp"
 
-#include "core/helpers/globas.hpp"
+#include "core/helpers/globals.hpp"
 
-//interfaces
+// Interfaces
 #define sig_client_state		"A1 ? ? ? ? 8B 80 ? ? ? ? C3"
 #define sig_directx				"A1 ? ? ? ? 50 8B 08 FF 51 0C"
 #define sig_input				"B9 ? ? ? ? F3 0F 11 04 24 FF 50 10"
@@ -34,14 +34,14 @@
 #define sig_player_move_helper	"8B 0D ? ? ? ? 8B 46 08 68"
 #define sig_weapon_data			"8B 35 ? ? ? ? FF 10 0F B7 C0"
 
-//misc
+// Misc
 #define sig_set_angles				"55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8"
 #define sig_prediction_player		"89 35 ? ? ? ? F3 0F 10 48"
 #define sig_prediction_random_seed	"A3 ? ? ? ? 66 ? ? 86"
 #define sig_viewmatrix				"0F 10 05 ? ? ? ? 8D 85 ? ? ? ? B9"
 #define sig_trace_to_exit			"55 8B EC 83 EC 4C F3 0F 10 75"					// For autowall
 
-// custom for the hooks
+// Custom for the hooks
 #define sig_key_values_engine					"85 C0 74 ? 51 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 #define sig_key_values_client					"85 C0 74 ? 6A ? 6A ? 56 8B C8 E8 ? ? ? ? 8B F0"
 #define sig_client_model_renderable				"56 8B F1 80 BE ? ? ? ? ? 0F 84 ? ? ? ? 80 BE"
