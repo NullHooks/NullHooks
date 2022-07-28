@@ -22,6 +22,7 @@ bool hooks::initialize() {
 	const auto on_screen_size_changed_target = reinterpret_cast<void*>(get_virtual(interfaces::surface, 116));
 	const auto emit_sound_target = reinterpret_cast<void*>(get_virtual(interfaces::engine_sound, 5));
 	const auto loose_files_allowed_target = reinterpret_cast<void*>(get_virtual(interfaces::filesystem, 128));
+	const auto overridemouseinput_target = reinterpret_cast<void*>(get_virtual(interfaces::clientmode, 23));
 	const auto check_for_pure_server_white_list_target = reinterpret_cast<void*>(utilities::pattern_scan("engine", sig_check_for_pure_server_white_list));
 	const auto is_depth_of_field_enabled_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_depth_of_field));
 	const auto get_client_model_renderable_target = reinterpret_cast<void*>(utilities::pattern_scan("client.dll", sig_client_model_renderable));
@@ -69,6 +70,7 @@ bool hooks::initialize() {
 		MAKE_HOOK(frame_stage_notify_target, frame_stage_notify::hook, frame_stage_notify::original, "frame_stage_notify");
 		MAKE_HOOK(render_smoke_overlay_target, render_smoke_overlay::hook, render_smoke_overlay::original, "render_smoke_overlay");
 		MAKE_HOOK(loose_files_allowed_target, loose_files_allowed::hook, loose_files_allowed::original, "loose_files_allowed");
+		MAKE_HOOK(overridemouseinput_target, overridemouseinput::hook, overridemouseinput::original, "overridemouseinput");
 		MAKE_HOOK(check_for_pure_server_white_list_target, check_for_pure_server_white_list::hook, check_for_pure_server_white_list::original, "check_for_pure_server_white_list");
 		MAKE_HOOK(on_screen_size_changed_target, on_screen_size_changed::hook, on_screen_size_changed::original, "on_screen_size_changed");
 		MAKE_HOOK(emit_sound_target, emit_sound::hook, emit_sound::original, "emit_sound");

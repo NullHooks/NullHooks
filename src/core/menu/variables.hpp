@@ -176,6 +176,7 @@ namespace variables {
 		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
 		inline hotkey_t eb_key(VK_XBUTTON1);
+		inline float edgebug_radius = 250.f;
 		inline bool jumpbug = false;
 		inline hotkey_t jb_key(VK_MENU);		// Alt key
 		inline bool slowwalk = false;

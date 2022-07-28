@@ -2,13 +2,17 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-// TODO: add restoring, using edgebug will fuck up the variables on every other function called in createmove - Patoke
+// @todo: add restoring, using edgebug will fuck up the variables on every other function called in createmove - Patoke
 void misc::movement::edgebug(c_usercmd* cmd) {
+    globals::disable_mouse = false;      // Reset mouse global if we are not doing an eb
+    
     if (!variables::misc::edgebug) return;
     if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
     if (!csgo::local_player) return;
     if (!csgo::local_player->is_alive()) return;
-    if (!(input::global_input.IsHeld(variables::misc::eb_key) && (csgo::local_player->flags() & fl_onground))) return;
+    if (!input::gobal_input.IsHeld(variables::misc::eb_key)) return;
+    if (csgo::local_player->move_type() == movetype_ladder || csgo::local_player->move_type() == movetype_noclip) return;
+    if (csgo::local_player->flags() & fl_onground) return;      // We can't edgebug on the ground
 
     // TODO: replace this for a better detection (tick tomfoolery) - Patoke
     constexpr auto edgebug_check = [](vec3_t& old_velocity, vec3_t& curr_velocity) -> bool {
@@ -33,7 +37,7 @@ void misc::movement::edgebug(c_usercmd* cmd) {
         // predict 250 ms into the future :scream:
         // i haven't yet added optimizations for this so setting this
         // to something too high will lag the shit out of ur game - Patoke
-        for (int tick = 1; tick <= TIME_TO_TICKS(0.25); tick++) {
+        for (int tick = 1; tick <= TIME_TO_TICKS(variables::misc::edgebug_radius / 1000.f); tick++) {
             vec3_t old_velocity = csgo::local_player->velocity();
             prediction::start(cmd);
 
@@ -52,8 +56,6 @@ void misc::movement::edgebug(c_usercmd* cmd) {
 
     if (interfaces::globals->tick_count - saved_tick <= ticks_to_stop) {
         // don't let the mf move...
-        // i'll add a mouse lock too later but if u want u can add it urself NN
-        // just define shit as a global variable, hook overridemouseinput and stop mouse input there - Patoke
         cmd->buttons &= ~in_forward;
         cmd->buttons &= ~in_back;
         cmd->buttons &= ~in_moveleft;
@@ -61,6 +63,8 @@ void misc::movement::edgebug(c_usercmd* cmd) {
         cmd->sidemove = 0.0f;
         cmd->forwardmove = 0.0f;
 
-        will_edgebug = false; // we aint trynna go into an infinite loop after we find 1 singular edgebug lol
+        globals::disable_mouse = true;
+
+        will_edgebug = false;   // We aint trynna go into an infinite loop after we find 1 singular edgebug lol
     }
 }
