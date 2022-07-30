@@ -73,12 +73,14 @@ void menu::render() {
 			/* -------- Aim - Second column -------- */
 			gui::add_column();
 
-			gui::add_groupbox("Antiaim", 5); {
-				gui::add_checkbox	("AntiAim",			variables::antiaim::antiaim);
-				gui::add_slider		("Pitch (x)",		variables::antiaim::pitch, -89.f, 89.f);
-				gui::add_slider		("Yaw (y)",			variables::antiaim::yaw, -180.f, 180.f);
-				gui::add_checkbox	("Spinbot",			variables::antiaim::spinbot);
-				gui::add_slider		("Spinbot speed",	variables::antiaim::spinbot_speed, 0.f, 100.f);
+			gui::add_groupbox("Antiaim", 7); {
+				gui::add_checkbox	("AntiAim",						variables::antiaim::antiaim);
+				gui::add_slider		("Pitch (x)",					variables::antiaim::pitch, -89.f, 89.f);
+				gui::add_slider		("Yaw (y)",						variables::antiaim::yaw, -180.f, 180.f);
+				gui::add_checkbox	("Spinbot",						variables::antiaim::spinbot);
+				gui::add_slider		("Spinbot speed",				variables::antiaim::spinbot_speed, 0.f, 100.f);
+				gui::add_checkbox	("Peek antiaim (Manual)",		variables::antiaim::peek_aa);						// Probably needs name change
+				gui::add_hotkey		("Peek antiaim toggle",			variables::antiaim::peek_aa_toggle_key);
 			}
 			break;
 		}
