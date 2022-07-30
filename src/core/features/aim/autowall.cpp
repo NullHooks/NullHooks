@@ -139,7 +139,7 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		#endif // _DEBUG
 
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
-			damage *= get_damage_multiplier(trace.hit_group);
+			damage *= get_damage_multiplier(trace.hit_group, weapon_data->weapon_headshot_multiplier);
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
 			

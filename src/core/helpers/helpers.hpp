@@ -6,7 +6,7 @@ struct int_hsv {
 	float s;	// Max: 1.f
 	float v;	// Max: 1.f
 
-	int_hsv( ) = default;
+	int_hsv() = default;
 	int_hsv(int_hsv& hsv) {
 		this->h = hsv.h;
 		this->s = hsv.s;
@@ -24,7 +24,7 @@ struct int_hsv {
 struct float_hsv {
 	float h, s, v;	// Max: 1.f
 
-	float_hsv( ) = default;
+	float_hsv() = default;
 	float_hsv(float_hsv& hsv) {
 		this->h = hsv.h;
 		this->s = hsv.s;
@@ -46,7 +46,7 @@ struct float_hsv {
 struct float_color {
 	float r, g, b;	// Max: 1.f
 
-	float_color( ) = default;
+	float_color() = default;
 	float_color(float_color& hsv) {
 		this->r = hsv.r;
 		this->g = hsv.g;
@@ -74,13 +74,13 @@ namespace helpers {
 	}
 
 	namespace colors {
-		color hsv2color(int_hsv, int alpha = 255);
+		color hsv2color(int_hsv hsv, int alpha = 255);
 		color hsv_float2color(float_hsv, int alpha = 255);
 		int_hsv color2hsv(color col);
 		float_hsv color2hsv_float(color col);
 		color float2color(float* id);
 	}
-	
+
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);
 };

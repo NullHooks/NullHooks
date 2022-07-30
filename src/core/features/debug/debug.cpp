@@ -62,11 +62,11 @@ void debug::draw_angles() {
 		render::draw_text_string(s_end.x, s_end.y, render::fonts::watermark_font, label, false, col);
 	};
 
-	draw_angle(sv_yaw, "SV",  helpers::colors::hsv2color(int_hsv(42,  255, 255), 255));
-	draw_angle(cl_yaw, "CL",  helpers::colors::hsv2color(int_hsv(84,  255, 255), 255));
-	draw_angle(eye,    "EYE", helpers::colors::hsv2color(int_hsv(168, 255, 255), 255));
-	draw_angle(eng,    "ENG", helpers::colors::hsv2color(int_hsv(210, 255, 255), 255));
-	draw_angle(lby,    "LBY", helpers::colors::hsv2color(int_hsv(255, 255, 255), 255));
+	draw_angle(sv_yaw, "SV",  helpers::colors::hsv2color({ 42,  1.f, 1.f }, 255));
+	draw_angle(cl_yaw, "CL",  helpers::colors::hsv2color({ 84,  1.f, 1.f }, 255));
+	draw_angle(eye,    "EYE", helpers::colors::hsv2color({ 168, 1.f, 1.f }, 255));
+	draw_angle(eng,    "ENG", helpers::colors::hsv2color({ 210, 1.f, 1.f }, 255));
+	draw_angle(lby,    "LBY", helpers::colors::hsv2color({ 255, 1.f, 1.f }, 255));
 }
 
 void debug::log::puts(std::string str) {
