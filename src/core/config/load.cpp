@@ -60,6 +60,8 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
 	load::parse_bool(doc,			variables::antiaim::spinbot,							"antiaim",			"spinbot");
 	load::parse_float(doc,			variables::antiaim::spinbot_speed,						"antiaim",			"spinbot_speed");
+	load::parse_bool(doc,			variables::antiaim::peek_aa,							"antiaim",			"peek_aa");
+	load::parse_hotkey(doc,			variables::antiaim::peek_aa_toggle_key,					"antiaim",			"peek_aa_toggle_key");
 	// Player visuals
 	load::parse_bool(doc,			variables::player_visuals::showteamesp,					"player_visuals",	"showteamesp");
 	load::parse_bool(doc,			variables::player_visuals::playerglow,					"player_visuals",	"playerglow");

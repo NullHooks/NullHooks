@@ -47,6 +47,8 @@ namespace variables {
 		inline float pitch = 0.f;
 		inline bool spinbot = false;
 		inline float spinbot_speed = 0.f;
+		inline bool peek_aa = false;
+		inline hotkey_t peek_aa_toggle_key(VK_XBUTTON1);
 	}
 
 	namespace player_visuals {
@@ -165,7 +167,7 @@ namespace variables {
 		inline bool edgebug = false;
 		inline hotkey_t eb_key(VK_XBUTTON1);
 		inline bool jumpbug = false;
-		inline hotkey_t jb_key(VK_MENU);	// Alt key
+		inline hotkey_t jb_key(VK_MENU);		// Alt key
 		inline bool slowwalk = false;
 		inline hotkey_t slowwalk_key(VK_MENU);	// Alt key
 
