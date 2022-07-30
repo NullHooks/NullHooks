@@ -312,13 +312,13 @@ const std::unordered_map<std::string, int> all_custom_models = {
 };
 
 struct collideable_t {
-	vec3_t obb_mins() { 
-		using original_fn = vec3_t * (__thiscall *)(void *);
-		return *((*(original_fn **)this)[1](this));
+	vec3_t obb_mins() {
+		using original_fn = vec3_t * (__thiscall*)(void*);
+		return *((*(original_fn**)this)[1](this));
 	};
 	vec3_t obb_maxs() {
-		using original_fn = vec3_t * (__thiscall *)(void *);
-		return *((*(original_fn **)this)[2](this));
+		using original_fn = vec3_t * (__thiscall*)(void*);
+		return *((*(original_fn**)this)[2](this));
 	};
 };
 
@@ -332,46 +332,46 @@ public:
 	}
 	collideable_t* collideable() {
 		using original_fn = collideable_t * (__thiscall*)(void*);
-		return (*(original_fn * *)this)[3](this);
+		return (*(original_fn**)this)[3](this);
 	}
-	matrix_t &coordinate_frame() {
+	matrix_t& coordinate_frame() {
 		static auto offset = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_CollisionGroup")) - 0x30;
-		return *reinterpret_cast<matrix_t *>(reinterpret_cast<uint8_t *>(this) + offset);
+		return *reinterpret_cast<matrix_t*>(reinterpret_cast<uint8_t*>(this) + offset);
 	}
 	c_client_class* client_class() {
 		using original_fn = c_client_class * (__thiscall*)(void*);
-		return (*(original_fn * *)networkable())[2](networkable());
+		return (*(original_fn**)networkable())[2](networkable());
 	}
 	int index() {
 		using original_fn = int(__thiscall*)(void*);
-		return (*(original_fn * *)networkable())[10](networkable());
+		return (*(original_fn**)networkable())[10](networkable());
 	}
 	bool is_player() {
 		using original_fn = bool(__thiscall*)(entity_t*);
-		return (*(original_fn * *)this)[158](this);
+		return (*(original_fn**)this)[158](this);
 	}
 	bool is_weapon() {
 		using original_fn = bool(__thiscall*)(entity_t*);
-		return (*(original_fn * *)this)[165](this);
+		return (*(original_fn**)this)[165](this);
 	}
-	bool setup_bones(matrix_t * out, int max_bones, int mask, float time) {
+	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
 		if (!this)
 			return false;
 
 		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
-		return (*(original_fn * *)animating())[13](animating(), out, max_bones, mask, time);
+		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
 	}
 	model_t* model() {
 		using original_fn = model_t * (__thiscall*)(void*);
-		return (*(original_fn * *)animating())[8](animating());
+		return (*(original_fn**)animating())[8](animating());
 	}
 	void update() {
 		using original_fn = void(__thiscall*)(entity_t*);
-		(*(original_fn * *)this)[218](this);
+		(*(original_fn**)this)[218](this);
 	}
 	int draw_model(int flags, uint8_t alpha) {
 		using original_fn = int(__thiscall*)(void*, int, uint8_t);
-		return (*(original_fn * *)animating())[9](animating(), flags, alpha);
+		return (*(original_fn**)animating())[9](animating(), flags, alpha);
 	}
 	void set_angles(vec3_t angles) {
 		using original_fn = void(__thiscall*)(void*, const vec3_t&);
@@ -386,29 +386,29 @@ public:
 
 	void set_model_index(int index) {
 		using original_fn = void(__thiscall*)(void*, int);
-		return (*(original_fn * *)this)[75](this, index);
+		return (*(original_fn**)this)[75](this, index);
 	}
 
 	void net_pre_data_update(int update_type) {
 		using original_fn = void(__thiscall*)(void*, int);
-		return (*(original_fn * *)networkable())[6](networkable(), update_type);
+		return (*(original_fn**)networkable())[6](networkable(), update_type);
 	}
 
 	void net_release() {
 		using original_fn = void(__thiscall*)(void*);
-		return (*(original_fn * *)networkable())[1](networkable());
+		return (*(original_fn**)networkable())[1](networkable());
 	}
 
 	int net_set_destroyed_on_recreate_entities() {
 		using original_fn = int(__thiscall*)(void*);
-		return (*(original_fn * *)networkable())[13](networkable());
+		return (*(original_fn**)networkable())[13](networkable());
 	}
 
-	bool dormant( ) {
-		using original_fn = bool( __thiscall* )( void* );
-		return ( *static_cast< original_fn** >( networkable( ) ) )[ 9 ]( networkable( ) );
+	bool dormant() {
+		using original_fn = bool(__thiscall*)(void*);
+		return (*static_cast<original_fn**>(networkable()))[9](networkable());
 	}
-	
+
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
 	NETVAR("DT_BaseEntity", "m_hOwnerEntity", owner_handle, unsigned long);
 	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
@@ -444,48 +444,48 @@ public:
 class weapon_t : public entity_t {
 public:
 	#pragma region BaseCombatWeapon
-	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack",      next_primary_attack,         float)
-	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack",    next_secondary_attack,       float)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip1",                   clip1_count,                 int)
-	NETVAR("DT_BaseCombatWeapon", "m_iClip2",                   clip2_count,                 int)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextPrimaryAttack", next_primary_attack, float)
+	NETVAR("DT_BaseCombatWeapon", "m_flNextSecondaryAttack", next_secondary_attack, float)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip1", clip1_count, int)
+	NETVAR("DT_BaseCombatWeapon", "m_iClip2", clip2_count, int)
 	NETVAR("DT_BaseCombatWeapon", "m_iPrimaryReserveAmmoCount", primary_reserve_ammo_acount, int)
-	NETVAR("DT_BaseCombatWeapon", "m_iViewModelIndex",          viewmodel_index,             int)
-	NETVAR("DT_BaseCombatWeapon", "m_iWorldModelIndex",         worldmodel_index,            int)
-	NETVAR("DT_BaseCombatWeapon", "m_iWorldDroppedModelIndex",  droppedmodel_index,          int)
-	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel",        weapon_worldmodel,           int)
+	NETVAR("DT_BaseCombatWeapon", "m_iViewModelIndex", viewmodel_index, int)
+	NETVAR("DT_BaseCombatWeapon", "m_iWorldModelIndex", worldmodel_index, int)
+	NETVAR("DT_BaseCombatWeapon", "m_iWorldDroppedModelIndex", droppedmodel_index, int)
+	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel", weapon_worldmodel, int)
 	#pragma endregion
 
-	NETVAR("DT_WeaponCSBase",     "m_flRecoilIndex",            recoil_index,                float)
-	NETVAR("DT_WeaponCSBase",     "m_fLastShotTime",            last_shot_time,              float)
-	NETVAR("DT_BaseCSGrenade",    "m_bPinPulled",               pin_pulled,                  bool)
-	NETVAR("DT_BaseCSGrenade",    "m_fThrowTime",               throw_time,                  float)
-	NETVAR("DT_WeaponCSBaseGun",  "m_zoomLevel",                zoom_level,                  float)
+	NETVAR("DT_WeaponCSBase", "m_flRecoilIndex", recoil_index, float)
+	NETVAR("DT_WeaponCSBase", "m_fLastShotTime", last_shot_time, float)
+	NETVAR("DT_BaseCSGrenade", "m_bPinPulled", pin_pulled, bool)
+	NETVAR("DT_BaseCSGrenade", "m_fThrowTime", throw_time, float)
+	NETVAR("DT_WeaponCSBaseGun", "m_zoomLevel", zoom_level, float)
 
 	#pragma region BaseAttributableItem
-	NETVAR("DT_BaseAttributableItem",		"m_iItemDefinitionIndex",	item_definition_index, short)
-	NETVAR("DT_BaseAttributableItem",		"m_iItemIDHigh",			item_id_high,		   int)
-	NETVAR("DT_BaseAttributableItem",		"m_iAccountID",				account_id,			   int)
-	NETVAR("DT_BaseAttributableItem",		"m_iEntityQuality",			entity_quality,		   int)
-	NETVAR_PTR("DT_BaseAttributableItem",	"m_szCustomName",			custom_name,		   char)
-	NETVAR("DT_BaseAttributableItem",		"m_nFallbackPaintKit",		fallback_paint_kit,	   int)
-	NETVAR("DT_BaseAttributableItem",		"m_nFallbackSeed",			fallback_seed,		   int)
-	NETVAR("DT_BaseAttributableItem",		"m_flFallbackWear",			fallback_wear,		   float)
-	NETVAR("DT_BaseAttributableItem",		"m_nFallbackStatTrak",		fallback_stattrack,	   int)
+	NETVAR("DT_BaseAttributableItem", "m_iItemDefinitionIndex", item_definition_index, short)
+	NETVAR("DT_BaseAttributableItem", "m_iItemIDHigh", item_id_high, int)
+	NETVAR("DT_BaseAttributableItem", "m_iAccountID", account_id, int)
+	NETVAR("DT_BaseAttributableItem", "m_iEntityQuality", entity_quality, int)
+	NETVAR_PTR("DT_BaseAttributableItem", "m_szCustomName", custom_name, char)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackPaintKit", fallback_paint_kit, int)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackSeed", fallback_seed, int)
+	NETVAR("DT_BaseAttributableItem", "m_flFallbackWear", fallback_wear, float)
+	NETVAR("DT_BaseAttributableItem", "m_nFallbackStatTrak", fallback_stattrack, int)
 	#pragma endregion
 
 	float inaccuracy() {
 		using original_fn = float(__thiscall*)(void*);
-		return (*(original_fn * *)this)[482](this);
+		return (*(original_fn**)this)[482](this);
 	}
 
 	float get_spread() {
 		using original_fn = float(__thiscall*)(void*);
-		return (*(original_fn * *)this)[452](this);
+		return (*(original_fn**)this)[452](this);
 	}
 
 	void update_accuracy_penalty() {
 		using original_fn = void(__thiscall*)(void*);
-		(*(original_fn * *)this)[483](this);
+		(*(original_fn**)this)[483](this);
 	}
 
 	weapon_info_t* get_weapon_data() {
@@ -615,6 +615,12 @@ public:
 		return reinterpret_cast<c_usercmd**>(uintptr_t(this) + offset);
 	}
 
+	c_usercmd& last_command() {
+		static const std::uintptr_t last_command_fn =
+			*reinterpret_cast<std::uintptr_t*>(utilities::pattern_scan("client.dll", "8D 8E ? ? ? ? 89 5C 24 3C") + 2);
+		return *reinterpret_cast<c_usercmd*>(reinterpret_cast<std::uintptr_t>(this) + last_command_fn);
+	}
+
 	void set_next_think(int think) {
 		using original_fn = void(__thiscall*)(void*, int);
 		static auto set_next_think_fn = reinterpret_cast<original_fn>(utilities::pattern_scan("client.dll", "55 8B EC 56 57 8B F9 8B B7 ? ? ? ? 8B"));
@@ -657,11 +663,17 @@ public:
 	}
 
 	anim_state* get_anim_state() {
-		return *reinterpret_cast<anim_state * *>(this + 0x3914);
+		return *reinterpret_cast<anim_state**>(this + 0x3914);
 	}
 
 	base_view_model_t* get_view_model() {
 		return (base_view_model_t*)interfaces::entity_list->get_client_entity_handle(view_model());
+	}
+
+	std::uint64_t get_steam_id() {
+		if (player_info_t player_info; interfaces::engine->get_player_info(index(), &player_info))
+			return player_info.xuid;
+		return 0;
 	}
 
 	bool can_see_player_pos(player_t* player, const vec3_t& pos) {
@@ -673,7 +685,7 @@ public:
 
 		ray_t ray;
 		ray.initialize(start, pos);				// Initialize ray like this
-		
+
 		trace_t tr;
 		interfaces::trace_ray->trace_ray(ray, MASK_SHOT | CONTENTS_GRATE, &filter, &tr);
 
@@ -719,22 +731,22 @@ public:
 	}
 
 	bool is_alive() {
-		if ( !this ) return false;
+		if (!this) return false;
 		return this->health() > 0;
 	}
 
 	bool is_moving() {
-		if ( !this ) return false;
+		if (!this) return false;
 		return this->velocity().length() > 0.1f;
 	}
 
 	bool is_in_air() {
-		if ( !this ) return false;
-		return !( this->flags() & fl_onground );
+		if (!this) return false;
+		return !(this->flags() & fl_onground);
 	}
 
 	bool is_flashed() {
-		if ( !this ) return false;
+		if (!this) return false;
 		return this->flash_duration() > 0.0f;
 	}
 
@@ -745,12 +757,12 @@ public:
 
 	vec3_t& abs_origin() {
 		using original_fn = vec3_t & (__thiscall*)(void*);
-		return (*(original_fn * *)this)[10](this);;
+		return (*(original_fn**)this)[10](this);;
 	}
 
 	vec3_t& abs_angles() {
 		using original_fn = vec3_t & (__thiscall*)(void*);
-		return (*(original_fn * *)this)[11](this);;
+		return (*(original_fn**)this)[11](this);;
 	}
 
 	void select_item(const char* str, int sub_type) {

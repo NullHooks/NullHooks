@@ -78,7 +78,7 @@ void backtrack::update() noexcept {
 			|| entity == csgo::local_player
 			|| entity->dormant()
 			|| !entity->is_alive()
-			|| (entity->team() == csgo::local_player->team() && !variables::misc::backtrack_team)) {
+			|| (!helpers::is_enemy(entity) && !variables::misc::backtrack_team)) {
 			records[i].clear();		// Clear current player
 			continue;				// And go to the next one
 		}
@@ -97,10 +97,11 @@ void backtrack::update() noexcept {
 		entity->setup_bones(record.matrix, 128, 0x7FF00, interfaces::globals->cur_time);	// We can't add the matrix to the record declaration cuz we need to use a ptr in setup_bones()
 		records[i].push_front(record);
 
-		while (records[i].size() > 3 && records[i].size() > static_cast<size_t>(TIME_TO_TICKS(0.2f)))
+		// Iterate through records and only keep the ones that match our backtrack time
+		while (records[i].size() > 3 && records[i].size() > static_cast<size_t>(TIME_TO_TICKS(variables::misc::backtrack_ticks / 1000.f)))
 			records[i].pop_back();
 		
-		// I have no idea what the next 5 lines are for. If you want you can make an issue explaining it :)
+		// The following lines determine if the tick is valid or not. We erase all the invalid ones
 		auto invalid = std::find_if(std::cbegin(records[i]), std::cend(records[i]), [](const player_record& rec) {
 			return !valid_tick(rec.simulation_time, 0.2f);
 		});
@@ -113,6 +114,7 @@ void backtrack::update() noexcept {
 void backtrack::run(c_usercmd* cmd) noexcept {
 	if (!variables::misc::backtrack) return;
 	if (!csgo::local_player || !csgo::local_player->is_alive()) return;
+	if (!(cmd->buttons & in_attack)) return;
 
 	auto weapon = csgo::local_player->active_weapon();
 	if (!weapon) return;
@@ -194,7 +196,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 		debug::best_target_idx = 0;
 	#endif // _DEBUG
 
-	if (best_record && cmd->buttons & in_attack)	// We got the target we are shooting and we are shooting lol
+	if (best_record)	// We got the target we are shooting and we are shooting lol
 		cmd->tick_count = TIME_TO_TICKS(records[besst_target_index][best_record].simulation_time + get_lerp_time());	// Epic matrix glitch
 }
 

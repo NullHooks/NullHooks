@@ -65,6 +65,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 ### Antiaim
 - Antiaim with custom pitch and jaw
+- Spinbot with custom speed
 
 ### Visuals
 #### Player ESP
@@ -114,7 +115,7 @@ An example of a skin config file can be found in [example-configs/skins.json](ht
 The skin chager currently is able to change:
 - [X] Weapon skins
 - [X] Knife skins and models
-- [ ] Globes
+- [ ] Gloves
 
 #### Model changer
 There are currently 2 model changer methods. `find_mdl` and precached models. `sv_pure` bypass is integrated in the cheat.
@@ -194,6 +195,7 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - No flash
 - No scope
 - Wireframe smoke (Open an issue if you want NoSmoke)
+- Worldcolor
 - Custom crosshair
 - Recoil crosshair
 - Bullet tracers (:warning: Broken in online matches. Check [todo](#todo))
@@ -329,10 +331,14 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Replace `player_info` esp with multicombobox
 - [X] Replace `findmdl` model changer with precached models ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/214919-precache-models.html))
 - [X] Add "defusing" to bomb timer
+- [X] Add worldcolor
+- [X] Entity glow won't turn off on weapons (will turn off if another glow is on)
+- [X] Skinchanger fixes
+    - [X] Fix talon knife inspect animation
+    - [X] Get localplayer steam id to fix weapon stattrack
 #
 </details>
 
-#### Features
 - [X] Add aim stuff
     - [X] Triggerbot
         - [X] Add delay slider
@@ -354,27 +360,19 @@ This method is not recommended as the cheat can be a bit outdated and you might 
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
 - [ ] Add auto revolver hold
-- [ ] Add worldcolor
 - [ ] Add player list <!-- Big flowhooks fan, sorry -->
 	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
 - [ ] Port to linux
 
-#### Bugs/Fixes
-- [ ] Skinchanger fixes
-    - [X] Fix talon knife inspect animation
-    - [ ] Get localplayer steam id to fix weapon stattrack
-- [ ] Entity glow won't turn off on weapons (will turn off if another glow is on)
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
 
-![Screenshot 14](screenshots/screenshot14.png)
-![Screenshot 15](screenshots/screenshot15.png)
-![Screenshot 16](screenshots/screenshot16.png)
+<!-- Ignore the low fps in some of the screenshots, I had to tab out of the game to make them -->
+![Screenshot 17](screenshots/screenshot17.png)
+![Screenshot 19](screenshots/screenshot19.jpg)
+![Screenshot 18](screenshots/screenshot18.jpg)
 ![Screenshot 13](screenshots/screenshot13.png)
-![Screenshot 8](screenshots/screenshot8.png)
-![Screenshot 9](screenshots/screenshot9.png)
-![Screenshot 11](screenshots/screenshot11.png)
 ![Screenshot 12](screenshots/screenshot12.png)
 

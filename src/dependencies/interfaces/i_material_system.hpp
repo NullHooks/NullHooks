@@ -1,5 +1,7 @@
 #pragma once
 #include "source-sdk/structs/materials.hpp"
+
+#pragma region DEFINITIONS
 #define DECLARE_POINTER_HANDLE(name) struct name##__ { int unused; }; typedef struct name##__ *name
 #define MAXSTUDIOSKINS		32
 
@@ -204,6 +206,7 @@ typedef void( *on_level_shutdown_function_t )( void *data );
 
 typedef unsigned short mat_handle_t;
 DECLARE_POINTER_HANDLE( mat_lock_t );
+#pragma endregion
 
 class i_material_system {
 public:

@@ -7,9 +7,9 @@
 #endif // _DEBUG
 
 #pragma region MULTIPLIERS
-float aim::autowall::get_damage_multiplier(int hit_group) {
+float aim::autowall::get_damage_multiplier(int hit_group, float hs_multiplier) {
 	switch (hit_group) {
-		case hitgroup_head:			return 4.0f;
+		case hitgroup_head:			return hs_multiplier;		// Changes depending on weapon
 		case hitgroup_stomach:		return 1.25f;
 		case hitgroup_leftleg:
 		case hitgroup_rightleg:		return 0.75f;

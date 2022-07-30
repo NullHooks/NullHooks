@@ -1,4 +1,5 @@
 #include "core/menu/framework.hpp"
+#include "core/menu/variables.hpp"
 #include "core/config/config.hpp"
 
 typedef struct CursorCoords {
@@ -9,6 +10,44 @@ typedef struct CursorCoords {
 cursor_coords cursor;
 cursor_coords cursor_corrected;
 
+#pragma region GUI EXTERNS
+int gui::vars::column_number = 0;			// Current column. Will change when calling add_column()
+
+// o_* variables are the original ones with 0 columns (all menu width)
+int gui::vars::o_container_left_pos = variables::ui::menu::x + container_margin;		// Will change when adding more columns
+int gui::vars::o_container_width = variables::ui::menu::w - container_margin * 2;	// Will get divided when adding more columns
+int gui::vars::o_item_left_pos = o_container_left_pos + container_padding;			// Base top left pos for all items (label text position)
+
+int gui::vars::o_item_combo_pos = variables::ui::menu::x + o_container_width - container_margin;		// Max right pos
+int gui::vars::o_item_checkbox_pos = o_item_combo_pos - item_checkbox_length;
+int gui::vars::o_item_slider_pos = o_item_combo_pos - item_slider_length;				// Top left corner of the actual slider
+int gui::vars::o_item_hotkey_w = o_container_width - container_padding * 2;
+
+// Actual vars for items and containers. Updated in init_tab() and add_column()
+int gui::vars::container_left_pos = o_container_left_pos;
+int gui::vars::container_width = o_container_width;
+int gui::vars::item_left_pos = o_item_left_pos;
+int gui::vars::item_combo_pos = o_item_combo_pos;
+int gui::vars::item_checkbox_pos = o_item_checkbox_pos;
+int gui::vars::item_slider_pos = o_item_slider_pos;
+int gui::vars::item_hotkey_w = o_item_hotkey_w;
+
+// Vars for groupbox
+int gui::vars::o_cur_part_y = variables::ui::menu::y + vars::top_margin_with_tabs + vars::container_margin;
+int gui::vars::o_cur_base_item_y = o_cur_part_y + container_padding;		// Base y position of the items (position of the first item of the groupbox)
+
+int gui::vars::cur_part_items = 0;			// Will be changed when adding groupbox
+int gui::vars::cur_part_y = o_cur_part_y;
+int gui::vars::cur_base_item_y = o_cur_base_item_y;
+int gui::vars::cur_part_h = 0;			// Will update with each item added
+
+int gui::vars::button_part_item = 0;
+int gui::vars::button_part_h = 0;			// Need to get h first to subtract it from bottom to get top pos
+int gui::vars::button_part_y = variables::ui::menu::y + variables::ui::menu::h - container_margin;
+int gui::vars::button_base_item_y = button_part_y + container_padding;
+#pragma endregion
+
+#pragma region GUI ITEMS
 // Returns true if pressed
 bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
@@ -77,7 +116,7 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	render::draw_text_string(x + 2, y - 1, font, label, false, color::white());
 }
 
-void gui::group_box(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
+void gui::groupbox(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, bool show_label) {
 	// Groupbox background
 	render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
 
@@ -175,7 +214,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	// Push to vector to render after menu
 	if (col.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, col.col, col.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_x, y + col_h + margin, col });
 }
 
 void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsigned long font, const std::string string, bool& value, colorpicker_col_t& col1, colorpicker_col_t& col2) {
@@ -223,9 +262,9 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	// Push to vector to render after menu
 	if (col1.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1.col, col1.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_l_x, y + col_h + margin, col1 });
 	if (col2.toggle)
-		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2.col, col2.toggle });
+		popup_system::active_color_popups.push_back(color_popup_info{ color_r_x, y + col_h + margin, col2 });
 }
 
 // Thanks to https://github.com/bobloxmonke
@@ -468,7 +507,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 
 void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
-	
+
 	constexpr int h = 11;
 	constexpr int max_txt_len = 255;
 	constexpr int button_w = 30;
@@ -491,17 +530,28 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	}
 
 	if (input::gobal_input.reading_textbox && textbox_info.reading_this) {
-		// Delte will remove last char
+		// Delete will remove last char
 		if (input::gobal_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
-			input::gobal_input.wndproc_textbox_buffer.pop_back();
-			textbox_info.text.pop_back();
+			// Ctrl + Del will clear the textbox
+			if (input::gobal_input.IsHeld(VK_CONTROL)) {
+				input::gobal_input.wndproc_textbox_buffer = "";
+				textbox_info.text = "";
+			} else {
+				input::gobal_input.wndproc_textbox_buffer.pop_back();
+				textbox_info.text.pop_back();
+			}
 		// If esc or enter, unfocus
 		} else if (input::gobal_input.IsHeld(VK_ESCAPE) || input::gobal_input.IsHeld(VK_RETURN)) {
 			input::gobal_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		// If key is valid, add to string. Gotta thank zgui
 		} else if (textbox_info.text.length() < max_txt_len) {
-			textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
+			// Only add if we are not overflowing text input
+			if (render::get_text_size(render::fonts::watermark_font, input::gobal_input.wndproc_textbox_buffer).x < text_box_w - margin - 2)	// -2 for cursor
+				textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
+			// If we are overflowing, reset buffer to current text
+			else
+				input::gobal_input.wndproc_textbox_buffer = textbox_info.text;
 		}
 	}
 
@@ -516,7 +566,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	// Cursor
 	if (textbox_info.reading_this) {
 		const int text_w = render::get_text_size(render::fonts::watermark_font, textbox_info.text).x;
-		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());		// TODO: +1?
+		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());
 	}
 
 	// Button
@@ -556,11 +606,210 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 	int item_n = 0;
 	for (std::string item : config_names) {
 		if (item_n > config::max_configs) break;
+
+		// Make sure we dont overflow. *1.5 to leave a bit of margin at the end
+		if (render::get_text_size(render::fonts::watermark_font_ns, item).x >= w - padding * 1.5) {
+			std::string buffer = "";
+
+			// Keep adding chars until we reach the maximum w
+			for (char c : item) {
+				buffer.push_back(c);
+				if (render::get_text_size(render::fonts::watermark_font_ns, buffer + "...").x >= w - padding * 1.5) {
+					buffer.pop_back();		// Remove last char cuz it is too long already
+					buffer += "...";		// Add 3 dots to indicate the filename is longer
+					break;					// We are done
+				}
+			}
+
+			item = buffer;					// Set the new string
+		}
+
 		render::draw_text_string(x + padding, y + (15 * item_n), render::fonts::watermark_font_ns, item, false, (item_n == config::selected_config) ? color::white() : color::white(100));
 		item_n++;
 	}
 }
+#pragma endregion
 
+#pragma region DYNAMIC GUI
+/* --------------------------- DYNAMIC GUI --------------------------- */
+
+// Updates item positions with new menu positons and all that. Called before the tab switch statement
+void gui::update_positions() {
+	vars::o_container_left_pos = variables::ui::menu::x + vars::container_margin;			// Will change when adding more columns
+	vars::o_container_width    = variables::ui::menu::w - vars::container_margin * 2;		// Will get divided when adding more columns
+	vars::o_item_left_pos      = vars::o_container_left_pos + vars::container_padding;		// Base top left pos for all items (label text position)
+	
+	vars::o_item_combo_pos     = variables::ui::menu::x + vars::o_container_width - vars::container_margin;		// Max right pos
+	vars::o_item_checkbox_pos  = vars::o_item_combo_pos - vars::item_checkbox_length;
+	vars::o_item_slider_pos    = vars::o_item_combo_pos - vars::item_slider_length;				// Top left corner of the actual slider
+	vars::o_item_hotkey_w      = vars::o_container_width - vars::container_padding * 2;
+
+	// Goupbox vars
+	vars::cur_part_items       = 0;		// Will get updated on the add_group_box() calls anyway
+	vars::cur_part_h           = 0;
+	vars::o_cur_part_y         = variables::ui::menu::y + vars::top_margin_with_tabs;		// No container margin because we will add it in add_groupbox()
+	vars::o_cur_base_item_y    = vars::o_cur_part_y + vars::container_padding;
+
+	vars::button_part_item     = 0;
+	vars::button_part_h        = 0;			// Need to get h first to subtract it from bottom to get top pos
+	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin;
+	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;
+}
+
+// Reset values to its original ones
+void gui::init_tab() {
+	vars::column_number = 0;
+
+	vars::container_left_pos	= vars::o_container_left_pos;
+	vars::container_width		= (vars::o_container_width / vars::columns) - (vars::container_margin / vars::columns);
+
+	// We need to assign them again instead of using the originals because the container widht changed
+	vars::item_left_pos			= vars::container_left_pos + vars::container_padding;
+	vars::item_combo_pos		= variables::ui::menu::x + vars::container_width - vars::container_margin;
+	vars::item_checkbox_pos		= vars::item_combo_pos - vars::item_checkbox_length;
+	vars::item_slider_pos		= vars::item_combo_pos - vars::item_slider_length;
+	vars::item_hotkey_w			= vars::container_width - vars::container_padding * 2;
+
+	vars::cur_part_y            = vars::o_cur_part_y;
+	vars::cur_base_item_y       = vars::o_cur_base_item_y;
+}
+
+// Adds a column and changes values depending on current column
+void gui::add_column() {
+	vars::column_number++;
+
+	if (vars::column_number > 0) {		// Only if we are not on the first col
+		vars::container_width--;
+		vars::cur_part_h            = 0;
+
+		vars::container_left_pos	= vars::container_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_left_pos			= vars::item_left_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_checkbox_pos		= vars::item_checkbox_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_slider_pos		= vars::item_slider_pos + (vars::container_width * vars::column_number) + vars::container_margin;
+		vars::item_combo_pos		= vars::item_checkbox_pos + vars::item_checkbox_length;
+
+		vars::cur_part_y      = vars::o_cur_part_y;				// We reset the y positions of the goupbox so they start on top of the second column
+		vars::cur_base_item_y = vars::o_cur_base_item_y;
+	}
+}
+
+void gui::add_groupbox(int item_number) {
+	vars::cur_part_items  = item_number;
+	vars::cur_part_y     += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
+	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
+	vars::cur_part_h      = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
+}
+
+void gui::add_groupbox(std::string name, int item_number) {
+	vars::cur_part_items = item_number;
+	vars::cur_part_y += vars::cur_part_h + vars::container_margin;		// cur_part_h is the "previous" part h
+	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
+	vars::cur_part_h = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
+
+	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, false);
+}
+
+void gui::add_bottom_groupbox(int item_number) {
+	vars::button_part_item     = item_number;
+	vars::button_part_h        = (vars::button_part_item * 15) + (vars::container_padding * 2) - 4;
+	vars::button_part_y        = variables::ui::menu::y + variables::ui::menu::h - vars::container_margin - vars::button_part_h;		// Get the top left corner based on the margin pos and the height (start from bottom)
+	vars::button_base_item_y   = vars::button_part_y + vars::container_padding;			// Same as other containers
+}
+
+void gui::add_checkbox(std::string label, bool& target, unsigned long font) {
+	// @todo: Should update cur_part_h with += item_h
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target);
+	gui::vars::cur_base_item_y += 15;		// Add 15 to the variable
+}
+
+void gui::add_checkbox(std::string label, bool& target) {
+	add_checkbox(label, target, render::fonts::watermark_font);
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color, unsigned long font) {
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target, color);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color) {
+	add_checkbox(label, target, color, render::fonts::watermark_font);
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2, unsigned long font) {
+	gui::check_box(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_checkbox_pos, font, label, target, color1, color2);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_checkbox(std::string label, bool& target, colorpicker_col_t& color1, colorpicker_col_t& color2) {
+	add_checkbox(label, target, color1, color2, render::fonts::watermark_font);
+}
+
+void gui::add_slider(std::string label, float& target, float min_value, float max_value, unsigned long font) {
+	gui::slider(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_slider_pos, gui::vars::item_slider_length, font, label, target, min_value, max_value);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_slider(std::string label, float& target, float min_value, float max_value) {
+	add_slider(label, target, min_value, max_value, render::fonts::watermark_font);
+}
+
+void gui::add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target, unsigned long font) {
+	gui::combobox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos, font, label, option_vector, target);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_combobox(std::string label, std::vector<std::string>& option_vector, combobox_toggle_t& target) {
+	add_combobox(label, option_vector, target, render::fonts::watermark_font);
+}
+
+void gui::add_multicombobox(std::string label, multicombobox_toggle_t& target, unsigned long font) {
+	gui::multicombobox(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos, font, label, target);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_multicombobox(std::string label, multicombobox_toggle_t& target) {
+	add_multicombobox(label, target, render::fonts::watermark_font);
+}
+
+void gui::add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this, unsigned long font) {
+	gui::hotkey(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, label, target, reading_this);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_hotkey(const std::string label, int& target_key, int& target, bool& reading_this) {
+	add_hotkey(label, target_key, target, reading_this, render::fonts::watermark_font);
+}
+
+void gui::add_hotkey(const std::string label, hotkey_t& hotkey_info, unsigned long font) {
+	gui::hotkey(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w, font, label, hotkey_info);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_hotkey(const std::string label, hotkey_t& hotkey_info) {
+	add_hotkey(label, hotkey_info, render::fonts::watermark_font);
+}
+
+void gui::add_button(const std::string label, void(*callback)(), unsigned long font) {
+	gui::button(gui::vars::item_left_pos, gui::vars::cur_base_item_y, gui::vars::item_combo_pos - vars::item_button_w, font, label, callback);
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_button(const std::string label, void(*callback)()) {
+	add_button(label, callback, render::fonts::watermark_font);
+}
+
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font) {
+	// The -2 and +2 are to move the textbox area a bit, just personal preference
+	gui::textbox(gui::vars::item_left_pos - 2, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w + 2, font, placeholder, config::new_config_name, config::create_new_config); 
+	gui::vars::cur_base_item_y += 15;
+}
+
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
+	add_textbox(placeholder, textbox_info, button_callback, render::fonts::watermark_font);
+}
+#pragma endregion
+
+#pragma region WINDOW MOVEMENT
 /* --------------------------- WINDOW MOVEMENT --------------------------- */
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
@@ -614,7 +863,9 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 		should_move_spec = false;
 	}
 }
+#pragma endregion
 
+#pragma region POPUPS
 /* --------------------------- POPUPS --------------------------- */
 
 // Will call each check_popups()
@@ -628,7 +879,7 @@ void popup_system::render_popups() {
 bool popup_system::mouse_in_popup(int x, int y) {
 	// For each color popup in the active_color_popups vector
 	for (const color_popup_info& pinfo : active_color_popups) {
-		if ( pinfo.toggle_color && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
+		if ( pinfo.col_t.toggle && (x >= pinfo.x) && (x <= pinfo.x + popup_system::win_w) && (y >= pinfo.y) && (y <= pinfo.y + popup_system::win_h) )
 			return true;
 	}
 
@@ -674,7 +925,7 @@ void popup_system::check_multicombo_popups() {
 
 // Actual popup for the color picker hue and all that
 void popup_system::color_picker_popup(color_popup_info col_p) {
-	if (!col_p.toggle_color) return;
+	if (!col_p.col_t.toggle) return;
 	
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
@@ -694,7 +945,9 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 		{ 255, 0,   0   }
 	};
 
-	/* --------------- HUE BAR --------------- */
+	float_hsv hsv_buffer = col_p.col_t.f_hsv;
+
+	#pragma region HUE BAR
 	// Draw hsv fades (6 segments)
 	for (auto n = 0; n < 6; n++) {
 		const int fade_w = slider_w / 6;
@@ -702,27 +955,76 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 
 		render::draw_fade(fade_x, slider_y, fade_w, slider_h, hueColors[n], hueColors[n + 1], true);
 	}
+	
 	// Check selected hue (mouse in slider)
+	float color_hue = hsv_buffer.h;
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
-		float input_hue = float(cursor.x - slider_x) / float(slider_w);
-		input_hue = (input_hue == 1.f) ? 0.99 : input_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
-		col_p.target = helpers::colors::hsv2color(float_hsv{ input_hue, 1.f, 1.f }, col_p.target.a);
+		color_hue = float(cursor.x - slider_x) / float(slider_w);
+		color_hue = (color_hue == 1.f) ? 0.99 : color_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
+		hsv_buffer.h = color_hue;
 	}
+	
 	// Render color selector depenging on the color's hue
-	float color_hue = helpers::colors::color2hsv_float(col_p.target).h;		// Get it from the color itself even if we dont change it
 	render::draw_rect(slider_x + slider_w * color_hue - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
 
-	/* --------------- ALPHA BAR --------------- */
+	#pragma region SATURATION BAR
 	slider_y += win_padding + slider_h;
-	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.target.get_custom_alpha(0), col_p.target.get_custom_alpha(255), true);
+	
+	const color lowest_sat = helpers::colors::hsv_float2color({ color_hue, 0.f, 1.f }, 255);
+	const color highest_sat = helpers::colors::hsv_float2color({ color_hue, 1.f, 1.f }, 255);
+	render::draw_fade(slider_x, slider_y, slider_w, slider_h, lowest_sat, highest_sat, true);
+
+	// Check selected hue (mouse in slider)
+	float color_sat = hsv_buffer.s;
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+		color_sat = float(cursor.x - slider_x) / float(slider_w);
+		color_sat = (color_sat == 0.f) ? 0.01 : color_sat;
+		hsv_buffer.s = color_sat;
+	}
+
+	// Render color selector depenging on the color's hue
+	render::draw_rect(slider_x + slider_w * color_sat - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
+
+	#pragma region HSV VALUE BAR
+	slider_y += win_padding + slider_h;
+
+	const color lowest_val = helpers::colors::hsv_float2color({ color_hue, 1.f, 0.f }, 255);
+	const color highest_val = helpers::colors::hsv_float2color({ color_hue, 1.f, 1.f }, 255);
+	render::draw_fade(slider_x, slider_y, slider_w, slider_h, lowest_val, highest_val, true);
+
+	// Check selected hue (mouse in slider)
+	float color_val = hsv_buffer.v;
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+		color_val = float(cursor.x - slider_x) / float(slider_w);
+		color_val = (color_val == 0.f) ? 0.01 : color_val;
+		hsv_buffer.v = color_val;
+	}
+
+	// Render color selector depenging on the color's hue
+	render::draw_rect(slider_x + slider_w * color_val - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
+
+	#pragma region ALPHA BAR
+	slider_y += win_padding + slider_h;
+
+	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.col_t.col.get_custom_alpha(0), col_p.col_t.col.get_custom_alpha(255), true);
+	
 	// Check selected hue (mouse in slider)
 	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
 		float input_alpha = float(cursor.x - slider_x) / float(slider_w);
-		col_p.target.a = input_alpha * 255.f;
+		col_p.col_t.col.a = input_alpha * 255.f;
 	}
+
 	// Render color selector depenging on the color's hue
-	float color_alpha = col_p.target.a / 255.f;
+	float color_alpha = col_p.col_t.col.a / 255.f;
 	render::draw_rect(slider_x + slider_w * color_alpha - 1, slider_y - 1, 3, slider_h + 2, color::white(255));
+	#pragma endregion
+
+	// Set new color replacing changed values
+	col_p.col_t.f_hsv = hsv_buffer;
+	col_p.col_t.col = helpers::colors::hsv_float2color(hsv_buffer, col_p.col_t.col.a);
 }
 
 void popup_system::combobox_popup(combo_popup_info combo_p) {
@@ -769,3 +1071,4 @@ void popup_system::multicombobox_popup(multicombo_popup_info combo_p) {
 		combo_p.target_vec.at(clicked_idx).state = !combo_p.target_vec.at(clicked_idx).state;
 	}
 }
+#pragma endregion

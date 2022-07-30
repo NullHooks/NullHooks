@@ -1,4 +1,6 @@
 # -----------
+screenshots/*
+
 /intermediates
 /00*
 /BAK

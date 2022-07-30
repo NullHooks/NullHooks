@@ -53,9 +53,13 @@ void config::save_config(std::string filename) {
 	} doc.AddMember("aim", aim, allocator);
 	
 	rapidjson::Value antiaim(rapidjson::kObjectType); {				// Antiaim
-		save::parse_bool(antiaim,				 allocator,			variables::antiaim::antiaim,							"antiaim");
-		save::parse_float(antiaim,				 allocator,			variables::antiaim::pitch,								"antiaim_pitch");
-		save::parse_float(antiaim,				 allocator,			variables::antiaim::yaw,								"antiaim_yaw");
+		save::parse_bool(antiaim,				allocator,			variables::antiaim::antiaim,							"antiaim");
+		save::parse_float(antiaim,				allocator,			variables::antiaim::pitch,								"antiaim_pitch");
+		save::parse_float(antiaim,				allocator,			variables::antiaim::yaw,								"antiaim_yaw");
+		save::parse_bool(antiaim,				allocator,			variables::antiaim::spinbot,							"spinbot");
+		save::parse_float(antiaim,				allocator,			variables::antiaim::spinbot_speed,						"spinbot_speed");
+		save::parse_bool(antiaim,				allocator,			variables::antiaim::peek_aa,							"peek_aa");
+		save::parse_hotkey(antiaim,				allocator,			variables::antiaim::peek_aa_toggle_key,					"peek_aa_toggle_key");
 	} doc.AddMember("antiaim", antiaim, allocator);
 
 	rapidjson::Value player_visuals(rapidjson::kObjectType); {		// Player visuals
@@ -65,7 +69,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::lineesp,						"lineesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::skeletonesp,					"skeletonesp");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::nameesp,						"nameesp");
-		save::parse_multicombo(player_visuals,		allocator,			variables::player_visuals::playerinfo,					"playerinfo");
+		save::parse_multicombo(player_visuals,	allocator,			variables::player_visuals::playerinfo,					"playerinfo");
 		save::parse_bool(player_visuals,		allocator,			variables::player_visuals::healthesp,					"healthesp");
 	} doc.AddMember("player_visuals", player_visuals, allocator);
 	
@@ -105,6 +109,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::chickenpride,					"chickenpride");
 		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_fov_slider,				"custom_fov_slider");
 		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_vmfov_slider,			"custom_vmfov_slider");
+		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::worldcolor,					"worldcolor");
 	} doc.AddMember("misc_visuals", misc_visuals, allocator);
 	
 	rapidjson::Value misc(rapidjson::kObjectType); {				// Misc
@@ -154,9 +159,12 @@ void config::save_config(std::string filename) {
 		save::parse_color(colors,				allocator,			variables::colors::chams_sleeve_c,						"chams_sleeve_c");
 		save::parse_color(colors,				allocator,			variables::colors::bt_chams_enemy,						"bt_chams_enemy");
 		save::parse_color(colors,				allocator,			variables::colors::bt_chams_friend,						"bt_chams_friend");
+		save::parse_color(colors,				allocator,			variables::colors::bt_chams_enemy_fade,					"bt_chams_enemy_fade");
+		save::parse_color(colors,				allocator,			variables::colors::bt_chams_friend_fade,				"bt_chams_friend_fade");
 		save::parse_color(colors,				allocator,			variables::colors::crosshair_c,							"crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::recoil_crosshair_c,					"recoil_crosshair_c");
 		save::parse_color(colors,				allocator,			variables::colors::aimbot_fov_c,						"aimbot_fov_c");
+		save::parse_color(colors,				allocator,			variables::colors::worldcolor_c,						"worldcolor_c");
 	} doc.AddMember("colors", colors, allocator);
 	
 	rapidjson::Value motion_blur(rapidjson::kObjectType); {			// Motion blur
@@ -185,7 +193,7 @@ void config::save_config(std::string filename) {
 
 #pragma region SAVE_FUNCTIONS
 void config::save::parse_bool(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, bool& target, std::string json_name) {
-	rapidjson::Value name(json_name.c_str(), allocator);
+	rapidjson::Value name(json_name.c_str(), allocator);		// Name used by rapidjson for the item ("name": 123)
 	parent.AddMember(name, target, allocator);
 }
 
@@ -203,7 +211,7 @@ void config::save::parse_multicombo(rapidjson::Value& parent, rapidjson::Documen
 	rapidjson::Value name(json_name.c_str(), allocator);
 	rapidjson::Value arr(rapidjson::kArrayType);
 
-	for (int n = 0; n < target.vector.size(); n++) {					// Each target vector item
+	for (int n = 0; n < target.vector.size(); n++) {			// Each target vector item
 		arr.PushBack(target.vector.at(n).state, allocator);		// Add item to array
 	}
 
@@ -212,17 +220,28 @@ void config::save::parse_multicombo(rapidjson::Value& parent, rapidjson::Documen
 }
 
 void config::save::parse_color(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, colorpicker_col_t& target, std::string json_name) {
-	rapidjson::Value name(json_name.c_str(), allocator);
-	rapidjson::Value arr(rapidjson::kArrayType);
+	rapidjson::Value name(json_name.c_str(), allocator);	// Name used by rapidjson for the item ("name": 123)
+	rapidjson::Value col_obj(rapidjson::kObjectType);		// The color object containing the rgb and the hsv arrays
+	rapidjson::Value rgb_arr(rapidjson::kArrayType);
+	rapidjson::Value hsv_arr(rapidjson::kArrayType);
 
-	// Add colors to array in order
-	arr.PushBack(target.col.r, allocator);
-	arr.PushBack(target.col.g, allocator);
-	arr.PushBack(target.col.b, allocator);
-	arr.PushBack(target.col.a, allocator);
+	// Add colors to rgb array in order
+	rgb_arr.PushBack(target.col.r, allocator);
+	rgb_arr.PushBack(target.col.g, allocator);
+	rgb_arr.PushBack(target.col.b, allocator);
+	rgb_arr.PushBack(target.col.a, allocator);
+
+	// Add colors to hsv array in order
+	hsv_arr.PushBack(target.f_hsv.h, allocator);
+	hsv_arr.PushBack(target.f_hsv.s, allocator);
+	hsv_arr.PushBack(target.f_hsv.v, allocator);
+
+	// Add arrays to color object
+	col_obj.AddMember("rgb", rgb_arr, allocator);
+	col_obj.AddMember("hsv", hsv_arr, allocator);
 
 	// Add array to main doc
-	parent.AddMember(name, arr, allocator);
+	parent.AddMember(name, col_obj, allocator);
 }
 
 void config::save::parse_hotkey(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, hotkey_t& target, std::string json_name) {

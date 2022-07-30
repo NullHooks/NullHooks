@@ -106,18 +106,18 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	// Check each player
 	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
-		auto iPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-		if (!iPlayer
-			|| iPlayer == csgo::local_player
-			|| !iPlayer->is_alive()
-			|| iPlayer->dormant()
-			|| iPlayer->has_gun_game_immunity()) continue;
-		if (!helpers::is_enemy(iPlayer) && !variables::aim::target_friends) continue;
+		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
+		if (!entity
+			|| entity == csgo::local_player
+			|| !entity->is_alive()
+			|| entity->dormant()
+			|| entity->has_gun_game_immunity()) continue;
+		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
 
 		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
 		for (const auto hitbox : all_hitboxes) {
-			auto hitbox_pos = iPlayer->get_hitbox_position(hitbox);
+			auto hitbox_pos = entity->get_hitbox_position(hitbox);
 			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
 
 			#ifdef _DEBUG
@@ -126,7 +126,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if (!aim::autowall::handle_walls(csgo::local_player, iPlayer, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox))
+				if (!aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox))
 					continue;
 			} else if (!enabled_hitbox) {
 				continue;	// We are trying to use ignore walls with disabled hitbox

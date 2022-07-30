@@ -121,12 +121,12 @@ void visuals::playeresp() {
 		#pragma region BOX ESP
 		if (variables::player_visuals::boxesp) {
 			if (player->team() == csgo::local_player->team() && variables::player_visuals::showteamesp) {
-				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());		// Outer box outline
-				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());		// Inner box outline
-				render::draw_rect(x, y, w, h, variables::colors::friendly_color);	// Color box line
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black(variables::colors::friendly_color.col.a));		// Outer box outline (Use inner color's opacity)
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black(variables::colors::friendly_color.col.a));		// Inner box outline
+				render::draw_rect(x, y, w, h, variables::colors::friendly_color);											// Color box line
 			} else if (player->team() != csgo::local_player->team()) {
-				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black());
-				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black());
+				render::draw_rect(x - 1, y - 1, w + 2, h + 2, color::black(variables::colors::enemy_color.col.a));
+				render::draw_rect(x + 1, y + 1, w - 2, h - 2, color::black(variables::colors::enemy_color.col.a));
 				render::draw_rect(x, y, w, h, variables::colors::enemy_color);
 			}
 		}

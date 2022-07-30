@@ -1,16 +1,13 @@
 #pragma once
 #include "source-sdk/sdk.hpp"
-#include "misc/backtrack.hpp"					// VIP so uses his own header file
+#include "core/features/misc/backtrack.hpp"
 
 namespace antiaim {
 	void run_antiaim(c_usercmd* cmd, bool& sendPacket);
 }
 
 namespace animations {
-	namespace entity {
-		// @todo: resolver
-	}
-
+	// @todo: resolver
 	namespace local {
 		void run_local_animations();
 	}
@@ -25,7 +22,7 @@ namespace aim {
 	void draw_fov();
 
 	namespace autowall {
-		float get_damage_multiplier(int hit_group);
+		float get_damage_multiplier(int hit_group, float hs_multiplier);
 		bool is_armored(int hit_group, bool helmet);
 		bool trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace);
 		static bool handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& start, float penetration, float& damage);
@@ -54,7 +51,7 @@ namespace visuals {
 	void bullet_tracer(i_game_event *event);
 	void nade_predict() noexcept;
 	void nosmoke(client_frame_stage_t frame_stage);
-	void apply_models();
+	void worldcolor();
 
 	namespace custom_models {
 		void replace_model(char* path);

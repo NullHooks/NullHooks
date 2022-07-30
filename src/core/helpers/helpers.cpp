@@ -1,3 +1,4 @@
+#include "dependencies/utilities/csgo.hpp"
 #include "core/helpers/helpers.hpp"
 
 #pragma region CONSOLE
@@ -30,29 +31,36 @@ color helpers::colors::hsv2color(int_hsv hsv, int alpha) {
 	float fX = fC * (1 - fabs(fmod(fHPrime, 2) - 1));
 	float fM = hsv.v - fC;
 
-	if (0 <= fHPrime && fHPrime < 1)
-		return color(fC*255, fX*255, 0, alpha);
-	else if (1 <= fHPrime && fHPrime < 2)
-		return color(fX*255, fC*255, 0, alpha);
-	else if (2 <= fHPrime && fHPrime < 3)
-		return color(0, fC*255, fX*255, alpha);
-	else if (3 <= fHPrime && fHPrime < 4)
-		return color(0, fX*255, fC*255, alpha);
-	else if (4 <= fHPrime && fHPrime < 5)
-		return color(fX*255, 0, fC*255, alpha);
-	else if (5 <= fHPrime && fHPrime < 6)
-		return color(fC*255, 0, fX*255, alpha);
-	else
-		return color(0, 0, 0, alpha);
+	color ret = color(0, 0, 0, alpha);
+	float_color col = { 0.f, 0.f, 0.f };
+
+	if (0 <= fHPrime && fHPrime < 1)			col = float_color{ fC,  fX,  0.f };
+	else if (1 <= fHPrime && fHPrime < 2)		col = float_color{ fX,  fC,  0.f };
+	else if (2 <= fHPrime && fHPrime < 3)		col = float_color{ 0.f, fC,  fX  };
+	else if (3 <= fHPrime && fHPrime < 4)		col = float_color{ 0.f, fX,  fC  };
+	else if (4 <= fHPrime && fHPrime < 5)		col = float_color{ fX,  0.f, fC  };
+	else if (5 <= fHPrime && fHPrime < 6)		col = float_color{ fC,  0.f, fX  };
+	else										col = float_color{ 0.f, 0.f, 0.f };
+
+	col.r += fM;
+	col.g += fM;
+	col.b += fM;
+
+	ret.r = col.r * 255;
+	ret.g = col.g * 255;
+	ret.b = col.b * 255;
+	ret.a = alpha;
+
+	return ret;
 }
 
 /* hsv2color(float_hsv): Returns color from hsv. Hue in 1.f format. */
-color helpers::colors::hsv2color(float_hsv hsv, int alpha) {
-	int_hsv converted = {
+color helpers::colors::hsv_float2color(float_hsv hsv, int alpha) {
+	int_hsv converted(
 		hsv.h * 360.f,		// So its in 1.f format
 		hsv.s,
 		hsv.v
-	};
+	);
 
 	return hsv2color(converted, alpha);
 }
@@ -63,30 +71,31 @@ color helpers::colors::hsv2color(float_hsv hsv, int alpha) {
  */
 int_hsv helpers::colors::color2hsv(color col) {
 	int_hsv result;
+	float_color f_col{ col.r / 255.f, col.g / 255.f, col.b / 255.f };		// Convert 255 rgb to 1.f rgb
 
-	float fCMax = max(max(col.r, col.g), col.b);
-	float fCMin = min(min(col.r, col.g), col.b);
+	float fCMax = max(max(f_col.r, f_col.g), f_col.b);
+	float fCMin = min(min(f_col.r, f_col.g), f_col.b);
 	float fDelta = fCMax - fCMin;
 
 	if (fDelta > 0) {
-		if (fCMax == col.r)
-			result.h = 60 * (fmod(((col.g - col.b) / fDelta), 6));
-		else if (fCMax == col.g)
-			result.h = 60 * (((col.b - col.r) / fDelta) + 2);
-		else if (fCMax == col.b)
-			result.h = 60 * (((col.r - col.g) / fDelta) + 4);
+		if (fCMax == f_col.r)
+			result.h = 60.f * (fmod(((f_col.g - f_col.b) / fDelta), 6));
+		else if (fCMax == f_col.g)
+			result.h = 60.f * (((f_col.b - f_col.r) / fDelta) + 2);
+		else if (fCMax == f_col.b)
+			result.h = 60.f * (((f_col.r - f_col.g) / fDelta) + 4);
 
-		if (fCMax > 0) result.s = fDelta / fCMax;
-		else result.s = 0;
+		if (fCMax > 0.f) result.s = fDelta / fCMax;
+		else result.s = 0.f;
 
 		result.v = fCMax;
 	} else {
-		result.h = 0;
-		result.s = 0;
+		result.h = 0.f;
+		result.s = 0.f;
 		result.v = fCMax;
 	}
 
-	if (result.h < 0) result.h = 360 + result.h;	// Revert if too small
+	if (result.h < 0.f) result.h = 360.f + result.h;	// Revert if too small
 	
 	return result;
 }
@@ -95,7 +104,7 @@ int_hsv helpers::colors::color2hsv(color col) {
 float_hsv helpers::colors::color2hsv_float(color col) {
 	int_hsv int_result = color2hsv(col);
 	float_hsv result = { 
-		int_result.h / 360.f,		// So its in 1.f format
+		(float)int_result.h / 360.f,		// So its in 1.f format
 		int_result.s,
 		int_result.v
 	};

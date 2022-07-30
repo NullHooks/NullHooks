@@ -58,6 +58,10 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::antiaim::antiaim,							"antiaim",			"antiaim");
 	load::parse_float(doc,			variables::antiaim::yaw,								"antiaim",			"antiaim_yaw");
 	load::parse_float(doc,			variables::antiaim::pitch,								"antiaim",			"antiaim_pitch");
+	load::parse_bool(doc,			variables::antiaim::spinbot,							"antiaim",			"spinbot");
+	load::parse_float(doc,			variables::antiaim::spinbot_speed,						"antiaim",			"spinbot_speed");
+	load::parse_bool(doc,			variables::antiaim::peek_aa,							"antiaim",			"peek_aa");
+	load::parse_hotkey(doc,			variables::antiaim::peek_aa_toggle_key,					"antiaim",			"peek_aa_toggle_key");
 	// Player visuals
 	load::parse_bool(doc,			variables::player_visuals::showteamesp,					"player_visuals",	"showteamesp");
 	load::parse_bool(doc,			variables::player_visuals::playerglow,					"player_visuals",	"playerglow");
@@ -99,6 +103,7 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::misc_visuals::chickenpride,					"misc_visuals",		"chickenpride");
 	load::parse_float(doc,			variables::misc_visuals::custom_fov_slider,				"misc_visuals",		"custom_fov_slider");
 	load::parse_float(doc,			variables::misc_visuals::custom_vmfov_slider,			"misc_visuals",		"custom_vmfov_slider");
+	load::parse_bool(doc,			variables::misc_visuals::worldcolor,					"misc_visuals",		"worldcolor");
 	// Misc
 	load::parse_bool(doc,			variables::misc::infinite_duck,							"misc",				"infinite_duck");
 	load::parse_bool(doc,			variables::misc::bhop,									"misc",				"bhop");
@@ -131,7 +136,6 @@ void config::load_config(std::string filename) {
 	load::parse_color(doc,			variables::colors::enemy_color,							"colors",			"enemy_color");
 	load::parse_color(doc,			variables::colors::enemy_color_soft,					"colors",			"enemy_color_soft");
 	load::parse_color(doc,			variables::colors::enemy_color_softer,					"colors",			"enemy_color_softer");
-	load::parse_color(doc,			variables::colors::enemy_color_softer,					"colors",			"enemy_color_softer");
 	load::parse_color(doc,			variables::colors::chams_localplayer,					"colors",			"chams_localplayer");
 	load::parse_color(doc,			variables::colors::chams_vis_enemy_c,					"colors",			"chams_vis_enemy_c");
 	load::parse_color(doc,			variables::colors::chams_inv_enemy_c,					"colors",			"chams_inv_enemy_c");
@@ -142,9 +146,12 @@ void config::load_config(std::string filename) {
 	load::parse_color(doc,			variables::colors::chams_sleeve_c,						"colors",			"chams_sleeve_c");
 	load::parse_color(doc,			variables::colors::bt_chams_enemy,						"colors",			"bt_chams_enemy");
 	load::parse_color(doc,			variables::colors::bt_chams_friend,						"colors",			"bt_chams_friend");
+	load::parse_color(doc,			variables::colors::bt_chams_enemy_fade,					"colors",			"bt_chams_enemy_fade");
+	load::parse_color(doc,			variables::colors::bt_chams_friend_fade,				"colors",			"bt_chams_friend_fade");
 	load::parse_color(doc,			variables::colors::crosshair_c,							"colors",			"crosshair_c");
 	load::parse_color(doc,			variables::colors::recoil_crosshair_c,					"colors",			"recoil_crosshair_c");
 	load::parse_color(doc,			variables::colors::aimbot_fov_c,						"colors",			"aimbot_fov_c");
+	load::parse_color(doc,			variables::colors::worldcolor_c,						"colors",			"worldcolor_c");
 	// Motion blur
 	load::parse_bool(doc,			variables::motion_blur.enabled,							"motion_blur",		"enabled");
 	load::parse_bool(doc,			variables::motion_blur.forwardEnabled,					"motion_blur",		"forward_enabled");
@@ -201,20 +208,44 @@ void config::load::parse_multicombo(rapidjson::Document& doc, multicombobox_togg
 }
 
 void config::load::parse_color(rapidjson::Document& doc, colorpicker_col_t& target, std::string parent, std::string json_name) {
-	if (!doc.HasMember(parent.c_str())) return;					// Check if parent in doc
-	rapidjson::Value& parent_obj = doc[parent.c_str()];			// Get json object from parent
-	if (!parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
-	rapidjson::Value& value = parent_obj[json_name.c_str()];	// value will be each json entry of the item
+	if (!doc.HasMember(parent.c_str())) return;											// Check if parent in doc
+	rapidjson::Value& parent_obj = doc[parent.c_str()];									// Get json object from parent
+	if (!parent_obj.IsObject() || !parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
+	rapidjson::Value& color_obj = parent_obj[json_name.c_str()];						// color_obj will be the obj containing the rgb and hsv arrays
+	if (!color_obj.IsObject()) return;													// Check if the color object is an object
+	
+	if (color_obj.HasMember("rgb")) {								// Get rgb array from color obj
+		rapidjson::Value& rgb_arr = color_obj["rgb"];				// rgb_arr will be the array containing the rgb integers
 
-	if (value.IsArray()) {											// Check item is array
-		if (value.Size() > 0 && value[0].IsInt())					// Json array is good and json value is a bool
-			target.col.r = value[0].GetInt();						// (R) Assign to color parameter
-		if (value.Size() > 1 && value[1].IsInt())
-			target.col.g = value[1].GetInt();						// (G)
-		if (value.Size() > 2 && value[2].IsInt())
-			target.col.b = value[2].GetInt();						// (B)
-		if (value.Size() > 3 && value[3].IsInt())
-			target.col.a = value[3].GetInt();						// (A)
+		if (rgb_arr.IsArray()) {									// Check item is array
+			if (rgb_arr.Size() > 0 && rgb_arr[0].IsInt())			// Json array is good and json value is an int
+				target.col.r = rgb_arr[0].GetInt();					// (R) Assign to color parameter
+			if (rgb_arr.Size() > 1 && rgb_arr[1].IsInt())
+				target.col.g = rgb_arr[1].GetInt();					// (G)
+			if (rgb_arr.Size() > 2 && rgb_arr[2].IsInt())
+				target.col.b = rgb_arr[2].GetInt();					// (B)
+			if (rgb_arr.Size() > 3 && rgb_arr[3].IsInt())
+				target.col.a = rgb_arr[3].GetInt();					// (A)
+		}
+	}
+
+	if (color_obj.HasMember("hsv")) {							// Get hsv array from color obj
+		rapidjson::Value& hsv_arr = color_obj["hsv"];			// hsv_arr will be the array containing the hsv floats
+
+		if (hsv_arr.IsArray()) {								// Check item is array
+			if (hsv_arr.Size() > 0) {							// Json array is good and json value is float (float_hsv)
+				if (hsv_arr[0].IsFloat())		target.f_hsv.h = hsv_arr[0].GetFloat();		// (H) Assign to float_hsv parameter
+				else if (hsv_arr[0].IsInt())	target.f_hsv.h = hsv_arr[0].GetInt();		// Int check just in case
+			}
+			if (hsv_arr.Size() > 1) {
+				if (hsv_arr[1].IsFloat())		target.f_hsv.s = hsv_arr[1].GetFloat();		// (S)
+				else if (hsv_arr[1].IsInt())	target.f_hsv.s = hsv_arr[1].GetInt();
+			}
+			if (hsv_arr.Size() > 2) {
+				if (hsv_arr[2].IsFloat())		target.f_hsv.v = hsv_arr[2].GetFloat();		// (V)
+				else if (hsv_arr[2].IsInt())	target.f_hsv.v = hsv_arr[2].GetInt();
+			}
+		}
 	}
 }
 
