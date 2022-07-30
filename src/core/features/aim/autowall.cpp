@@ -3,9 +3,9 @@
 #include "core/menu/variables.hpp"
 
 #pragma region MULTIPLIERS
-float aim::autowall::get_damage_multiplier(int hit_group) {
+float aim::autowall::get_damage_multiplier(int hit_group, float hs_multiplier) {
 	switch (hit_group) {
-		case hitgroup_head:			return 4.0f;
+		case hitgroup_head:			return hs_multiplier;		// Changes depending on weapon
 		case hitgroup_stomach:		return 1.25f;
 		case hitgroup_leftleg:
 		case hitgroup_rightleg:		return 0.75f;
@@ -117,7 +117,7 @@ bool aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const
 		if (trace.flFraction == 1.0f) break;
 
 		distance += trace.flFraction * (weapon_data->weapon_range - distance);
-		damage = damage * get_damage_multiplier(trace.hit_group) * powf(weapon_data->weapon_range_mod, distance / 500.0f);
+		damage = damage * get_damage_multiplier(trace.hit_group, weapon_data->weapon_headshot_multiplier) * powf(weapon_data->weapon_range_mod, distance / 500.0f);
 		if (trace.entity == entity && trace.hit_group > hitgroup_generic && trace.hit_group <= hitgroup_rightleg) {
 			if (float armor_ratio{ weapon_data->weapon_armor_ratio / 2.0f }; is_armored(trace.hit_group, trace.entity->has_helmet()))
 				damage -= (trace.entity->armor() < damage * armor_ratio / 2.0f ? trace.entity->armor() * 4.0f : damage) * (1.0f - armor_ratio);
