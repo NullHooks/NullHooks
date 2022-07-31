@@ -3,7 +3,6 @@
 
 class client_class;
 class i_client_networkable;
-class i_client_mode;
 
 typedef i_client_networkable* (*create_client_class_fn)(int ent_number, int serial_number);
 typedef i_client_networkable* (*create_event_fn)();
