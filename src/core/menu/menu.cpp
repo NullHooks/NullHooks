@@ -166,7 +166,7 @@ void menu::render() {
 				gui::add_hotkey		("Slowwalk key",						variables::misc::slowwalk_key);
 			}
 
-			gui::add_groupbox("Movement", 3); {
+			gui::add_groupbox("Speedgraph", 3); {
 				gui::add_multicombobox	("Speedgraph options",	variables::misc::speedgraph_target);
 				gui::add_slider			("Speedgraph height",	variables::misc::speedgraph_h, 0.f, 100.f);
 				gui::add_slider			("Speedgraph pos",		variables::misc::speedgraph_pos, 0.f, 100.f);
@@ -175,7 +175,7 @@ void menu::render() {
 			/* ----- Misc - Second column ----- */
 			gui::add_column();
 
-			gui::add_groupbox("Movement", 3); {
+			gui::add_groupbox("Thirdperson", 3); {
 				gui::add_checkbox	("Thirdperson",				variables::misc::thirdperson);
 				gui::add_hotkey		("Thirdperson toggle key",	variables::misc::thirdperson_key);
 				gui::add_slider		("Thirdperson distance",	variables::misc::thirdperson_dist, 50.f, 200.f);
@@ -193,7 +193,7 @@ void menu::render() {
 				gui::add_slider("Custom viewmodel FOV",		variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
 			}
 
-			gui::add_groupbox("Fov", 5); {
+			gui::add_groupbox("Motion blur", 5); {
 				gui::add_checkbox	("Enable motion blur",		variables::motion_blur.enabled);
 				gui::add_checkbox	("Forward motion blur",		variables::motion_blur.forwardEnabled);
 				gui::add_slider		("Strenght",				variables::motion_blur.strength, 0.f, 15.f);
@@ -214,7 +214,7 @@ void menu::render() {
 		case 3: {	// Config
 			gui::init_tab();
 
-			gui::add_groupbox("Skins", 4); {
+			gui::add_groupbox("Config", 4); {
 				gui::add_button		("Refresh configs",			config::refresh_list);
 				gui::add_textbox	("Config name...",			config::new_config_name, config::create_new_config);
 				gui::add_button		("Load selected config",	config::load_selected_config);
@@ -229,7 +229,7 @@ void menu::render() {
 			/* ----- Config - Second column ----- */
 			gui::add_column();
 
-			gui::add_groupbox("Movement", config::max_configs); {
+			gui::add_groupbox("Config selection", config::max_configs); {
 				gui::config_selection(gui::vars::container_left_pos, gui::vars::cur_base_item_y, gui::vars::container_width, render::fonts::watermark_font,
 					config::config_names);
 			}
