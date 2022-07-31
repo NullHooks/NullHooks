@@ -179,6 +179,7 @@ void config::save_config(std::string filename) {
 	} doc.AddMember("motion_blur", motion_blur, allocator);
 	
 	/* ------------------------ Write to file ------------------------ */
+	
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 	doc.Accept(writer);
@@ -189,6 +190,10 @@ void config::save_config(std::string filename) {
 		file << buffer.GetString();
 		file.close();
 	}
+
+	/* --------------------------------------------------------------- */
+	
+	helpers::chat_save_config(filename);		// Print to game chat
 }
 #pragma endregion
 

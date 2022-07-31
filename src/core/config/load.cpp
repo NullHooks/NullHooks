@@ -161,6 +161,8 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.fallingIntensity,				"motion_blur",		"falling_intensity");
 	load::parse_float(doc,			variables::motion_blur.rotationIntensity,				"motion_blur",		"rotation_intensity");
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur",		"strength");
+
+	helpers::chat_load_config(filename);		// Print to game chat
 }
 #pragma endregion
 
