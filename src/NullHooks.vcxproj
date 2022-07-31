@@ -280,6 +280,7 @@
     <ClInclude Include="dependencies\interfaces\i_app_system.hpp" />
     <ClInclude Include="dependencies\interfaces\i_base_client_dll.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_entity_list.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_client_mode.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_state.hpp" />
     <ClInclude Include="dependencies\interfaces\i_client_string_table_container.hpp" />
     <ClInclude Include="dependencies\interfaces\i_console.hpp" />

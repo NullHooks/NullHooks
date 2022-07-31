@@ -33,6 +33,7 @@
 #include "dependencies/interfaces/i_filesystem.hpp"
 #include "dependencies/interfaces/i_engine_sound.hpp"
 #include "dependencies/interfaces/i_panoramaui_engine.hpp"
+#include "dependencies/interfaces/i_client_mode.hpp"
 
 namespace interfaces {
 	enum class interface_type { index, bruteforce };
