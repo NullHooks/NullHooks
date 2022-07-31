@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma region STRUCTS
 // Hue in 360 format
 struct int_hsv {
 	int h;		// Max: 360
@@ -65,6 +66,25 @@ struct float_color {
 		this->b = (float)col.b / 255.f;
 	}
 };
+#pragma endregion
+
+#pragma region ENUMS
+enum chat_colors {
+	CHAT_COLOR_WHITE = 0x01,
+	CHAT_COLOR_RED,
+	CHAT_COLOR_LIGHT_PURPLE,
+	CHAT_COLOR_GREEN,
+	CHAT_COLOR_LIGHT_GREEN,
+	CHAT_COLOR_LIME,
+	CHAT_COLOR_LIGHT_RED,
+	CHAT_COLOR_GRAY,
+	CHAT_COLOR_LIGHT_YELLOW,
+	CHAT_COLOR_GRAY_BLUE,
+	CHAT_COLOR_LIGHT_BLUE,
+	CHAT_COLOR_BLUE,
+	CHAT_COLOR_PURPLE,
+};
+#pragma endregion
 
 namespace helpers {
 	namespace console {
@@ -83,4 +103,8 @@ namespace helpers {
 	
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);
+	void chat_print(std::string str);
+	void chat_print(std::string str, char col);		// Prints 'NullHooks | str' with color
+	void chat_load_config(std::string config_name);
+	void chat_save_config(std::string config_name);
 };
