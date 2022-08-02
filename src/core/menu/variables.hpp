@@ -196,6 +196,7 @@ namespace variables {
 		inline bool draw_stats = true;
 		inline bool clean_screenshots = true;
 		inline bool reveal_ranks = true;
+		inline bool discord_rp = true;
 	}
 	
 	namespace ui {

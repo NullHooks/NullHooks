@@ -34,5 +34,8 @@ void __stdcall hooks::frame_stage_notify::hook(client_frame_stage_t frame_stage)
 		default:                                    break;
 	}
 
+	// Always call discrord rp
+	misc::discord_update();
+
 	original(interfaces::client, frame_stage);
 }

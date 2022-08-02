@@ -69,6 +69,7 @@ namespace misc {
 	void thirdperson();
 	void reset_thirdperson();
 	void reveal_ranks(c_usercmd* cmd);
+	void discord_update();
 
 	namespace movement {
 		void infinite_duck(c_usercmd* cmd);

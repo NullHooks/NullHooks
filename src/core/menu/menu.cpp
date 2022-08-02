@@ -181,11 +181,12 @@ void menu::render() {
 				gui::add_slider		("Thirdperson distance",	variables::misc::thirdperson_dist, 50.f, 200.f);
 			}
 
-			gui::add_groupbox("Interface", 5); {
+			gui::add_groupbox("Interface", 6); {
 				gui::add_checkbox("Hide cheat on screenshots",	variables::misc::clean_screenshots);
 				gui::add_checkbox("Show watermark",				variables::misc::draw_watermark);
 				gui::add_checkbox("Show stats",					variables::misc::draw_stats);
 				gui::add_checkbox("Spectator list",				variables::ui::spectators::spectator_list);
+				gui::add_checkbox("Discord rich presence",		variables::misc::discord_rp);
 				gui::add_checkbox("Reveal ranks",				variables::misc::reveal_ranks);
 			}
 
