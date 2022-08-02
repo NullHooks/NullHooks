@@ -22,12 +22,13 @@ void misc::discord_update() {
     static float last_presence_update = 0.0f;
     static bool is_initialized = false;
     static int game_timestamp = INVALID_TIMESTAMP;
+    static std::string last_map_name = "";
 
     static std::string rp_id = get_rp_id();
     if (rp_id == "") return;
 
     // @todo: Fix
-    bool should_rp = (variables::misc::discord_rp && !input::gobal_input.IsHeld(globals::unhook_key));
+    bool should_rp = (variables::misc::discord_rp /* && !input::gobal_input.IsHeld(globals::unhook_key)*/);
 
     if (is_initialized && !should_rp) {
         Discord_ClearPresence();
@@ -62,13 +63,18 @@ void misc::discord_update() {
         if (game_timestamp == INVALID_TIMESTAMP)
             game_timestamp = std::time(nullptr);        // Store timestamp of game start if we just joined
 
-        auto map_name = interfaces::engine->get_level_name();
+        std::string map_name = interfaces::engine->get_level_name();
+        if (map_name != last_map_name) {
+            game_timestamp = std::time(nullptr);        // Reset game timestamp on map change
+            last_map_name = map_name;
+        }
+
         char presence_status_buffer[64];
 
         memset(presence_status_buffer, 0, sizeof(presence_status_buffer));
 
         #ifdef _DEBUG
-        sprintf_s(presence_status_buffer, "Debugging on: %s", map_name);
+        sprintf_s(presence_status_buffer, "Debugging on: %s", map_name.c_str());
         #else
         sprintf_s(presence_status_buffer, "Playing on: %s", map_name);
         #endif
