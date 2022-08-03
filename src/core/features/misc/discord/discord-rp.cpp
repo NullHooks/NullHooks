@@ -18,6 +18,7 @@
 
 std::string get_rp_id();        // Used for getting the rp id from the config file
 
+// Used in frame_stage_notify
 void misc::discord_update() {
     static float last_presence_update = 0.0f;
     static bool is_initialized = false;
