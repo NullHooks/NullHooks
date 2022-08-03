@@ -135,6 +135,7 @@ void config::save_config(std::string filename) {
 		save::parse_bool(misc,					allocator,			variables::misc::draw_watermark,						"draw_watermark");
 		save::parse_bool(misc,					allocator,			variables::misc::draw_stats,							"draw_stats");
 		save::parse_bool(misc,					allocator,			variables::misc::clean_screenshots,						"clean_screenshots");
+		save::parse_bool(misc,					allocator,			variables::misc::reveal_ranks,							"reveal_ranks");
 	} doc.AddMember("misc", misc, allocator);
 	
 	rapidjson::Value ui(rapidjson::kObjectType); {					// Ui
@@ -178,6 +179,7 @@ void config::save_config(std::string filename) {
 	} doc.AddMember("motion_blur", motion_blur, allocator);
 	
 	/* ------------------------ Write to file ------------------------ */
+	
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 	doc.Accept(writer);
@@ -188,6 +190,10 @@ void config::save_config(std::string filename) {
 		file << buffer.GetString();
 		file.close();
 	}
+
+	/* --------------------------------------------------------------- */
+	
+	helpers::chat_save_config(filename);		// Print to game chat
 }
 #pragma endregion
 

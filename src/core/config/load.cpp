@@ -127,6 +127,7 @@ void config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::misc::draw_watermark,						"misc",				"draw_watermark");
 	load::parse_bool(doc,			variables::misc::draw_stats,							"misc",				"draw_stats");
 	load::parse_bool(doc,			variables::misc::clean_screenshots,						"misc",				"clean_screenshots");
+	load::parse_bool(doc,			variables::misc::reveal_ranks,							"misc",				"reveal_ranks");
 	// Ui
 	load::parse_bool(doc,			variables::ui::spectators::spectator_list,				"ui",				"spectator_list");
 	// Colors
@@ -160,6 +161,8 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.fallingIntensity,				"motion_blur",		"falling_intensity");
 	load::parse_float(doc,			variables::motion_blur.rotationIntensity,				"motion_blur",		"rotation_intensity");
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur",		"strength");
+
+	helpers::chat_load_config(filename);		// Print to game chat
 }
 #pragma endregion
 

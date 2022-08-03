@@ -152,4 +152,27 @@ bool helpers::is_enemy(player_t* player) {
 
 	isOtherEnemy(csgo::local_player, player);
 }
+
+void helpers::chat_print(std::string str) {
+	interfaces::clientmode->chat->chat_printf(0, str.c_str());
+}
+
+void helpers::chat_print(std::string str, char col) {
+	std::string buff = std::string(" ") + (char)CHAT_COLOR_RED + std::string("NullHooks") + (char)CHAT_COLOR_GRAY + std::string(" | ") + (char)col + str;
+	interfaces::clientmode->chat->chat_printf(0, buff.c_str());
+}
+
+void helpers::chat_load_config(std::string config_name) {
+	std::string buff = std::string(" ") + (char)CHAT_COLOR_RED + std::string("NullHooks") + (char)CHAT_COLOR_GRAY + std::string(" | ") +
+		(char)CHAT_COLOR_WHITE + std::string("Loaded config: ") + (char)CHAT_COLOR_LIGHT_PURPLE + config_name;
+
+	interfaces::clientmode->chat->chat_printf(0, buff.c_str());
+}
+
+void helpers::chat_save_config(std::string config_name) {
+	std::string buff = std::string(" ") + (char)CHAT_COLOR_RED + std::string("NullHooks") + (char)CHAT_COLOR_GRAY + std::string(" | ") +
+		(char)CHAT_COLOR_WHITE + std::string("Saved config: ") + (char)CHAT_COLOR_LIGHT_PURPLE + config_name;
+
+	interfaces::clientmode->chat->chat_printf(0, buff.c_str());
+}
 #pragma endregion

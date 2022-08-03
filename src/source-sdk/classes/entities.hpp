@@ -659,7 +659,12 @@ public:
 	}
 
 	vec3_t get_eye_pos() {
-		return origin() + view_offset();
+		vec3_t ret;
+		using original_fn = void(__thiscall*)(void*, vec3_t*);
+		(*(original_fn**)this)[285](this, &ret);
+		return ret;
+
+		//return abs_origin() + view_offset();
 	}
 
 	anim_state* get_anim_state() {

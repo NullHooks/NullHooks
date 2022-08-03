@@ -38,6 +38,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	csgo::local_player = static_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
 	if (!csgo::local_player) return result;
 
+	misc::reveal_ranks(cmd);
 	misc::speedgraph::update();
 	misc::movement::bunny_hop(cmd);
 	misc::movement::infinite_duck(cmd);
