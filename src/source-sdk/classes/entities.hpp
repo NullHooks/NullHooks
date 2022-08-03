@@ -658,13 +658,20 @@ public:
 		return (UINT*)((uintptr_t)this + (netvar_manager::get_net_var(fnv::hash("DT_CSPlayer"), fnv::hash("m_hMyWeapons"))));
 	}
 
+	// Call method instead of adding view_offset() to origin()
 	vec3_t get_eye_pos() {
 		vec3_t ret;
 		using original_fn = void(__thiscall*)(void*, vec3_t*);
 		(*(original_fn**)this)[285](this, &ret);
 		return ret;
+	}
 
-		//return abs_origin() + view_offset();
+	// Call method instead of netvar
+	vec3_t get_aim_punch() {
+		vec3_t ret;
+		using original_fn = void(__thiscall*)(void*, vec3_t*);
+		(*(original_fn**)this)[346](this, &ret);
+		return ret;
 	}
 
 	anim_state* get_anim_state() {
