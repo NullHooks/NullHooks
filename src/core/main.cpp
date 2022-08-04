@@ -27,7 +27,7 @@ unsigned long WINAPI initialize(void* instance) {
 	}
 
 	// VK_END to unhook. We use IsHeld() because don't need to check the "first frame"
-	while (!input::gobal_input.IsHeld(VK_END))
+	while (!input::global_input.IsHeld(VK_END))
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	
 	//close menu so input is restored to user in the hooks::paint_traverse::hook hook.

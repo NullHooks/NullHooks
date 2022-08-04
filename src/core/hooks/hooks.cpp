@@ -36,7 +36,7 @@ bool hooks::initialize() {
 		helpers::console::state_to_console_color("Init", "Windows initialized!");
 		backtrack::init();					// Init backtrack cvars
 		helpers::console::state_to_console_color("Init", "Backtrack initialized!");
-		input::gobal_input.Init();			// Start arrays empty and all that, needed before WndProc
+		input::global_input.Init();			// Start arrays empty and all that, needed before WndProc
 		helpers::console::state_to_console_color("Init", "Global input initialized!");
 
 		// WndProc

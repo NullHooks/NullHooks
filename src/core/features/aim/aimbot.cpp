@@ -133,7 +133,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 #pragma region ACTUAL AIMBOT
 void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
+	if (!(variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
 		&& !(!variables::aim::autofire && (cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
@@ -177,7 +177,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	
 	cmd->viewangles = final_angle;
 
-	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
+	if (variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }
 #pragma endregion

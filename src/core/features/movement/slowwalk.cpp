@@ -4,7 +4,7 @@
 
 void misc::movement::slow_walk(c_usercmd* cmd) {
 	if (!variables::misc::slowwalk) return;
-	if (!input::gobal_input.IsHeld(variables::misc::slowwalk_key.key)) return;
+	if (!input::global_input.IsHeld(variables::misc::slowwalk_key.key)) return;
     if (!csgo::local_player) return;
     if (!(csgo::local_player->flags() & fl_onground)) return;        // We are not walking
 

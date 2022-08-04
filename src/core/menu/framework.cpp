@@ -63,7 +63,7 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	// Cursor in button and clicked
 	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Button background (Hover)
-		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON));
+		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON));
 	} else {
 		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Button background
 	}
@@ -92,13 +92,13 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		if ((cursor.x >= bl_x) && (cursor.x <= bl_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
 			bl_col = color(115, 21, 21, 255);					// Hover
-			if (input::gobal_input.IsPressed(VK_LBUTTON))
+			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == min) ? max : target - 1;	// Decrease
 		}
 	
 		if ((cursor.x >= br_x) && (cursor.x <= br_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
 			br_col = color(115, 21, 21, 255);					// Hover
-			if (input::gobal_input.IsPressed(VK_LBUTTON))
+			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == max) ? min : target + 1;	// Increase
 		}
 	}
@@ -132,7 +132,7 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	if ((cursor.x > x) && (cursor.x < x + w) && (cursor.y > y) && (cursor.y < y + h)
-		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON))
+		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON))
 		tab = count;
 	
 	// Tab background and line
@@ -158,19 +158,19 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		switch (click_area_id) {
 			default:
 			case 0: {	// Only checkbox
-				if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::gobal_input.IsPressed(VK_LBUTTON))
+				if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h) && input::global_input.IsPressed(VK_LBUTTON))
 					value = !value;		// If in checkbox and clicked
 				break;
 			}
 			case 1: {	// Name and checkbox, not color
 				if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h)		// Checkbox
 					|| (cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the colors)
-					&& input::gobal_input.IsPressed(VK_LBUTTON))
+					&& input::global_input.IsPressed(VK_LBUTTON))
 					value = !value;		// If in checkbox or text, but not color picker and clicked
 				break;
 			}
 			case 2: {	// All width from name to checkbox
-				if ((cursor.x >= x) && (cursor.x <= position + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+				if ((cursor.x >= x) && (cursor.x <= position + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && input::global_input.IsPressed(VK_LBUTTON)) {
 					value = !value;		// If in checkbox or text and clicked
 				}
 				break;
@@ -193,7 +193,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	const int col_w = 20, col_h = 11;					// Color "button" size
 	const int color_x = position - margin - col_w;		// Color "button" position
 
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
 		if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))	// Checkbox
 			|| ((cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
 			value = !value;
@@ -226,7 +226,7 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	const int color_l_x = color_r_x - margin - col_w;	// Left color (1) "button" position
 
 	// Comments in other function
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {		// Check click and all that once so it doesn't freak out
 		// Checkbox
 		if (((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
 			|| ((cursor.x >= x) && (cursor.x <= position - 55) && (cursor.y >= y) && (cursor.y <= y + h)))		// Name and all that. (5 + 20 + 5 + 20 + 5 for the 2 colors)
@@ -280,7 +280,7 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 	
 	// Get value from cursor and assign it
 	if ((cursor.x >= slider_pos_x) && (cursor.x <= slider_pos_x + slider_len) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_height)
-		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsHeld(VK_LBUTTON))
+		&& !popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsHeld(VK_LBUTTON))
 		value = map_slider_constrain((cursor.x - slider_pos_x), 0.0f, float(slider_len), float(min_value), float(max_value));
 
 	// Slider background and value display
@@ -317,7 +317,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	const int position = combo_right_pos - w;		// Get top left corner of current item
 
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
 		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
 			target.toggle = !target.toggle;			// If in checkbox and clicked
 		// See color picker comment
@@ -381,7 +381,7 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	const int position = combo_right_pos - w;		// Get top left corner of current item
 
 	// The bad thing about mouse_in_popup is that you can only check for popups after they are generated (You pop the items when rendering from the vector)
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
 		if ((cursor.x >= position) && (cursor.x <= position + w) && (cursor.y >= y) && (cursor.y <= y + h))
 			target.toggle = !target.toggle;			// If in checkbox and clicked
 		// See color picker comment
@@ -408,7 +408,7 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 
 /*
  * hotkey: Will scan for keys and will change the target_key value to the scanned (latest pressed) virtual key code
- * reading_this_hotkey is needed to check if the hotkey we are changing in input::gobal_input.reading_hotkey is the same as the one in this option
+ * reading_this_hotkey is needed to check if the hotkey we are changing in input::global_input.reading_hotkey is the same as the one in this option
  */
 void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string string, int& target_key, bool& reading_this_hotkey) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
@@ -419,27 +419,27 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		// If in hotkey button or text and clicked (but was not reading a hotkey)
 		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !reading_this_hotkey) {
-			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
-				input::gobal_input.reading_hotkey = true;
+			if (input::global_input.IsPressed(VK_LBUTTON)) {
+				input::global_input.reading_hotkey = true;
 				reading_this_hotkey				  = true;
 				should_skip_frame				  = true;
-			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
 				target_key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
-	if (input::gobal_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
-		const int newkey = input::gobal_input.LatestPressed();
+	if (input::global_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
+		const int newkey = input::global_input.LatestPressed();
 		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
 				target_key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				target_key = newkey;							// Store key
-				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
+				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
 			}
 
-			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
+			input::global_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			reading_this_hotkey               = false;		// And we don't have to worry about wich hotkey are we reading
 		}
 	} else if (should_skip_frame) {
@@ -467,27 +467,27 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		// If in hotkey button or text and clicked (but was not reading a hotkey)
 		if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1) && !hotkey_info.reading_this) {
-			if (input::gobal_input.IsPressed(VK_LBUTTON)) {
-				input::gobal_input.reading_hotkey = true;
+			if (input::global_input.IsPressed(VK_LBUTTON)) {
+				input::global_input.reading_hotkey = true;
 				hotkey_info.reading_this          = true;
 				should_skip_frame                 = true;
-			} else if (input::gobal_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
 				hotkey_info.key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
-	if (input::gobal_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
-		const int newkey = input::gobal_input.LatestPressed();
+	if (input::global_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
+		const int newkey = input::global_input.LatestPressed();
 		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
 				hotkey_info.key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				hotkey_info.key = newkey;						// Store key
-				input::gobal_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
+				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
 			}
 
-			input::gobal_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
+			input::global_input.reading_hotkey = false;		// We are no longer waiting for hotkeys
 			hotkey_info.reading_this          = false;		// And we don't have to worry about wich hotkey are we reading
 		}
 	} else if (should_skip_frame) {
@@ -515,43 +515,43 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	const int text_box_w = w - button_w - margin;
 	const int button_x = x + text_box_w + margin;
 
-	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
 		// If in text area and clicked
 		if ((cursor.x >= x) && (cursor.x <= x + text_box_w) && (cursor.y >= y - 1) && (cursor.y <= y + h + 1)) {
-			if (!input::gobal_input.reading_textbox) {
-				input::gobal_input.wndproc_textbox_buffer = textbox_info.text;		// Move current text to buffer cuz we reading
-				input::gobal_input.reading_textbox = true;
+			if (!input::global_input.reading_textbox) {
+				input::global_input.wndproc_textbox_buffer = textbox_info.text;		// Move current text to buffer cuz we reading
+				input::global_input.reading_textbox = true;
 				textbox_info.reading_this = true;
 			}
 		} else {
-			input::gobal_input.reading_textbox = false;
+			input::global_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		}
 	}
 
-	if (input::gobal_input.reading_textbox && textbox_info.reading_this) {
+	if (input::global_input.reading_textbox && textbox_info.reading_this) {
 		// Delete will remove last char
-		if (input::gobal_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
+		if (input::global_input.IsPressed(VK_BACK) && !textbox_info.text.empty()) {
 			// Ctrl + Del will clear the textbox
-			if (input::gobal_input.IsHeld(VK_CONTROL)) {
-				input::gobal_input.wndproc_textbox_buffer = "";
+			if (input::global_input.IsHeld(VK_CONTROL)) {
+				input::global_input.wndproc_textbox_buffer = "";
 				textbox_info.text = "";
 			} else {
-				input::gobal_input.wndproc_textbox_buffer.pop_back();
+				input::global_input.wndproc_textbox_buffer.pop_back();
 				textbox_info.text.pop_back();
 			}
 		// If esc or enter, unfocus
-		} else if (input::gobal_input.IsHeld(VK_ESCAPE) || input::gobal_input.IsHeld(VK_RETURN)) {
-			input::gobal_input.reading_textbox = false;
+		} else if (input::global_input.IsHeld(VK_ESCAPE) || input::global_input.IsHeld(VK_RETURN)) {
+			input::global_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		// If key is valid, add to string. Gotta thank zgui
 		} else if (textbox_info.text.length() < max_txt_len) {
 			// Only add if we are not overflowing text input
-			if (render::get_text_size(render::fonts::watermark_font, input::gobal_input.wndproc_textbox_buffer).x < text_box_w - margin - 2)	// -2 for cursor
-				textbox_info.text = input::gobal_input.wndproc_textbox_buffer;
+			if (render::get_text_size(render::fonts::watermark_font, input::global_input.wndproc_textbox_buffer).x < text_box_w - margin - 2)	// -2 for cursor
+				textbox_info.text = input::global_input.wndproc_textbox_buffer;
 			// If we are overflowing, reset buffer to current text
 			else
-				input::gobal_input.wndproc_textbox_buffer = textbox_info.text;
+				input::global_input.wndproc_textbox_buffer = textbox_info.text;
 		}
 	}
 
@@ -572,10 +572,10 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	// Button
 	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
-		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
 			button_callback(textbox_info.text);
 			textbox_info.text = "";
-			input::gobal_input.wndproc_textbox_buffer = "";
+			input::global_input.wndproc_textbox_buffer = "";
 		}
 	} else {
 		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
@@ -588,7 +588,7 @@ void gui::config_selection(std::int32_t x, std::int32_t y, std::int32_t w, unsig
 	constexpr int padding = 10;
 	const int h = config_names.size() * 15;		// 15px per line
 	
-	if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y) && (cursor.y < y + h) && input::gobal_input.IsHeld(VK_LBUTTON))		// We are holding inside region
+	if ((cursor.x >= x) && (cursor.x <= x + w) && (cursor.y >= y) && (cursor.y < y + h) && input::global_input.IsHeld(VK_LBUTTON))		// We are holding inside region
 		config::selected_config = (cursor.y - y) / 15;		// Get clicked item based on pos
 
 	// No configs
@@ -817,7 +817,7 @@ void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::i
 
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if (input::gobal_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
+	if (input::global_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
 		user_dragging_menu = true;
 
 		if (!should_move_menu) {
@@ -832,7 +832,7 @@ void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::i
 		y = cursor.y - cursor_corrected.y;
 	}
 	
-	if (!input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if (!input::global_input.IsHeld(VK_LBUTTON)) {
 		user_dragging_menu = false;
 		should_move_menu = false;
 	}
@@ -843,7 +843,7 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 	
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
-	if (input::gobal_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
+	if (input::global_input.IsHeld(VK_LBUTTON) && (cursor.x > x && cursor.x < x + w && cursor.y > y && cursor.y < y + h)) {
 		user_dragging_spec = true;
 
 		if (!should_move_spec) {
@@ -858,7 +858,7 @@ void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, s
 		y = cursor.y - cursor_corrected.y;
 	}
 
-	if (!input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if (!input::global_input.IsHeld(VK_LBUTTON)) {
 		user_dragging_spec = false;
 		should_move_spec = false;
 	}
@@ -958,7 +958,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	
 	// Check selected hue (mouse in slider)
 	float color_hue = hsv_buffer.h;
-	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y < slider_y + slider_h) && input::global_input.IsHeld(VK_LBUTTON)) {
 		color_hue = float(cursor.x - slider_x) / float(slider_w);
 		color_hue = (color_hue == 1.f) ? 0.99 : color_hue;		// If max slider value, subtract 1 color (max value is the same as min value in rgb, so when converting back the slider reset to 0)
 		hsv_buffer.h = color_hue;
@@ -977,7 +977,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 
 	// Check selected hue (mouse in slider)
 	float color_sat = hsv_buffer.s;
-	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::global_input.IsHeld(VK_LBUTTON)) {
 		color_sat = float(cursor.x - slider_x) / float(slider_w);
 		color_sat = (color_sat == 0.f) ? 0.01 : color_sat;
 		hsv_buffer.s = color_sat;
@@ -996,7 +996,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 
 	// Check selected hue (mouse in slider)
 	float color_val = hsv_buffer.v;
-	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::global_input.IsHeld(VK_LBUTTON)) {
 		color_val = float(cursor.x - slider_x) / float(slider_w);
 		color_val = (color_val == 0.f) ? 0.01 : color_val;
 		hsv_buffer.v = color_val;
@@ -1012,7 +1012,7 @@ void popup_system::color_picker_popup(color_popup_info col_p) {
 	render::draw_fade(slider_x, slider_y, slider_w, slider_h, col_p.col_t.col.get_custom_alpha(0), col_p.col_t.col.get_custom_alpha(255), true);
 	
 	// Check selected hue (mouse in slider)
-	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::gobal_input.IsHeld(VK_LBUTTON)) {
+	if ((cursor.x >= slider_x) && (cursor.x <= slider_x + slider_w) && (cursor.y >= slider_y) && (cursor.y <= slider_y + slider_h) && input::global_input.IsHeld(VK_LBUTTON)) {
 		float input_alpha = float(cursor.x - slider_x) / float(slider_w);
 		col_p.col_t.col.a = input_alpha * 255.f;
 	}
@@ -1042,7 +1042,7 @@ void popup_system::combobox_popup(combo_popup_info combo_p) {
 		item_n++;
 	}
 
-	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsHeld(VK_LBUTTON))
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::global_input.IsHeld(VK_LBUTTON))
 		combo_p.target_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
 }
 
@@ -1066,7 +1066,7 @@ void popup_system::multicombobox_popup(multicombo_popup_info combo_p) {
 		item_n++;
 	}
 
-	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::gobal_input.IsPressed(VK_LBUTTON)) {
+	if ((cursor.x >= combo_p.x) && (cursor.x <= combo_p.x + combo_p.w) && (cursor.y >= combo_p.y) && (cursor.y < combo_p.y + combo_p.h) && input::global_input.IsPressed(VK_LBUTTON)) {
 		int clicked_idx = (cursor.y - combo_p.y) / 15;		// Get clicked item
 		combo_p.target_vec.at(clicked_idx).state = !combo_p.target_vec.at(clicked_idx).state;
 	}
