@@ -101,10 +101,13 @@ namespace helpers {
 		color float2color(float* id);
 	}
 	
+	namespace chat {
+		void print(std::string str);
+		void print(std::string str, char col);		// Prints 'NullHooks | str' with color
+		void load_config(std::string config_name);
+		void save_config(std::string config_name);
+	}
+
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);
-	void chat_print(std::string str);
-	void chat_print(std::string str, char col);		// Prints 'NullHooks | str' with color
-	void chat_load_config(std::string config_name);
-	void chat_save_config(std::string config_name);
 };

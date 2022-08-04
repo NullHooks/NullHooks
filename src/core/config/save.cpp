@@ -19,6 +19,7 @@ void config::create_new_config(std::string filename) {
 }
 
 void config::save_config(std::string filename) {
+	if (filename == "") return;
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
 	DWORD exitst = GetFileAttributesA(full_path.c_str());
@@ -193,7 +194,7 @@ void config::save_config(std::string filename) {
 
 	/* --------------------------------------------------------------- */
 	
-	helpers::chat_save_config(filename);		// Print to game chat
+	helpers::chat::save_config(filename);		// Print to game chat
 }
 #pragma endregion
 
