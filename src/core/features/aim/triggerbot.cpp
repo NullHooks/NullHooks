@@ -4,7 +4,7 @@
 
 void aim::triggerbot(c_usercmd* cmd) {
 	if (!variables::aim::triggerbot) return;
-	if (!input::gobal_input.IsHeld(variables::aim::triggerbot_key)) return;
+	if (!input::global_input.IsHeld(variables::aim::triggerbot_key)) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 	if (!aimbot_weapon_check(true)) return;

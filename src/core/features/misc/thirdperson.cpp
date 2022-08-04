@@ -20,7 +20,7 @@ void misc::thirdperson() {
 
     static bool thirdperson_toggled = true;
     static bool spectated_thirdperson_toggle = false;
-    if (input::gobal_input.IsPressed(variables::misc::thirdperson_key)) {
+    if (input::global_input.IsPressed(variables::misc::thirdperson_key)) {
         if (csgo::local_player && csgo::local_player->is_alive())
             thirdperson_toggled = !thirdperson_toggled;
         else if (player != csgo::local_player)
@@ -55,7 +55,7 @@ void misc::thirdperson() {
     // If we are alive and we are trying to throw a grenade, reset thirdperson
     weapon_t* active_weapon = csgo::local_player->active_weapon();
     if (!active_weapon) return;
-    if (active_weapon->is_grenade() && (input::gobal_input.IsHeld(VK_LBUTTON) || input::gobal_input.IsHeld(VK_RBUTTON))) {
+    if (active_weapon->is_grenade() && (input::global_input.IsHeld(VK_LBUTTON) || input::global_input.IsHeld(VK_RBUTTON))) {
         reset_thirdperson();
         return;
     }

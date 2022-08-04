@@ -147,7 +147,7 @@ void menu::render() {
 
 			gui::add_groupbox("Network", 4); {
 				gui::add_checkbox	("Backtrack",			variables::misc::backtrack);
-				gui::add_slider		("Backtrack ms",			variables::misc::backtrack_ticks, 0.f, 400.f);
+				gui::add_slider		("Backtrack ms",		variables::misc::backtrack_ticks, 0.f, 400.f);
 				gui::add_checkbox	("Also teammates",		variables::misc::backtrack_team, variables::colors::bt_chams_friend_fade, variables::colors::bt_chams_friend);
 				gui::add_checkbox	("Backtrack chams",		variables::chams::backtrack_chams, variables::colors::bt_chams_enemy_fade, variables::colors::bt_chams_enemy);
 			}
@@ -249,7 +249,7 @@ void menu::render() {
 
 // Toggle using IsPressed (GetAsyncKeyState)
 void menu::check_toggle() {
-	if (input::gobal_input.IsPressed(VK_INSERT))
+	if (input::global_input.IsPressed(VK_INSERT))
 		variables::ui::menu::opened = !variables::ui::menu::opened;
 }
 
