@@ -56,8 +56,11 @@ public:
 		this->toggle = toggle;
 	}
 
-	inline bool is_enabled(int idx) {
-		return this->vector.at(idx).state;
+	bool is_enabled(int idx) {
+		if (idx >= vector.size())
+			throw std::runtime_error(std::string("multicombobox_toggle_t::is_enabled() was called with a wrong idx (out of range)"));
+
+		return vector.at(idx).state;
 	}
 
 	operator std::vector<multicombo_opt_t>() { return vector; }
