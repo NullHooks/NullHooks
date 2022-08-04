@@ -133,7 +133,7 @@ void config::save_config(std::string filename) {
 		save::parse_hotkey(misc,				allocator,			variables::misc::thirdperson_key,						"thirdperson_key");
 		save::parse_float(misc,					allocator,			variables::misc::thirdperson_dist,						"thirdperson_dist");
 		save::parse_bool(misc,					allocator,			variables::misc::draw_watermark,						"draw_watermark");
-		save::parse_bool(misc,					allocator,			variables::misc::draw_stats,							"draw_stats");
+		save::parse_multicombo(misc,			allocator,			variables::misc::watermark_stats,						"draw_stats");
 		save::parse_bool(misc,					allocator,			variables::misc::clean_screenshots,						"clean_screenshots");
 		save::parse_bool(misc,					allocator,			variables::misc::reveal_ranks,							"reveal_ranks");
 	} doc.AddMember("misc", misc, allocator);

@@ -1,1 +1,431 @@
-{"aim":{"triggerbot":false,"triggerbot_key":33,"triggerbot_delay":0.0,"aimbot":true,"silent":true,"autofire":true,"aimbot_key":33,"bodyaim_if_lethal":true,"autowall":1,"aimbot_fov":1.0,"aimbot_smoothing":0.0,"target_friends":false,"non_rifle_aimpunch":true,"aimbot_noscope":true,"min_damage":6.25,"hitboxes":[true,true,false,false,false]},"player_visuals":{"showteamesp":true,"playerglow":false,"boxesp":false,"lineesp":false,"skeletonesp":false,"nameesp":true,"playerinfo":true,"healthesp":true},"entity_visuals":{"entityglow":false,"entitytext":true,"bombtimer":true,"nade_esp":true},"chams":{"only_visible_chams":false,"draw_chams_on_top":false,"wireframe_chams":false,"player_chams":true,"localplayer_chams":true,"vm_weapon_chams":false,"vm_arm_chams":true,"vm_sleeve_chams":true,"player_mat_id":1,"localplayer_mat_id":11,"weapon_mat_id":4,"arms_mat_id":1,"sleeve_mat_id":1,"backtrack_chams":true},"misc_visuals":{"noflash":0.10000000149011612,"wireframe_smoke":true,"nade_predict":true,"noscope":true,"crosshair":true,"recoil_crosshair":true,"bulletracer_draw_target":[false,false],"bulletracer_team_target":[true,false,false],"chickenpride":false,"custom_fov_slider":95.0,"custom_vmfov_slider":1.0},"misc":{"infinite_duck":true,"bhop":true,"autostrafe":2,"edgejump":false,"ej_key":67,"edgebug":false,"eb_key":5,"jumpbug":true,"jb_key":5,"slowwalk":true,"slowwalk_key":18,"speedgraph_target":[false,false,true,true],"speedgraph_h":40.0,"speedgraph_pos":92.5,"backtrack":true,"backtrack_team":false,"thirdperson":true,"thirdperson_key":34,"thirdperson_dist":175.625,"draw_watermark":true,"draw_stats":true,"clean_screenshots":true},"ui":{"spectator_list":true},"colors":{"friendly_color":[0,90,255,255],"friendly_color_soft":[0,150,255,255],"friendly_color_softer":[90,180,255,255],"enemy_color":[255,0,0,255],"enemy_color_soft":[190,25,25,255],"enemy_color_softer":[255,75,75,255],"enemy_color_softer":[255,75,75,255],"chams_localplayer":[255,150,255,255],"chams_vis_enemy_c":[230,20,70,255],"chams_inv_enemy_c":[150,15,15,255],"chams_vis_friend_c":[0,150,255,255],"chams_inv_friend_c":[0,75,255,255],"chams_weapon_c":[255,150,255,255],"chams_arms_c":[255,0,255,0],"chams_sleeve_c":[100,0,255,0],"bt_chams_enemy":[230,20,70,30],"bt_chams_friend":[0,150,255,30],"crosshair_c":[255,255,255,255],"recoil_crosshair_c":[0,255,0,255]},"motion_blur":{"enabled":true,"forward_enabled":false,"falling_min":10.0,"falling_max":20.0,"falling_intensity":1.0,"rotation_intensity":1.0,"strength":3.0}}
+{
+  "aim": {
+    "triggerbot": false,
+    "triggerbot_key": 33,
+    "triggerbot_delay": 0,
+    "aimbot": true,
+    "silent": true,
+    "autofire": true,
+    "aimbot_key": 33,
+    "bodyaim_if_lethal": true,
+    "autowall": 1,
+    "aimbot_fov": 180,
+    "draw_fov": false,
+    "aimbot_smoothing": 0,
+    "target_friends": false,
+    "non_rifle_aimpunch": true,
+    "aimbot_noscope": true,
+    "min_damage": 35,
+    "hitboxes": [
+      true,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "antiaim": {
+    "antiaim": true,
+    "antiaim_pitch": 89,
+    "antiaim_yaw": -180,
+    "spinbot": false,
+    "spinbot_speed": 0,
+    "peek_aa": true,
+    "peek_aa_toggle_key": 67
+  },
+  "player_visuals": {
+    "showteamesp": true,
+    "playerglow": false,
+    "boxesp": false,
+    "lineesp": false,
+    "skeletonesp": false,
+    "nameesp": true,
+    "playerinfo": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "healthesp": true
+  },
+  "entity_visuals": {
+    "entityglow": false,
+    "entitytext": true,
+    "bombtimer": true,
+    "nade_esp": true
+  },
+  "chams": {
+    "only_visible_chams": false,
+    "draw_chams_on_top": false,
+    "wireframe_chams": false,
+    "player_chams": true,
+    "localplayer_chams": true,
+    "vm_weapon_chams": false,
+    "vm_arm_chams": true,
+    "vm_sleeve_chams": true,
+    "player_mat_id": 1,
+    "localplayer_mat_id": 3,
+    "weapon_mat_id": 4,
+    "arms_mat_id": 1,
+    "sleeve_mat_id": 1,
+    "backtrack_chams": true
+  },
+  "misc_visuals": {
+    "noflash": 0.10000000149011612,
+    "wireframe_smoke": true,
+    "nade_predict": true,
+    "noscope": true,
+    "crosshair": true,
+    "recoil_crosshair": true,
+    "bulletracer_draw_target": [
+      false,
+      false
+    ],
+    "bulletracer_team_target": [
+      true,
+      false,
+      false
+    ],
+    "chickenpride": false,
+    "custom_fov_slider": 95,
+    "custom_vmfov_slider": 1,
+    "worldcolor": true
+  },
+  "misc": {
+    "infinite_duck": true,
+    "bhop": true,
+    "autostrafe": 2,
+    "edgejump": false,
+    "ej_key": 67,
+    "edgebug": false,
+    "eb_key": 5,
+    "jumpbug": true,
+    "jb_key": 5,
+    "slowwalk": true,
+    "slowwalk_key": 18,
+    "speedgraph_target": [
+      false,
+      false,
+      true,
+      true
+    ],
+    "speedgraph_h": 40,
+    "speedgraph_pos": 92.5,
+    "backtrack": true,
+    "backtrack_team": false,
+    "thirdperson": true,
+    "thirdperson_key": 34,
+    "thirdperson_dist": 200,
+    "draw_watermark": true,
+    "draw_stats": [
+      true,
+      true,
+      true
+    ],
+    "clean_screenshots": true,
+    "reveal_ranks": true
+  },
+  "ui": {
+    "spectator_list": true
+  },
+  "colors": {
+    "friendly_color": {
+      "rgb": [
+        0,
+        90,
+        255,
+        255
+      ],
+      "hsv": [
+        0.605555534362793,
+        1,
+        1
+      ]
+    },
+    "friendly_color_soft": {
+      "rgb": [
+        0,
+        150,
+        255,
+        255
+      ],
+      "hsv": [
+        0.5666666626930237,
+        1,
+        1
+      ]
+    },
+    "friendly_color_softer": {
+      "rgb": [
+        90,
+        180,
+        255,
+        255
+      ],
+      "hsv": [
+        0.574999988079071,
+        0.6470588445663452,
+        1
+      ]
+    },
+    "enemy_color": {
+      "rgb": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "hsv": [
+        0,
+        1,
+        1
+      ]
+    },
+    "enemy_color_soft": {
+      "rgb": [
+        190,
+        25,
+        25,
+        255
+      ],
+      "hsv": [
+        0,
+        0.8684210777282715,
+        0.7450980544090271
+      ]
+    },
+    "enemy_color_softer": {
+      "rgb": [
+        255,
+        75,
+        75,
+        255
+      ],
+      "hsv": [
+        0,
+        0.7058823108673096,
+        1
+      ]
+    },
+    "chams_localplayer": {
+      "rgb": [
+        150,
+        242,
+        255,
+        26
+      ],
+      "hsv": [
+        0.5196850299835205,
+        0.4117646813392639,
+        1
+      ]
+    },
+    "chams_vis_enemy_c": {
+      "rgb": [
+        230,
+        20,
+        70,
+        255
+      ],
+      "hsv": [
+        0.9611111283302307,
+        0.9130434989929199,
+        0.9019607901573181
+      ]
+    },
+    "chams_inv_enemy_c": {
+      "rgb": [
+        150,
+        15,
+        15,
+        255
+      ],
+      "hsv": [
+        0,
+        0.9000000357627869,
+        0.5882353186607361
+      ]
+    },
+    "chams_vis_friend_c": {
+      "rgb": [
+        0,
+        150,
+        255,
+        255
+      ],
+      "hsv": [
+        0.5666666626930237,
+        1,
+        1
+      ]
+    },
+    "chams_inv_friend_c": {
+      "rgb": [
+        0,
+        75,
+        255,
+        255
+      ],
+      "hsv": [
+        0.6166666746139526,
+        1,
+        1
+      ]
+    },
+    "chams_weapon_c": {
+      "rgb": [
+        255,
+        150,
+        255,
+        255
+      ],
+      "hsv": [
+        0.8333333134651184,
+        0.4117646813392639,
+        1
+      ]
+    },
+    "chams_arms_c": {
+      "rgb": [
+        255,
+        0,
+        255,
+        0
+      ],
+      "hsv": [
+        0.8333333134651184,
+        1,
+        1
+      ]
+    },
+    "chams_sleeve_c": {
+      "rgb": [
+        255,
+        34,
+        0,
+        0
+      ],
+      "hsv": [
+        0.023622047156095505,
+        1,
+        1
+      ]
+    },
+    "bt_chams_enemy": {
+      "rgb": [
+        230,
+        20,
+        70,
+        30
+      ],
+      "hsv": [
+        0.9611111283302307,
+        0.9130434989929199,
+        0.9019607901573181
+      ]
+    },
+    "bt_chams_friend": {
+      "rgb": [
+        0,
+        150,
+        255,
+        30
+      ],
+      "hsv": [
+        0.5666666626930237,
+        1,
+        1
+      ]
+    },
+    "bt_chams_enemy_fade": {
+      "rgb": [
+        194,
+        89,
+        41,
+        182
+      ],
+      "hsv": [
+        0.05511811003088951,
+        0.787401556968689,
+        0.7637795209884644
+      ]
+    },
+    "bt_chams_friend_fade": {
+      "rgb": [
+        174,
+        255,
+        76,
+        132
+      ],
+      "hsv": [
+        0.24409449100494385,
+        0.7007874250411987,
+        1
+      ]
+    },
+    "crosshair_c": {
+      "rgb": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "hsv": [
+        0,
+        0,
+        1
+      ]
+    },
+    "recoil_crosshair_c": {
+      "rgb": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "hsv": [
+        0.3333333432674408,
+        1,
+        1
+      ]
+    },
+    "aimbot_fov_c": {
+      "rgb": [
+        255,
+        255,
+        255,
+        150
+      ],
+      "hsv": [
+        0,
+        0,
+        1
+      ]
+    },
+    "worldcolor_c": {
+      "rgb": [
+        140,
+        90,
+        140,
+        255
+      ],
+      "hsv": [
+        0.834645688533783,
+        0.35433071851730347,
+        0.5511810779571533
+      ]
+    }
+  },
+  "motion_blur": {
+    "enabled": true,
+    "forward_enabled": false,
+    "falling_min": 10,
+    "falling_max": 20,
+    "falling_intensity": 1,
+    "rotation_intensity": 1,
+    "strength": 3
+  }
+}
