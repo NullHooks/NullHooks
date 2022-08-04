@@ -18,7 +18,7 @@ void visuals::worldcolor() {
     static bool using_worldcolor = true;        // If true it means we just used worldcolor, so if we disable the menu var, it will apply default worldcolor to reset.
                                                 // Default is true in case we load a the cheat in a match with worldcolor enabled
 
-    if (!variables::misc_visuals::worldcolor) {
+    if (!variables::misc_visuals::worldcolor || (interfaces::engine->is_taking_screenshot() && variables::misc::clean_screenshots)) {
         if (using_worldcolor) {
             apply_worldcolor(color::white());
             using_worldcolor = false;
