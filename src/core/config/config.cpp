@@ -59,6 +59,10 @@ void config::refresh_list() {
 	const std::string path = nullhooks_config_folder + "\\config";
 
 	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+		DWORD exitst = GetFileAttributesA(entry.path().string().c_str());
+		if (exitst == INVALID_FILE_ATTRIBUTES || exitst & FILE_ATTRIBUTE_DIRECTORY)		// Check just in case if path does not exist or it is a folder
+			continue;
+
 		std::string full_name = entry.path().filename().string();
 		config_names.push_back(full_name);
 	}

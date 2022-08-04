@@ -17,8 +17,11 @@ void config::load_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
 	DWORD exitst = GetFileAttributesA(full_path.c_str());
-	if (exitst == INVALID_FILE_ATTRIBUTES)		// Path does not exist
-		std::ofstream{ full_path.c_str() };		// Open as output to create it
+	if (exitst == INVALID_FILE_ATTRIBUTES || exitst & FILE_ATTRIBUTE_DIRECTORY) {	// Path does not exist or it is a folder
+		std::string buff = "Error loading config: " + filename;
+		helpers::chat::print(buff, CHAT_COLOR_LIGHT_RED);
+		return;
+	}
 
 	std::ifstream file;
 	file.open(full_path, std::ios::in);
@@ -162,7 +165,7 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.rotationIntensity,				"motion_blur",		"rotation_intensity");
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur",		"strength");
 
-	helpers::chat_load_config(filename);		// Print to game chat
+	helpers::chat::load_config(filename);		// Print to game chat
 }
 #pragma endregion
 
