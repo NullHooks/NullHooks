@@ -2,11 +2,6 @@
 #include "core/menu/variables.hpp"
 #include "core/config/config.hpp"
 
-typedef struct CursorCoords {
-	int x;
-	int y;
-} cursor_coords;
-
 cursor_coords cursor;
 cursor_coords cursor_corrected;
 
