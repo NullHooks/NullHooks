@@ -88,7 +88,7 @@ namespace gui {
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);		// Unused
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);	// Unused
-	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
+	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string));
 	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
 	
 	// Menu movement
@@ -122,8 +122,8 @@ namespace gui {
 	void add_hotkey(const std::string label, hotkey_t& hotkey_info, unsigned long font);
 	void add_button(const std::string label, void(*callback)());
 	void add_button(const std::string label, void(*callback)(), unsigned long font);
-	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font);
-	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string), unsigned int font);
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string));
 
 	// Dynamic menu variables
 	namespace vars {

@@ -14,12 +14,12 @@ namespace config {
 	void refresh_list();
 
 	inline textbox_t new_config_name("");
-	void create_new_config(std::string filename);
+	bool create_new_config(std::string filename);
 
-	void load_config(std::string filename);
+	bool load_config(std::string filename);
 	void load_selected_config();
 	
-	void save_config(std::string filename);
+	bool save_config(std::string filename);
 	void save_selected_config();
 
 	namespace load {

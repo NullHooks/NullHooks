@@ -505,7 +505,7 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 }
 
-void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
+void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string)) {
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	constexpr int h = 11;
@@ -514,6 +514,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	constexpr int margin = 5;
 	const int text_box_w = w - button_w - margin;
 	const int button_x = x + text_box_w + margin;
+	bool call_callback = false;		// Used to check if we pressed enter or clicked the button
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
 		// If in text area and clicked
@@ -540,8 +541,13 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 				input::global_input.wndproc_textbox_buffer.pop_back();
 				textbox_info.text.pop_back();
 			}
-		// If esc or enter, unfocus
-		} else if (input::global_input.IsHeld(VK_ESCAPE) || input::global_input.IsHeld(VK_RETURN)) {
+		// If esc just unfocus
+		} else if (input::global_input.IsHeld(VK_ESCAPE)) {
+			input::global_input.reading_textbox = false;
+			textbox_info.reading_this = false;
+		// If enter, store that we want to call callback and unfocus
+		} else if (input::global_input.IsHeld(VK_RETURN)) {
+			call_callback = true;
 			input::global_input.reading_textbox = false;
 			textbox_info.reading_this = false;
 		// If key is valid, add to string. Gotta thank zgui
@@ -569,16 +575,20 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 		render::draw_filled_rect(x + margin + text_w, y, 1, 11, color::white());
 	}
 
-	// Button
+	// Draw button and store if we clicked
 	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
 		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
-		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON)) {
-			button_callback(textbox_info.text);
+		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON))
+			call_callback = true;		// Store that we want to call callback
+	} else {
+		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
+	}
+
+	if (call_callback) {
+		if (button_callback(textbox_info.text)) {		// Call callback function, if it executes correctly, clear the textbox
 			textbox_info.text = "";
 			input::global_input.wndproc_textbox_buffer = "";
 		}
-	} else {
-		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
 	}
 }
 
@@ -798,13 +808,13 @@ void gui::add_button(const std::string label, void(*callback)()) {
 	add_button(label, callback, render::fonts::watermark_font);
 }
 
-void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font) {
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string), unsigned int font) {
 	// The -2 and +2 are to move the textbox area a bit, just personal preference
 	gui::textbox(gui::vars::item_left_pos - 2, gui::vars::cur_base_item_y, gui::vars::item_hotkey_w + 2, font, placeholder, config::new_config_name, config::create_new_config); 
 	gui::vars::cur_base_item_y += 15;
 }
 
-void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string)) {
+void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string)) {
 	add_textbox(placeholder, textbox_info, button_callback, render::fonts::watermark_font);
 }
 #pragma endregion
