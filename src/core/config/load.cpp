@@ -13,14 +13,14 @@ void config::load_selected_config() {
 }
 
 #pragma region LOAD_CONFIG
-void config::load_config(std::string filename) {
+bool config::load_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
 	DWORD exitst = GetFileAttributesA(full_path.c_str());
 	if (exitst == INVALID_FILE_ATTRIBUTES || exitst & FILE_ATTRIBUTE_DIRECTORY) {	// Path does not exist or it is a folder
 		std::string buff = "Error loading config: " + filename;
 		helpers::chat::print(buff, CHAT_COLOR_LIGHT_RED);
-		return;
+		return false;
 	}
 
 	std::ifstream file;
@@ -36,7 +36,7 @@ void config::load_config(std::string filename) {
 
 	// File contents as str to dom
 	rapidjson::Document doc;
-	if (doc.Parse(file_contents.c_str()).HasParseError()) return;
+	if (doc.Parse(file_contents.c_str()).HasParseError()) return false;
 
 	/* ------------------------ Read all variables ------------------------ */
 	// Aim
@@ -166,6 +166,8 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur",		"strength");
 
 	helpers::chat::load_config(filename);		// Print to game chat
+
+	return true;
 }
 #pragma endregion
 

@@ -110,4 +110,5 @@ namespace helpers {
 
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);
+	std::string strip(std::string str);
 };

@@ -7,19 +7,20 @@
 #include "dependencies/rapidjson/writer.h"
 #include "dependencies/rapidjson/stringbuffer.h"
 
+bool config::create_new_config(std::string filename) {
+	if (!save_config(filename))		return false;		// Call save_config and return false if something went wrong (Like wrong textbox name)
+	refresh_list();										// If everything is correct, refresh config list and return true
+	return true;
+}
+
 void config::save_selected_config() {
 	if (selected_config >= 0 && selected_config < config_names.size())
 		save_config(config_names.at(selected_config));
 }
 
 #pragma region SAVE_CONFIG
-void config::create_new_config(std::string filename) {
-	save_config(filename);
-	refresh_list();
-}
-
-void config::save_config(std::string filename) {
-	if (filename == "") return;
+bool config::save_config(std::string filename) {
+	if (helpers::strip(filename) == "") return false;
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
 	DWORD exitst = GetFileAttributesA(full_path.c_str());
@@ -195,6 +196,8 @@ void config::save_config(std::string filename) {
 	/* --------------------------------------------------------------- */
 	
 	helpers::chat::save_config(filename);		// Print to game chat
+
+	return true;
 }
 #pragma endregion
 
