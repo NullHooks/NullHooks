@@ -237,7 +237,6 @@ void menu::render() {
 			break;
 		}
 	}
-
 	#pragma endregion
 
 	#pragma region WINDOW MOVEMENTS

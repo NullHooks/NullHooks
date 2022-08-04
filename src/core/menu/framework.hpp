@@ -5,6 +5,11 @@
 #include "dependencies/utilities/renderer/renderer.hpp"
 
 #pragma region STRUCTS
+struct cursor_coords {
+	int x;
+	int y;
+};
+
 struct multicombo_opt_t {
 	std::string text;
 	bool state;
