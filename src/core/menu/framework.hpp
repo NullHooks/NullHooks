@@ -56,6 +56,10 @@ public:
 		this->toggle = toggle;
 	}
 
+	inline bool is_enabled(int idx) {
+		return this->vector.at(idx).state;
+	}
+
 	operator std::vector<multicombo_opt_t>() { return vector; }
 	operator bool() { return toggle; }
 };
