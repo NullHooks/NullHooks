@@ -106,6 +106,10 @@ void misc::speedgraph::draw() {
 			if (variables::misc::speedgraph_target.vector.at(1).state)
 				line_col = speed2color(next_speed);
 
+			constexpr float opacity_len = 30.f;
+			if (n <= opacity_len) line_col = line_col.get_custom_alpha(n / opacity_len * 255);
+			else if (n >= speeds_vec.size() - opacity_len) line_col = line_col.get_custom_alpha(255 - ((n - (speeds_vec.size() - opacity_len)) / opacity_len * 255));
+
 			render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
 		}
 	}
