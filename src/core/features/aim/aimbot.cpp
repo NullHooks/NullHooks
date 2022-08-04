@@ -155,18 +155,17 @@ void aim::run_aimbot(c_usercmd* cmd) {
 
 	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 	if (variables::aim::non_rifle_aimpunch) {
-		local_aim_punch = csgo::local_player->aim_punch_angle();
+		local_aim_punch = csgo::local_player->get_aim_punch();
 	} else {
 		switch (weapon_data->weapon_type) {
 			case WEAPONTYPE_RIFLE:
 			case WEAPONTYPE_SUBMACHINEGUN:
 			case WEAPONTYPE_MACHINEGUN:
-				local_aim_punch = csgo::local_player->aim_punch_angle();
+				local_aim_punch = csgo::local_player->get_aim_punch();
 		}
 	}
 
-	static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->get_float();
-	vec3_t enemy_angle = (aim_angle - (local_aim_punch * recoil_scale)) - cmd->viewangles;
+	vec3_t enemy_angle = (aim_angle - local_aim_punch) - cmd->viewangles;
 	enemy_angle.clamp();
 
 	vec3_t angle_diff = enemy_angle;	

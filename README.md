@@ -103,7 +103,7 @@ The skinchanger loads a json file called `skins.json`, inside `DOCUMENTS/NullHoo
 Setting name                | Description
 ----------------------------|------------------------------------------------------------
 `"item_definition_index"`   | Can have a weapon buy index as int or as enum name (Same names as weapons, like `WEAPON_KNIFE_M9_BAYONET` for example).
-`"paint_kit"`               | The skin id as integer. You can find some skin ids [here](https://steamcommunity.com/sharedfiles/filedetails/?id=880595913) or [here](https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt)
+`"paint_kit"`               | The skin id as integer. You can find some skin ids [here](https://steamcommunity.com/sharedfiles/filedetails/?id=880595913), [here](https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt) or [here](https://csgostash.com/).
 `"seed"`                    | The skin seed as integer.
 `"stattrack"`               | The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
 `"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
@@ -256,7 +256,7 @@ I recommend using Visual Studio 2022.
 This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
 
 1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
-2. Download the file `NulHooks.dll` under "Assets"
+2. Download the file `NullHooks.dll` under "Assets"
 3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
 ## Todo
