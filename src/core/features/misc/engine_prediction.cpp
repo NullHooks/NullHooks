@@ -52,8 +52,8 @@ void prediction::start(c_usercmd* cmd) {
 	interfaces::game_movement->start_track_prediction_errors(csgo::local_player);
 
 	if (cmd->weaponselect) {
-		weapon_t* weapon = csgo::local_player->active_weapon();
-		weapon_info_t* weapon_info = weapon->get_weapon_data();
+		static weapon_t* weapon = csgo::local_player->active_weapon();		// Static because the current weapon pointer doesnt' change
+		static weapon_info_t* weapon_info = weapon->get_weapon_data();
 		if (weapon && weapon_info)
 			csgo::local_player->select_item(weapon_info->weapon_name, cmd->weaponsubtype);
 	}
