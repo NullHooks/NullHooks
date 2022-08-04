@@ -49,6 +49,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	backtrack::update();
 	misc::movement::pre_pred_jumpbug(cmd, old_flags);
 	
+	prediction::get_server_time(cmd);		// Call it once before prediction
 	prediction::start(cmd); {
 		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
@@ -56,7 +57,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 		aim::run_aimbot(cmd);
 
 		backtrack::run(cmd);
-
+		
 		antiaim::run_antiaim(cmd, send_packet);
 	} prediction::end();
 

@@ -1,6 +1,24 @@
 #include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 
+// Will get called once in create_move hook and then used in prediction to assign it to globals->cur_time
+float prediction::get_server_time(c_usercmd* cmd) {
+	static int tick;				// Will be set when we call this func on create move and it will be used in prediction
+	static c_usercmd* last_cmd;
+
+	if (cmd) {
+		player_t* local = csgo::local_player;
+		if (local && (!last_cmd || last_cmd->predicted))
+			tick = *(UINT*)((uintptr_t)local + (netvar_manager::get_net_var(fnv::hash("DT_CSPlayer"), fnv::hash("m_nTickBase"))));
+		else
+			tick++;
+		
+		last_cmd = cmd;
+	}
+
+	return tick * interfaces::globals->interval_per_tick;
+}
+
 void prediction::start(c_usercmd* cmd) {
 	if (!csgo::local_player || !cmd) return;
 
@@ -27,15 +45,15 @@ void prediction::start(c_usercmd* cmd) {
 	old_cur_time = interfaces::globals->cur_time;
 	old_frame_time = interfaces::globals->frame_time;
 
-	interfaces::globals->cur_time = csgo::local_player->get_tick_base() * interfaces::globals->interval_per_tick;
+	interfaces::globals->cur_time = get_server_time(0);		// Called with cmd in create_move
 	interfaces::globals->frame_time = interfaces::globals->interval_per_tick;
 
 	interfaces::move_helper->set_host(csgo::local_player);
 	interfaces::game_movement->start_track_prediction_errors(csgo::local_player);
 
 	if (cmd->weaponselect) {
-		static weapon_t* weapon = csgo::local_player->active_weapon();
-		static weapon_info_t* weapon_info = weapon->get_weapon_data();
+		weapon_t* weapon = csgo::local_player->active_weapon();
+		weapon_info_t* weapon_info = weapon->get_weapon_data();
 		if (weapon && weapon_info)
 			csgo::local_player->select_item(weapon_info->weapon_name, cmd->weaponsubtype);
 	}
