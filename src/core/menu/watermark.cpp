@@ -8,7 +8,7 @@
 
 void watermark::draw() {
     if (!variables::misc::draw_watermark) return;
-    const std::string cheat_name = "NullHooks";
+    static const std::string cheat_name = "NullHooks";
     if (csgo::local_player && interfaces::engine->is_connected()) {
         player_info_t player_info;
         interfaces::engine->get_player_info(interfaces::engine->get_local_player(), &player_info);
@@ -72,32 +72,40 @@ int get_ping() noexcept {
 }
 
 // Will draw the actual string based on the values and lengths
-void draw_stats_string(std::string ts, color ts_col, std::string fps, color fps_col, std::string ping, color ping_col, bool draw_speed) {
+void draw_stats_string(std::string base, color base_col, std::string fps, color fps_col, bool draw_fps, std::string ping, color ping_col, bool draw_ping) {
     const int x = variables::ui::watermark::x;
     const int y = variables::ui::watermark::y + 12;
     const unsigned long font = render::fonts::watermark_font;
     const int margin = 40;
 
-    const std::wstring converted_ts = std::wstring(ts.begin(), ts.end());
+    const std::wstring converted_base = std::wstring(base.begin(), base.end());
     const std::wstring converted_fps = std::wstring(fps.begin(), fps.end());
 
     interfaces::surface->draw_text_font(font);
 
     int width, height;
     interfaces::surface->draw_text_pos(x, y);
-    interfaces::surface->get_text_size(font, converted_ts.c_str(), width, height);
-    interfaces::surface->set_text_color(ts_col.r, ts_col.g, ts_col.b, ts_col.a);
-    interfaces::surface->draw_render_text(converted_ts.c_str(), wcslen(converted_ts.c_str()));
+    interfaces::surface->get_text_size(font, converted_base.c_str(), width, height);
 
-    interfaces::surface->set_text_color(fps_col.r, fps_col.g, fps_col.b, fps_col.a);
-    interfaces::surface->draw_render_text(converted_fps.c_str(), wcslen(converted_fps.c_str()));
+    interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
+    interfaces::surface->draw_render_text(converted_base.c_str(), wcslen(converted_base.c_str()));
 
-    if (draw_speed) {
-        const std::string pingtext = " | Ping: ";
+    if (draw_fps) {
+        interfaces::surface->set_text_color(fps_col.r, fps_col.g, fps_col.b, fps_col.a);
+        interfaces::surface->draw_render_text(converted_fps.c_str(), wcslen(converted_fps.c_str()));
+    }
+
+    if (draw_ping) {
+        std::string pingtext = "";
+        if (variables::misc::watermark_stats.is_enabled(0) || variables::misc::watermark_stats.is_enabled(1))
+            pingtext = " | Ping: ";     // Add ' | ' if it's not the only item we want to draw
+        else
+            pingtext = "Ping: ";
+        
         const std::wstring converted_pingtext = std::wstring(pingtext.begin(), pingtext.end());
         const std::wstring converted_ping = std::wstring(ping.begin(), ping.end());
 
-        interfaces::surface->set_text_color(ts_col.r, ts_col.g, ts_col.b, ts_col.a);
+        interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
         interfaces::surface->draw_render_text(converted_pingtext.c_str(), wcslen(converted_pingtext.c_str()));
 
         interfaces::surface->set_text_color(ping_col.r, ping_col.g, ping_col.b, ping_col.a);
@@ -107,18 +115,29 @@ void draw_stats_string(std::string ts, color ts_col, std::string fps, color fps_
 
 // Will get the stats and colors and pass them to draw_stats_string()
 void watermark::draw_stats() {
-    if (!variables::misc::draw_stats) return;
+    const bool draw_time = variables::misc::watermark_stats.is_enabled(0);
+    const bool draw_fps  = variables::misc::watermark_stats.is_enabled(1);
+    const bool draw_ping = variables::misc::watermark_stats.is_enabled(2);
+    if (!draw_time && !draw_fps && !draw_ping) return;
+
+    std::string base_str = "";
+    if (draw_time) {
+        base_str = get_timestamp_string();  // Get the base string with the timestamp
+        if (draw_fps)                       // We also want to draw fps, so append
+            base_str += " | FPS: ";
+    } else if (draw_fps) {                  // We don't want to draw time but we want to draw fps, set 'FPS: ' as base
+        base_str = "FPS: ";
+    }
 
     // Colors
-    const color base_color = color(220,   5,   5, 255);
-    const color color_l    = color(255, 150,   0, 255);
-    const color color_m    = color(255, 255,   0, 255);
-    const color color_h    = color(  0, 255,  10, 255);
+    static const color base_color = color(220,   5,   5, 255);
+    static const color color_l    = color(255, 150,   0, 255);
+    static const color color_m    = color(255, 255,   0, 255);
+    static const color color_h    = color(  0, 255,  10, 255);
 
     color fps_color = base_color;
-
-    const int fps = get_fps();
-    if (fps < 80)      fps_color = color_l;
+    const int fps   = get_fps();
+    if (fps < 80)       fps_color = color_l;
     else if (fps < 110) fps_color = color_m;
     else                fps_color = color_h;
 
@@ -129,8 +148,8 @@ void watermark::draw_stats() {
         else if (ping < 75) ping_color = color_m;
         else                ping_color = color_l;
 
-        draw_stats_string(get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, std::to_string(ping), ping_color, true);
+        draw_stats_string(base_str, base_color, std::to_string(fps), fps_color, draw_fps, std::to_string(ping), ping_color, draw_ping);     // We have valid ping, pass the multicombobox bool as arg
     } else {
-        draw_stats_string(get_timestamp_string() + " | FPS: ", base_color, std::to_string(fps), fps_color, "", base_color, false);
+        draw_stats_string(base_str, base_color, std::to_string(fps), fps_color, draw_fps, "", base_color, false);                           // We don't have a valid ping, we don't care about the combobox value
     }
 }

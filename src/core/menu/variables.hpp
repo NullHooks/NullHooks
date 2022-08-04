@@ -193,7 +193,12 @@ namespace variables {
 
 		// UI
 		inline bool draw_watermark = true;
-		inline bool draw_stats = true;
+		inline std::vector<multicombo_opt_t> watermark_stats_options = {
+			{ "Time",		true },
+			{ "Fps",		true },
+			{ "Ping",		true }
+		};
+		inline multicombobox_toggle_t watermark_stats(watermark_stats_options);
 		inline bool clean_screenshots = true;
 		inline bool reveal_ranks = true;
 	}
