@@ -256,7 +256,7 @@ I recommend using Visual Studio 2022.
 This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
 
 1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
-2. Download the file `NulHooks.dll` under "Assets"
+2. Download the file `NullHooks.dll` under "Assets"
 3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
 ## Todo
