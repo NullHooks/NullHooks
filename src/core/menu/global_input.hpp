@@ -111,7 +111,7 @@ private:
 
 #pragma region INPUT NAMESPACE
 namespace input {
-    inline GlobalInput gobal_input;
+    inline GlobalInput global_input;
 
     inline std::map<int, std::string> key_names = {
     /*    Virtual key id            Key name */
