@@ -26,7 +26,7 @@ struct convars {
 namespace backtrack {
 	void init();
 	float get_lerp_time() noexcept;
-	bool valid_tick(float simtime, float maxtime) noexcept;
+	bool valid_tick(float simtime) noexcept;
 	void update() noexcept;				// Uesd in create_move before prediction
 	void run(c_usercmd*) noexcept;		// Uesd in create_move inside preciction
 	void frame_stage_notify();			// Uesd in frame_stage_notify
