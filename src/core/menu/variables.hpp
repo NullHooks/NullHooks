@@ -219,6 +219,8 @@ namespace variables {
 		namespace watermark {
 			inline int y = 10;
 			inline int x = 15;
+			inline int w = 0;
+			inline int h = 0;
 		}
 	}
 
