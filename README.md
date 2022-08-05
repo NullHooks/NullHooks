@@ -40,6 +40,8 @@ As I said I made this project to learn about game hacking and cpp in general, so
 
 See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
+*NOTE: Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
+Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`*.  
 *NOTE: If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are.*
 
 ## Features
