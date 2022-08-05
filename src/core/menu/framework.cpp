@@ -819,6 +819,7 @@ void gui::add_textbox(const std::string placeholder, textbox_t& textbox_info, bo
 
 void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
 	if (spectator_framework::user_dragging_spec) return;	// Avoid overlapping
+	if (watermark::user_dragging_menu) return;				// Avoid overlapping
 
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
@@ -845,6 +846,7 @@ void gui::menu_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::i
 
 void spectator_framework::spec_list_movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h) {
 	if (gui::user_dragging_menu) return;		// Avoid overlapping
+	if (watermark::user_dragging_menu) return;		// Avoid overlapping
 	
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 

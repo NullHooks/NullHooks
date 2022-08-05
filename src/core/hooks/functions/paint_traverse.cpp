@@ -26,7 +26,6 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 
 		#pragma region GUI
 		watermark::draw();
-		watermark::draw_stats();
 
 		misc::speedgraph::draw();
 		misc::spectator_list();
