@@ -351,6 +351,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Custom aimbot key (autofire)
     - [X] Add bodyaim if lethal
     - [ ] Make aimbot and triggerbot also aim for backtrack. (Get hitbox positions from matrix)
+    - [ ] Fix aimbot shooting 1 tick behind (Try shooting moving targets with `sv_showimpacts 1`, it only hits locally)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
