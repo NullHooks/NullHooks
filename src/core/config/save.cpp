@@ -212,6 +212,11 @@ void config::save::parse_float(rapidjson::Value& parent, rapidjson::Document::Al
 	parent.AddMember(name, target, allocator);
 }
 
+void config::save::parse_int(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, int& target, std::string json_name) {
+	rapidjson::Value name(json_name.c_str(), allocator);
+	parent.AddMember(name, target, allocator);
+}
+
 void config::save::parse_combobox(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator, combobox_toggle_t& target, std::string json_name) {
 	rapidjson::Value name(json_name.c_str(), allocator);
 	parent.AddMember(name, target.idx, allocator);

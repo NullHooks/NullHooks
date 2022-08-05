@@ -190,6 +190,15 @@ void config::load::parse_float(rapidjson::Document& doc, float& target, std::str
 	if (value.IsFloat()) target = value.GetFloat();
 }
 
+void config::load::parse_int(rapidjson::Document& doc, int& target, std::string parent, std::string json_name) {
+	if (!doc.HasMember(parent.c_str())) return;					// Check if parent in doc
+	rapidjson::Value& parent_obj = doc[parent.c_str()];			// Get json object from parent
+	if (!parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
+	rapidjson::Value& value = parent_obj[json_name.c_str()];	// value will be each json entry of the item
+
+	if (value.IsInt()) target = value.GetInt();
+}
+
 void config::load::parse_combobox(rapidjson::Document& doc, combobox_toggle_t& target, std::string parent, std::string json_name) {
 	if (!doc.HasMember(parent.c_str())) return;					// Check if parent in doc
 	rapidjson::Value& parent_obj = doc[parent.c_str()];			// Get json object from parent
