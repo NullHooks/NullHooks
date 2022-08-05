@@ -8,5 +8,5 @@ labels: ''
 
 <!--
 Make sure you read CONTRIBUTING.md
-https://github.com/r4v10l1/NullHooks/blob/main/CONTRIBUTING.md
+https://github.com/NullHooks/NullHooks/blob/main/CONTRIBUTING.md
 -->
