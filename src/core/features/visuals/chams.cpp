@@ -67,7 +67,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 				const color chams_col = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend : variables::colors::bt_chams_enemy;
 				const color chams_col_fade = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend_fade : variables::colors::bt_chams_enemy_fade;
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
-					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time, 0.2f)
+					if (!backtrack::valid_tick(backtrack::records[player->index()][i].simulation_time)
 						|| backtrack::records[player->index()][i].matrix == nullptr)
 						continue;
 
