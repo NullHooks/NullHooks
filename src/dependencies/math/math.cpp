@@ -181,3 +181,16 @@ float math::get_fov(const vec3_t& view_angle, const vec3_t& aim_angle) {
 
 	return RAD2DEG(acos(aim.dot(ang) / aim.length_sqr()));
 }
+
+float math::angle_delta_rad(float a, float b) {
+	float delta;
+	delta = isfinite(a - b) ? remainder(a - b, 360) : 0;
+
+	if (a > b) {
+		if (delta >= M_PI)  delta -= M_PI * 2;
+	} else {
+		if (delta <= -M_PI) delta += M_PI * 2;
+	}
+
+	return delta;
+}
