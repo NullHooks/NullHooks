@@ -13,14 +13,14 @@ namespace variables {
 		inline bool autofire = false;
 		inline hotkey_t aimbot_key(VK_NEXT);
 		inline bool bodyaim_if_lethal = false;
-		
+
 		inline std::vector<std::string> autowall_settings = {
 			"Only visible",
 			"Autowall",
 			"Ignore walls"
 		};
 		inline combobox_toggle_t autowall(0);	// Will store the autowall setting: 0 only visible, 1 autowall, 2 ignore walls
-		
+
 		inline float aimbot_fov = 20.f;
 		inline bool draw_fov = false;
 
@@ -126,7 +126,7 @@ namespace variables {
 		inline float noflash_alpha = 0.f;
 		inline bool wireframe_smoke = false;
 		inline bool nade_predict = true;
-		inline bool noscope  = true;
+		inline bool noscope = true;
 		inline bool crosshair = false;
 		inline bool recoil_crosshair = false;
 		inline bool worldcolor = false;
@@ -158,10 +158,11 @@ namespace variables {
 		inline std::vector<std::string> autostrafe_options = {
 			"None",
 			"Legit",
-			"Rage"
+			"Forward rage",
+			"Multidir rage"
 		};
 		inline combobox_toggle_t autostrafe_target(0);
-		
+
 		inline bool edgejump = false;
 		inline hotkey_t ej_key('C');	// Mind the ' ' and the capital letter
 		inline bool edgebug = false;
@@ -180,7 +181,7 @@ namespace variables {
 		inline multicombobox_toggle_t speedgraph_target(speedgraph_options);
 		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
-		
+
 		// Network
 		inline bool backtrack = false;
 		inline bool backtrack_team = false;
@@ -202,7 +203,7 @@ namespace variables {
 		inline bool clean_screenshots = true;
 		inline bool reveal_ranks = true;
 	}
-	
+
 	namespace ui {
 		namespace spectators {
 			inline bool spectator_list = true;
@@ -238,38 +239,38 @@ namespace variables {
 	// Despite the indentation, we are calling constructor with color as argument
 	namespace colors {
 		// Esp and glow
-		inline colorpicker_col_t friendly_color			(color(0, 90, 255, 255));
-		inline colorpicker_col_t friendly_color_soft	(color(0, 150, 255, 255));
-		inline colorpicker_col_t friendly_color_softer	(color(90, 180, 255, 255));
-		inline colorpicker_col_t enemy_color			(color(255, 0, 0, 255));
-		inline colorpicker_col_t enemy_color_soft		(color(190, 25, 25, 255));
-		inline colorpicker_col_t enemy_color_softer		(color(255, 75, 75, 255));
+		inline colorpicker_col_t friendly_color(color(0, 90, 255, 255));
+		inline colorpicker_col_t friendly_color_soft(color(0, 150, 255, 255));
+		inline colorpicker_col_t friendly_color_softer(color(90, 180, 255, 255));
+		inline colorpicker_col_t enemy_color(color(255, 0, 0, 255));
+		inline colorpicker_col_t enemy_color_soft(color(190, 25, 25, 255));
+		inline colorpicker_col_t enemy_color_softer(color(255, 75, 75, 255));
 
-		inline colorpicker_col_t friendly_glow_c		(friendly_color_soft.col.get_custom_alpha(200));
-		inline colorpicker_col_t enemy_glow_c			(enemy_color_soft.col.get_custom_alpha(200));
-		inline colorpicker_col_t entity_glow_c			(color::white(200));
+		inline colorpicker_col_t friendly_glow_c(friendly_color_soft.col.get_custom_alpha(200));
+		inline colorpicker_col_t enemy_glow_c(enemy_color_soft.col.get_custom_alpha(200));
+		inline colorpicker_col_t entity_glow_c(color::white(200));
 
 		// Chams
-		inline colorpicker_col_t chams_localplayer		(color(255, 150, 255, 255));
-		inline colorpicker_col_t chams_vis_enemy_c		(color(230, 20, 70));
-		inline colorpicker_col_t chams_inv_enemy_c		(color(150, 15, 15, 255));
-		inline colorpicker_col_t chams_vis_friend_c		(color(0, 150, 255));
-		inline colorpicker_col_t chams_inv_friend_c		(color(0, 75, 255));
+		inline colorpicker_col_t chams_localplayer(color(255, 150, 255, 255));
+		inline colorpicker_col_t chams_vis_enemy_c(color(230, 20, 70));
+		inline colorpicker_col_t chams_inv_enemy_c(color(150, 15, 15, 255));
+		inline colorpicker_col_t chams_vis_friend_c(color(0, 150, 255));
+		inline colorpicker_col_t chams_inv_friend_c(color(0, 75, 255));
 
-		inline colorpicker_col_t chams_weapon_c			(color(255, 150, 255, 255));
-		inline colorpicker_col_t chams_arms_c			(color(255, 0, 255, 255));
-		inline colorpicker_col_t chams_sleeve_c			(color(100, 0, 255, 255));
+		inline colorpicker_col_t chams_weapon_c(color(255, 150, 255, 255));
+		inline colorpicker_col_t chams_arms_c(color(255, 0, 255, 255));
+		inline colorpicker_col_t chams_sleeve_c(color(100, 0, 255, 255));
 
-		inline colorpicker_col_t bt_chams_enemy			(chams_vis_enemy_c.col.get_custom_alpha(30));		// Backtrack enemy
-		inline colorpicker_col_t bt_chams_friend		(chams_vis_friend_c.col.get_custom_alpha(30));		// Backtrack friendly
-		inline colorpicker_col_t bt_chams_enemy_fade	(color::white(200));		// Used for the color transition
-		inline colorpicker_col_t bt_chams_friend_fade	(color::white(200));		// Used for the color transition
+		inline colorpicker_col_t bt_chams_enemy(chams_vis_enemy_c.col.get_custom_alpha(30));		// Backtrack enemy
+		inline colorpicker_col_t bt_chams_friend(chams_vis_friend_c.col.get_custom_alpha(30));		// Backtrack friendly
+		inline colorpicker_col_t bt_chams_enemy_fade(color::white(200));		// Used for the color transition
+		inline colorpicker_col_t bt_chams_friend_fade(color::white(200));		// Used for the color transition
 
 		// Misc
-		inline colorpicker_col_t crosshair_c			(color(255, 255, 255, 255));
-		inline colorpicker_col_t recoil_crosshair_c		(color(0, 255, 0, 255));
-		inline colorpicker_col_t aimbot_fov_c			(color(255, 255, 255, 150));
-		inline colorpicker_col_t worldcolor_c			(color(125, 0, 170, 255));
+		inline colorpicker_col_t crosshair_c(color(255, 255, 255, 255));
+		inline colorpicker_col_t recoil_crosshair_c(color(0, 255, 0, 255));
+		inline colorpicker_col_t aimbot_fov_c(color(255, 255, 255, 150));
+		inline colorpicker_col_t worldcolor_c(color(125, 0, 170, 255));
 	};
 
 	inline struct MotionBlur {

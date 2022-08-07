@@ -17,4 +17,5 @@ namespace math {
 	bool screen_transform(const vec3_t& point, vec3_t& screen);
 	bool world_to_screen(const vec3_t& origin, vec3_t& screen);
 	float get_fov(const vec3_t& view_angle, const vec3_t& aim_angle);
+	float angle_delta_rad(float a, float b);
 };
