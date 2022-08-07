@@ -210,7 +210,8 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - BunnyHop
 - Autostrafe
     - Legit
-    - Rage
+    - Forward rage *(Old one)*
+    - Multidirectional rage
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
@@ -357,7 +358,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [X] Slowwalk
-    - [ ] Longjump
+    <!-- - [ ] Longjump -->
 - [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
