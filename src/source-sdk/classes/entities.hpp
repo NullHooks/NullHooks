@@ -6,6 +6,7 @@
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
 
+#pragma region ENUMS
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
 	DATA_UPDATE_DATATABLE_CHANGED,
@@ -322,6 +323,14 @@ struct collideable_t {
 	};
 };
 
+/*
+template <typename T>
+static constexpr auto relative_to_absolute(uint8_t* address) {
+	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
+}
+*/
+#pragma endregion
+
 class entity_t {
 public:
 	void* animating() {
@@ -355,10 +364,30 @@ public:
 		return (*(original_fn**)this)[165](this);
 	}
 	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
-		if (!this)
-			return false;
+		if (!this) return false;
 
 		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
+
+		/*
+		// Fix bone matrix?
+		if (true) {
+			int* render = reinterpret_cast<int*>(this + 0x274);
+			int backup = *render;
+			vec3_t abs_origin_ret = abs_origin();
+			*render = 0;
+			
+			using fn = void(__thiscall*)(entity_t*, const vec3_t&);
+			static fn set_abs_origin = relative_to_absolute<fn>(utilities::pattern_scan("client.dll", "E8 ? ? ? ? EB 19 8B 07") + 1);
+			set_abs_origin(this, origin());
+
+			auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc
+			set_abs_origin(this, abs_origin_ret);
+			*render = backup;
+
+			return result;
+		}
+		*/
+		
 		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
 	}
 	model_t* model() {
@@ -407,6 +436,11 @@ public:
 	bool dormant() {
 		using original_fn = bool(__thiscall*)(void*);
 		return (*static_cast<original_fn**>(networkable()))[9](networkable());
+	}
+
+	vec3_t& abs_origin() {
+		using original_fn = vec3_t&(__thiscall*)(void*);
+		return (*(original_fn**)this)[10](this);;
 	}
 
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
@@ -705,11 +739,12 @@ public:
 	}
 
 	vec3_t get_bone_position(int bone) {
-		matrix_t bone_matrices[128];
-		if (setup_bones(bone_matrices, 128, 256, 0.0f))
-			return vec3_t{ bone_matrices[bone][0][3], bone_matrices[bone][1][3], bone_matrices[bone][2][3] };
-		else
-			return vec3_t{ };
+		matrix_t bone_matrices[MAXSTUDIOBONES];
+
+		if (setup_bones(bone_matrices, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f))
+			return bone_matrices[bone].get_origin();
+
+		return vec3_t{ };
 	}
 
 	vec3_t get_hitbox_position(int hitbox_id) {
@@ -765,11 +800,6 @@ public:
 	void update_client_side_animations() {
 		using original_fn = void(__thiscall*)(void*);
 		(*(original_fn**)this)[224](this);
-	}
-
-	vec3_t& abs_origin() {
-		using original_fn = vec3_t & (__thiscall*)(void*);
-		return (*(original_fn**)this)[10](this);;
 	}
 
 	vec3_t& abs_angles() {
