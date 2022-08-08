@@ -104,7 +104,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
 
 		for (const auto hitbox : all_hitboxes) {
-			auto hitbox_pos = entity->get_hitbox_position(hitbox);
+			auto hitbox_pos = entity->get_hitbox_position_fixed(hitbox);
 			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
 
 			// Ignore everything if we have "ignore walls" setting (2)
@@ -127,8 +127,6 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		}
 	}
 
-	// For debugging
-	interfaces::debug_overlay->add_line_overlay(local_eye_pos, best_target, color::green(200), false, 1.f);
 	return best_target;		// vec3_t position of the best bone
 }
 #pragma endregion
