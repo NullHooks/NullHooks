@@ -51,6 +51,48 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 
 #pragma region GET TARGET
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
+	float best_damage = 0.f;						// Will store the best damage when iterating player's hitboxes
+	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
+	
+	// Check if we have weapon data before doing anything else
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return best_target;
+
+	// Get eye pos from localplayer
+	auto local_eye_pos = csgo::local_player->get_eye_pos();
+
+	// Players will get appended here with their fov. Then the vector will get ordered.
+	std::vector<std::pair<float, player_t*>> target_list{};
+
+	// Iterate players and search for the closest to crosshair. This is just an aproximation.
+	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
+		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
+		if (!entity
+			|| entity == csgo::local_player
+			|| !entity->is_alive()
+			|| entity->dormant()
+			|| entity->has_gun_game_immunity()) continue;
+		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
+
+		// We get the eye position of the current entity for checking which entity is closer. This doesn't have to be accurate
+		auto entity_pos = entity->get_eye_pos();
+
+		// Calculate relative angle to target
+		vec3_t aim_angle = math::calculate_relative_angle(local_eye_pos, entity_pos, cmd->viewangles);
+		aim_angle.clamp();
+
+		// Get the fov to target. Lower == closer to crosshair == better
+		const float fov = std::hypot(aim_angle.x, aim_angle.y);
+
+		// Push to target vector the entity with its fov
+		target_list.push_back({ fov, entity });
+	}
+
+	// After storing the players, order them from lower fov to greater fov
+	std::sort(target_list.begin(), target_list.end(), [](const std::pair<float, player_t*>& a, const std::pair<float, player_t*>& b) -> bool {
+		return a.first < b.first;
+	});
+
 	// Store selected hitboxes
 	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
@@ -86,48 +128,39 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	}
 
-	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
-	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
-	const auto weapon_data = active_weapon->get_weapon_data();
-	if (!weapon_data) return best_target;
+	// Iterate the ordered target list
+	for (const std::pair<float, player_t*> item : target_list) {
+		// Check if we are checking a target with more fov than needed
+		if (item.first > variables::aim::aimbot_fov) break;
 
-	auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
+		const auto entity = item.second;
 
-	// Check each player
-	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
-		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-		if (!entity
-			|| entity == csgo::local_player
-			|| !entity->is_alive()
-			|| entity->dormant()
-			|| entity->has_gun_game_immunity()) continue;
-		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
-
+		// Iterate all possible hitboxes, even if not enabled
 		for (const auto hitbox : all_hitboxes) {
 			auto hitbox_pos = entity->get_hitbox_position_fixed(hitbox);
-			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
+			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();		// Enabled by user
+
+			autowall_data_t autowall_data = { false, 0.f };
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				if (!aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox))
+				// Get autowall data and check if we can make enough damage or kill
+				autowall_data = aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, enabled_hitbox);
+				if (autowall_data.damage < (int)variables::aim::min_damage && !autowall_data.lethal)
 					continue;
 			} else if (!enabled_hitbox) {
 				continue;	// We are trying to use ignore walls with disabled hitbox
 			}
 
-			vec3_t aim_angle = math::calculate_relative_angle(local_eye_pos, hitbox_pos, cmd->viewangles);
-			aim_angle.clamp();
-
 			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
-			const float fov = std::hypot(aim_angle.x, aim_angle.y);
-			if (fov < best_fov) {
-				best_fov = fov;
+			if (autowall_data.damage > best_damage) {
+				best_damage = autowall_data.damage;
 				best_target = hitbox_pos;
 			}
 		}
 	}
-
-	return best_target;		// vec3_t position of the best bone
+	
+	return best_target;		// vec3_t position of the best bone. Empty if none
 }
 #pragma endregion
 
