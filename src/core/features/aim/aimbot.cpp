@@ -61,7 +61,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	// Players will get appended here with their fov. Then the vector will get ordered.
 	std::vector<std::pair<float, player_t*>> target_list{};
 
-	// Iterate players and search for the closest to crosshair. This is just an aproximation.
+	// Iterate players and store the fov to their eyes. It is just so we can have an aproximate priority by crosshair distance.
 	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
 		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
 		if (!entity
@@ -71,7 +71,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 			|| entity->has_gun_game_immunity()) continue;
 		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
 
-		// We get the eye position of the current entity for checking which entity is closer. This doesn't have to be accurate
+		// We get the eye position of the current entity so we can store it, and then order by it. This doesn't have to be precise
 		auto entity_pos = entity->get_eye_pos();
 
 		// Calculate relative angle to target
@@ -85,7 +85,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		target_list.push_back({ fov, entity });
 	}
 
-	// After storing the players, order them from lower fov to greater fov
+	// After storing the players, order them from lower fov to greater fov (priority)
 	std::sort(target_list.begin(), target_list.end(), [](const std::pair<float, player_t*>& a, const std::pair<float, player_t*>& b) -> bool {
 		return a.first < b.first;
 	});
@@ -133,8 +133,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		const auto entity = item.second;
 		
 		// Will store the best damage and hitbox of the current player
-		float best_damage = 0.f;
-		vec3_t best_hitbox(0, 0, 0);
+		float best_player_damage = 0.f;
+		vec3_t best_player_hitbox(0, 0, 0);
 
 		// Iterate all possible hitboxes, even if not enabled (for checking bodyaim if lethal)
 		for (const auto hitbox : all_hitboxes) {
@@ -145,12 +145,17 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 			// Ignore everything if we have "ignore walls" setting (2)
 			if (variables::aim::autowall.idx != 2) {
-				// Get autowall data and check if we can make enough damage or kill
+				// Get autowall data and check if we can make enough damage or kill. autowall::handle_walls() takes care of stuff like "bodyaim if lethal" and "only visible",
+				// so it will only return damage for valid hitboxes
 				autowall_data = aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, enabled_hitbox);
+
+				// Check if the returned damage is enough or if we can kill the target (we dont need to worry about bodyaim_if_lethal here)
 				if (autowall_data.damage < (int)variables::aim::min_damage && !autowall_data.lethal)
 					continue;
 			} else if (!enabled_hitbox) {
-				continue;	// We are trying to use ignore walls with disabled hitbox
+				// We are trying to use ignore walls with disabled hitbox.
+				// @todo: bodyaim_if_lethal would not work with "ignore walls" because we dont run autowall
+				continue;
 			}
 
 			// If we can kill, we don't care about any other players, since we are checking by fov priority
@@ -158,22 +163,22 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 				return hitbox_pos;
 
 			// Check what the best hitbox would be based on damage, then save it as "this player's best hitbox"
-			if (autowall_data.damage > best_damage) {
-				best_damage = autowall_data.damage;
-				best_hitbox = hitbox_pos;
+			if (autowall_data.damage > best_player_damage) {
+				best_player_damage = autowall_data.damage;
+				best_player_hitbox = hitbox_pos;
 			}
 		}
 
 		/*
-		 * What we are doing here is saving the hitbox with the most damage of the current player (best_hitbox) as the final target ONLY if we don't have a final target yet.
+		 * What we are doing here is saving the hitbox with the most damage from the current player (best_player_hitbox) as the final target ONLY if we don't have a final target yet (we found a closer non-lethal target).
 		 * We do it this way so:
 		 *		1. We check if we can do damage to the closest player
 		 *		2. If we can't (after checking hitboxes, all are 0 damage) go to the next player until we find a target that we can damage inside our fov (fov is checked on the first line of the loop)
-		 *		3. Once we find a valid hitbox (max damage of closest player), store it as the final target, but don't return/break inmediatly
+		 *		3. Once we find a valid hitbox (max damage of closest player), store it as the final target, but don't return/break inmediately
 		 *		4. If we have priorize_lethal_targets, keep iterating the rest of the players in the vector to see if we can deal lethal damage to a hitbox, then return that instead (just when we find the lethal hitbox)
 		 */
-		if (best_damage > 0.f && final_target.is_zero()) {
-			final_target = best_hitbox;
+		if (best_player_damage > 0.f && final_target.is_zero()) {
+			final_target = best_player_hitbox;
 
 			if (!variables::aim::priorize_lethal_targets) break;
 		}
