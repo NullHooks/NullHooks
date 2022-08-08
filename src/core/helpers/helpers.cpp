@@ -2,7 +2,7 @@
 #include "core/helpers/helpers.hpp"
 
 #pragma region CONSOLE
-void helpers::console::state_to_console(const char* tag,  const char* text) {
+void helpers::console::state_to_console(const char* tag, const char* text) {
 	interfaces::console->printf("[NullHooks] [%s] %s\n", tag, text);
 }
 
@@ -158,7 +158,7 @@ void helpers::chat::save_config(std::string config_name) {
 
 #pragma region MISC
 template <typename T>
-static constexpr auto relativeToAbsolute(uint8_t* address) noexcept {
+static constexpr auto helpers::relative_to_absolute(uint8_t* address) {
 	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
 }
 
@@ -173,7 +173,7 @@ bool helpers::is_enemy(player_t* player) {
 	if (!csgo::local_player || !player) return false;
 
 	using fn = bool(__thiscall*)(player_t*, player_t*);
-	static fn isOtherEnemy = relativeToAbsolute<fn>(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
+	static fn isOtherEnemy = relative_to_absolute<fn>(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
 
 	isOtherEnemy(csgo::local_player, player);
 }
