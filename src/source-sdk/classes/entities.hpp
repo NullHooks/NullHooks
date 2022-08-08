@@ -323,12 +323,10 @@ struct collideable_t {
 	};
 };
 
-/*
 template <typename T>
 static constexpr auto relative_to_absolute(uint8_t* address) {
 	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
 }
-*/
 #pragma endregion
 
 class entity_t {
@@ -363,32 +361,57 @@ public:
 		using original_fn = bool(__thiscall*)(entity_t*);
 		return (*(original_fn**)this)[165](this);
 	}
+	uint32_t& get_effects() {
+		static auto offset = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_fEffects"));
+		return *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(this) + offset);
+	}
+	uint32_t& most_recent_model_bone_counter() {
+		static auto invalidateBoneCache = utilities::pattern_scan("client.dll", "80 3D ? ? ? ? ? 74 16 A1 ? ? ? ? 48 C7 81");
+		static auto mostRecentModelBoneCounter = *reinterpret_cast<uintptr_t*>(invalidateBoneCache + 0x1B);
+
+		return *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(this) + mostRecentModelBoneCounter);
+	}
+	float& last_bone_setup_time() {
+		static auto invalidateBoneCache = utilities::pattern_scan("client.dll", "80 3D ? ? ? ? ? 74 16 A1 ? ? ? ? 48 C7 81");
+		static auto lastBoneSetupTime = *reinterpret_cast<uintptr_t*>(invalidateBoneCache + 0x11);
+
+		return *reinterpret_cast<float*>(reinterpret_cast<uintptr_t>(this) + lastBoneSetupTime);
+	}
+	void invalidate_bone_cache() {
+		if (!this) return;
+
+		last_bone_setup_time() = -FLT_MAX;
+		most_recent_model_bone_counter() = UINT_MAX;
+	}
 	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
 		if (!this) return false;
 
 		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
-
-		/*
-		// Fix bone matrix?
-		if (true) {
-			int* render = reinterpret_cast<int*>(this + 0x274);
-			int backup = *render;
-			vec3_t abs_origin_ret = abs_origin();
-			*render = 0;
-			
-			using fn = void(__thiscall*)(entity_t*, const vec3_t&);
-			static fn set_abs_origin = relative_to_absolute<fn>(utilities::pattern_scan("client.dll", "E8 ? ? ? ? EB 19 8B 07") + 1);
-			set_abs_origin(this, origin());
-
-			auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc
-			set_abs_origin(this, abs_origin_ret);
-			*render = backup;
-
-			return result;
-		}
-		*/
-		
 		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
+	}
+	bool setup_bones_fixed(matrix_t* out, int max_bones, int mask, float time) {
+		if (!this) return false;
+
+		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
+
+		// Fix bone matrix. First store abs_origina nad effects
+		vec3_t actual_abs_origin = abs_origin();
+		uintptr_t backup_effects = get_effects();
+		
+		this->invalidate_bone_cache();
+		get_effects() |= 8;
+
+		using abs_fn = void(__thiscall*)(entity_t*, const vec3_t&);
+		static abs_fn set_abs_origin = relative_to_absolute<abs_fn>(utilities::pattern_scan("client.dll", "E8 ? ? ? ? EB 19 8B 07") + 1);
+		set_abs_origin(this, origin());
+
+		auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc with origin
+		
+		// Restore old origin and effects
+		set_abs_origin(this, actual_abs_origin);
+		get_effects() = backup_effects;
+
+		return result;
 	}
 	model_t* model() {
 		using original_fn = model_t * (__thiscall*)(void*);
@@ -443,15 +466,18 @@ public:
 		return (*(original_fn**)this)[10](this);;
 	}
 
-	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
 	NETVAR("DT_BaseEntity", "m_hOwnerEntity", owner_handle, unsigned long);
-	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
-	NETVAR("DT_BasePlayer", "m_vecOrigin", origin, vec3_t);
-	NETVAR("DT_BasePlayer", "m_vecViewOffset[0]", view_offset, vec3_t);
-	NETVAR("DT_CSPlayer", "m_iTeamNum", team, int);
 	NETVAR("DT_BaseEntity", "m_bSpotted", spotted, bool);
+	
+	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
+	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
+	NETVAR("DT_CSPlayer", "m_iTeamNum", team, int);
 	NETVAR("DT_CSPlayer", "m_nSurvivalTeam", survival_team, int);
 	NETVAR("DT_CSPlayer", "m_flHealthShotBoostExpirationTime", health_boost_time, float);
+	
+	NETVAR("DT_BasePlayer", "m_vecOrigin", origin, vec3_t);
+	NETVAR("DT_BasePlayer", "m_vecViewOffset[0]", view_offset, vec3_t);
+
 	NETVAR("DT_PlantedC4", "m_flC4Blow", m_flC4Blow, float);
 	NETVAR("DT_PlantedC4", "m_flDefuseCountDown", m_flDefuseCountDown, float);
 	NETVAR("DT_PlantedC4", "m_bBombDefused", m_bBombDefused, bool);
@@ -751,6 +777,28 @@ public:
 		matrix_t bone_matrix[MAXSTUDIOBONES];
 
 		if (setup_bones(bone_matrix, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f)) {
+			auto studio_model = interfaces::model_info->get_studio_model(model());
+
+			if (studio_model) {
+				auto hitbox = studio_model->hitbox_set(0)->hitbox(hitbox_id);
+
+				if (hitbox) {
+					auto min = vec3_t{}, max = vec3_t{};
+
+					math::transform_vector(hitbox->mins, bone_matrix[hitbox->bone], min);
+					math::transform_vector(hitbox->maxs, bone_matrix[hitbox->bone], max);
+
+					return vec3_t((min.x + max.x) * 0.5f, (min.y + max.y) * 0.5f, (min.z + max.z) * 0.5f);
+				}
+			}
+		}
+		return vec3_t{};
+	}
+
+	vec3_t get_hitbox_position_fixed(int hitbox_id) {
+		matrix_t bone_matrix[MAXSTUDIOBONES];
+
+		if (setup_bones_fixed(bone_matrix, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f)) {
 			auto studio_model = interfaces::model_info->get_studio_model(model());
 
 			if (studio_model) {
