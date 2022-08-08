@@ -2,7 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-#pragma region AIMBOT CHECKS
+// Checks if we can fire, used in other places
 bool aim::can_fire(player_t* target) {
 	weapon_t* active_weapon = target->active_weapon();
 	if (!active_weapon) return false;
@@ -47,16 +47,13 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 	// (We reached here without return so we are good to use aimbot)
 	return true;
 }
-#pragma endregion
 
-#pragma region GET TARGET
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
-	float best_damage = 0.f;						// Will store the best damage when iterating player's hitboxes
-	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
+	vec3_t final_target(0, 0, 0);					// Position of best hitbox. Will be returned
 	
 	// Check if we have weapon data before doing anything else
 	const auto weapon_data = active_weapon->get_weapon_data();
-	if (!weapon_data) return best_target;
+	if (!weapon_data) return final_target;
 
 	// Get eye pos from localplayer
 	auto local_eye_pos = csgo::local_player->get_eye_pos();
@@ -134,8 +131,12 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		if (item.first > variables::aim::aimbot_fov) break;
 
 		const auto entity = item.second;
+		
+		// Will store the best damage and hitbox of the current player
+		float best_damage = 0.f;
+		vec3_t best_hitbox(0, 0, 0);
 
-		// Iterate all possible hitboxes, even if not enabled
+		// Iterate all possible hitboxes, even if not enabled (for checking bodyaim if lethal)
 		for (const auto hitbox : all_hitboxes) {
 			auto hitbox_pos = entity->get_hitbox_position_fixed(hitbox);
 			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();		// Enabled by user
@@ -152,19 +153,35 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 				continue;	// We are trying to use ignore walls with disabled hitbox
 			}
 
-			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
+			// If we can kill, we don't care about any other players, since we are checking by fov priority
+			if (autowall_data.lethal || autowall_data.damage >= entity->health())
+				return hitbox_pos;
+
+			// Check what the best hitbox would be based on damage, then save it as "this player's best hitbox"
 			if (autowall_data.damage > best_damage) {
 				best_damage = autowall_data.damage;
-				best_target = hitbox_pos;
+				best_hitbox = hitbox_pos;
 			}
+		}
+
+		/*
+		 * What we are doing here is saving the hitbox with the most damage of the current player (best_hitbox) as the final target ONLY if we don't have a final target yet.
+		 * We do it this way so:
+		 *		1. We check if we can do damage to the closest player
+		 *		2. If we can't (after checking hitboxes, all are 0 damage) go to the next player until we find a target that we can damage inside our fov (fov is checked on the first line of the loop)
+		 *		3. Once we find a valid hitbox (max damage of closest player), store it as the final target, but don't return/break inmediatly
+		 *		4. If we have priorize_lethal_targets, keep iterating the rest of the players in the vector to see if we can deal lethal damage to a hitbox, then return that instead (just when we find the lethal hitbox)
+		 */
+		if (best_damage > 0.f && final_target.is_zero()) {
+			final_target = best_hitbox;
+
+			if (!variables::aim::priorize_lethal_targets) break;
 		}
 	}
 	
-	return best_target;		// vec3_t position of the best bone. Empty if none
+	return final_target;		// vec3_t position of the best bone/hitbox. Zero if not found.
 }
-#pragma endregion
 
-#pragma region ACTUAL AIMBOT
 void aim::run_aimbot(c_usercmd* cmd) {
 	if (!(variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
 		&& !(!variables::aim::autofire && (cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
@@ -213,9 +230,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }
-#pragma endregion
 
-#pragma region FOV CIRCLE
 // Used in aim::draw_fov()
 float scale_fov_by_width(float fov, float aspect_ratio) {
 	aspect_ratio *= 0.75f;
@@ -253,4 +268,3 @@ void aim::draw_fov() {
 	
 	render::draw_circle(sw/2, sh/2, rad, 255, variables::colors::aimbot_fov_c);
 }
-#pragma endregion
