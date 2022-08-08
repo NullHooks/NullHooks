@@ -91,6 +91,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	const auto weapon_data = active_weapon->get_weapon_data();
 	if (!weapon_data) return best_target;
 
+	auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
+
 	// Check each player
 	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
 		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
@@ -100,8 +102,6 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 			|| entity->dormant()
 			|| entity->has_gun_game_immunity()) continue;
 		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
-
-		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
 
 		for (const auto hitbox : all_hitboxes) {
 			auto hitbox_pos = entity->get_hitbox_position(hitbox);
@@ -127,6 +127,8 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		}
 	}
 
+	// For debugging
+	interfaces::debug_overlay->add_line_overlay(local_eye_pos, best_target, color::green(200), false, 1.f);
 	return best_target;		// vec3_t position of the best bone
 }
 #pragma endregion
