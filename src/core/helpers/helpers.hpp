@@ -7,7 +7,7 @@ struct int_hsv {
 	float s;	// Max: 1.f
 	float v;	// Max: 1.f
 
-	int_hsv( ) = default;
+	int_hsv() = default;
 	int_hsv(int_hsv& hsv) {
 		this->h = hsv.h;
 		this->s = hsv.s;
@@ -25,7 +25,7 @@ struct int_hsv {
 struct float_hsv {
 	float h, s, v;	// Max: 1.f
 
-	float_hsv( ) = default;
+	float_hsv() = default;
 	float_hsv(float_hsv& hsv) {
 		this->h = hsv.h;
 		this->s = hsv.s;
@@ -47,7 +47,7 @@ struct float_hsv {
 struct float_color {
 	float r, g, b;	// Max: 1.f
 
-	float_color( ) = default;
+	float_color() = default;
 	float_color(float_color& hsv) {
 		this->r = hsv.r;
 		this->g = hsv.g;
@@ -100,13 +100,16 @@ namespace helpers {
 		float_hsv color2hsv_float(color col);
 		color float2color(float* id);
 	}
-	
+
 	namespace chat {
 		void print(std::string str);
 		void print(std::string str, char col);		// Prints 'NullHooks | str' with color
 		void load_config(std::string config_name);
 		void save_config(std::string config_name);
 	}
+
+	template <typename T>
+	static constexpr auto relative_to_absolute(uint8_t* address);
 
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);

@@ -2,7 +2,7 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
-#pragma region AIMBOT CHECKS
+// Checks if we can fire, used in other places
 bool aim::can_fire(player_t* target) {
 	weapon_t* active_weapon = target->active_weapon();
 	if (!active_weapon) return false;
@@ -47,10 +47,49 @@ bool aim::aimbot_weapon_check(bool check_scope) {
 	// (We reached here without return so we are good to use aimbot)
 	return true;
 }
-#pragma endregion
 
-#pragma region GET TARGET
 vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
+	vec3_t final_target(0, 0, 0);					// Position of best hitbox. Will be returned
+	
+	// Check if we have weapon data before doing anything else
+	const auto weapon_data = active_weapon->get_weapon_data();
+	if (!weapon_data) return final_target;
+
+	// Get eye pos from localplayer
+	auto local_eye_pos = csgo::local_player->get_eye_pos();
+
+	// Players will get appended here with their fov. Then the vector will get ordered.
+	std::vector<std::pair<float, player_t*>> target_list{};
+
+	// Iterate players and store the fov to their eyes. It is just so we can have an aproximate priority by crosshair distance.
+	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
+		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
+		if (!entity
+			|| entity == csgo::local_player
+			|| !entity->is_alive()
+			|| entity->dormant()
+			|| entity->has_gun_game_immunity()) continue;
+		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
+
+		// We get the eye position of the current entity so we can store it, and then order by it. This doesn't have to be precise
+		auto entity_pos = entity->get_eye_pos();
+
+		// Calculate relative angle to target
+		vec3_t aim_angle = math::calculate_relative_angle(local_eye_pos, entity_pos, cmd->viewangles);
+		aim_angle.clamp();
+
+		// Get the fov to target. Lower == closer to crosshair == better
+		const float fov = std::hypot(aim_angle.x, aim_angle.y);
+
+		// Push to target vector the entity with its fov
+		target_list.push_back({ fov, entity });
+	}
+
+	// After storing the players, order them from lower fov to greater fov (priority)
+	std::sort(target_list.begin(), target_list.end(), [](const std::pair<float, player_t*>& a, const std::pair<float, player_t*>& b) -> bool {
+		return a.first < b.first;
+	});
+
 	// Store selected hitboxes
 	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
@@ -86,52 +125,79 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 	}
 
-	float best_fov = variables::aim::aimbot_fov;	// This variable will store the fov of the closest player to crosshair, we start it as the fov setting
-	vec3_t best_target(0, 0, 0);					// Position of best hitbox. Will be returned
-	const auto weapon_data = active_weapon->get_weapon_data();
-	if (!weapon_data) return best_target;
+	// Iterate the ordered target list
+	for (const std::pair<float, player_t*> item : target_list) {
+		// Check if we are checking a target with more fov than needed
+		if (item.first > variables::aim::aimbot_fov) break;
 
-	// Check each player
-	for (int i = 1; i <= interfaces::globals->max_clients; i++) {
-		auto entity = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-		if (!entity
-			|| entity == csgo::local_player
-			|| !entity->is_alive()
-			|| entity->dormant()
-			|| entity->has_gun_game_immunity()) continue;
-		if (!helpers::is_enemy(entity) && !variables::aim::target_friends) continue;
+		const auto entity = item.second;
+		const float entity_health = entity->health();
 
-		auto local_eye_pos = csgo::local_player->get_eye_pos();		// Get eye pos from origin player_t
+		// Will store the best damage and hitbox of the current player
+		float best_player_damage = 0.f;
+		vec3_t best_player_hitbox(0, 0, 0);
 
-		for (const auto hitbox : all_hitboxes) {
-			auto hitbox_pos = entity->get_hitbox_position(hitbox);
-			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();
+		// Iterate all possible hitboxes, even if not enabled (for checking bodyaim if lethal)
+		for (const int hitbox : all_hitboxes) {
+			auto hitbox_pos = entity->get_hitbox_position_fixed(hitbox);
+			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();		// Enabled by user
 
-			// Ignore everything if we have "ignore walls" setting (2)
-			if (variables::aim::autowall.idx != 2) {
-				if (!aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, (int)variables::aim::min_damage, enabled_hitbox))
+			autowall_data_t autowall_data = { false, 0.f };
+
+			if (variables::aim::autowall.idx < 2) {
+				// If "Only visible" and we can't see it, ignore hitbox
+				if (variables::aim::autowall.idx == 0 && !csgo::local_player->can_see_player_pos(entity, hitbox_pos))
 					continue;
-			} else if (!enabled_hitbox) {
-				continue;	// We are trying to use ignore walls with disabled hitbox
+
+				// Get autowall data and check if we can make enough damage or kill. autowall::handle_walls() takes care of stuff like "bodyaim if lethal" and "only visible",
+				// so it will only return damage for valid hitboxes
+				autowall_data = aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, enabled_hitbox);
+
+				// Check if the autowall data was invalid
+				if (autowall_data.damage < 0.f)
+					continue;
+				
+				// Check if the returned damage is enough or if we can kill the target (we dont need to worry about bodyaim_if_lethal here)
+				if (autowall_data.damage < (int)variables::aim::min_damage && !autowall_data.lethal)
+					continue;
+			} else if (variables::aim::autowall.idx == 2) {
+				// @todo: bodyaim_if_lethal would not work with "ignore walls" because we dont run autowall
+				// We are trying to use ignore walls with disabled hitbox.
+				if (!enabled_hitbox) continue;
+
+				// We don't care about walls and we found a valid hitbox, return it
+				return hitbox_pos;
 			}
 
-			vec3_t aim_angle = math::calculate_relative_angle(local_eye_pos, hitbox_pos, cmd->viewangles);
-			aim_angle.clamp();
+			// If we can kill, we don't care about any other players, since we are checking by fov priority
+			if (autowall_data.lethal || autowall_data.damage >= entity_health)
+				return hitbox_pos;
 
-			// First time checks the fov setting, then will overwrite if it finds a player that is closer to crosshair
-			const float fov = std::hypot(aim_angle.x, aim_angle.y);
-			if (fov < best_fov) {
-				best_fov = fov;
-				best_target = hitbox_pos;
+			// Check what the best hitbox would be based on damage, then save it as "this player's best hitbox"
+			if (autowall_data.damage > best_player_damage) {
+				best_player_damage = autowall_data.damage;
+				best_player_hitbox = hitbox_pos;
 			}
 		}
+
+		/*
+		 * What we are doing here is saving the hitbox with the most damage from the current player (best_player_hitbox) as the final target ONLY if we don't have a final target yet (we found a closer non-lethal target).
+		 * We do it this way so:
+		 *		1. We check if we can do damage to the closest player
+		 *		2. If we can't (after checking hitboxes, all are 0 damage) go to the next player until we find a target that we can damage inside our fov (fov is checked on the first line of the loop)
+		 *		3. Once we find a valid hitbox (max damage of closest player), store it as the final target, but don't return/break inmediately
+		 *		4. If we have priorize_lethal_targets, keep iterating the rest of the players in the vector to see if we can deal lethal damage to a hitbox, then return that instead (just when we find the lethal hitbox)
+		 */
+		if (best_player_damage > 0.f && final_target.is_zero()) {
+			final_target = best_player_hitbox;
+
+			if (!variables::aim::priorize_lethal_targets) break;
+		}
 	}
-
-	return best_target;		// vec3_t position of the best bone
+	
+	return final_target;		// vec3_t position of the best bone/hitbox. Zero if not found.
 }
-#pragma endregion
 
-#pragma region ACTUAL AIMBOT
 void aim::run_aimbot(c_usercmd* cmd) {
 	if (!(variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
 		&& !(!variables::aim::autofire && (cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
@@ -180,9 +246,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	if (variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }
-#pragma endregion
 
-#pragma region FOV CIRCLE
 // Used in aim::draw_fov()
 float scale_fov_by_width(float fov, float aspect_ratio) {
 	aspect_ratio *= 0.75f;
@@ -220,4 +284,3 @@ void aim::draw_fov() {
 	
 	render::draw_circle(sw/2, sh/2, rad, 255, variables::colors::aimbot_fov_c);
 }
-#pragma endregion
