@@ -95,7 +95,7 @@ static bool aim::autowall::handle_bullet_penetration(surface_data* enter_surface
 // Used to check if target it visible or hittable. Used in aimbot.
 // enabled_hitbox will be used to know what hitboxes are enabled by the user (cuz now its iterating all due to bodyaim_if_lethal)
 autowall_data_t aim::autowall::handle_walls(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, bool enabled_hitbox) {
-	if (!variables::aim::bodyaim_if_lethal && !enabled_hitbox) return { false, 0.f };
+	if (!variables::aim::bodyaim_if_lethal && !enabled_hitbox) return { false, -1.f };
 
 	float damage = static_cast<float>(weapon_data->weapon_damage);
 	vec3_t start = local_player->get_eye_pos();
@@ -124,24 +124,24 @@ autowall_data_t aim::autowall::handle_walls(player_t* local_player, entity_t* en
 			
 			// If we can kill and we have the setting enabled, ignore enabled hitboxes and shoot
 			if (variables::aim::bodyaim_if_lethal && reinterpret_cast<player_t*>(entity)->health() < damage)
-				return {true, damage};
+				return { true, damage };
 			// If we can't kill, the best place to shoot is the closest enabled hitbox
 			else if (enabled_hitbox)
 				return { false, damage };
 		}
-		// Return false (invalid) if we care only about visible and we dont see the target
-		if (variables::aim::autowall.idx == 0) return { false, 0.f };
+		// Return invalid if we care only about visible and we dont see the target. This should never happen.
+		//if (variables::aim::autowall.idx == 0) return { false, -1.f };
 
 		const auto surface_data = interfaces::surface_props_physics->get_surface_data(trace.surface.surfaceProps);
 		if (surface_data->penetrationmodifier < 0.1f) break;
 
 		// Start and damage are changed from handle_bullet_penetration()
 		if (!autowall::handle_bullet_penetration(surface_data, trace, direction, start, weapon_data->weapon_penetration, damage))
-			return { false, 0.f };
+			return { false, -1.f };
 
 		hits_left--;
 	}
 
-	return { false, 0.f };
+	return { false, -1.f };
 }
 #pragma endregion
