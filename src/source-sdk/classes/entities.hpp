@@ -5,6 +5,7 @@
 #include "source-sdk/structs/animstate.hpp"
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
+#include "source-sdk/classes/collideable.hpp"
 
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
@@ -309,17 +310,6 @@ const std::unordered_map<std::string, int> all_custom_models = {
 	{ "PLAYER_ALLY",					PLAYER_ALLY },
 	{ "PLAYER_ENEMY",					PLAYER_ENEMY },
 	{ "ARMS",							ARMS }
-};
-
-struct collideable_t {
-	vec3_t obb_mins() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[1](this));
-	};
-	vec3_t obb_maxs() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[2](this));
-	};
 };
 
 class entity_t {
