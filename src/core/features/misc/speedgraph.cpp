@@ -21,12 +21,12 @@ color speed2color(int speed) {
 
 // Used by misc::speedgraph::draw()
 void draw_speed_str(int x, int y, int speed, color col) {
-	if (variables::misc::speedgraph_target.vector.at(2).state) {
+	if (variables::misc::speedgraph_target.is_enabled(2)) {
 		render::draw_text_string(x, y, render::fonts::watermark_font_m, std::to_string(speed), true, col);
 		y += 17;	// Only increase y for jump text if we did the first text
 	}
 
-	if (variables::misc::speedgraph_target.vector.at(3).state && last_jumped > 0) {
+	if (variables::misc::speedgraph_target.is_enabled(3) && last_jumped > 0) {
 		const color jmpspeed_col = (last_jumped > old_last_jumped) ? color(0, 240, 0) : color(230, 10, 10);
 		const color p_col = color::white();
 
@@ -92,10 +92,10 @@ void misc::speedgraph::draw() {
 	int screen_w, screen_h;
 	interfaces::surface->get_screen_size(screen_w, screen_h);
 
-	if (variables::misc::speedgraph_target.vector.at(0).state) {		// Line
-		for (int n = 0; n < speeds_vec.size() - 1; n++) {   // -1 to skip last item
+	if (variables::misc::speedgraph_target.is_enabled(0)) {		// Line
+		for (int n = 0; n < speeds_vec.size() - 1; n++) {		// -1 to skip last item
 			int cur_speed  = speeds_vec.at(n);
-			int next_speed = speeds_vec.at(n + 1);          // Needed to draw line to next value
+			int next_speed = speeds_vec.at(n + 1);				// Needed to draw line to next value
 
 			int cur_x  = screen_w / 2 - speed_graph_width / 2 + n;
 			int next_x = cur_x + 1;
@@ -103,8 +103,12 @@ void misc::speedgraph::draw() {
 			int next_y = screen_h * (variables::misc::speedgraph_pos/100.f) - next_speed * (variables::misc::speedgraph_h / 100 * 0.5f);
 
 			color line_col = color::white();
-			if (variables::misc::speedgraph_target.vector.at(1).state)
+			if (variables::misc::speedgraph_target.is_enabled(1))
 				line_col = speed2color(next_speed);
+
+			constexpr float opacity_len = 30.f;
+			if (n <= opacity_len) line_col = line_col.get_custom_alpha(n / opacity_len * 255);
+			else if (n >= speeds_vec.size() - opacity_len) line_col = line_col.get_custom_alpha(255 - ((n - (speeds_vec.size() - opacity_len)) / opacity_len * 255));
 
 			render::draw_line(cur_x, cur_y, next_x, next_y, line_col);
 		}

@@ -13,12 +13,15 @@ void config::load_selected_config() {
 }
 
 #pragma region LOAD_CONFIG
-void config::load_config(std::string filename) {
+bool config::load_config(std::string filename) {
 	std::string full_path = nullhooks_config_folder + "\\config\\" + filename;
 
 	DWORD exitst = GetFileAttributesA(full_path.c_str());
-	if (exitst == INVALID_FILE_ATTRIBUTES)		// Path does not exist
-		std::ofstream{ full_path.c_str() };		// Open as output to create it
+	if (exitst == INVALID_FILE_ATTRIBUTES || exitst & FILE_ATTRIBUTE_DIRECTORY) {	// Path does not exist or it is a folder
+		std::string buff = "Error loading config: " + filename;
+		helpers::chat::print(buff, CHAT_COLOR_LIGHT_RED);
+		return false;
+	}
 
 	std::ifstream file;
 	file.open(full_path, std::ios::in);
@@ -33,7 +36,7 @@ void config::load_config(std::string filename) {
 
 	// File contents as str to dom
 	rapidjson::Document doc;
-	if (doc.Parse(file_contents.c_str()).HasParseError()) return;
+	if (doc.Parse(file_contents.c_str()).HasParseError()) return false;
 
 	/* ------------------------ Read all variables ------------------------ */
 	// Aim
@@ -125,7 +128,7 @@ void config::load_config(std::string filename) {
 	load::parse_hotkey(doc,			variables::misc::thirdperson_key,						"misc",				"thirdperson_key");
 	load::parse_float(doc,			variables::misc::thirdperson_dist,						"misc",				"thirdperson_dist");
 	load::parse_bool(doc,			variables::misc::draw_watermark,						"misc",				"draw_watermark");
-	load::parse_bool(doc,			variables::misc::draw_stats,							"misc",				"draw_stats");
+	load::parse_multicombo(doc,		variables::misc::watermark_stats,						"misc",				"draw_stats");
 	load::parse_bool(doc,			variables::misc::clean_screenshots,						"misc",				"clean_screenshots");
 	load::parse_bool(doc,			variables::misc::reveal_ranks,							"misc",				"reveal_ranks");
 	// Ui
@@ -162,7 +165,9 @@ void config::load_config(std::string filename) {
 	load::parse_float(doc,			variables::motion_blur.rotationIntensity,				"motion_blur",		"rotation_intensity");
 	load::parse_float(doc,			variables::motion_blur.strength,						"motion_blur",		"strength");
 
-	helpers::chat_load_config(filename);		// Print to game chat
+	helpers::chat::load_config(filename);		// Print to game chat
+
+	return true;
 }
 #pragma endregion
 
@@ -183,6 +188,15 @@ void config::load::parse_float(rapidjson::Document& doc, float& target, std::str
 	rapidjson::Value& value = parent_obj[json_name.c_str()];	// value will be each json entry of the item
 
 	if (value.IsFloat()) target = value.GetFloat();
+}
+
+void config::load::parse_int(rapidjson::Document& doc, int& target, std::string parent, std::string json_name) {
+	if (!doc.HasMember(parent.c_str())) return;					// Check if parent in doc
+	rapidjson::Value& parent_obj = doc[parent.c_str()];			// Get json object from parent
+	if (!parent_obj.HasMember(json_name.c_str())) return;		// Check if item in doc
+	rapidjson::Value& value = parent_obj[json_name.c_str()];	// value will be each json entry of the item
+
+	if (value.IsInt()) target = value.GetInt();
 }
 
 void config::load::parse_combobox(rapidjson::Document& doc, combobox_toggle_t& target, std::string parent, std::string json_name) {

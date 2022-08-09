@@ -42,7 +42,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	} else if (variables::antiaim::peek_aa) {
 		// Toggle peek aa direction. We need to make a "manual IsPressed()" because we are checking the key in create_move
 		static bool was_pressed = false;
-		if (input::gobal_input.IsHeld(variables::antiaim::peek_aa_toggle_key)) {
+		if (input::global_input.IsHeld(variables::antiaim::peek_aa_toggle_key)) {
 			if (!was_pressed) peek_right = !peek_right;
 			was_pressed = true;
 		} else {

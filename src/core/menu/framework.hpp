@@ -5,6 +5,11 @@
 #include "dependencies/utilities/renderer/renderer.hpp"
 
 #pragma region STRUCTS
+struct cursor_coords {
+	int x;
+	int y;
+};
+
 struct multicombo_opt_t {
 	std::string text;
 	bool state;
@@ -56,6 +61,13 @@ public:
 		this->toggle = toggle;
 	}
 
+	bool is_enabled(int idx) {
+		if (idx >= vector.size())
+			throw std::runtime_error(std::string("multicombobox_toggle_t::is_enabled() was called with a wrong idx (out of range)"));
+
+		return vector.at(idx).state;
+	}
+
 	operator std::vector<multicombo_opt_t>() { return vector; }
 	operator bool() { return toggle; }
 };
@@ -81,7 +93,7 @@ namespace gui {
 	void button(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label, void(*callback)());
 	bool button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, unsigned long font, const std::string label);		// Unused
 	void id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position, int val_cont_w, unsigned long font, const std::string label, int& target, int min, int max);	// Unused
-	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
+	void textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long font, const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string));
 	void config_selection(std::int32_t x, std::int32_t y, std::int32_t width, unsigned long font, std::vector<std::string>& config_names);
 	
 	// Menu movement
@@ -115,8 +127,8 @@ namespace gui {
 	void add_hotkey(const std::string label, hotkey_t& hotkey_info, unsigned long font);
 	void add_button(const std::string label, void(*callback)());
 	void add_button(const std::string label, void(*callback)(), unsigned long font);
-	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string), unsigned int font);
-	void add_textbox(const std::string placeholder, textbox_t& textbox_info, void(*button_callback)(std::string));
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string), unsigned int font);
+	void add_textbox(const std::string placeholder, textbox_t& textbox_info, bool(*button_callback)(std::string));
 
 	// Dynamic menu variables
 	namespace vars {
@@ -173,6 +185,20 @@ namespace spectator_framework {
 	inline bool user_dragging_spec = false;		// Used to know if the user is holding the spectator list window area
 	inline bool should_move_spec = false;		// Used to know when to check the new spectator list positions
 }
+
+namespace watermark {
+	inline bool user_dragging_menu = false;
+	inline bool should_move_menu = false;
+
+	// Will call other 2 functions
+	void draw();
+	// Moving the watermark 
+	void movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
+	// Will draw the User@NullHooks watermark
+	void draw_watermark(int x, int y);
+	// Will draw the date, fps and ping stats
+	void draw_stats();
+};
 #pragma endregion
 
 #pragma region POPUPS

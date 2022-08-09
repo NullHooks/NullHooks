@@ -161,16 +161,16 @@ void visuals::playeresp() {
 
 		#pragma region INFO ESP
 		if (player_info_enabled) {
-			// Friends
+			// Friends and enemies
 			if (player->team() != csgo::local_player->team() || variables::player_visuals::showteamesp) {
-				if (variables::player_visuals::playerinfo.vector[1].state && player->armor() > 0) {
+				if (variables::player_visuals::playerinfo.is_enabled(1) && player->armor() > 0) {
 					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
 					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
 				}
 
 				// Has bomb
 				bool has_bomb = false;
-				if (variables::player_visuals::playerinfo.vector[3].state) {
+				if (variables::player_visuals::playerinfo.is_enabled(3)) {
 					const auto weapons = player->get_weapons();
 					if (!weapons) return;
 					for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
@@ -183,32 +183,32 @@ void visuals::playeresp() {
 				}
 
 				int item_num = 0;
-				if (variables::player_visuals::playerinfo.vector[2].state && player->is_defusing()) {
+				if (variables::player_visuals::playerinfo.is_enabled(2) && player->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				} else if (variables::player_visuals::playerinfo.vector[2].state && player->has_defuser()) {
+				} else if (variables::player_visuals::playerinfo.is_enabled(2) && player->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
 					item_num++;
-				} else if (variables::player_visuals::playerinfo.vector[3].state && has_bomb) {
+				} else if (variables::player_visuals::playerinfo.is_enabled(3) && has_bomb) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "B", true, color(210, 110, 0, 255));
 					item_num++;
 				}
 
-				if (variables::player_visuals::playerinfo.vector[4].state && player->is_scoped()) {
+				if (variables::player_visuals::playerinfo.is_enabled(4) && player->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
 					item_num++;
 				}
-				if (variables::player_visuals::playerinfo.vector[5].state && player->is_flashed()) {
+				if (variables::player_visuals::playerinfo.is_enabled(5) && player->is_flashed()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
 					item_num++;
 				}
-				if (variables::player_visuals::playerinfo.vector[6].state && !aim::can_fire(player)) {
+				if (variables::player_visuals::playerinfo.is_enabled(6) && !aim::can_fire(player)) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "X", true, color(230, 210, 0, 255));
 					item_num++;
 				}
 
 				// Weapon name
-				if (variables::player_visuals::playerinfo.vector[0].state) {
+				if (variables::player_visuals::playerinfo.is_enabled(0)) {
 					auto current_weapon = player->active_weapon();
 					if (!current_weapon) continue;
 					auto weapon_data = current_weapon->get_weapon_data();
@@ -221,61 +221,7 @@ void visuals::playeresp() {
 					const color weapon_name_col = (player->team() == csgo::local_player->team()) ? variables::colors::friendly_color_softer.col : variables::colors::enemy_color_softer.col;
 					render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, weapon_name_col);
 				}
-			
-			} /*else if (player->team() != csgo::local_player->team()) {
-				if (player->armor() > 0) {
-					int armor_x = (variables::player_visuals::healthesp) ? 6 : 0;
-					render::draw_text_string(x - 10 - armor_x, y + 1, render::fonts::watermark_font, "A", false, variables::colors::friendly_color_softer.col);
-				}
-
-				// Has bomb
-				bool has_bomb = false;
-				const auto weapons = player->get_weapons();
-				if (!weapons) return;
-				for (int n = 0; weapons[n]; n++) {		// Iterate list of weapon handles
-					weapon_t* weapon = (weapon_t*)interfaces::entity_list->get_client_entity_handle(weapons[n]);
-					if (weapon && weapon->is_bomb()) {
-						has_bomb = true;
-						break;
-					}
-				}
-
-				int item_num = 0;
-				if (player->is_defusing()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
-					item_num++;
-				} else if (player->has_defuser()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer.col);
-					item_num++;
-				} else if (has_bomb) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "B", true, color(210, 110, 0, 255));
-					item_num++;
-				}
-
-				if (player->is_scoped()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (player->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer.col);
-					item_num++;
-				}
-				if (player->is_flashed()) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "F", true, color(255, 255, 0));
-					item_num++;
-				}
-				if (!aim::can_fire(player)) {
-					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "X", true, color(210, 170, 0, 255));
-					item_num++;
-				}
-
-				const auto current_weapon = player->active_weapon();
-				if (!current_weapon) continue;
-				const auto weapon_data = current_weapon->get_weapon_data();
-				if (!weapon_data) continue;
-				std::string s_weapon_name = weapon_data->weapon_name;
-				
-				int y_weapon = (variables::player_visuals::nameesp) ? 12 : 0;
-				if (strstr(s_weapon_name.c_str(), "weapon_")) s_weapon_name.erase(s_weapon_name.begin(), s_weapon_name.begin() + 7);	// Remove "weapon_"
-				render::draw_text_string(x + w / 2, y + h + 2 + y_weapon, render::fonts::watermark_font, s_weapon_name, true, variables::colors::enemy_color_softer.col);
 			}
-			*/
 		}
 		#pragma endregion
 

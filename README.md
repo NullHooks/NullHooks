@@ -40,6 +40,8 @@ As I said I made this project to learn about game hacking and cpp in general, so
 
 See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
+*NOTE: Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
+Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`*.  
 *NOTE: If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are.*
 
 ## Features
@@ -208,7 +210,8 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - BunnyHop
 - Autostrafe
     - Legit
-    - Rage
+    - Forward rage *(Old one)*
+    - Multidirectional rage
 - Edgejump (On key)
 - Edgebug assist (Needs improvement)
 - Jumpbug (On key)
@@ -256,7 +259,7 @@ I recommend using Visual Studio 2022.
 This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
 
 1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
-2. Download the file `NulHooks.dll` under "Assets"
+2. Download the file `NullHooks.dll` under "Assets"
 3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
 ## Todo
@@ -349,12 +352,13 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Custom aimbot key (autofire)
     - [X] Add bodyaim if lethal
     - [ ] Make aimbot and triggerbot also aim for backtrack. (Get hitbox positions from matrix)
+    - [ ] Fix aimbot shooting 1 tick behind (Try shooting moving targets with `sv_showimpacts 1`, it only hits locally)
 - [X] Add movement stuff
     - [X] EdgeJump
     - [ ] EdgeBug (Improve: [link](https://github.com/Spookycpp/millionware/blob/master/sdk/features/movement/movement.cpp#L119))
     - [X] JumpBug
     - [X] Slowwalk
-    - [ ] Longjump
+    <!-- - [ ] Longjump -->
 - [X] Add event listeners (hook `FireEventIntern`)
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)

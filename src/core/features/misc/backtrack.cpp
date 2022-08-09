@@ -46,19 +46,22 @@ float backtrack::get_lerp_time() noexcept {
 	return max(interfaces::console->get_convar("cl_interp")->get_float(), (ratiod / ((min_ud_rate->get_float()) ? max_ud_rate->get_float() : ud_rate)));
 }
 
-// Needs more comments and explanation
-bool backtrack::valid_tick(float simtime, float maxtime) noexcept {
+// Used in backtrack::update() to validate records
+bool backtrack::valid_tick(float simtime) noexcept {
 	auto nci = interfaces::engine->get_net_channel_info();
 	if (!nci) return false;
 
+	// True latency + Network latency + Interpolation latency (lerp time)
 	float correct = nci->get_latency(0) + nci->get_latency(1) + get_lerp_time();
+
+	// Check to see if our correction is within 0 - sv_maxunlag
 	std::clamp(correct, 0.f, interfaces::console->get_convar("sv_maxunlag")->get_float());
 
-	float delta_time = correct - (TICKS_TO_TIME(csgo::local_player->get_tick_base()) - simtime);
+	// Use cur_time instead of localplayer tickbase because we are not using the 2013 sdk
+	float delta_time = correct - (interfaces::globals->cur_time - simtime);
 
-	float time_limit = maxtime;
-	std::clamp(time_limit, 0.001f, 0.2f);
-
+	// @todo: Add ping spike. See #68
+	const float time_limit = 0.2f;
 	return fabsf(delta_time) <= time_limit;
 }
 
@@ -102,11 +105,14 @@ void backtrack::update() noexcept {
 			records[i].pop_back();
 		
 		// The following lines determine if the tick is valid or not. We erase all the invalid ones
-		auto invalid = std::find_if(std::cbegin(records[i]), std::cend(records[i]), [](const player_record& rec) {
-			return !valid_tick(rec.simulation_time, 0.2f);
-		});
-		if (invalid != std::cend(records[i]))
-			records[i].erase(invalid, std::cend(records[i]));
+		int iRecord = 0;
+		for (player_record rec : records[i]) {
+			if (!valid_tick(rec.simulation_time)) {
+				records[i].erase(std::cbegin(records[i]) + iRecord, std::cend(records[i]));
+				break;
+			}
+			iRecord++;
+		}
 	}
 }
 
@@ -161,7 +167,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 
 		for (size_t i = 0; i < records[besst_target_index].size(); i++) {
 			auto record = &records[besst_target_index][i];		// Current record's best target
-			if (!record || !valid_tick(record->simulation_time, 0.2f)) continue;
+			if (!record || !valid_tick(record->simulation_time)) continue;
 			
 			// Get current record's best target head pos and convert them to angles
 			auto head_pos = record->head - csgo::local_player->get_eye_pos();

@@ -5,6 +5,7 @@
 #include "source-sdk/structs/animstate.hpp"
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
+#include "source-sdk/classes/collideable.hpp"
 
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
@@ -309,17 +310,6 @@ const std::unordered_map<std::string, int> all_custom_models = {
 	{ "PLAYER_ALLY",					PLAYER_ALLY },
 	{ "PLAYER_ENEMY",					PLAYER_ENEMY },
 	{ "ARMS",							ARMS }
-};
-
-struct collideable_t {
-	vec3_t obb_mins() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[1](this));
-	};
-	vec3_t obb_maxs() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[2](this));
-	};
 };
 
 class entity_t {
@@ -658,13 +648,20 @@ public:
 		return (UINT*)((uintptr_t)this + (netvar_manager::get_net_var(fnv::hash("DT_CSPlayer"), fnv::hash("m_hMyWeapons"))));
 	}
 
+	// Call method instead of adding view_offset() to origin()
 	vec3_t get_eye_pos() {
 		vec3_t ret;
 		using original_fn = void(__thiscall*)(void*, vec3_t*);
 		(*(original_fn**)this)[285](this, &ret);
 		return ret;
+	}
 
-		//return abs_origin() + view_offset();
+	// Call method instead of netvar
+	vec3_t get_aim_punch() {
+		vec3_t ret;
+		using original_fn = void(__thiscall*)(void*, vec3_t*);
+		(*(original_fn**)this)[346](this, &ret);
+		return ret;
 	}
 
 	anim_state* get_anim_state() {

@@ -58,20 +58,20 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 	// Store selected hitboxes
 	std::vector<int> all_hitboxes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };	// For bodyaim if lethal
 	std::vector<int> selected_hitboxes;
-	if (variables::aim::hitboxes.vector[0].state) {		// Head
+	if (variables::aim::hitboxes.is_enabled(0)) {		// Head
 		selected_hitboxes.emplace_back(hitbox_head);
 	}
-	if (variables::aim::hitboxes.vector[1].state) {		// Neck
+	if (variables::aim::hitboxes.is_enabled(1)) {		// Neck
 		selected_hitboxes.emplace_back(hitbox_neck);
 	}
-	if (variables::aim::hitboxes.vector[2].state) {		// Chest
+	if (variables::aim::hitboxes.is_enabled(2)) {		// Chest
 		selected_hitboxes.emplace_back(hitbox_pelvis);
 		selected_hitboxes.emplace_back(hitbox_stomach);
 		selected_hitboxes.emplace_back(hitbox_lower_chest);
 		selected_hitboxes.emplace_back(hitbox_chest);
 		selected_hitboxes.emplace_back(hitbox_upper_chest);
 	}
-	if (variables::aim::hitboxes.vector[3].state) {		// Arms
+	if (variables::aim::hitboxes.is_enabled(3)) {		// Arms
 		selected_hitboxes.emplace_back(hitbox_right_hand);
 		selected_hitboxes.emplace_back(hitbox_left_hand);
 		selected_hitboxes.emplace_back(hitbox_right_upper_arm);
@@ -80,7 +80,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		selected_hitboxes.emplace_back(hitbox_left_forearm);
 
 	}
-	if (variables::aim::hitboxes.vector[4].state) {		// Legs
+	if (variables::aim::hitboxes.is_enabled(4)) {		// Legs
 		selected_hitboxes.emplace_back(hitbox_right_thigh);
 		selected_hitboxes.emplace_back(hitbox_left_thigh);
 		selected_hitboxes.emplace_back(hitbox_right_calf);
@@ -182,7 +182,7 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 
 #pragma region ACTUAL AIMBOT
 void aim::run_aimbot(c_usercmd* cmd) {
-	if (!(variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
+	if (!(variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))	// Not holding aimbot key
 		&& !(!variables::aim::autofire && (cmd->buttons & cmd_buttons::in_attack))) return;			// or not attacking
 	if (!variables::aim::aimbot) return;
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
@@ -204,18 +204,17 @@ void aim::run_aimbot(c_usercmd* cmd) {
 
 	vec3_t local_aim_punch{};	// Initialize at 0 because we only want aim punch with rifles
 	if (variables::aim::non_rifle_aimpunch) {
-		local_aim_punch = csgo::local_player->aim_punch_angle();
+		local_aim_punch = csgo::local_player->get_aim_punch();
 	} else {
 		switch (weapon_data->weapon_type) {
 			case WEAPONTYPE_RIFLE:
 			case WEAPONTYPE_SUBMACHINEGUN:
 			case WEAPONTYPE_MACHINEGUN:
-				local_aim_punch = csgo::local_player->aim_punch_angle();
+				local_aim_punch = csgo::local_player->get_aim_punch();
 		}
 	}
 
-	static auto recoil_scale = interfaces::console->get_convar("weapon_recoil_scale")->get_float();
-	vec3_t enemy_angle = (aim_angle - (local_aim_punch * recoil_scale)) - cmd->viewangles;
+	vec3_t enemy_angle = (aim_angle - local_aim_punch) - cmd->viewangles;
 	enemy_angle.clamp();
 
 	vec3_t angle_diff = enemy_angle;	
@@ -227,7 +226,7 @@ void aim::run_aimbot(c_usercmd* cmd) {
 	
 	cmd->viewangles = final_angle;
 
-	if (variables::aim::autofire && input::gobal_input.IsHeld(variables::aim::aimbot_key.key))
+	if (variables::aim::autofire && input::global_input.IsHeld(variables::aim::aimbot_key.key))
 		cmd->buttons |= in_attack;
 }
 #pragma endregion
