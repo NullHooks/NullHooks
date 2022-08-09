@@ -131,35 +131,46 @@ vec3_t get_best_target(c_usercmd* cmd, weapon_t* active_weapon) {
 		if (item.first > variables::aim::aimbot_fov) break;
 
 		const auto entity = item.second;
-		
+		const float entity_health = entity->health();
+
 		// Will store the best damage and hitbox of the current player
 		float best_player_damage = 0.f;
 		vec3_t best_player_hitbox(0, 0, 0);
 
 		// Iterate all possible hitboxes, even if not enabled (for checking bodyaim if lethal)
-		for (const auto hitbox : all_hitboxes) {
+		for (const int hitbox : all_hitboxes) {
 			auto hitbox_pos = entity->get_hitbox_position_fixed(hitbox);
 			bool enabled_hitbox = std::find(selected_hitboxes.begin(), selected_hitboxes.end(), hitbox) != selected_hitboxes.end();		// Enabled by user
 
 			autowall_data_t autowall_data = { false, 0.f };
 
-			// Ignore everything if we have "ignore walls" setting (2)
-			if (variables::aim::autowall.idx != 2) {
+			if (variables::aim::autowall.idx < 2) {
+				// If "Only visible" and we can't see it, ignore hitbox
+				if (variables::aim::autowall.idx == 0 && !csgo::local_player->can_see_player_pos(entity, hitbox_pos))
+					continue;
+
 				// Get autowall data and check if we can make enough damage or kill. autowall::handle_walls() takes care of stuff like "bodyaim if lethal" and "only visible",
 				// so it will only return damage for valid hitboxes
 				autowall_data = aim::autowall::handle_walls(csgo::local_player, entity, hitbox_pos, weapon_data, enabled_hitbox);
 
+				// Check if the autowall data was invalid
+				if (autowall_data.damage < 0.f)
+					continue;
+				
 				// Check if the returned damage is enough or if we can kill the target (we dont need to worry about bodyaim_if_lethal here)
 				if (autowall_data.damage < (int)variables::aim::min_damage && !autowall_data.lethal)
 					continue;
-			} else if (!enabled_hitbox) {
-				// We are trying to use ignore walls with disabled hitbox.
+			} else if (variables::aim::autowall.idx == 2) {
 				// @todo: bodyaim_if_lethal would not work with "ignore walls" because we dont run autowall
-				continue;
+				// We are trying to use ignore walls with disabled hitbox.
+				if (!enabled_hitbox) continue;
+
+				// We don't care about walls and we found a valid hitbox, return it
+				return hitbox_pos;
 			}
 
 			// If we can kill, we don't care about any other players, since we are checking by fov priority
-			if (autowall_data.lethal || autowall_data.damage >= entity->health())
+			if (autowall_data.lethal || autowall_data.damage >= entity_health)
 				return hitbox_pos;
 
 			// Check what the best hitbox would be based on damage, then save it as "this player's best hitbox"

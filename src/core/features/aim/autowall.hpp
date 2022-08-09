@@ -2,5 +2,5 @@
 
 struct autowall_data_t {
 	bool lethal;
-	float damage;
+	float damage;		// Negative damage means invalid
 };
