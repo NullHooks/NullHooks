@@ -5,6 +5,7 @@
 #include "source-sdk/structs/animstate.hpp"
 #include "dependencies/utilities/utilities.hpp"
 #include "dependencies/utilities/netvars/netvars.hpp"
+#include "source-sdk/classes/collideable.hpp"
 
 #pragma region ENUMS
 enum data_update_type_t {
@@ -312,17 +313,6 @@ const std::unordered_map<std::string, int> all_custom_models = {
 	{ "ARMS",							ARMS }
 };
 
-struct collideable_t {
-	vec3_t obb_mins() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[1](this));
-	};
-	vec3_t obb_maxs() {
-		using original_fn = vec3_t * (__thiscall*)(void*);
-		return *((*(original_fn**)this)[2](this));
-	};
-};
-
 template <typename T>
 static constexpr auto relative_to_absolute(uint8_t* address) {
 	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
@@ -397,7 +387,7 @@ public:
 		// Fix bone matrix. First store abs_origina nad effects
 		vec3_t actual_abs_origin = abs_origin();
 		uintptr_t backup_effects = get_effects();
-		
+
 		this->invalidate_bone_cache();
 		get_effects() |= 8;
 
@@ -406,7 +396,7 @@ public:
 		set_abs_origin(this, origin());
 
 		auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc with origin
-		
+
 		// Restore old origin and effects
 		set_abs_origin(this, actual_abs_origin);
 		get_effects() = backup_effects;
@@ -462,19 +452,19 @@ public:
 	}
 
 	vec3_t& abs_origin() {
-		using original_fn = vec3_t&(__thiscall*)(void*);
+		using original_fn = vec3_t & (__thiscall*)(void*);
 		return (*(original_fn**)this)[10](this);;
 	}
 
 	NETVAR("DT_BaseEntity", "m_hOwnerEntity", owner_handle, unsigned long);
 	NETVAR("DT_BaseEntity", "m_bSpotted", spotted, bool);
-	
+
 	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
 	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
 	NETVAR("DT_CSPlayer", "m_iTeamNum", team, int);
 	NETVAR("DT_CSPlayer", "m_nSurvivalTeam", survival_team, int);
 	NETVAR("DT_CSPlayer", "m_flHealthShotBoostExpirationTime", health_boost_time, float);
-	
+
 	NETVAR("DT_BasePlayer", "m_vecOrigin", origin, vec3_t);
 	NETVAR("DT_BasePlayer", "m_vecViewOffset[0]", view_offset, vec3_t);
 
