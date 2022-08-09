@@ -56,18 +56,19 @@ void menu::render() {
 				gui::add_slider		("Triggerbot delay",	variables::aim::triggerbot_delay, 0.f, 30.f);
 			}
 
-			gui::add_groupbox("Aimbot", 11); {
-				gui::add_checkbox		("Enable aimbot",		variables::aim::aimbot);
-				gui::add_checkbox		("Autofire",			variables::aim::autofire);
-				gui::add_hotkey			("Only on key",			variables::aim::aimbot_key);
-				gui::add_checkbox		("Silent",				variables::aim::silent);
-				gui::add_combobox		("Autowall",			variables::aim::autowall_settings, variables::aim::autowall);
-				gui::add_multicombobox	("Aimbot hitboxes",		variables::aim::hitboxes);
-				gui::add_checkbox		("Bodyaim if lethal",	variables::aim::bodyaim_if_lethal);
-				gui::add_slider			("Minimum damage",		variables::aim::min_damage, 0.f, 100.f);
-				gui::add_slider			("Aimbot fov",			variables::aim::aimbot_fov, 0.f, 180.f);
-				gui::add_checkbox		("Draw fov",			variables::aim::draw_fov, variables::colors::aimbot_fov_c);
-				gui::add_slider			("Aimbot smoothing",	variables::aim::aimbot_smoothing, 0.f, 1.f);
+			gui::add_groupbox("Aimbot", 12); {
+				gui::add_checkbox		("Enable aimbot",			variables::aim::aimbot);
+				gui::add_checkbox		("Autofire",				variables::aim::autofire);
+				gui::add_hotkey			("Only on key",				variables::aim::aimbot_key);
+				gui::add_checkbox		("Silent",					variables::aim::silent);
+				gui::add_combobox		("Autowall",				variables::aim::autowall_settings, variables::aim::autowall);
+				gui::add_multicombobox	("Aimbot hitboxes",			variables::aim::hitboxes);
+				gui::add_checkbox		("Bodyaim if lethal",		variables::aim::bodyaim_if_lethal);
+				gui::add_checkbox		("Priorize lethal targets",	variables::aim::priorize_lethal_targets);
+				gui::add_slider			("Minimum damage",			variables::aim::min_damage, 0.f, 100.f);
+				gui::add_slider			("Aimbot fov",				variables::aim::aimbot_fov, 0.f, 180.f);
+				gui::add_checkbox		("Draw fov",				variables::aim::draw_fov, variables::colors::aimbot_fov_c);
+				gui::add_slider			("Aimbot smoothing",		variables::aim::aimbot_smoothing, 0.f, 1.f);
 			}
 
 			/* -------- Aim - Second column -------- */

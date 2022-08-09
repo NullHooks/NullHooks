@@ -12,7 +12,7 @@ float prediction::get_server_time(c_usercmd* cmd) {
 			tick = *(UINT*)((uintptr_t)local + (netvar_manager::get_net_var(fnv::hash("DT_CSPlayer"), fnv::hash("m_nTickBase"))));
 		else
 			tick++;
-		
+
 		last_cmd = cmd;
 	}
 
@@ -28,7 +28,7 @@ void prediction::start(c_usercmd* cmd) {
 	custom_inpred = true;
 
 	*csgo::local_player->current_command() = cmd;
-	csgo::local_player->last_command( ) = *cmd;
+	csgo::local_player->last_command() = *cmd;
 
 	// last_command
 	*reinterpret_cast<c_usercmd**>(uintptr_t(csgo::local_player) + 0x3298) = cmd;
@@ -114,8 +114,7 @@ void prediction::post_think() {
 }
 
 void prediction::end() {
-	if (!csgo::local_player)
-		return;
+	if (!csgo::local_player) return;
 
 	custom_inpred = false;
 
