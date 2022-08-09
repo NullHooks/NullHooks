@@ -261,6 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\config\config.hpp" />
+    <ClInclude Include="core\features\aim\autowall.hpp" />
     <ClInclude Include="core\features\debug\debug.hpp" />
     <ClInclude Include="core\features\features.hpp" />
     <ClInclude Include="core\features\misc\backtrack.hpp" />

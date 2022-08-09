@@ -48,6 +48,7 @@ bool config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::aim::autofire,								"aim",				"autofire");
 	load::parse_hotkey(doc,			variables::aim::aimbot_key,								"aim",				"aimbot_key");
 	load::parse_bool(doc,			variables::aim::bodyaim_if_lethal,						"aim",				"bodyaim_if_lethal");
+	load::parse_bool(doc,			variables::aim::priorize_lethal_targets,				"aim",				"priorize_lethal_targets");
 	load::parse_combobox(doc,		variables::aim::autowall,								"aim",				"autowall");
 	load::parse_float(doc,			variables::aim::aimbot_fov,								"aim",				"aimbot_fov");
 	load::parse_bool(doc,			variables::aim::draw_fov,								"aim",				"draw_fov");

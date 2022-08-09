@@ -7,6 +7,7 @@
 #include "dependencies/utilities/netvars/netvars.hpp"
 #include "source-sdk/classes/collideable.hpp"
 
+#pragma region ENUMS
 enum data_update_type_t {
 	DATA_UPDATE_CREATED = 0,
 	DATA_UPDATE_DATATABLE_CHANGED,
@@ -312,6 +313,12 @@ const std::unordered_map<std::string, int> all_custom_models = {
 	{ "ARMS",							ARMS }
 };
 
+template <typename T>
+static constexpr auto relative_to_absolute(uint8_t* address) {
+	return (T)(address + 4 + *reinterpret_cast<std::int32_t*>(address));
+}
+#pragma endregion
+
 class entity_t {
 public:
 	void* animating() {
@@ -344,9 +351,59 @@ public:
 		using original_fn = bool(__thiscall*)(entity_t*);
 		return (*(original_fn**)this)[165](this);
 	}
+	uint32_t& get_effects() {
+		static auto offset = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_fEffects"));
+		return *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(this) + offset);
+	}
+
+	#pragma region FIXED SETUP_BONES
+	uint32_t& most_recent_model_bone_counter() {
+		static auto invalidateBoneCache = utilities::pattern_scan("client.dll", "80 3D ? ? ? ? ? 74 16 A1 ? ? ? ? 48 C7 81");
+		static auto mostRecentModelBoneCounter = *reinterpret_cast<uintptr_t*>(invalidateBoneCache + 0x1B);
+
+		return *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(this) + mostRecentModelBoneCounter);
+	}
+	float& last_bone_setup_time() {
+		static auto invalidateBoneCache = utilities::pattern_scan("client.dll", "80 3D ? ? ? ? ? 74 16 A1 ? ? ? ? 48 C7 81");
+		static auto lastBoneSetupTime = *reinterpret_cast<uintptr_t*>(invalidateBoneCache + 0x11);
+
+		return *reinterpret_cast<float*>(reinterpret_cast<uintptr_t>(this) + lastBoneSetupTime);
+	}
+	void invalidate_bone_cache() {		// Causes fps drop
+		if (!this) return;
+
+		last_bone_setup_time() = -FLT_MAX;
+		most_recent_model_bone_counter() = UINT_MAX;
+	}
+	bool setup_bones_fixed(matrix_t* out, int max_bones, int mask, float time) {
+		if (!this) return false;
+
+		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
+
+		// Fix bone matrix. First backup render and abs_origina
+		int* render = reinterpret_cast<int*>(this + 0x274);
+		int render_backup = *render;
+		
+		vec3_t actual_abs_origin = abs_origin();
+		
+		*render = 0;
+
+		using abs_fn = void(__thiscall*)(entity_t*, const vec3_t&);
+		static abs_fn set_abs_origin = relative_to_absolute<abs_fn>(utilities::pattern_scan("client.dll", "E8 ? ? ? ? EB 19 8B 07") + 1);
+		set_abs_origin(this, origin());
+
+		auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc with origin
+
+		// Restore old abs_origin and render
+		set_abs_origin(this, actual_abs_origin);
+		*render = render_backup;
+
+		return result;
+	}
+	#pragma endregion
+
 	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
-		if (!this)
-			return false;
+		if (!this) return false;
 
 		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
 		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
@@ -399,15 +456,23 @@ public:
 		return (*static_cast<original_fn**>(networkable()))[9](networkable());
 	}
 
-	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
+	vec3_t& abs_origin() {
+		using original_fn = vec3_t & (__thiscall*)(void*);
+		return (*(original_fn**)this)[10](this);;
+	}
+
 	NETVAR("DT_BaseEntity", "m_hOwnerEntity", owner_handle, unsigned long);
-	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
-	NETVAR("DT_BasePlayer", "m_vecOrigin", origin, vec3_t);
-	NETVAR("DT_BasePlayer", "m_vecViewOffset[0]", view_offset, vec3_t);
-	NETVAR("DT_CSPlayer", "m_iTeamNum", team, int);
 	NETVAR("DT_BaseEntity", "m_bSpotted", spotted, bool);
+
+	NETVAR("DT_CSPlayer", "m_fFlags", flags, int);
+	NETVAR("DT_CSPlayer", "m_flSimulationTime", simulation_time, float);
+	NETVAR("DT_CSPlayer", "m_iTeamNum", team, int);
 	NETVAR("DT_CSPlayer", "m_nSurvivalTeam", survival_team, int);
 	NETVAR("DT_CSPlayer", "m_flHealthShotBoostExpirationTime", health_boost_time, float);
+
+	NETVAR("DT_BasePlayer", "m_vecOrigin", origin, vec3_t);
+	NETVAR("DT_BasePlayer", "m_vecViewOffset[0]", view_offset, vec3_t);
+
 	NETVAR("DT_PlantedC4", "m_flC4Blow", m_flC4Blow, float);
 	NETVAR("DT_PlantedC4", "m_flDefuseCountDown", m_flDefuseCountDown, float);
 	NETVAR("DT_PlantedC4", "m_bBombDefused", m_bBombDefused, bool);
@@ -695,17 +760,40 @@ public:
 	}
 
 	vec3_t get_bone_position(int bone) {
-		matrix_t bone_matrices[128];
-		if (setup_bones(bone_matrices, 128, 256, 0.0f))
-			return vec3_t{ bone_matrices[bone][0][3], bone_matrices[bone][1][3], bone_matrices[bone][2][3] };
-		else
-			return vec3_t{ };
+		matrix_t bone_matrices[MAXSTUDIOBONES];
+
+		if (setup_bones(bone_matrices, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f))
+			return bone_matrices[bone].get_origin();
+
+		return vec3_t{ };
 	}
 
 	vec3_t get_hitbox_position(int hitbox_id) {
 		matrix_t bone_matrix[MAXSTUDIOBONES];
 
 		if (setup_bones(bone_matrix, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f)) {
+			auto studio_model = interfaces::model_info->get_studio_model(model());
+
+			if (studio_model) {
+				auto hitbox = studio_model->hitbox_set(0)->hitbox(hitbox_id);
+
+				if (hitbox) {
+					auto min = vec3_t{}, max = vec3_t{};
+
+					math::transform_vector(hitbox->mins, bone_matrix[hitbox->bone], min);
+					math::transform_vector(hitbox->maxs, bone_matrix[hitbox->bone], max);
+
+					return vec3_t((min.x + max.x) * 0.5f, (min.y + max.y) * 0.5f, (min.z + max.z) * 0.5f);
+				}
+			}
+		}
+		return vec3_t{};
+	}
+
+	vec3_t get_hitbox_position_fixed(int hitbox_id) {
+		matrix_t bone_matrix[MAXSTUDIOBONES];
+
+		if (setup_bones_fixed(bone_matrix, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0.0f)) {
 			auto studio_model = interfaces::model_info->get_studio_model(model());
 
 			if (studio_model) {
@@ -755,11 +843,6 @@ public:
 	void update_client_side_animations() {
 		using original_fn = void(__thiscall*)(void*);
 		(*(original_fn**)this)[224](this);
-	}
-
-	vec3_t& abs_origin() {
-		using original_fn = vec3_t & (__thiscall*)(void*);
-		return (*(original_fn**)this)[10](this);;
 	}
 
 	vec3_t& abs_angles() {

@@ -1,6 +1,7 @@
 #pragma once
 #include "source-sdk/sdk.hpp"
 #include "core/features/misc/backtrack.hpp"
+#include "core/features/aim/autowall.hpp"
 
 namespace antiaim {
 	void run_antiaim(c_usercmd* cmd, bool& sendPacket);
@@ -26,7 +27,7 @@ namespace aim {
 		bool is_armored(int hit_group, bool helmet);
 		bool trace_to_exit(trace_t& enter_trace, vec3_t& start, const vec3_t& direction, vec3_t& end, trace_t& exit_trace);
 		static bool handle_bullet_penetration(surface_data* enter_surface_data, trace_t& enter_trace, const vec3_t& direction, vec3_t& start, float penetration, float& damage);
-		bool handle_walls(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, int min_damage, bool enabled_hitbox);
+		autowall_data_t handle_walls(player_t* local_player, entity_t* entity, const vec3_t& destination, const weapon_info_t* weapon_data, bool enabled_hitbox);
 	}
 }
 

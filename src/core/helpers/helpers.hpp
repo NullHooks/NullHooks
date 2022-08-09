@@ -100,13 +100,16 @@ namespace helpers {
 		float_hsv color2hsv_float(color col);
 		color float2color(float* id);
 	}
-	
+
 	namespace chat {
 		void print(std::string str);
 		void print(std::string str, char col);		// Prints 'NullHooks | str' with color
 		void load_config(std::string config_name);
 		void save_config(std::string config_name);
 	}
+
+	template <typename T>
+	static constexpr auto relative_to_absolute(uint8_t* address);
 
 	player_t* local_or_spectated();
 	bool is_enemy(player_t* player);

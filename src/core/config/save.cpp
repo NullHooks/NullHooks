@@ -43,6 +43,7 @@ bool config::save_config(std::string filename) {
 		save::parse_bool(aim,					allocator,			variables::aim::autofire,								"autofire");
 		save::parse_hotkey(aim,					allocator,			variables::aim::aimbot_key,								"aimbot_key");
 		save::parse_bool(aim,					allocator,			variables::aim::bodyaim_if_lethal,						"bodyaim_if_lethal");
+		save::parse_bool(aim,					allocator,			variables::aim::priorize_lethal_targets,				"priorize_lethal_targets");
 		save::parse_combobox(aim,				allocator,			variables::aim::autowall,								"autowall");
 		save::parse_float(aim,					allocator,			variables::aim::aimbot_fov,								"aimbot_fov");
 		save::parse_bool(aim,					allocator,			variables::aim::draw_fov,								"draw_fov");
