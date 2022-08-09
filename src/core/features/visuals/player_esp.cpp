@@ -86,8 +86,8 @@ void visuals::playeresp() {
 		if (!player_model) continue;
 		auto hdr = interfaces::model_info->get_studio_model(player_model);
 		if (!hdr) continue;
-		static matrix_t bones[128];
-		if (!player->setup_bones(bones, 128, 256, 0)) continue;
+		static matrix_t bones[MAXSTUDIOBONES];
+		if (!player->setup_bones(bones, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0)) continue;
 
 		int x, y, w, h;
 		if (!bbox(player, x, y, w, h)) continue;
