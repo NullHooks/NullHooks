@@ -355,6 +355,8 @@ public:
 		static auto offset = netvar_manager::get_net_var(fnv::hash("DT_BaseEntity"), fnv::hash("m_fEffects"));
 		return *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(this) + offset);
 	}
+
+	#pragma region FIXED SETUP_BONES
 	uint32_t& most_recent_model_bone_counter() {
 		static auto invalidateBoneCache = utilities::pattern_scan("client.dll", "80 3D ? ? ? ? ? 74 16 A1 ? ? ? ? 48 C7 81");
 		static auto mostRecentModelBoneCounter = *reinterpret_cast<uintptr_t*>(invalidateBoneCache + 0x1B);
@@ -367,29 +369,24 @@ public:
 
 		return *reinterpret_cast<float*>(reinterpret_cast<uintptr_t>(this) + lastBoneSetupTime);
 	}
-	void invalidate_bone_cache() {
+	void invalidate_bone_cache() {		// Causes fps drop
 		if (!this) return;
 
 		last_bone_setup_time() = -FLT_MAX;
 		most_recent_model_bone_counter() = UINT_MAX;
-	}
-	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
-		if (!this) return false;
-
-		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
-		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
 	}
 	bool setup_bones_fixed(matrix_t* out, int max_bones, int mask, float time) {
 		if (!this) return false;
 
 		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
 
-		// Fix bone matrix. First store abs_origina nad effects
+		// Fix bone matrix. First backup render and abs_origina
+		int* render = reinterpret_cast<int*>(this + 0x274);
+		int render_backup = *render;
+		
 		vec3_t actual_abs_origin = abs_origin();
-		uintptr_t backup_effects = get_effects();
-
-		this->invalidate_bone_cache();
-		get_effects() |= 8;
+		
+		*render = 0;
 
 		using abs_fn = void(__thiscall*)(entity_t*, const vec3_t&);
 		static abs_fn set_abs_origin = relative_to_absolute<abs_fn>(utilities::pattern_scan("client.dll", "E8 ? ? ? ? EB 19 8B 07") + 1);
@@ -397,11 +394,19 @@ public:
 
 		auto result = (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);		// Get original result from vfunc with origin
 
-		// Restore old origin and effects
+		// Restore old abs_origin and render
 		set_abs_origin(this, actual_abs_origin);
-		get_effects() = backup_effects;
+		*render = render_backup;
 
 		return result;
+	}
+	#pragma endregion
+
+	bool setup_bones(matrix_t* out, int max_bones, int mask, float time) {
+		if (!this) return false;
+
+		using original_fn = bool(__thiscall*)(void*, matrix_t*, int, int, float);
+		return (*(original_fn**)animating())[13](animating(), out, max_bones, mask, time);
 	}
 	model_t* model() {
 		using original_fn = model_t * (__thiscall*)(void*);
