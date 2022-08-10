@@ -220,6 +220,7 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 
 ### Misc
 - Backtrack
+- Rank revealer
 - Spectator list
 - Stats watermark (*username, time, fps, ping...*)
 - Hide cheat on screenshots
