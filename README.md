@@ -224,7 +224,7 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - Backtrack
 - Rank revealer
 - Spectator list
-- Stats watermark (*username, time, fps, ping...*)
+- Stats watermark (*username, cheat name, fps, ping...*)
 - Hide cheat on screenshots
 - Hotkey system
     - <kbd>Delete</kbd> sets the hotkey to `None`, meaning that the hotkey will apear always as held
