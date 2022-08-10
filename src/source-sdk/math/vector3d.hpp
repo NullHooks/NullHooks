@@ -53,6 +53,12 @@ public:
 	vec3_t operator-(const vec3_t& v) {
 		return vec3_t{ x - v.x, y - v.y, z - v.z };
 	}
+	vec3_t operator-(float fl) {
+		return vec3_t{ x - fl, y - fl, z - fl };
+	}
+	vec3_t operator+(float fl) {
+		return vec3_t{ x + fl, y + fl, z + fl };
+	}
 	vec3_t operator*(float fl) const {
 		return vec3_t(x * fl, y * fl, z * fl);
 	}
@@ -114,7 +120,7 @@ public:
 	}
 
 	bool is_zero() {
-		return (this->x == 0 && this->y == 0 && this->z == 0);
+		return (this->x == 0.f && this->y == 0.f && this->z == 0.f);
 	}
 
 	void init(float ix, float iy, float iz);

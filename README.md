@@ -60,6 +60,8 @@ Make sure you update your remotes with `git remote set-url origin https://github
     - Auto if key is set to 'None'
 - Aimbot fov
     - Fov circle
+- Bodyaim if lethal. Will ignore enabled hitboxes if another one is lethal.
+- Priorize lethal targets. Will ignore closest target if there is a killable target inside the aimbot's fov.
 - Aimbot smoothness (Only on snappy aimbot)
 - Aimbot and triggerbot hitboxes
 - Only if scoped
@@ -220,8 +222,9 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 
 ### Misc
 - Backtrack
+- Rank revealer
 - Spectator list
-- Stats watermark (*username, time, fps, ping...*)
+- Stats watermark (*username, cheat name, fps, ping...*)
 - Hide cheat on screenshots
 - Hotkey system
     - <kbd>Delete</kbd> sets the hotkey to `None`, meaning that the hotkey will apear always as held

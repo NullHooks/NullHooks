@@ -195,13 +195,13 @@ namespace variables {
 		inline float thirdperson_dist = 100.f;
 
 		// UI
-		inline bool draw_watermark = true;
-		inline std::vector<multicombo_opt_t> watermark_stats_options = {
-			{ "Time",		true },
+		inline std::vector<multicombo_opt_t> watermark_options = {
+			{ "User",		true },
+			{ "Cheat",		true },
 			{ "Fps",		true },
 			{ "Ping",		true }
 		};
-		inline multicombobox_toggle_t watermark_stats(watermark_stats_options);
+		inline multicombobox_toggle_t watermark(watermark_options);
 		inline bool clean_screenshots = true;
 		inline bool reveal_ranks = true;
 	}
@@ -223,7 +223,7 @@ namespace variables {
 			inline int y = 10;
 			inline int x = 15;
 			inline int w = 0;
-			inline int h = 0;
+			inline int h = 17;
 		}
 	}
 

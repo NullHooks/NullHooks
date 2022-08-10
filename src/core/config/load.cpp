@@ -128,8 +128,7 @@ bool config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::misc::thirdperson,							"misc",				"thirdperson");
 	load::parse_hotkey(doc,			variables::misc::thirdperson_key,						"misc",				"thirdperson_key");
 	load::parse_float(doc,			variables::misc::thirdperson_dist,						"misc",				"thirdperson_dist");
-	load::parse_bool(doc,			variables::misc::draw_watermark,						"misc",				"draw_watermark");
-	load::parse_multicombo(doc,		variables::misc::watermark_stats,						"misc",				"draw_stats");
+	load::parse_multicombo(doc,		variables::misc::watermark,								"misc",				"watermark");
 	load::parse_bool(doc,			variables::misc::clean_screenshots,						"misc",				"clean_screenshots");
 	load::parse_bool(doc,			variables::misc::reveal_ranks,							"misc",				"reveal_ranks");
 	// Ui

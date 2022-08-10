@@ -57,10 +57,8 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	}
 
 	// Yaw
-	if (send_packet)
-		cmd->viewangles.y -= yaw;       // Set our yaw
-	else
-		cmd->viewangles.y += yaw;       // Again but for fake
+	if (!send_packet) yaw += 58.f;			// For fake
+	cmd->viewangles.y -= yaw;				// Set our yaw
 
 	/*
 	 * Micromovement
