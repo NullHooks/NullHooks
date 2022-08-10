@@ -114,7 +114,7 @@ public:
 	}
 
 	bool is_zero() {
-		return (this->x == 0 && this->y == 0 && this->z == 0);
+		return (this->x == 0.f && this->y == 0.f && this->z == 0.f);
 	}
 
 	void init(float ix, float iy, float iz);
