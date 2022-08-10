@@ -60,6 +60,8 @@ Make sure you update your remotes with `git remote set-url origin https://github
     - Auto if key is set to 'None'
 - Aimbot fov
     - Fov circle
+- Bodyaim if lethal. Will ignore enabled hitboxes if another one is lethal.
+- Priorize lethal targets. Will ignore closest target if there is a killable target inside the aimbot's fov.
 - Aimbot smoothness (Only on snappy aimbot)
 - Aimbot and triggerbot hitboxes
 - Only if scoped

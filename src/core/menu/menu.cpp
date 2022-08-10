@@ -182,10 +182,9 @@ void menu::render() {
 				gui::add_slider		("Thirdperson distance",	variables::misc::thirdperson_dist, 50.f, 200.f);
 			}
 
-			gui::add_groupbox("Interface", 5); {
+			gui::add_groupbox("Interface", 4); {
 				gui::add_checkbox("Hide cheat on screenshots",	variables::misc::clean_screenshots);
-				gui::add_checkbox("Show watermark",				variables::misc::draw_watermark);
-				gui::add_multicombobox("Show stats",			variables::misc::watermark_stats);
+				gui::add_multicombobox("Watermark",				variables::misc::watermark);
 				gui::add_checkbox("Spectator list",				variables::ui::spectators::spectator_list);
 				gui::add_checkbox("Reveal ranks",				variables::misc::reveal_ranks);
 			}

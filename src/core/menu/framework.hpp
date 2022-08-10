@@ -192,12 +192,12 @@ namespace watermark {
 
 	// Will call other 2 functions
 	void draw();
+	
+	// Will draw the user name, cheat name, fps and ping stats
+	void get_str_and_draw();
+
 	// Moving the watermark 
 	void movement(std::int32_t& x, std::int32_t& y, std::int32_t w, std::int32_t h);
-	// Will draw the User@NullHooks watermark
-	void draw_watermark(int x, int y);
-	// Will draw the date, fps and ping stats
-	void draw_stats();
 };
 #pragma endregion
 
