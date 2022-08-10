@@ -15,7 +15,7 @@ cursor_coords w_cursor_corrected;
 const int margin = 5;
 
 void watermark::draw() {
-	variables::ui::watermark::w = 0;		// Reset before drawing, will be set in get_str_and_draw (in draw_stats_string() actually)
+	variables::ui::watermark::w = margin;		// Reset to margin before drawing, will be set in get_str_and_draw (in draw_stats_string() actually)
 	get_str_and_draw();
 
 	movement(variables::ui::watermark::x, variables::ui::watermark::y, variables::ui::watermark::w, variables::ui::watermark::h);
@@ -82,7 +82,7 @@ void watermark::get_str_and_draw() {
 	}
 
 	// Colors
-	static const color base_color = color(220, 5, 5, 255);
+	static const color base_color = color(230, 230, 230, 255);
 	static const color color_l = color(255, 150, 0, 255);
 	static const color color_m = color(255, 255, 0, 255);
 	static const color color_h = color(0, 255, 10, 255);
@@ -108,9 +108,10 @@ void watermark::get_str_and_draw() {
 
 // Will draw the actual string based on the values and lengths
 void draw_stats_string(std::string base, color base_col, std::string fps, color fps_col, bool draw_fps, std::string ping, color ping_col, bool draw_ping) {
-	static int text_w_buff = margin * 2;
+	static int text_w_buff = 0;
 	const int x = variables::ui::watermark::x;
 	const int y = variables::ui::watermark::y;
+	const int h = variables::ui::watermark::h;
 	const unsigned long font = render::fonts::watermark_font;
 
 	const std::wstring converted_base = std::wstring(base.begin(), base.end());
@@ -119,19 +120,23 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 	interfaces::surface->draw_text_font(font);
 
 	int width, height;
-	interfaces::surface->draw_text_pos(x, y);
+	interfaces::surface->draw_text_pos(x + margin, y + 2);
 	interfaces::surface->get_text_size(font, converted_base.c_str(), width, height);
+
+	text_w_buff = render::get_text_size(render::fonts::watermark_font, base).x;
+	render::draw_filled_rect(x, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+	variables::ui::watermark::w += text_w_buff;
 
 	interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
 	interfaces::surface->draw_render_text(converted_base.c_str(), wcslen(converted_base.c_str()));
 
-	text_w_buff = render::get_text_size(render::fonts::watermark_font, base).x;
-
 	if (draw_fps) {
+		text_w_buff = render::get_text_size(render::fonts::watermark_font, fps).x;
+		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+		variables::ui::watermark::w += text_w_buff;
+
 		interfaces::surface->set_text_color(fps_col.r, fps_col.g, fps_col.b, fps_col.a);
 		interfaces::surface->draw_render_text(converted_fps.c_str(), wcslen(converted_fps.c_str()));
-
-		text_w_buff += render::get_text_size(render::fonts::watermark_font, fps).x;
 	}
 
 	if (draw_ping) {
@@ -144,16 +149,21 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 		const std::wstring converted_pingtext = std::wstring(pingtext.begin(), pingtext.end());
 		const std::wstring converted_ping = std::wstring(ping.begin(), ping.end());
 
+		text_w_buff = render::get_text_size(render::fonts::watermark_font, pingtext + ping).x;
+		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+		variables::ui::watermark::w += text_w_buff;
+
 		interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
 		interfaces::surface->draw_render_text(converted_pingtext.c_str(), wcslen(converted_pingtext.c_str()));
 
 		interfaces::surface->set_text_color(ping_col.r, ping_col.g, ping_col.b, ping_col.a);
 		interfaces::surface->draw_render_text(converted_ping.c_str(), wcslen(converted_ping.c_str()));
-
-		text_w_buff += render::get_text_size(render::fonts::watermark_font, pingtext + ping).x;
 	}
 
-	variables::ui::watermark::w = text_w_buff;		// Set the watermark w
+	// Draw the final right margin and the external rect
+	render::draw_filled_rect(x + variables::ui::watermark::w, y, margin, h, color(36, 36, 36, 255));
+	variables::ui::watermark::w += margin;
+	render::draw_rect(x, y, variables::ui::watermark::w, h, color(25, 25, 25, 255));
 }
 
 int get_fps() {

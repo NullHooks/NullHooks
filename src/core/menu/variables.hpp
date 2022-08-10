@@ -223,7 +223,7 @@ namespace variables {
 			inline int y = 10;
 			inline int x = 15;
 			inline int w = 0;
-			inline int h = 15;
+			inline int h = 17;
 		}
 	}
 
