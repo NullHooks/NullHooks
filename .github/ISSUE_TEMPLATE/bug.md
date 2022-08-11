@@ -7,12 +7,14 @@ labels: bug
 ---
 
 ### Bug description
-<!-- Put here a detailed description about the bug -->
+<!-- Put here a detailed description about the bug. -->
 
 ### Steps to reproduce
 <!--
 Describe (In steps if possible) what did you do to find the bug.
 Avoid saying: "Just join a match and play" (What gamemode, what settings were active, etc.)
+
+Please include useful information like what settings were you using.
 -->
 
 ### <!-- Optional --> Possible fix
