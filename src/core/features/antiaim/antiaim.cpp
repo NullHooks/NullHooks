@@ -1,4 +1,6 @@
 #include "dependencies/utilities/csgo.hpp"
+#include "dependencies/interfaces/interfaces.hpp"
+#include <math.h>
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
@@ -10,6 +12,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;     // Ladder or noclip
 
 	// Don't aa if we are doing any of this
+	// @todo: add revolver & attack2 check
 	// @todo: prepare the revolver without flicking
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
@@ -20,6 +23,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 
 	// Don't aa when throwing a nade. Not only don't aa but don't even flick. Say thank you to ma man @hBuffer
 	// @todo: Good nade prediction :(
+	// @note: https://github.com/LWSS/Fuzion/blob/master/src/Hacks/grenadeprediction.cpp
 	if (active_weapon->is_grenade() && !active_weapon->pin_pulled()) {
 		float throw_time = active_weapon->throw_time();
 		if (throw_time > 0) {
@@ -38,27 +42,25 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	static float yaw = 0.f;
 
 	if (variables::antiaim::spinbot) {
-		yaw += variables::antiaim::spinbot_speed / 2;       // Half speed for more control
+		yaw = fmodf(globals->curtime * variables::antiaim::spinbot_speed, 360.f);
 	} else if (variables::antiaim::peek_aa) {
 		// Toggle peek aa direction. We need to make a "manual IsPressed()" because we are checking the key in create_move
 		static bool was_pressed = false;
-		if (input::global_input.IsHeld(variables::antiaim::peek_aa_toggle_key)) {
-			if (!was_pressed) peek_right = !peek_right;
+		if (input::global_input.IsHeld(variables::antiaim::peek_aa_toggle_key) && !was_pressed) {
+			peek_right = !peek_right;
 			was_pressed = true;
-		} else {
+		} else
 			was_pressed = false;
-		}
 
 		// Change yaw to peek dir
-		if (peek_right) yaw = right_peek_yaw;
-		else            yaw = left_peek_yaw;
+		yaw = peek_right ? right_peek_yaw : left_peek_yaw;
 	} else {
 		yaw = variables::antiaim::yaw;
 	}
 
 	// Yaw
-	if (!send_packet) yaw += 58.f;			// For fake
-	cmd->viewangles.y -= yaw;				// Set our yaw
+	if (!send_packet) yaw += 58.f;				// Add desync
+  	cmd->viewangles.y -= yaw;					// Real
 
 	/*
 	 * Micromovement
@@ -73,4 +75,6 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	}
 
 	// @todo: lby and fakelag
+	// @note: https://github.com/LWSS/Fuzion/blob/0a4d775e17aba7a723aadce5b80898705e0bd6ff/src/Hacks/antiaim.cpp#L240
+	// @note: https://github.com/LWSS/Fuzion/blob/master/src/Hacks/fakelag.cpp
 }
