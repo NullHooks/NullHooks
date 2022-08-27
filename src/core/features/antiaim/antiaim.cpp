@@ -16,7 +16,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	// @todo: prepare the revolver without flicking
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
-	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                             // We are shooting
+	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                                 // We are shooting
 		|| (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
 		|| (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
 		|| cmd->buttons & in_use) return;                                                           // Interacting with door, weapon, bomb, etc.
@@ -60,7 +60,17 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 
 	// Yaw
 	if (!send_packet) yaw += 58.f;				// Add desync
-  	cmd->viewangles.y -= yaw;					// Real
+  	cmd->viewangles.y -= yaw;				// Real
+	
+	if (cmd->viewangles.y > 180.0f)
+		cmd->viewangles.y = 180.0f;
+	else if (cmd->viewangles.y < -180.0f)
+		cmd->viewangles.y = -180.0f;
+
+	if (cmd->viewangles.x > 89.0f)
+		cmd->viewangles.x = 89.0f;
+	else if (cmd->viewangles.x < -89.0f)
+		cmd->viewangles.x = -89.0f;
 
 	/*
 	 * Micromovement
