@@ -56,9 +56,10 @@ void menu::render() {
 				gui::add_slider		("Triggerbot delay",	variables::aim::triggerbot_delay, 0.f, 30.f);
 			}
 
-			gui::add_groupbox("Aimbot", 12); {
+			gui::add_groupbox("Aimbot", 13); {
 				gui::add_checkbox		("Enable aimbot",			variables::aim::aimbot);
 				gui::add_checkbox		("Autofire",				variables::aim::autofire);
+				gui::add_checkbox		("Auto revolver",				variables::aim::aimbot_autorevolver);
 				gui::add_hotkey			("Only on key",				variables::aim::aimbot_key);
 				gui::add_checkbox		("Silent",					variables::aim::silent);
 				gui::add_combobox		("Autowall",				variables::aim::autowall_settings, variables::aim::autowall);

@@ -30,6 +30,7 @@ namespace variables {
 		inline bool target_friends = false;
 		inline bool non_rifle_aimpunch = true;
 		inline bool aimbot_noscope = true;
+		inline bool aimbot_autorevolver = false;
 
 		inline float min_damage = 60.f;
 
@@ -45,6 +46,7 @@ namespace variables {
 
 	namespace antiaim {
 		inline bool antiaim = false;
+		inline bool at_target = false;
 		inline float yaw = 0.f;
 		inline float pitch = 0.f;
 		inline bool spinbot = false;
