@@ -16,7 +16,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	// @todo: prepare the revolver without flicking
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
-	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                                 // We are shooting
+	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)								// We are shooting
 		|| (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
 		|| (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
 		|| cmd->buttons & in_use) return;                                                           // Interacting with door, weapon, bomb, etc.
@@ -42,15 +42,16 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	static float yaw = 0.f;
 
 	if (variables::antiaim::spinbot) {
-		yaw = fmodf(globals->curtime * variables::antiaim::spinbot_speed, 360.f);
+		yaw = fmodf(interfaces::globals->cur_time * variables::antiaim::spinbot_speed, 360.f);
 	} else if (variables::antiaim::peek_aa) {
 		// Toggle peek aa direction. We need to make a "manual IsPressed()" because we are checking the key in create_move
 		static bool was_pressed = false;
-		if (input::global_input.IsHeld(variables::antiaim::peek_aa_toggle_key) && !was_pressed) {
-			peek_right = !peek_right;
+		if (input::global_input.IsHeld(variables::antiaim::peek_aa_toggle_key)) {
+			if (!was_pressed) peek_right = !peek_right;
 			was_pressed = true;
-		} else
+		} else {
 			was_pressed = false;
+		}
 
 		// Change yaw to peek dir
 		yaw = peek_right ? right_peek_yaw : left_peek_yaw;
@@ -60,17 +61,9 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 
 	// Yaw
 	if (!send_packet) yaw += 58.f;				// Add desync
-  	cmd->viewangles.y -= yaw;				// Real
+	cmd->viewangles.y -= yaw;					// Real
 	
-	if (cmd->viewangles.y > 180.0f)
-		cmd->viewangles.y = 180.0f;
-	else if (cmd->viewangles.y < -180.0f)
-		cmd->viewangles.y = -180.0f;
-
-	if (cmd->viewangles.x > 89.0f)
-		cmd->viewangles.x = 89.0f;
-	else if (cmd->viewangles.x < -89.0f)
-		cmd->viewangles.x = -89.0f;
+	cmd->viewangles.clamp();
 
 	/*
 	 * Micromovement
