@@ -65,6 +65,7 @@ Make sure you update your remotes with `git remote set-url origin https://github
 - Aimbot smoothness (Only on snappy aimbot)
 - Aimbot and triggerbot hitboxes
 - Only if scoped
+- Autorevolver
 - Aimpunch only on rifles (Looks more legit)
 
 ### Antiaim
@@ -342,6 +343,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Skinchanger fixes
     - [X] Fix talon knife inspect animation
     - [X] Get localplayer steam id to fix weapon stattrack
+- [X] Add auto revolver
 #
 </details>
 
@@ -366,7 +368,6 @@ This method is not recommended as the cheat can be a bit outdated and you might 
     - [X] Add bullet tracers
         - [ ] Fix `bullet_impact` event not working in online matches (without using event listener)
     - [ ] Add [decoy timer](https://www.unknowncheats.me/forum/counterstrike-global-offensive/498498-decoys-spawn-time.html)
-- [ ] Add auto revolver hold
 - [ ] Add player list <!-- Big flowhooks fan, sorry -->
 	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
