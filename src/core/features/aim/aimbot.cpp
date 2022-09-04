@@ -2,6 +2,38 @@
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
+// Autorevolver for createmove
+void aim::AutoRevolver(c_usercmd* pCmd, player_t* pLocal)
+{
+	if (!variables::aim::aimbot_autorevolver) return;
+	weapon_t* pWeapon = pLocal->active_weapon();
+	if (pWeapon == nullptr)
+		return;
+
+	short nDefinitionIndex = pWeapon->item_definition_index();
+	weapon_info_t* pWeaponData = interfaces::weapon_system->get_weapon_data(nDefinitionIndex);
+
+	// check if the weapon is a gun
+	if (pWeaponData == nullptr)
+		return;
+	// auto revolvo function
+	if (pWeapon->item_definition_index() == WEAPON_REVOLVER) {
+
+		constexpr auto timeToTicks = [](float time) {  return static_cast<int>(0.5f + time / interfaces::globals->interval_per_tick); };
+		constexpr float revolverPrepareTime{ 0.234375f };
+
+		static float readyTime;
+
+
+		if (!readyTime) readyTime = interfaces::globals->cur_time + revolverPrepareTime;
+		auto ticksToReady = timeToTicks(readyTime - interfaces::globals->cur_time - interfaces::engine->get_net_channel_info()->get_latency(0)); //get latency so it doesnt shoot randomly
+		if (ticksToReady > 0 && ticksToReady <= timeToTicks(revolverPrepareTime))
+			pCmd->buttons |= in_attack;
+		else
+			readyTime = 0.0f;
+	}
+}
+
 // Checks if we can fire, used in other places
 bool aim::can_fire(player_t* target) {
 	weapon_t* active_weapon = target->active_weapon();
