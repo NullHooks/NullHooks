@@ -510,7 +510,7 @@ public:
 	NETVAR("DT_BaseCombatWeapon", "m_hWeaponWorldModel", weapon_worldmodel, int)
 	#pragma endregion
 
-	NETVAR("DT_WeaponCSBase", "m_flPostponeFireReadyTime", postponeFireReadyTime, float)
+	NETVAR("DT_WeaponCSBase", "m_flPostponeFireReadyTime", postpone_fire_ready_time, float)
 	NETVAR("DT_WeaponCSBase", "m_flRecoilIndex", recoil_index, float)
 	NETVAR("DT_WeaponCSBase", "m_fLastShotTime", last_shot_time, float)
 	NETVAR("DT_BaseCSGrenade", "m_bPinPulled", pin_pulled, bool)

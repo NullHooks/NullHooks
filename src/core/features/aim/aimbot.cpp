@@ -287,7 +287,7 @@ void aim::draw_fov() {
 
 // Used in createmove after aa
 void aim::auto_revolver(c_usercmd* cmd) {
-	if (!variables::aim::aimbot_autorevolver) return;
+	if (!variables::aim::autorevolver) return;
 	
 	weapon_t* weapon = csgo::local_player->active_weapon();
 	if (!weapon) return;
