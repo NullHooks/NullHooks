@@ -46,7 +46,6 @@ namespace variables {
 
 	namespace antiaim {
 		inline bool antiaim = false;
-		inline bool at_target = false;
 		inline float yaw = 0.f;
 		inline float pitch = 0.f;
 		inline bool spinbot = false;
