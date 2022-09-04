@@ -58,7 +58,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 		aim::run_aimbot(cmd);
 
 		antiaim::run_antiaim(cmd, send_packet);
-		aim::AutoRevolver(cmd, csgo::local_player);  // run autorevolver after antiaim to avoid flickering
+		aim::auto_revolver(cmd);  // run autorevolver after antiaim to avoid flickering
 
 		backtrack::run(cmd);
 	} prediction::end();
