@@ -284,3 +284,32 @@ void aim::draw_fov() {
 	
 	render::draw_circle(sw/2, sh/2, rad, 255, variables::colors::aimbot_fov_c);
 }
+
+// Used in createmove after aa
+void aim::auto_revolver(c_usercmd* cmd) {
+	if (!variables::aim::autorevolver) return;
+	
+	weapon_t* weapon = csgo::local_player->active_weapon();
+	if (!weapon) return;
+
+	short idx = weapon->item_definition_index();
+	weapon_info_t* weapon_data = interfaces::weapon_system->get_weapon_data(idx);
+	if (!weapon_data) return;
+
+	// Auto revolver
+	if (idx == WEAPON_REVOLVER) {
+		constexpr float revolver_prep_time{ 0.234375f };
+
+		static float ready_time;
+
+		if (!ready_time) ready_time = interfaces::globals->cur_time + revolver_prep_time;
+
+		// Get latency so it doesnt shoot randomly
+		auto ticks_to_ready = TIME_TO_TICKS(ready_time - interfaces::globals->cur_time - interfaces::engine->get_net_channel_info()->get_latency(0));
+
+		if (ticks_to_ready > 0 && ticks_to_ready <= TIME_TO_TICKS(revolver_prep_time))
+			cmd->buttons |= in_attack;
+		else
+			ready_time = 0.0f;
+	}
+}

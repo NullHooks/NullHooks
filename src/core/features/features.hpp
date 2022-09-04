@@ -18,6 +18,7 @@ namespace aim {
 	void triggerbot(c_usercmd* cmd);
 	void run_aimbot(c_usercmd* cmd);
 
+	void auto_revolver(c_usercmd* cmd);
 	bool can_fire(player_t* target);
 	bool aimbot_weapon_check(bool check_scope);
 	void draw_fov();
