@@ -39,7 +39,7 @@ bool config::save_config(std::string filename) {
 		save::parse_hotkey(aim,					allocator,			variables::aim::triggerbot_key,							"triggerbot_key");
 		save::parse_float(aim,					allocator,			variables::aim::triggerbot_delay,						"triggerbot_delay");
 		save::parse_bool(aim,					allocator,			variables::aim::aimbot,									"aimbot");
-		save::parse_bool(aim,					allocator,			variables::aim::aimbot_autorevolver,					"aimbot_autorevolver");
+		save::parse_bool(aim,					allocator,			variables::aim::autorevolver,							"aimbot_autorevolver");
 		save::parse_bool(aim,					allocator,			variables::aim::silent,									"silent");
 		save::parse_bool(aim,					allocator,			variables::aim::autofire,								"autofire");
 		save::parse_hotkey(aim,					allocator,			variables::aim::aimbot_key,								"aimbot_key");

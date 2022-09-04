@@ -44,7 +44,7 @@ bool config::load_config(std::string filename) {
 	load::parse_hotkey(doc,			variables::aim::triggerbot_key,							"aim",				"triggerbot_key");
 	load::parse_float(doc,			variables::aim::triggerbot_delay,						"aim",				"triggerbot_delay");
 	load::parse_bool(doc,			variables::aim::aimbot,									"aim",				"aimbot");
-	load::parse_bool(doc,			variables::aim::aimbot_autorevolver,					"aim",				"aimbot_autorevolver");
+	load::parse_bool(doc,			variables::aim::autorevolver,							"aim",				"aimbot_autorevolver");
 	load::parse_bool(doc,			variables::aim::silent,									"aim",				"silent");
 	load::parse_bool(doc,			variables::aim::autofire,								"aim",				"autofire");
 	load::parse_hotkey(doc,			variables::aim::aimbot_key,								"aim",				"aimbot_key");
