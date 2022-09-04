@@ -16,7 +16,11 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)                             // We are shooting
 		|| (active_weapon->is_knife() && (cmd->buttons & in_attack || cmd->buttons & in_attack2))   // We are stabbing
 		|| (active_weapon->is_bomb() && cmd->buttons & in_attack)                                   // Planting bomb
-		|| cmd->buttons & in_use) return;                                                           // Interacting with door, weapon, bomb, etc.
+		|| cmd->buttons & in_use) return;   // Interacting with door, weapon, bomb, etc.
+
+	float flPostponeFireReady = active_weapon->postponeFireReadyTime();
+	if (active_weapon->item_definition_index() == WEAPON_REVOLVER && flPostponeFireReady > 0 && flPostponeFireReady < interfaces::globals->cur_time && cmd->buttons & (in_attack | in_attack2))
+		return;
 
 	// Don't aa when throwing a nade. Not only don't aa but don't even flick. Say thank you to ma man @hBuffer
 	// @todo: Good nade prediction :(
