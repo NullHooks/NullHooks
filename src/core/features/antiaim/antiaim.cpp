@@ -57,8 +57,8 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	}
 
 	// Yaw
-	if (!send_packet) yaw += 58.f;				// Add desync
-	cmd->viewangles.y -= yaw;					// Real
+	if (!send_packet) yaw += 58.f;		// Add desync
+	cmd->viewangles.y -= yaw;			// Real
 	
 	cmd->viewangles.clamp();
 
@@ -68,9 +68,11 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	 *   to your real LBY and its not rotating towards your fake one.
 	 */
 	if (fabsf(cmd->sidemove) < 5.0f) {
-		if (cmd->buttons & in_duck)     // If we are ducking make the movement bigger
+		// If we are ducking make the movement bigger
+		if (cmd->buttons & in_duck)
 			cmd->sidemove = cmd->tick_count & 1 ? 3.25f : -3.25f;
-		else                            // Else just make it normal
+		// Else just make it normal
+		else
 			cmd->sidemove = cmd->tick_count & 1 ? 1.1f : -1.1f;
 	}
 
