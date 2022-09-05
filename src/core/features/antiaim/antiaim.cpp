@@ -12,8 +12,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	if (move_type == movetype_ladder || move_type == movetype_noclip || move_type == movetype_observer) return;     // Ladder or noclip
 
 	// Don't aa if we are doing any of this
-	// @todo: add revolver & attack2 check
-	// @todo: prepare the revolver without flicking
+	// @todo: add attack2 check for the revolver
 	weapon_t* active_weapon = csgo::local_player->active_weapon();
 	if (!active_weapon) return;
 	if ((aim::can_fire(csgo::local_player) && cmd->buttons & in_attack)								// We are shooting
@@ -42,7 +41,7 @@ void antiaim::run_antiaim(c_usercmd* cmd, bool& send_packet) {
 	static float yaw = 0.f;
 
 	if (variables::antiaim::spinbot) {
-		yaw = fmodf(interfaces::globals->cur_time * variables::antiaim::spinbot_speed, 360.f);
+		yaw += variables::antiaim::spinbot_speed / 2;       // Half speed for more control
 	} else if (variables::antiaim::peek_aa) {
 		// Toggle peek aa direction. We need to make a "manual IsPressed()" because we are checking the key in create_move
 		static bool was_pressed = false;
