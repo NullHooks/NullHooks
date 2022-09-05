@@ -1,6 +1,4 @@
 #include "dependencies/utilities/csgo.hpp"
-#include "dependencies/interfaces/interfaces.hpp"
-#include <math.h>
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
