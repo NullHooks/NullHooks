@@ -1,4 +1,4 @@
-#include "dependencies/utilities/csgo.hpp"
+﻿#include "dependencies/utilities/csgo.hpp"
 #include "core/features/features.hpp"
 #include "core/menu/variables.hpp"
 
@@ -20,7 +20,7 @@ struct smoke_t : public entity_t {
 
 void visuals::entity_esp() {
 	if (!(variables::entity_visuals::nade_esp
-		|| variables::entity_visuals::entitytext
+		|| variables::entity_visuals::entity_esp.idx == 0
 		|| variables::entity_visuals::bombtimer
 		|| variables::misc_visuals::chickenpride)) return;
 	if (!interfaces::engine->is_connected() && !interfaces::engine->is_in_game()) return;
@@ -153,7 +153,7 @@ void visuals::entity_esp() {
 
 			#pragma region MISC
 			case cchicken:
-				if (!(math::world_to_screen(origin, w2s) && variables::misc_visuals::chickenpride && variables::entity_visuals::entitytext)) break;
+				if (!(math::world_to_screen(origin, w2s) && variables::misc_visuals::chickenpride && variables::entity_visuals::entity_esp.idx != 0)) break;
 				render::draw_text_string(w2s.x, w2s.y, render::fonts::watermark_font, "chicken", true, color(255, 0, 255));
 				break;
 			#pragma endregion
@@ -167,7 +167,7 @@ void visuals::entity_esp() {
 void draw_bomb_text(entity_t* bomb_ent, float time);
 
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
-	if (!(variables::entity_visuals::entitytext || variables::entity_visuals::bombtimer) || !bomb_ent) return;
+	if (variables::entity_visuals::entity_esp.idx == 0 || !variables::entity_visuals::bombtimer || !bomb_ent) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p) return;
@@ -191,7 +191,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 		}
 
 		// Planted bomb esp
-		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entitytext)
+		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entity_esp.idx != 0)
 			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
 	}
 	#pragma endregion
@@ -236,7 +236,7 @@ void draw_bomb_text(entity_t* bomb_ent, float time) {
 
 #pragma region DROPPED ENTITY INFO FUNCTIONS
 void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
-	if (!variables::entity_visuals::entitytext || !bomb_ent) return;
+	if (variables::entity_visuals::entity_esp.idx == 0 || !bomb_ent) return;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p || bomb_p->dormant() || bomb_p->owner_handle() > -1) return;
@@ -251,7 +251,10 @@ void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 }
 
 void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y_ofset) {
-	if (!variables::entity_visuals::entitytext || !entity) return;
+	if (variables::entity_visuals::entity_esp.idx == 0 || !entity) return;
+
+	const unsigned long font = (variables::entity_visuals::entity_esp.idx == 1) ? render::fonts::watermark_font : render::fonts::weapon_icon_font;
+	std::string final_text = (variables::entity_visuals::entity_esp.idx == 1) ? text : "\uE009";		// Does not work
 
 	player_t* entity_p = reinterpret_cast<player_t*>(entity);
 	if (!entity_p || entity_p->dormant() || entity_p->owner_handle() > -1) return;
@@ -262,6 +265,6 @@ void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y
 	vec3_t abs_origin = entity_p->abs_origin();
 	vec3_t entPosScreen;
 	if (math::world_to_screen(abs_origin, entPosScreen))
-		render::draw_text_string(entPosScreen.x, entPosScreen.y + y_ofset, render::fonts::watermark_font, text, true, color::white(255));
+		render::draw_text_string(entPosScreen.x, entPosScreen.y + y_ofset, font, final_text, true, color::white());
 }
 #pragma endregion

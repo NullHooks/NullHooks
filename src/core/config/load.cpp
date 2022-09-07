@@ -78,7 +78,7 @@ bool config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::player_visuals::healthesp,					"player_visuals",	"healthesp");
 	// Entity visuals
 	load::parse_bool(doc,			variables::entity_visuals::entityglow,					"entity_visuals",	"entityglow");
-	load::parse_bool(doc,			variables::entity_visuals::entitytext,					"entity_visuals",	"entitytext");
+	load::parse_combobox(doc,		variables::entity_visuals::entity_esp,					"entity_visuals",	"entity_esp");
 	load::parse_bool(doc,			variables::entity_visuals::bombtimer,					"entity_visuals",	"bombtimer");
 	load::parse_bool(doc,			variables::entity_visuals::nade_esp,					"entity_visuals",	"nade_esp");
 	// Chams

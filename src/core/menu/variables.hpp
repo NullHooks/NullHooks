@@ -77,8 +77,14 @@ namespace variables {
 	}
 
 	namespace entity_visuals {
+		inline std::vector<std::string> entity_esp_settings = {
+			"None",
+			"Text",
+			"Icon"
+		};
+		inline combobox_toggle_t entity_esp(0);
+
 		inline bool entityglow = false;
-		inline bool entitytext = false;
 		inline bool bombtimer = true;
 		inline bool nade_esp = false;
 	}

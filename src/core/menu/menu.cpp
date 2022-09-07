@@ -128,7 +128,7 @@ void menu::render() {
 			gui::add_groupbox("Other ESP", 3); {
 				gui::add_checkbox("Bomb timer",				variables::entity_visuals::bombtimer);
 				gui::add_checkbox("Nade projectile ESP",	variables::entity_visuals::nade_esp);
-				gui::add_checkbox("Entity info",			variables::entity_visuals::entitytext);
+				gui::add_combobox("Entity info",			variables::entity_visuals::entity_esp_settings, variables::entity_visuals::entity_esp);
 			}
 
 			gui::add_groupbox("Misc", 9); {

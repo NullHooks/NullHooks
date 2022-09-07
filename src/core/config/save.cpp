@@ -79,7 +79,7 @@ bool config::save_config(std::string filename) {
 	
 	rapidjson::Value entity_visuals(rapidjson::kObjectType); {		// Entity visuals
 		save::parse_bool(entity_visuals,		allocator,			variables::entity_visuals::entityglow,					"entityglow");
-		save::parse_bool(entity_visuals,		allocator,			variables::entity_visuals::entitytext,					"entitytext");
+		save::parse_combobox(entity_visuals,	allocator,			variables::entity_visuals::entity_esp,					"entity_esp");
 		save::parse_bool(entity_visuals,		allocator,			variables::entity_visuals::bombtimer,					"bombtimer");
 		save::parse_bool(entity_visuals,		allocator,			variables::entity_visuals::nade_esp,					"nade_esp");
 	} doc.AddMember("entity_visuals", entity_visuals, allocator);
