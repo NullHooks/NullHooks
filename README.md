@@ -17,18 +17,6 @@
 # Table of contents
 1. [Description](#description)
 2. [Features](#features)
-    - [Aim](#aim)
-    - [Antiaim](#antiaim)
-    - [Visuals](#visuals)
-        - [Player ESP](#player-esp)
-        - [Glow](#glow)
-        - [Chams](#chams)
-        - [Skinchanger](#skinchanger)
-        - [Model changer](#model-changer)
-        - [Misc](#misc)
-    - [Movement](#movement)
-    - [Misc](#misc-1)
-    - [Config system](#config-system)
 3. [Installing](#installing)
 4. [Todo](#todo)
 5. [Screenshots](#screenshots)
@@ -45,7 +33,9 @@ Make sure you update your remotes with `git remote set-url origin https://github
 *NOTE: If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are.*
 
 ## Features
-### Aim
+<details>
+    <summary><b>Aim</b></summary>
+
 - Triggerbot
     - With custom delay
 - Aimbot
@@ -67,12 +57,18 @@ Make sure you update your remotes with `git remote set-url origin https://github
 - Only if scoped
 - Autorevolver
 - Aimpunch only on rifles (Looks more legit)
+</details>
+<!-------------------------------------------------------------------------------------------->
+<details>
+    <summary><b>Antiaim</b></summary>
 
-### Antiaim
 - Antiaim with custom pitch and jaw
 - Spinbot with custom speed
+</details>
+<!-------------------------------------------------------------------------------------------->
+<details>
+    <summary><b>Visuals</b></summary>
 
-### Visuals
 #### Player ESP
 - Enable/disable team ESP
 - Box ESP
@@ -194,6 +190,7 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 #### Misc
 - C4 timer and bar
 - Dropped weapons and grenades name
+- Dropped weapons and grenades icon
 - Nade projectile ESP
 - Nade projectile duration
 - Grenade prediction
@@ -207,8 +204,11 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - Fov changer
 - Thirdperson
 - Motion blur
+</details>
+<!-------------------------------------------------------------------------------------------->
+<details>
+    <summary><b>Movement</b></summary>
 
-### Movement
 - Infinite duck (:warning: Untrusted)
 - BunnyHop
 - Autostrafe
@@ -220,8 +220,11 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - Jumpbug (On key)
 - Slow walk (On key)
 - Speed graph (*With color, height and position options*)
+</details>
+<!-------------------------------------------------------------------------------------------->
+<details>
+    <summary><b>Misc</b></summary>
 
-### Misc
 - Backtrack
 - Rank revealer
 - Spectator list
@@ -230,8 +233,11 @@ You can add viewmodels to weapons that you are not currently using like the bayo
 - Hotkey system
     - <kbd>Delete</kbd> sets the hotkey to `None`, meaning that the hotkey will apear always as held
     - <kbd>Esc</kbd> will cancel the current hotkey selection, restoring it to its original state
+</details>
+<!-------------------------------------------------------------------------------------------->
+<details>
+    <summary><b>Config system</b></summary>
 
-### Config system
 Config system for skins and settings (independent for now). The skin configs should be placed under the NullHooks folder which is created in your documents folder, and your setting configs should be placed under the config directory. Example:
 ```
 DOCUMENTS
@@ -243,6 +249,7 @@ DOCUMENTS
 ```
 
 For more information and examples check [`config-examples`](https://github.com/r4v10l1/NullHooks/tree/main/config-examples).
+</details>
 
 ## Installing
 ### Compiling from source (Recommended)
@@ -380,9 +387,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 *Some screenshots might be a bit outdated...*  
 
 <!-- Ignore the low fps in some of the screenshots, I had to tab out of the game to make them -->
-![Screenshot 17](screenshots/screenshot17.png)
-![Screenshot 19](screenshots/screenshot19.jpg)
-![Screenshot 18](screenshots/screenshot18.jpg)
-![Screenshot 13](screenshots/screenshot13.png)
-![Screenshot 12](screenshots/screenshot12.png)
+![screenshot-1](https://user-images.githubusercontent.com/29655971/188993525-7b65e1ea-ccd3-4a62-bbf9-485a4489cdfb.png)
+![screenshot-2](https://user-images.githubusercontent.com/29655971/188993566-c4e8d03d-af7b-4501-baf9-62b267d2c139.png)
+![screenshot-3](https://user-images.githubusercontent.com/29655971/188993604-ba454f46-3a91-438d-a50c-b6d5feb2fe9b.png)
+![screenshot-4](https://user-images.githubusercontent.com/29655971/188993616-f905649d-6c8c-4f77-b412-5cc1f942060f.png)
+![screenshot-5](https://user-images.githubusercontent.com/29655971/188993633-e2c0c609-b649-49c8-95f5-469e1ac27785.png)
 
