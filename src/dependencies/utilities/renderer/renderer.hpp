@@ -13,6 +13,7 @@ enum font_flags {
 	fontflag_dropshadow = 0x080,
 	fontflag_additive = 0x100,
 	fontflag_outline = 0x200,
+	// 0x210 ?
 	fontflag_custom = 0x400,
 	fontflag_bitmap = 0x800,
 };

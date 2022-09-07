@@ -14,7 +14,7 @@ void render::initialize() {
 	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Lucida Console", 12, 500, 0, 0, 0);
 
 	// Other
-	interfaces::surface->set_font_glyph(render::fonts::weapon_icon_font, "Counter-Strike", 30, 300, 0, 0, 0x210);
+	interfaces::surface->set_font_glyph(render::fonts::weapon_icon_font, "Counter-Strike", 28, 300, 0, 0, 0x210);
 	interfaces::surface->set_font_glyph(render::fonts::playername_font, "Dina", 12, 500, 0, 0, 0);						// A personal favourite https://www.dcmembers.com/jibsen/download/61/
 }
 

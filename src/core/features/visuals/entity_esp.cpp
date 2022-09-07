@@ -163,11 +163,16 @@ void visuals::entity_esp() {
 	}
 }
 
+
 #pragma region PLANTED BOMB FUNCTIONS
+std::string idx2icon(int item_definition_idx);
 void draw_bomb_text(entity_t* bomb_ent, float time);
 
 void visuals::entity_info::bomb(entity_t* bomb_ent) {
 	if (variables::entity_visuals::entity_esp.idx == 0 || !variables::entity_visuals::bombtimer || !bomb_ent) return;
+
+	const std::string final_text = (variables::entity_visuals::entity_esp.idx == 1) ? "Bomb" : "\\";
+	const unsigned long font = (variables::entity_visuals::entity_esp.idx == 1) ? render::fonts::watermark_font : render::fonts::weapon_icon_font;
 
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p) return;
@@ -192,7 +197,7 @@ void visuals::entity_info::bomb(entity_t* bomb_ent) {
 
 		// Planted bomb esp
 		if (math::world_to_screen(bomb_p->origin(), entPosScreen) && variables::entity_visuals::entity_esp.idx != 0)
-			render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Bomb", true, color(255, 140, 0, 255));
+			render::draw_text_string(entPosScreen.x, entPosScreen.y, font, final_text, true, color(255, 140, 0, 255));
 	}
 	#pragma endregion
 }
@@ -238,6 +243,9 @@ void draw_bomb_text(entity_t* bomb_ent, float time) {
 void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 	if (variables::entity_visuals::entity_esp.idx == 0 || !bomb_ent) return;
 
+	const std::string final_text = (variables::entity_visuals::entity_esp.idx == 1) ? "Dropped bomb" : "\\";
+	const unsigned long font = (variables::entity_visuals::entity_esp.idx == 1) ? render::fonts::watermark_font : render::fonts::weapon_icon_font;
+
 	player_t* bomb_p = reinterpret_cast<player_t*>(bomb_ent);
 	if (!bomb_p || bomb_p->dormant() || bomb_p->owner_handle() > -1) return;
 
@@ -247,14 +255,15 @@ void visuals::entity_info::dropped_bomb(entity_t* bomb_ent) {
 	vec3_t abs_origin = bomb_p->abs_origin();
 	vec3_t entPosScreen;
 	if (math::world_to_screen(abs_origin, entPosScreen))
-		render::draw_text_string(entPosScreen.x, entPosScreen.y, render::fonts::watermark_font, "Dropped bomb", true, color(255, 140, 0, 255));
+		render::draw_text_string(entPosScreen.x, entPosScreen.y, font, final_text, true, color(255, 140, 0, 255));
 }
 
 void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y_ofset) {
 	if (variables::entity_visuals::entity_esp.idx == 0 || !entity) return;
 
-	const unsigned long font = (variables::entity_visuals::entity_esp.idx == 1) ? render::fonts::watermark_font : render::fonts::weapon_icon_font;
-	std::string final_text = (variables::entity_visuals::entity_esp.idx == 1) ? text : "\uE009";		// Does not work
+	// First get the text, if its "?" (invalid) use the default font
+	const std::string final_text = (variables::entity_visuals::entity_esp.idx == 1) ? text : idx2icon(reinterpret_cast<weapon_t*>(entity)->item_definition_index());
+	const unsigned long font = (variables::entity_visuals::entity_esp.idx == 1 || final_text == "?") ? render::fonts::watermark_font : render::fonts::weapon_icon_font;
 
 	player_t* entity_p = reinterpret_cast<player_t*>(entity);
 	if (!entity_p || entity_p->dormant() || entity_p->owner_handle() > -1) return;
@@ -266,5 +275,64 @@ void visuals::entity_info::weapon_name(entity_t* entity, const char* text, int y
 	vec3_t entPosScreen;
 	if (math::world_to_screen(abs_origin, entPosScreen))
 		render::draw_text_string(entPosScreen.x, entPosScreen.y + y_ofset, font, final_text, true, color::white());
+}
+
+std::string idx2icon(int item_definition_idx) {
+	switch (item_definition_idx) {
+		case WEAPON_DEAGLE:               return "F";
+		case WEAPON_ELITE:                return "S";
+		case WEAPON_FIVESEVEN:            return "U";
+		case WEAPON_GLOCK:                return "C";
+		case WEAPON_AK47:                 return "B";
+		case WEAPON_AUG:                  return "E";
+		case WEAPON_AWP:                  return "R";
+		case WEAPON_FAMAS:                return "T";
+		case WEAPON_G3SG1:                return "I";
+		case WEAPON_GALILAR:              return "V";
+		case WEAPON_M249:                 return "Z";
+		case WEAPON_M4A1:                 return "W";
+		case WEAPON_MAC10:                return "L";
+		case WEAPON_P90:                  return "M";
+		case WEAPON_UMP45:                return "Q";
+		case WEAPON_XM1014:               return "]";
+		case WEAPON_BIZON:                return "D";
+		case WEAPON_MAG7:                 return "K";
+		case WEAPON_NEGEV:                return "Z";
+		case WEAPON_SAWEDOFF:             return "K";
+		case WEAPON_TEC9:                 return "C";
+		case WEAPON_TASER:                return "Y";
+		case WEAPON_HKP2000:              return "Y";
+		case WEAPON_MP7:                  return "X";
+		case WEAPON_MP9:                  return "D";
+		case WEAPON_NOVA:                 return "K";
+		case WEAPON_P250:                 return "Y";
+		case WEAPON_SCAR20:               return "I";
+		case WEAPON_SG556:                return "[";
+		case WEAPON_SSG08:                return "N";
+		case WEAPON_KNIFE:                return "J";
+		case WEAPON_FLASHBANG:            return "G";
+		case WEAPON_HEGRENADE:            return "H";
+		case WEAPON_SMOKEGRENADE:         return "P";
+		case WEAPON_MOLOTOV:              return "H";
+		case WEAPON_DECOY:                return "G";
+		case WEAPON_FIREBOMB:             return "H";
+		case WEAPON_C4:                   return "\\";
+		case WEAPON_KNIFE_T:              return "J";
+		case WEAPON_M4A1_SILENCER:        return "W";
+		case WEAPON_USP_SILENCER:         return "Y";
+		case WEAPON_CZ75A:                return "Y";
+		case WEAPON_REVOLVER:             return "F";
+		case WEAPON_BAYONET:              return "J";
+		case WEAPON_KNIFE_FLIP:           return "J";
+		case WEAPON_KNIFE_GUT:            return "J";
+		case WEAPON_KNIFE_KARAMBIT:       return "J";
+		case WEAPON_KNIFE_M9_BAYONET:     return "J";
+		case WEAPON_KNIFE_SURVIVAL:       return "J";
+		case WEAPON_KNIFE_FALCHION:       return "J";
+		case WEAPON_KNIFE_SURVIVAL_BOWIE: return "J";
+		case WEAPON_KNIFE_BUTTERFLY:      return "J";
+		case WEAPON_KNIFE_PUSH:           return "J";
+		default:                          return "?";
+	}
 }
 #pragma endregion
