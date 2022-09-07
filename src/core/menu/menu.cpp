@@ -45,7 +45,7 @@ void menu::render() {
 			gui::init_tab();
 
 			gui::add_groupbox("General", 3); {
-				gui::add_checkbox	("Also target teammates",				variables::aim::target_friends);
+				gui::add_checkbox	("Also target friendly",				variables::aim::target_friends);
 				gui::add_checkbox	("Enable noscope aimbot on snipers",	variables::aim::aimbot_noscope);
 				gui::add_checkbox	("Enable non-rifle aim punch",			variables::aim::non_rifle_aimpunch);
 			}
@@ -150,7 +150,7 @@ void menu::render() {
 			gui::add_groupbox("Network", 4); {
 				gui::add_checkbox	("Backtrack",			variables::misc::backtrack);
 				gui::add_slider		("Backtrack ms",		variables::misc::backtrack_ticks, 0.f, 400.f);
-				gui::add_checkbox	("Also teammates",		variables::misc::backtrack_team, variables::colors::bt_chams_friend_fade, variables::colors::bt_chams_friend);
+				gui::add_checkbox	("Also friendly",		variables::misc::backtrack_team, variables::colors::bt_chams_friend_fade, variables::colors::bt_chams_friend);
 				gui::add_checkbox	("Backtrack chams",		variables::chams::backtrack_chams, variables::colors::bt_chams_enemy_fade, variables::colors::bt_chams_enemy);
 			}
 

@@ -133,7 +133,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 			|| entity == csgo::local_player
 			|| entity->dormant()
 			|| !entity->is_alive()
-			|| (entity->team() == csgo::local_player->team() && !variables::misc::backtrack_team)) continue;
+			|| (!helpers::is_enemy(entity) && !variables::misc::backtrack_team)) continue;
 		
 		// Get entity's eye pos and convert to angle
 		auto eyes = entity->get_hitbox_position(hitbox_head) - csgo::local_player->get_eye_pos();
@@ -201,7 +201,7 @@ void backtrack::frame_stage_notify() {
 	if (!(variables::misc::backtrack && csgo::local_player && csgo::local_player->is_alive())) return;
 	for (uint32_t i = 1; i <= interfaces::globals->max_clients; i++) {
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-		if (!player || player->team() == csgo::local_player->team() || player == csgo::local_player || player->dormant())
+		if (!player || (!helpers::is_enemy(player) && !variables::misc::backtrack_team) || player == csgo::local_player || player->dormant())
 			continue;
 		set_interpolation_flags(player, 0);
 	}
