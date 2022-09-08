@@ -108,6 +108,7 @@ bool config::load_config(std::string filename) {
 	load::parse_bool(doc,			variables::misc_visuals::chickenpride,					"misc_visuals",		"chickenpride");
 	load::parse_float(doc,			variables::misc_visuals::custom_fov_slider,				"misc_visuals",		"custom_fov_slider");
 	load::parse_float(doc,			variables::misc_visuals::custom_vmfov_slider,			"misc_visuals",		"custom_vmfov_slider");
+	load::parse_float(doc,			variables::misc_visuals::custom_ar_slider,				"misc_visuals",		"custom_ar_slider");
 	load::parse_bool(doc,			variables::misc_visuals::worldcolor,					"misc_visuals",		"worldcolor");
 	// Misc
 	load::parse_bool(doc,			variables::misc::infinite_duck,							"misc",				"infinite_duck");
@@ -132,6 +133,7 @@ bool config::load_config(std::string filename) {
 	load::parse_multicombo(doc,		variables::misc::watermark,								"misc",				"watermark");
 	load::parse_bool(doc,			variables::misc::clean_screenshots,						"misc",				"clean_screenshots");
 	load::parse_bool(doc,			variables::misc::reveal_ranks,							"misc",				"reveal_ranks");
+	load::parse_bool(doc,			variables::misc::developer_csgo,						"misc",		"developer_csgo");
 	// Ui
 	load::parse_bool(doc,			variables::ui::spectators::spectator_list,				"ui",				"spectator_list");
 	// Colors

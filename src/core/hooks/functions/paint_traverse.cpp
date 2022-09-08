@@ -20,6 +20,8 @@ void __stdcall hooks::paint_traverse::hook(unsigned int panel, bool force_repain
 		#pragma region MISC
 		aim::draw_fov();
 		visuals::nade_predict();
+		visuals::dev_mode();
+		visuals::aspect_ratio();
 		visuals::crosshair::custom_crosshair();
 		visuals::crosshair::recoil_crosshair();
 		#pragma endregion

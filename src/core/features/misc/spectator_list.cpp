@@ -2,12 +2,13 @@
 #include "core/features/features.hpp"
 #include "core/menu/menu.hpp"
 
-void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, std::int32_t wname_h, std::int32_t wname_margin, color bg, color header_text, color header_line, const std::string& name) {
+void draw_spec_frame(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, std::int32_t wname_h, std::int32_t wname_margin, color bg, color header_text, const std::string& name) {
 	// Background
+	render::draw_filled_rect(x - 2, y - 2, w + 4, h + 4, color(45, 45, 45, 255));
 	render::draw_filled_rect(x, y, w, h, bg);
 	// Header title
 	render::draw_filled_rect(x, y, w, wname_h, header_text);
-	render::draw_filled_rect(x, y + wname_h, w, 2, header_line);
+	render::draw_filled_rect(x, y, w, 2, color(107, 117, 255, 255));
 	render::draw_text_string(x + 10, y + wname_margin, render::fonts::watermark_font, name, false, color::white(255));
 };
 
@@ -18,7 +19,7 @@ void misc::spectator_list() {
 		// Draw only frame in main menu for example
 		variables::ui::spectators::h = 5 + 5 + 25;
 		draw_spec_frame(variables::ui::spectators::x, variables::ui::spectators::y, variables::ui::spectators::w, variables::ui::spectators::h, 25, 5,
-			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
+			color(36, 36, 36, 255), color(25, 25, 25, 255), "Spectators");
 		return;
 	}
 
@@ -75,7 +76,7 @@ void misc::spectator_list() {
 		variables::ui::spectators::h = 5 + (15 * spec_count) + 5 + wname_h;
 
 		draw_spec_frame(variables::ui::spectators::x, variables::ui::spectators::y, cur_name_w, variables::ui::spectators::h, wname_h, 5,
-			color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "Spectators");
+			color(36, 36, 36, 255), color(25, 25, 25, 255), "Spectators");
 
 		// Print each username
 		std::wstring username;

@@ -13,3 +13,23 @@ void visuals::nade_predict() noexcept {
     nadeVar->callbacks.size = 0;
     nadeVar->set_value((variables::misc_visuals::nade_predict && !variables::antiaim::antiaim) ? 1 : 0);
 }
+
+// variables::misc::developer_csgo
+
+void visuals::dev_mode() noexcept {
+
+    static auto developerVar{ interfaces::console->get_convar("developer") };
+
+    developerVar->callbacks.size = 0;
+    developerVar->set_value(variables::misc::developer_csgo ? 1 : 0);
+}
+
+// variables::misc_visuals::custom_ar_slider
+
+void visuals::aspect_ratio() noexcept {
+
+    static auto developerVar{ interfaces::console->get_convar("r_aspectratio") };
+
+    developerVar->callbacks.size = 0;
+    developerVar->set_value(variables::misc_visuals::custom_ar_slider);
+}

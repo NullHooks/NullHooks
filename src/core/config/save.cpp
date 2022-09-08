@@ -112,7 +112,8 @@ bool config::save_config(std::string filename) {
 		save::parse_multicombo(misc_visuals,	allocator,			variables::misc_visuals::bulletracer_team_target,		"bulletracer_team_target");
 		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::chickenpride,					"chickenpride");
 		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_fov_slider,				"custom_fov_slider");
-		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_vmfov_slider,			"custom_vmfov_slider");
+		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_vmfov_slider,			"custom_vmfov_slider"); 
+		save::parse_float(misc_visuals,			allocator,			variables::misc_visuals::custom_ar_slider,				"custom_ar_slider");//variables::misc_visuals::custom_ar_slider
 		save::parse_bool(misc_visuals,			allocator,			variables::misc_visuals::worldcolor,					"worldcolor");
 	} doc.AddMember("misc_visuals", misc_visuals, allocator);
 	
@@ -139,6 +140,7 @@ bool config::save_config(std::string filename) {
 		save::parse_multicombo(misc,			allocator,			variables::misc::watermark,								"watermark");
 		save::parse_bool(misc,					allocator,			variables::misc::clean_screenshots,						"clean_screenshots");
 		save::parse_bool(misc,					allocator,			variables::misc::reveal_ranks,							"reveal_ranks");
+		save::parse_bool(misc,					allocator,			variables::misc::developer_csgo,						"developer_csgo");
 	} doc.AddMember("misc", misc, allocator);
 	
 	rapidjson::Value ui(rapidjson::kObjectType); {					// Ui

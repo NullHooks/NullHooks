@@ -3,12 +3,14 @@
 #include "core/features/visuals/skin_changer/skin_changer.hpp"
 #include "core/config/config.hpp"
 
-auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, color header_line, const std::string& name) {
+auto do_frame = [&](std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, color bg, color header_text, const std::string& name) {
 	// Background
+
+	render::draw_filled_rect(x - 2, y - 2, w + 4, h + 4, color(45, 45, 45, 255));
 	render::draw_filled_rect(x, y, w, h, bg);
 	// Header title
 	render::draw_filled_rect(x, y, w, 30, header_text);
-	render::draw_filled_rect(x, y + 30, w, 2, header_line);
+	render::draw_filled_rect(x, y, w, 2, color(107, 117, 255, 255));
 	render::draw_text_string(x + 10, y + 8, render::fonts::watermark_font, name, false, color::white(255));
 };
 
@@ -17,7 +19,7 @@ void menu::render() {
 
 	// Menu title and all that
 	do_frame(variables::ui::menu::x, variables::ui::menu::y, variables::ui::menu::w, variables::ui::menu::h,
-		color(36, 36, 36, 255), color(25, 25, 25, 255), color(36, 36, 36, 255), "NullHooks");
+		color(36, 36, 36, 255), color(25, 25, 25, 255), "NullHooks");
 
 	#pragma region TABS
 	/* ------------------ TABS ------------------ */
@@ -183,16 +185,18 @@ void menu::render() {
 				gui::add_slider		("Thirdperson distance",	variables::misc::thirdperson_dist, 50.f, 200.f);
 			}
 
-			gui::add_groupbox("Interface", 4); {
+			gui::add_groupbox("Interface", 5); {
 				gui::add_checkbox("Hide cheat on screenshots",	variables::misc::clean_screenshots);
 				gui::add_multicombobox("Watermark",				variables::misc::watermark);
 				gui::add_checkbox("Spectator list",				variables::ui::spectators::spectator_list);
-				gui::add_checkbox("Reveal ranks",				variables::misc::reveal_ranks);
+				gui::add_checkbox("Reveal ranks", variables::misc::reveal_ranks);
+				gui::add_checkbox("Developer mode", variables::misc::developer_csgo);
 			}
 
-			gui::add_groupbox("Fov", 2); {
-				gui::add_slider("Custom FOV",				variables::misc_visuals::custom_fov_slider, 80.f, 130.f);
-				gui::add_slider("Custom viewmodel FOV",		variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
+			gui::add_groupbox("Fov", 3); {
+				gui::add_slider("FOV",					variables::misc_visuals::custom_fov_slider, 80.f, 130.f);
+				gui::add_slider("Viewmodel FOV",		variables::misc_visuals::custom_vmfov_slider, 0.5f, 2.f);
+				gui::add_slider("Aspect ratio",			variables::misc_visuals::custom_ar_slider, 0.f, 3.f);
 			}
 
 			gui::add_groupbox("Motion blur", 5); {

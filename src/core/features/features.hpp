@@ -52,6 +52,8 @@ namespace visuals {
 	void noflash();
 	void bullet_tracer(i_game_event *event);
 	void nade_predict() noexcept;
+	void dev_mode() noexcept;
+	void aspect_ratio() noexcept;
 	void nosmoke(client_frame_stage_t frame_stage);
 	void worldcolor();
 

@@ -157,6 +157,7 @@ namespace variables {
 
 		inline float custom_fov_slider = 90.f;
 		inline float custom_vmfov_slider = 1.f;
+		inline float custom_ar_slider = 0.f;
 	}
 
 	namespace misc {
@@ -211,6 +212,7 @@ namespace variables {
 		inline multicombobox_toggle_t watermark(watermark_options);
 		inline bool clean_screenshots = true;
 		inline bool reveal_ranks = true;
+		inline bool developer_csgo = false;
 	}
 
 	namespace ui {

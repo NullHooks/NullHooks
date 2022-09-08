@@ -124,7 +124,7 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 	interfaces::surface->get_text_size(font, converted_base.c_str(), width, height);
 
 	text_w_buff = render::get_text_size(render::fonts::watermark_font, base).x;
-	render::draw_filled_rect(x, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+	render::draw_filled_rect(x, y, margin + text_w_buff, h, color(25, 25, 25, 255));
 	variables::ui::watermark::w += text_w_buff;
 
 	interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
@@ -132,7 +132,7 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 
 	if (draw_fps) {
 		text_w_buff = render::get_text_size(render::fonts::watermark_font, fps).x;
-		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(25, 25, 25, 255));
 		variables::ui::watermark::w += text_w_buff;
 
 		interfaces::surface->set_text_color(fps_col.r, fps_col.g, fps_col.b, fps_col.a);
@@ -150,7 +150,7 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 		const std::wstring converted_ping = std::wstring(ping.begin(), ping.end());
 
 		text_w_buff = render::get_text_size(render::fonts::watermark_font, pingtext + ping).x;
-		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(36, 36, 36, 255));
+		render::draw_filled_rect(x + variables::ui::watermark::w, y, margin + text_w_buff, h, color(25, 25, 25, 255));
 		variables::ui::watermark::w += text_w_buff;
 
 		interfaces::surface->set_text_color(base_col.r, base_col.g, base_col.b, base_col.a);
@@ -161,9 +161,13 @@ void draw_stats_string(std::string base, color base_col, std::string fps, color 
 	}
 
 	// Draw the final right margin and the external rect
-	render::draw_filled_rect(x + variables::ui::watermark::w, y, margin, h, color(36, 36, 36, 255));
+	render::draw_filled_rect(x + variables::ui::watermark::w, y, margin, h, color(25, 25, 25, 255));
 	variables::ui::watermark::w += margin;
-	render::draw_rect(x, y, variables::ui::watermark::w, h, color(25, 25, 25, 255));
+	render::draw_rect(x, y, variables::ui::watermark::w, h, color(45, 45, 45, 255));
+	render::draw_rect(x - 1, y - 1, variables::ui::watermark::w + 2, h + 2, color(45, 45, 45, 255));
+	render::draw_rect(x - 2, y - 2, variables::ui::watermark::w + 4, h + 4, color(45, 45, 45, 255));
+	render::draw_filled_rect(x, y, variables::ui::watermark::w, 2, color(107, 117, 255, 255));
+
 }
 
 int get_fps() {
