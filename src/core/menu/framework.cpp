@@ -2,6 +2,8 @@
 #include "core/menu/variables.hpp"
 #include "core/config/config.hpp"
 
+#define DRAW_GROUPBOX_LABELS false
+
 cursor_coords cursor;
 cursor_coords cursor_corrected;
 
@@ -48,7 +50,7 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 	interfaces::surface->surface_get_cursor_pos(cursor.x, cursor.y);
 
 	const int w = 30, h = 11;	// Button size
-	const color c_default = color(150, 22, 22, 255);
+	const color c_default = color(107, 117, 255, 255);
 	const color c_hover = color(135, 21, 21, 255);
 	bool pressed = false;
 
@@ -57,11 +59,14 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 
 	// Cursor in button and clicked
 	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(115, 21, 21, 255));		// Button background (Hover)
+		render::draw_filled_rect(butt_pos, y, w, h, color(81, 74, 178, 255));		// Button background (Hover)
 		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON));
 	} else {
-		render::draw_filled_rect(butt_pos, y, w, h, color(150, 22, 22, 255));		// Button background
+		render::draw_filled_rect(butt_pos, y, w, h, color(107, 117, 255, 255));		// Button background
 	}
+
+	// Button padding
+	render::draw_rect(butt_pos, y, w, h, color(45, 45, 45, 255));
 
 	return pressed;
 }
@@ -81,18 +86,18 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 	const int val_cont_x = br_x - button_margins - val_cont_w;		// Value container
 	const int bl_x = val_cont_x - button_margins - bw;				// Left button - Decrease
 
-	color bl_col = color(150, 22, 22, 255);
-	color br_col = color(150, 22, 22, 255);
+	color bl_col = color(107, 117, 255, 255);
+	color br_col = color(107, 117, 255, 255);
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		if ((cursor.x >= bl_x) && (cursor.x <= bl_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
-			bl_col = color(115, 21, 21, 255);					// Hover
+			bl_col = color(59, 54, 128, 255);					// Hover
 			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == min) ? max : target - 1;	// Decrease
 		}
 	
 		if ((cursor.x >= br_x) && (cursor.x <= br_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
-			br_col = color(115, 21, 21, 255);					// Hover
+			br_col = color(59, 54, 128, 255);					// Hover
 			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == max) ? min : target + 1;	// Increase
 		}
@@ -120,7 +125,7 @@ void gui::groupbox(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t 
 
 	// Groupbox label
 	if (show_label)
-		render::draw_text_string(x + 2, y - 12, font, string, false, color::white());
+		render::draw_text_string(x + 5, y - 6, font, string, false, color::white());
 }
 
 void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, unsigned long font, const std::string string, std::int32_t& tab, std::int32_t count) {
@@ -133,7 +138,7 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	// Tab background and line
 	if (tab == count) {
 		render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
-		render::draw_filled_rect(x, y+h-1, w, 2, color(150, 22, 22, 255));
+		render::draw_filled_rect(x, y+h-1, w, 2, color(107, 117, 255, 255));
 	} else {
 		render::draw_filled_rect(x, y, w, h, color(34, 34, 34, 255));
 		render::draw_filled_rect(x, y +h, w, 1, color(45, 45, 45, 255));
@@ -174,7 +179,9 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 	}
 
 	// Checkbox itself
-	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));
+	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));		// Background
+	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));				// Border
+	if (value) render::draw_filled_rect(position+2, y+2, w-4, h-4, color(107, 117, 255, 255));		// Color if enabled
 
 	// Checkbox label
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
@@ -201,11 +208,13 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 			col.toggle = false;			// Close popup if user clicks outside
 	}
 
-	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));		// Checkbox itself
-	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
+	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));
+	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));
+	if (value) render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());	// Checkbox text
 
-	render::draw_filled_rect(color_x, y, col_w, col_h, col.col);											// Color itself
-	render::draw_rect(color_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));						// Color outline
+	render::draw_filled_rect(color_x, y, col_w, col_h, col.col);					// Color itself
+	render::draw_rect(color_x, y, col_w, col_h, color(45, 45, 45, 255));			// Color outline
 
 	// Push to vector to render after menu
 	if (col.toggle)
@@ -243,17 +252,20 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		}
 	}
 
-	// Checkbox
-	render::draw_filled_rect(position, y, w, h, value ? color(150, 22, 22, 255) : color(36, 36, 36, 255));
+	// Checkbox. Comments in first checkbox
+	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));
+	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));
+	if (value) render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
+
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 
 	// Left color
 	render::draw_filled_rect(color_l_x, y, col_w, col_h, col1.col);
-	render::draw_rect(color_l_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
+	render::draw_rect(color_l_x, y, col_w, col_h, color(45, 45, 45, 255));
 
 	// Right color
 	render::draw_filled_rect(color_r_x, y, col_w, col_h, col2.col);
-	render::draw_rect(color_r_x - 1, y - 1, col_w + 2, col_h + 2, color(30, 30, 30, 255));
+	render::draw_rect(color_r_x, y, col_w, col_h, color(45, 45, 45, 255));
 
 	// Push to vector to render after menu
 	if (col1.toggle)
@@ -281,7 +293,8 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 	// Slider background and value display
 	const float reverse_map = map_slider_constrain(value, float(min_value), float(max_value), 0.0f, float(slider_len));
 	render::draw_filled_rect(slider_pos_x, slider_y, slider_len, slider_height, color(36, 36, 36, 255));
-	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_height, color(150, 22, 22, 255));
+	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_height, color(107, 117, 255, 255));
+	render::draw_rect(slider_pos_x, slider_y, slider_len, slider_height, color(45, 45, 45, 255));				// Border
 
 	// Slider label
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
@@ -323,6 +336,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	// Combobox "button"
 	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
 	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, opt_vec.at(target.idx), false, color::white());
+	render::draw_rect(position, y - 1, w, h + 2, color(45, 45, 45, 255));		// Border
 	
 	// Draw arrow
 	for (int n = 0; n < arrow_h; n++) {
@@ -387,6 +401,7 @@ void gui::multicombobox(std::int32_t x, std::int32_t y, std::int32_t combo_right
 	// Combobox "button"
 	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
 	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, button_str, false, color::white());
+	render::draw_rect(position, y - 1, w, h + 2, color(45, 45, 45, 255));
 
 	// Draw arrow
 	for (int n = 0; n < arrow_h; n++) {
@@ -419,16 +434,16 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				reading_this_hotkey				  = true;
 				should_skip_frame				  = true;
 			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				target_key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+				target_key = INPUT_KEY_NONE;							// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::global_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::global_input.LatestPressed();
-		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
+		if (newkey != INPUT_KEY_WAITING) {						// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
-				target_key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
+				target_key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				target_key = newkey;							// Store key
 				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
@@ -467,16 +482,16 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				hotkey_info.reading_this          = true;
 				should_skip_frame                 = true;
 			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				hotkey_info.key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+				hotkey_info.key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::global_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
 		const int newkey = input::global_input.LatestPressed();
-		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
+		if (newkey != INPUT_KEY_WAITING) {						// -1 means there is no new keypress
 			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
-				hotkey_info.key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
+				hotkey_info.key = INPUT_KEY_NONE;				// When a hotkey is none, it will apear as pressed all the time
 			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				hotkey_info.key = newkey;						// Store key
 				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
@@ -563,6 +578,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	} else if (!textbox_info.reading_this) {
 		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, placeholder, false, color::white(100));
 	}
+	render::draw_rect(x, y - 2, text_box_w, 15, color(45, 45, 45, 255));		// Textbox border
 
 	// Cursor
 	if (textbox_info.reading_this) {
@@ -572,12 +588,13 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 
 	// Draw button and store if we clicked
 	if ((cursor.x >= button_x) && (cursor.x <= button_x + button_w) && (cursor.y >= y) && (cursor.y <= y + h)) {
-		render::draw_filled_rect(button_x, y, button_w, h, color(115, 21, 21, 255));		// Button background (Hover)
+		render::draw_filled_rect(button_x, y, button_w, h, color(59, 54, 128, 255) );		// Button background (Hover)
 		if (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON))
 			call_callback = true;		// Store that we want to call callback
 	} else {
-		render::draw_filled_rect(button_x, y, button_w, h, color(150, 22, 22, 255));		// Button background
+		render::draw_filled_rect(button_x, y, button_w, h, color(107, 117, 255, 255));		// Button background
 	}
+	render::draw_rect(button_x, y, button_w, h, color(45, 45, 45, 255));		// Button border
 
 	if (call_callback) {
 		if (button_callback(textbox_info.text)) {		// Call callback function, if it executes correctly, clear the textbox
@@ -711,7 +728,7 @@ void gui::add_groupbox(std::string name, int item_number) {
 	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
 	vars::cur_part_h = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
 
-	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, false);
+	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, DRAW_GROUPBOX_LABELS);
 }
 
 void gui::add_bottom_groupbox(int item_number) {
@@ -1069,7 +1086,7 @@ void popup_system::multicombobox_popup(multicombo_popup_info combo_p) {
 
 	int item_n = 0;
 	for (multicombo_opt_t item : combo_p.target_vec) {
-		render::draw_text_string(combo_p.x + combo_win_padding, combo_p.y + (15 * item_n), render::fonts::watermark_font_ns, item.text, false, item.state ? color(200, 10, 10, 255) : color(190, 190, 190, 255));
+		render::draw_text_string(combo_p.x + combo_win_padding, combo_p.y + (15 * item_n), render::fonts::watermark_font_ns, item.text, false, item.state ? color(107, 117, 255, 255) : color(255, 255, 255, 255));
 		item_n++;
 	}
 
