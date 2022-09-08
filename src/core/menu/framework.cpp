@@ -433,18 +433,18 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				input::global_input.reading_hotkey = true;
 				reading_this_hotkey				  = true;
 				should_skip_frame				  = true;
-			} else if (input::global_input.IsPressed(VK_ESCAPE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				target_key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
+				target_key = INPUT_KEY_NONE;							// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::global_input.reading_hotkey && reading_this_hotkey && !should_skip_frame) {
 		const int newkey = input::global_input.LatestPressed();
-		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
-			if (newkey == VK_ESCAPE) {							// Delte will remove the hotkey
-				target_key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
-			} else {					// Did not press scape (cancel hotkey).
+		if (newkey != INPUT_KEY_WAITING) {						// -1 means there is no new keypress
+			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
+				target_key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
+			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				target_key = newkey;							// Store key
 				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
 			}
@@ -482,17 +482,17 @@ void gui::hotkey(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long f
 				hotkey_info.reading_this          = true;
 				should_skip_frame                 = true;
 			} else if (input::global_input.IsPressed(VK_DELETE)) {		// We can delete the hotkey without "reading it". Just hovering and pressing delete
-				hotkey_info.key = INPUT_KEY_NONE;								// When a hotkey is none, it will apear as pressed all the time
+				hotkey_info.key = INPUT_KEY_NONE;						// When a hotkey is none, it will apear as pressed all the time
 			}
 		}
 	}
 
 	if (input::global_input.reading_hotkey && hotkey_info.reading_this && !should_skip_frame) {
 		const int newkey = input::global_input.LatestPressed();
-		if (newkey != INPUT_KEY_WAITING) {							// -1 means there is no new keypress
-			if (newkey == VK_ESCAPE) {							// Delte will remove the hotkey
-				hotkey_info.key = INPUT_KEY_NONE;					// When a hotkey is none, it will apear as pressed all the time
-			} else {					// Did not press scape (cancel hotkey).
+		if (newkey != INPUT_KEY_WAITING) {						// -1 means there is no new keypress
+			if (newkey == VK_DELETE) {							// Delte will remove the hotkey
+				hotkey_info.key = INPUT_KEY_NONE;				// When a hotkey is none, it will apear as pressed all the time
+			} else if (newkey != VK_ESCAPE) {					// Did not press scape (cancel hotkey).
 				hotkey_info.key = newkey;						// Store key
 				input::global_input.latest_hotkey = newkey;		// Store to avoid toggling the key when assigning
 			}
