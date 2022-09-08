@@ -2,6 +2,8 @@
 #include "core/menu/variables.hpp"
 #include "core/config/config.hpp"
 
+#define DRAW_GROUPBOX_LABELS false
+
 cursor_coords cursor;
 cursor_coords cursor_corrected;
 
@@ -57,13 +59,13 @@ bool gui::button_bool(std::int32_t x, std::int32_t y, std::int32_t butt_pos, uns
 
 	// Cursor in button and clicked
 	if ((cursor.x >= butt_pos) && (cursor.x <= butt_pos + w) && (cursor.y >= y) && (cursor.y <= y + h)) {
-		render::draw_filled_rect(butt_pos, y, w, h, color(59, 54, 128, 255) );		// Button background (Hover) color(59, 54, 128, 255) 
+		render::draw_filled_rect(butt_pos, y, w, h, color(81, 74, 178, 255));		// Button background (Hover)
 		pressed = (!popup_system::mouse_in_popup(cursor.x, cursor.y) && input::global_input.IsPressed(VK_LBUTTON));
 	} else {
 		render::draw_filled_rect(butt_pos, y, w, h, color(107, 117, 255, 255));		// Button background
 	}
 
-
+	// Button padding
 	render::draw_rect(butt_pos, y, w, h, color(45, 45, 45, 255));
 
 	return pressed;
@@ -89,13 +91,13 @@ void gui::id_changer(std::int32_t x, std::int32_t y, std::int32_t right_position
 
 	if (!popup_system::mouse_in_popup(cursor.x, cursor.y)) {
 		if ((cursor.x >= bl_x) && (cursor.x <= bl_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
-			bl_col = color(59, 54, 128, 255) ;					// Hover
+			bl_col = color(59, 54, 128, 255);					// Hover
 			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == min) ? max : target - 1;	// Decrease
 		}
 	
 		if ((cursor.x >= br_x) && (cursor.x <= br_x + bw) && (cursor.y >= y) && (cursor.y <= y + bh)) {
-			br_col = color(59, 54, 128, 255) ;					// Hover
+			br_col = color(59, 54, 128, 255);					// Hover
 			if (input::global_input.IsPressed(VK_LBUTTON))
 				target = (target == max) ? min : target + 1;	// Increase
 		}
@@ -136,7 +138,7 @@ void gui::tab(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, un
 	// Tab background and line
 	if (tab == count) {
 		render::draw_filled_rect(x, y, w, h, color(25, 25, 25, 255));
-		render::draw_filled_rect(x, y+h-1, w, 2, color(107, 117, 255, 255)); // 107, 117, 255 color(107, 117, 255, 255)
+		render::draw_filled_rect(x, y+h-1, w, 2, color(107, 117, 255, 255));
 	} else {
 		render::draw_filled_rect(x, y, w, h, color(34, 34, 34, 255));
 		render::draw_filled_rect(x, y +h, w, 1, color(45, 45, 45, 255));
@@ -176,13 +178,10 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		}
 	}
 
-	// Checkbox itself penisnsnsnsns
-
-	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));
-	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));
-	if (value) {
-		render::draw_filled_rect(position+2, y+2, w-4, h-4, color(107, 117, 255, 255));
-	}
+	// Checkbox itself
+	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));		// Background
+	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));				// Border
+	if (value) render::draw_filled_rect(position+2, y+2, w-4, h-4, color(107, 117, 255, 255));		// Color if enabled
 
 	// Checkbox label
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
@@ -211,13 +210,11 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 
 	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));
 	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));
-	if (value) {
-		render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
-	}
-	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());								// Checkbox text
+	if (value) render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
+	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());	// Checkbox text
 
-	render::draw_filled_rect(color_x, y, col_w, col_h, col.col);											// Color itself
-	render::draw_rect(color_x, y, col_w, col_h, color(45, 45, 45, 255));						// Color outline
+	render::draw_filled_rect(color_x, y, col_w, col_h, col.col);					// Color itself
+	render::draw_rect(color_x, y, col_w, col_h, color(45, 45, 45, 255));			// Color outline
 
 	// Push to vector to render after menu
 	if (col.toggle)
@@ -255,12 +252,11 @@ void gui::check_box(std::int32_t x, std::int32_t y, std::int32_t position, unsig
 		}
 	}
 
-	// Checkbox
+	// Checkbox. Comments in first checkbox
 	render::draw_filled_rect(position, y, w, h, color(36, 36, 36, 255));
 	render::draw_rect(position, y, w, h, color(45, 45, 45, 255));
-	if (value) {
-		render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
-	}
+	if (value) render::draw_filled_rect(position + 2, y + 2, w - 4, h - 4, color(107, 117, 255, 255));
+
 	render::draw_text_string(x + 2, y - 1, font, string, false, color::white());
 
 	// Left color
@@ -298,7 +294,7 @@ void gui::slider(std::int32_t x, std::int32_t y, std::int32_t slider_pos_x, std:
 	const float reverse_map = map_slider_constrain(value, float(min_value), float(max_value), 0.0f, float(slider_len));
 	render::draw_filled_rect(slider_pos_x, slider_y, slider_len, slider_height, color(36, 36, 36, 255));
 	render::draw_filled_rect(slider_pos_x, slider_y, reverse_map, slider_height, color(107, 117, 255, 255));
-	render::draw_rect(slider_pos_x, slider_y, slider_len, slider_height, color(45, 45, 45, 255));
+	render::draw_rect(slider_pos_x, slider_y, slider_len, slider_height, color(45, 45, 45, 255));				// Border
 
 	// Slider label
 	render::draw_text_string(x + 2, y - 1, font, (std::stringstream{ } << string << ": " <<  std::setprecision(3) << value).str(), false, color::white());
@@ -340,7 +336,7 @@ void gui::combobox(std::int32_t x, std::int32_t y, std::int32_t combo_right_pos,
 	// Combobox "button"
 	render::draw_filled_rect(position, y - 1, w, h + 2, color(36, 36, 36, 255));
 	render::draw_text_string(position + x_margin, y - 1, render::fonts::watermark_font_ns, opt_vec.at(target.idx), false, color::white());
-	render::draw_rect(position, y - 1, w, h + 2, color(45, 45, 45, 255));
+	render::draw_rect(position, y - 1, w, h + 2, color(45, 45, 45, 255));		// Border
 	
 	// Draw arrow
 	for (int n = 0; n < arrow_h; n++) {
@@ -582,7 +578,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	} else if (!textbox_info.reading_this) {
 		render::draw_text_string(x + margin, y - 1, render::fonts::watermark_font, placeholder, false, color::white(100));
 	}
-	render::draw_rect(x, y - 2, text_box_w, 15, color(45, 45, 45, 255));
+	render::draw_rect(x, y - 2, text_box_w, 15, color(45, 45, 45, 255));		// Textbox border
 
 	// Cursor
 	if (textbox_info.reading_this) {
@@ -598,7 +594,7 @@ void gui::textbox(std::int32_t x, std::int32_t y, std::int32_t w, unsigned long 
 	} else {
 		render::draw_filled_rect(button_x, y, button_w, h, color(107, 117, 255, 255));		// Button background
 	}
-	render::draw_rect(button_x, y, button_w, h, color(45, 45, 45, 255));
+	render::draw_rect(button_x, y, button_w, h, color(45, 45, 45, 255));		// Button border
 
 	if (call_callback) {
 		if (button_callback(textbox_info.text)) {		// Call callback function, if it executes correctly, clear the textbox
@@ -732,7 +728,7 @@ void gui::add_groupbox(std::string name, int item_number) {
 	vars::cur_base_item_y = vars::cur_part_y + vars::container_padding;
 	vars::cur_part_h = (15 * vars::cur_part_items) + (vars::container_padding * 2) - 4;		// This for now, but should be increased with the items added
 
-	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, false);
+	gui::groupbox(gui::vars::container_left_pos, gui::vars::cur_part_y, gui::vars::container_width, gui::vars::cur_part_h, render::fonts::watermark_font, name, DRAW_GROUPBOX_LABELS);
 }
 
 void gui::add_bottom_groupbox(int item_number) {
