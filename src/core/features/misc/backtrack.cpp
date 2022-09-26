@@ -156,7 +156,7 @@ void backtrack::run(c_usercmd* cmd) noexcept {
 
 	int best_record{ };
 	if (best_target) {			// We found a good target
-		if (records[besst_target_index].size() <= 3) return;	// ???
+		if (records[besst_target_index].size() <= 3) return;	// Check if we have less than 3 valid targets. Note: Not entirely sure why it does this you can just check if the deque is empty.
 
 		best_fov = 255.f;		// ???
 		best_dist = 999.f;		// ??? Why do we need this shit again
