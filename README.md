@@ -16,10 +16,11 @@
 
 # Table of contents
 1. [Description](#description)
-2. [Features](#features)
-3. [Installing](#installing)
-4. [Todo](#todo)
-5. [Screenshots](#screenshots)
+2. [Notes](#notes)
+3. [Features](#features)
+4. [Installing](#installing)
+5. [Todo](#todo)
+6. [Screenshots](#screenshots)
 
 ## Description
 Edgy name but not as cool as *PissHooks™* (RIP).
@@ -28,9 +29,13 @@ As I said I made this project to learn about game hacking and cpp in general, so
 
 See [contributing.md](CONTRIBUTING.md) for contributing to the project and [references.md](REFERENCES.md) for a list of cheats that helped me learn while making it.
 
-*NOTE: Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
-Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`*.  
-*NOTE: If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are.*
+## Notes
+
+1. *Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
+Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`*.
+2. *The last cs:go update broke something in the cheat, and unfortunately I can't figure out what. Lately I lost a bit of motivation for the cheat, so if anyone knows a fix, feel free to PR.  
+Here is the issue: [#85](https://github.com/NullHooks/NullHooks/issues/85)*.
+3. *If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are*.
 
 ## Features
 <details>
