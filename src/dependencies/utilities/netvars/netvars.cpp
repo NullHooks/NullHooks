@@ -70,7 +70,7 @@ namespace netvar_manager {
 	void initialize_props(netvar_table_map & table_map) {
 		const auto dump_vars = true;  //true if netvar dump
 
-		std::map< std::string, std::map< uintptr_t, std::string > > var_dump;
+		std::map< std::string, std::map< uint32_t, std::string > > var_dump;
 		for (auto client_class = interfaces::client->get_client_classes();
 			client_class;
 			client_class = client_class->next_ptr) {
