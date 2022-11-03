@@ -33,9 +33,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 
 1. *Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
 Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`*.
-2. *The last cs:go update broke something in the cheat, and unfortunately I can't figure out what. Lately I lost a bit of motivation for the cheat, so if anyone knows a fix, feel free to PR.  
-Here is the issue: [#85](https://github.com/NullHooks/NullHooks/issues/85)*.
-3. *If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are*.
+2. *If you are some kid from a third world country trying to sell this, please just don't, everyone knows how retarded you are*.
 
 ## Features
 <details>
