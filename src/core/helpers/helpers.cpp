@@ -169,11 +169,11 @@ player_t* helpers::local_or_spectated() {
 }
 
 // Checks if its enemy from localplayer
-bool helpers::is_enemy(player_t* player) {
+bool helpers::is_enemy(player_t* player) noexcept {
 	if (!csgo::local_player || !player) return false;
 
 	using fn = bool(__thiscall*)(player_t*, player_t*);
-	static fn isOtherEnemy = relative_to_absolute<fn>(utilities::pattern_scan("client.dll", "8B CE E8 ? ? ? ? 02 C0") + 3);
+	static fn isOtherEnemy = relative_to_absolute<fn>(utilities::pattern_scan("client.dll", sig_is_other_enemy) + 3);
 
 	isOtherEnemy(csgo::local_player, player);
 }
