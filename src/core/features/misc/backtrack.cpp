@@ -198,10 +198,15 @@ void backtrack::frame_stage_notify() {
 			*(uintptr_t*)((*(uintptr_t*)var_map) + index * 12) = flag;
 	};
 
-	if (!(variables::misc::backtrack && csgo::local_player && csgo::local_player->is_alive())) return;
+	if (!(variables::misc::backtrack
+		&& csgo::local_player
+		&& csgo::local_player->is_alive()
+		&& interfaces::engine->is_in_game()
+		&& interfaces::engine->is_connected())) return;
+
 	for (uint32_t i = 1; i <= interfaces::globals->max_clients; i++) {
 		player_t* player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(i));
-		if (!player || (!helpers::is_enemy(player) && !variables::misc::backtrack_team) || player == csgo::local_player || player->dormant())
+		if (!player || player == csgo::local_player || player->dormant() || (!helpers::is_enemy(player) && !variables::misc::backtrack_team))
 			continue;
 		set_interpolation_flags(player, 0);
 	}
