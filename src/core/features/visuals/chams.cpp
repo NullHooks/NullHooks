@@ -60,10 +60,11 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 			override_material(false, false, color(255, 255, 255, 100), player_material);
 		} else {
 			// Backtrack chams
-			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (player->team() != csgo::local_player->team() || variables::misc::backtrack_team)) {
+			if (variables::misc::backtrack && backtrack::records[player->index()].size() > 0 && variables::chams::backtrack_chams && (helpers::is_enemy(player) || variables::misc::backtrack_team)) {
 				if (!variables::chams::player_chams || !player->is_moving())
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);	// Draw original player before backtrack if normal player chams are disabled. Probably a bad way of doing it
 
+				// Colors, like chams, depend on team and not on is_enemy()
 				const color chams_col = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend : variables::colors::bt_chams_enemy;
 				const color chams_col_fade = (player->team() == csgo::local_player->team()) ? variables::colors::bt_chams_friend_fade : variables::colors::bt_chams_enemy_fade;
 				for (uint32_t i = 0; i < backtrack::records[player->index()].size(); i++) {
@@ -84,7 +85,7 @@ void visuals::draw_chams(i_mat_render_context* ctx, const draw_model_state_t& st
 
 				const float localplayer_col_a = (csgo::local_player->is_scoped()) ? 30 : variables::colors::chams_localplayer.col.a;
 				override_material(false, variables::chams::wireframe_chams, variables::colors::chams_localplayer.col.get_custom_alpha(localplayer_col_a), materials[variables::chams::localplayer_chams_mat_id.idx]);
-			// Enemies
+			// Enemies (color depends on team, not is_enemy())
 			} else if (variables::chams::player_chams && player->team() != csgo::local_player->team()) {
 				if (variables::chams::draw_chams_on_top)
 					hooks::draw_model_execute::original(interfaces::model_render, 0, ctx, state, info, matrix);
