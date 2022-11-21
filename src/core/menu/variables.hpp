@@ -192,6 +192,9 @@ namespace variables {
 		inline float speedgraph_h = 40.f;
 		inline float speedgraph_pos = 92.5;
 
+		inline bool blockbot = false;
+		inline hotkey_t blockbot_key(VK_MENU);
+
 		// Network
 		inline bool backtrack = false;
 		inline bool backtrack_team = false;

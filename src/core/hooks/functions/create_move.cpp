@@ -47,12 +47,14 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	auto old_flags = csgo::local_player->flags();
 
 	backtrack::update();
+	misc::blockbot(cmd);
 	misc::movement::pre_pred_jumpbug(cmd, old_flags);
-	
+
 	prediction::get_server_time(cmd);		// Call it once before prediction
 	prediction::start(cmd); {
 		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
+
 
 		aim::triggerbot(cmd);
 		aim::run_aimbot(cmd);

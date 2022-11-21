@@ -10,6 +10,7 @@ namespace math {
 	void vector_angles(vec3_t&, vec3_t&);
 	void angle_vectors(vec3_t&, vec3_t*, vec3_t*, vec3_t*);
 	void angle_vectors(const vec3_t& angles, vec3_t& forward);
+	vec3_t angle2d_to_vec(float angle);
 	vec3_t vector_add(vec3_t&, vec3_t&);
 	vec3_t vector_subtract(vec3_t&, vec3_t&);
 	vec3_t vector_multiply(vec3_t&, vec3_t&);

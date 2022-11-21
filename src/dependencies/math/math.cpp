@@ -122,6 +122,15 @@ void math::angle_vectors(const vec3_t& angles, vec3_t& forward) {
 	forward.z = -sp;
 }
 
+vec3_t math::angle2d_to_vec(float angle) {
+	return vec3_t{
+		std::cos(DEG2RAD(angle)),
+		std::sin(DEG2RAD(angle)),
+		0.0f
+	};
+}
+
+// These 4 should not be necesary since you can do (vec*vec) or (vec+vec) now
 vec3_t math::vector_add(vec3_t & a, vec3_t & b) {
 	return vec3_t(a.x + b.x,
 		a.y + b.y,

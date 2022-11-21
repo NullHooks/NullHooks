@@ -99,6 +99,34 @@ public:
 	inline float length_2d() const {
 		return sqrt((x * x) + (y * y));
 	}
+
+	// Pasted from OsirisAndExtra, sorry
+	vec3_t snap_to_4() const {
+		const float l = length_2d();
+		bool xp = x >= 0.0f;
+		bool yp = y >= 0.0f;
+		bool xy = std::fabsf(x) >= std::fabsf(y);
+
+		if (xp && xy)	return vec3_t{ l, 0.0f, 0.0f };
+		if (!xp && xy)	return vec3_t{ -l, 0.0f, 0.0f };
+		if (yp && !xy)	return vec3_t{ 0.0f, l, 0.0f };
+		if (!yp && !xy)	return vec3_t{ 0.0f, -l, 0.0f };
+
+		return vec3_t{};
+	}
+
+	constexpr float dotproduct_2d(const vec3_t& v) {
+		return x * v.x + y * v.y;
+	}
+
+	vec3_t crossproduct(vec3_t v) const {
+		return vec3_t{
+			y * v.z - z * v.y,
+			z * v.x - x * v.z,
+			x * v.y - y * v.x
+		};
+	}
+
 	void crossproduct(vec3_t v1, vec3_t v2, vec3_t cross_p) const {
 		cross_p.x = (v1.y * v2.z) - (v1.z * v2.y); //i
 		cross_p.y = -((v1.x * v2.z) - (v1.z * v2.x)); //j

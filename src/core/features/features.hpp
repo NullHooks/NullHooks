@@ -70,6 +70,7 @@ namespace misc {
 	void spectator_list();
 	void thirdperson();
 	void reset_thirdperson();
+	void blockbot(c_usercmd* cmd);
 	void reveal_ranks(c_usercmd* cmd);
 
 	namespace movement {
