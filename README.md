@@ -381,6 +381,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [ ] Arm models are only changed when having a custom playermodel. [`replace_arms_model()`](https://github.com/NullHooks/NullHooks/blob/0284cebb401bb348b69b5f228d720477995eb71f/src/core/features/visuals/skin_changer/skin_changer.cpp#L138) is always called.
 - [ ] Add no-recoil
 - [ ] Add scaleform ui
+- [ ] Add custom radar (See [SEOwned](https://www.unknowncheats.me/forum/team-fortress-2-a/436430-seowned-featured-cheat.html) for cool style)
 - [ ] Add player list <!-- Big flowhooks fan, sorry -->
 	- [ ] Ability to set certain players to rage and ignore aimbot smoothing, etc.
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
