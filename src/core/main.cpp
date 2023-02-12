@@ -5,7 +5,7 @@
 volatile constexpr const char fuck_skids[] = /* :^) */
 	"Hey! If you are reading this maybe you looked through the source code or maybe you are reversing this DLL! "
 	"Either way you need to know that this project is open source and you can find the code at: "
-	"https://github.com/r4v10l1/NullHooks or https://github.com/NullHooks/NullHooks";
+	"https://github.com/8dcc/NullHooks or https://github.com/NullHooks/NullHooks";
 
 unsigned long WINAPI initialize(void* instance) {
 	while (!GetModuleHandleA("serverbrowser.dll"))

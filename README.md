@@ -2,14 +2,14 @@
     <h1>NullHooks</h1>
     <p><b>CS:GO cheat I made based on designer's base, and many other cheats I found. Mainly made for learning.</b></p>
     <div>
-        <a href="https://github.com/r4v10l1/NullHooks/issues">
-            <img src="https://img.shields.io/github/issues/r4v10l1/NullHooks?color=cc0000&style=flat" alt="GitHub issues">
+        <a href="https://github.com/NullHooks/NullHooks/issues">
+            <img src="https://img.shields.io/github/issues/NullHooks/NullHooks?color=cc0000&style=flat" alt="GitHub issues">
         </a>
-        <a href="https://github.com/r4v10l1/NullHooks/pulls">
+        <a href="https://github.com/NullHooks/NullHooks/pulls">
             <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=cc0000&style=flat" alt="Pull requests welcome">
         </a>
-        <a href="https://github.com/r4v10l1/NullHooks/blob/main/LICENSE">
-            <img src="https://img.shields.io/github/license/r4v10l1/NullHooks?color=cc0000&style=flat" alt="License">
+        <a href="https://github.com/NullHooks/NullHooks/blob/main/LICENSE">
+            <img src="https://img.shields.io/github/license/NullHooks/NullHooks?color=cc0000&style=flat" alt="License">
         </a>
     </div>
 </div>
@@ -32,7 +32,7 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 ## Notes
 
 > **Note**
-> Because @hBuffer dissapeared, I am transfering the repo from r4v10l1/NullHooks to NullHooks/NullHooks.
+> Because @hBuffer dissapeared, I am transfering the repo from 8dcc/NullHooks to NullHooks/NullHooks.
 > Make sure you update your remotes with `git remote set-url origin https://github.com/NullHooks/NullHooks`.
 
 > **Note**
@@ -106,18 +106,18 @@ See [contributing.md](CONTRIBUTING.md) for contributing to the project and [refe
 - Change individual materials for the chams
 
 #### Skinchanger
-The skinchanger loads a json file called `skins.json`, inside `DOCUMENTS/NullHooks/`, *DOCUMENTS* being your windows documents folder (will be created if it doesn't exist). The json structure is very simple, having the weapon buy index enum name as a string ([weapon name list](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/source-sdk/classes/entities.hpp#L193-L284)), with the weapon [properties](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L34-L42) as strings inside:
+The skinchanger loads a json file called `skins.json`, inside `DOCUMENTS/NullHooks/`, *DOCUMENTS* being your windows documents folder (will be created if it doesn't exist). The json structure is very simple, having the weapon buy index enum name as a string ([weapon name list](https://github.com/NullHooks/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/source-sdk/classes/entities.hpp#L193-L284)), with the weapon [properties](https://github.com/NullHooks/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L34-L42) as strings inside:
 Setting name                | Description
 ----------------------------|------------------------------------------------------------
 `"item_definition_index"`   | Can have a weapon buy index as int or as enum name (Same names as weapons, like `WEAPON_KNIFE_M9_BAYONET` for example).
 `"paint_kit"`               | The skin id as integer. You can find some skin ids [here](https://steamcommunity.com/sharedfiles/filedetails/?id=880595913), [here](https://github.com/adamb70/CSGO-skin-ID-dumper/blob/master/item_index.txt) or [here](https://csgostash.com/).
 `"seed"`                    | The skin seed as integer.
 `"stattrack"`               | The stattrack kill number as int. `-1` means disabled. *:warning: Currently stattrack is not working properly becayse of an error. See todo list.*
-`"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/r4v10l1/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
+`"quality"`                 | The int or enum string of the quality. List can be found [here](https://github.com/NullHooks/NullHooks/blob/634ff18040739d0d7fe437074114f5eae92e907d/src/core/features/visuals/skin_changer/skin_changer.hpp#L19-L32).
 `"wear"`                    | The float corresponding to the weapon wear. From `0.001f` to `1.f`, lower means better.
 `"custom_name"`             | String containing the custom name for the weapon.
 
-An example of a skin config file can be found in [example-configs/skins.json](https://github.com/r4v10l1/NullHooks/blob/main/config-examples/skins.json).
+An example of a skin config file can be found in [example-configs/skins.json](https://github.com/NullHooks/NullHooks/blob/main/config-examples/skins.json).
 
 The skin chager currently is able to change:
 - [X] Weapon skins
@@ -139,7 +139,7 @@ The model changer is currently able to change:
 
 :warning: All the models need to be downloaded manually.
 
-- When using `find_mdl`, it will hook to the function, and when the game tries to load a model, we will replace it with our own. `find_mdl` model paths are hardcoded in [`models.hpp`](https://github.com/r4v10l1/NullHooks/blob/main/src/core/features/visuals/models.hpp). In that file explains where to put the models and all that. If an item is `NULL` it will be ignored.
+- When using `find_mdl`, it will hook to the function, and when the game tries to load a model, we will replace it with our own. `find_mdl` model paths are hardcoded in [`models.hpp`](https://github.com/NullHooks/NullHooks/blob/main/src/core/features/visuals/models.hpp). In that file explains where to put the models and all that. If an item is `NULL` it will be ignored.
 - Precached models are a way better alternative, because with my json config system you can edit and load the file any time you want during a match. For adding models to a weapon, simply add to the skin json the following options:
     - `"viewmodel"`: The viewmodel path from the csgo directory. The viewmodel files usually start with `v_`.  
     *Example: `"models/weapons/eminem/bananabit/v_bananabit.mdl"`*
@@ -186,7 +186,7 @@ A good example of a json file for replacing the knives usin precached models wou
 }
 ```
 
-The first 3 lines are for changing special models. In this case ally players, enemy players and localplayer. See special models here: [Link](https://github.com/r4v10l1/NullHooks/blob/824b745d9fc17f139d6e6a223fa5533f52664e8c/src/source-sdk/classes/entities.hpp#L307-L312).
+The first 3 lines are for changing special models. In this case ally players, enemy players and localplayer. See special models here: [Link](https://github.com/NullHooks/NullHooks/blob/824b745d9fc17f139d6e6a223fa5533f52664e8c/src/source-sdk/classes/entities.hpp#L307-L312).
 
 Changes the default ct knife index to the karambit one, automatically changing the models and applaying the skins of the karambit. Since there is a custom viewmodel and worlmodel, the model will change but the rarity, skin name, kill icon, etc. will be the same.
 
@@ -254,7 +254,7 @@ DOCUMENTS
         └─ skins.json
 ```
 
-For more information and examples check [`config-examples`](https://github.com/r4v10l1/NullHooks/tree/main/config-examples).
+For more information and examples check [`config-examples`](https://github.com/NullHooks/NullHooks/tree/main/config-examples).
 </details>
 
 ## Installing
@@ -262,7 +262,7 @@ For more information and examples check [`config-examples`](https://github.com/r
 I recommend using Visual Studio 2022.
 
 1. Install Microsoft Visual Studio 2022 from [this link](https://visualstudio.microsoft.com/vs/community/)
-2. [Clone](https://www.git-scm.com/docs/git-clone) or [download](https://github.com/r4v10l1/NullHooks/archive/refs/heads/main.zip) the project to your computer
+2. [Clone](https://www.git-scm.com/docs/git-clone) or [download](https://github.com/NullHooks/NullHooks/archive/refs/heads/main.zip) the project to your computer
 3. Open the file `src/NullHooks.sln` with Visual Studio 2022
 4. If an alert pops up, click `Ok` or `Update`, if it doesn't make sure the project is updated by clicking `Project > Retarget solution` in the window bar
 5. Make sure you are compiling the project in `Release | x86` in the top bar
@@ -275,7 +275,7 @@ I recommend using Visual Studio 2022.
 ### Downloading the `.dll` from releases
 This method is not recommended as the cheat can be a bit outdated and you might encounter some problems depending on your computer.
 
-1. Go to the [latest release page](https://github.com/r4v10l1/NullHooks/releases/latest)
+1. Go to the [latest release page](https://github.com/NullHooks/NullHooks/releases/latest)
 2. Download the file `NullHooks.dll` under "Assets"
 3. Inject using your favourite [injector](https://en.wikipedia.org/wiki/DLL_injection)
 
@@ -319,7 +319,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Fix cursor position being relative to screen instead of game window
 - [X] Add color picker ([example](screenshots/color-picker-edit.png))
     - [X] Add popup system that renders after the menu so other elements don't render over the window
-    - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/r4v10l1/NullHooks/issues/5) 
+    - [X] Fix `gui::id_changer()` decrease button. See [issue](https://github.com/NullHooks/NullHooks/issues/5) 
     - [X] Add great global input system
 - [X] Fix both spectator list and menu dragging when overlapped (See bottom of `menu.cpp`)
 - [X] Add combobox (Will add multi-combobox when needed)
@@ -333,7 +333,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 - [X] Add custom models
     - [X] Check if model path exists ([link](https://www.unknowncheats.me/forum/counterstrike-global-offensive/141916-game-directory.html))
 - [X] Add custom hotkeys to framework
-- [X] Add motion blur (See [#25](https://github.com/r4v10l1/NullHooks/issues/25))
+- [X] Add motion blur (See [#25](https://github.com/NullHooks/NullHooks/issues/25))
 - [X] Add multicombobox
     - [X] For selecting what parts of the speedgraph we should draw
 - [X] Reset bomb timer on new round (sometimes?)

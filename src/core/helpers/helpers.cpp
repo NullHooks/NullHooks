@@ -66,7 +66,7 @@ color helpers::colors::hsv_float2color(float_hsv hsv, int alpha) {
 }
 
 /*
- * See: https://gist.github.com/r4v10l1/5f559419bb1f27eb22ea5b9da0343b1b
+ * See: https://gist.github.com/8dcc/5f559419bb1f27eb22ea5b9da0343b1b
  * Returns hsv from color. Hue in 360 format.
  */
 int_hsv helpers::colors::color2hsv(color col) {
