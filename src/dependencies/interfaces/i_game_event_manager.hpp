@@ -32,30 +32,33 @@ public:
 	virtual void            set_string( const char *name, const char *value ) = 0;
 	virtual void            set_wstring( const char *name, const wchar_t *value ) = 0;
 	virtual void			set_ptr(const char* szKeyName, const void* pValue) = 0;
+	virtual bool			for_event_data(void* pEvent) const = 0;
 };
 
 class i_game_event_listener2 {
 public:
 	virtual ~i_game_event_listener2( void ) {}
-
 	virtual void fire_game_event( i_game_event *event ) = 0;
+	virtual int  get_event_debug_id( void ) {
+		return debug_id;
+	};
 	int debug_id;
-	virtual int  get_event_debug_id( void ) { return debug_id; };
 };
 
 class i_game_event_manager2 {
 public:
-	virtual             ~i_game_event_manager2() = 0;
-	virtual int         load_events_from_file( const char *filename ) = 0;
-	virtual void        reset() = 0;
-	virtual bool        add_listener( i_game_event_listener2 *listener, const char *name, bool serverside ) = 0;
-	virtual bool        find_listener( i_game_event_listener2 *listener, const char *name ) = 0;
-	virtual int         remove_listener( i_game_event_listener2 *listener ) = 0;
-	virtual i_game_event *CreateEvent( const char *name, bool force, unsigned int unk ) = 0;
-	virtual bool        fire_event( i_game_event *event, bool dont_broadcast = false ) = 0;
-	virtual bool        fire_event_client_side( i_game_event *event ) = 0;
-	virtual i_game_event *duplicate_event( i_game_event *event ) = 0;
-	virtual void        free_event( i_game_event *event ) = 0;
-	virtual bool        serialize_event( i_game_event *event, bf_write *buf ) = 0;
-	virtual i_game_event *unserialize_event( bf_read *buf ) = 0;
+	virtual               ~i_game_event_manager2() = 0;
+	virtual int           load_events_from_file( const char *filename ) = 0;
+	virtual void          reset() = 0;
+	virtual bool          add_listener( i_game_event_listener2 *listener, const char *name, bool serverside ) = 0;
+	virtual bool          find_listener( i_game_event_listener2 *listener, const char *name ) = 0;
+	virtual int           remove_listener( i_game_event_listener2 *listener ) = 0;
+	virtual i_game_event* CreateEvent( const char *name, bool force, unsigned int unk ) = 0;
+	virtual bool          fire_event( i_game_event *event, bool dont_broadcast = false ) = 0;
+	virtual bool          fire_event_client_side( i_game_event *event ) = 0;
+	virtual i_game_event* duplicate_event( i_game_event *event ) = 0;
+	virtual void          free_event( i_game_event *event ) = 0;
+	virtual bool          serialize_event( i_game_event *event, bf_write *buf ) = 0;
+	virtual i_game_event* unserialize_event( bf_read *buf ) = 0;
+	virtual c_key_values* get_event_data_types(i_game_event* pEvent) = 0;
 };
