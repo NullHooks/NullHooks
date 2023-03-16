@@ -399,9 +399,16 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 *Some screenshots might be a bit outdated...*  
 
 <!-- Ignore the low fps in some of the screenshots, I had to tab out of the game to make them -->
-![screenshot-1](https://user-images.githubusercontent.com/29655971/188993525-7b65e1ea-ccd3-4a62-bbf9-485a4489cdfb.png)
-![screenshot-2](https://user-images.githubusercontent.com/29655971/188993566-c4e8d03d-af7b-4501-baf9-62b267d2c139.png)
-![screenshot-3](https://user-images.githubusercontent.com/29655971/188993604-ba454f46-3a91-438d-a50c-b6d5feb2fe9b.png)
+![screenshot-0](https://user-images.githubusercontent.com/29655971/225770047-39bc421b-9eb2-4d6c-9fe0-bd54d29618a8.png)
+![screenshot-1](https://user-images.githubusercontent.com/29655971/188993604-ba454f46-3a91-438d-a50c-b6d5feb2fe9b.png)
+
+<details>
+    <summary>Old screenshots</summary>  
+    <br>
+
+![screenshot-2](https://user-images.githubusercontent.com/29655971/188993525-7b65e1ea-ccd3-4a62-bbf9-485a4489cdfb.png)
+![screenshot-3](https://user-images.githubusercontent.com/29655971/188993566-c4e8d03d-af7b-4501-baf9-62b267d2c139.png)
 ![screenshot-4](https://user-images.githubusercontent.com/29655971/188993616-f905649d-6c8c-4f77-b412-5cc1f942060f.png)
 ![screenshot-5](https://user-images.githubusercontent.com/29655971/188993633-e2c0c609-b649-49c8-95f5-469e1ac27785.png)
 
+</details>
