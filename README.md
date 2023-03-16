@@ -360,6 +360,9 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 #
 </details>
 
+<details>
+  <summary>Pending items</summary>  
+
 - [X] Add aim stuff
     - [X] Triggerbot
         - [X] Add delay slider
@@ -390,6 +393,7 @@ This method is not recommended as the cheat can be a bit outdated and you might 
 	- [ ] Ability to set certain players to friendly and ignore aimbot, etc.
 - [ ] Port to linux
 
+</details>
 
 ## Screenshots
 *Some screenshots might be a bit outdated...*  
