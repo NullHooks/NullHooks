@@ -95,6 +95,12 @@ namespace hooks {
 		void __fastcall hook(void* thisptr, void* edx, int& filter, int ent_index, int channel, const char* sound_entry, unsigned int sound_entry_hash, const char* sample, float volume, int seed, float attenuation, int flags, int pitch, const vec3_t* origin, const vec3_t* direction, void* utl_vec_origins, bool update_positions, float soundtime, int speakerentity, StartSoundParams_t& params);
 	}
 
+	namespace overridemouseinput {
+		using fn = void(__thiscall*)(void*, float*, float*);
+		inline fn original;
+		void __fastcall hook(void* thisptr, void* edx, float* x, float* y);
+	}
+
 	namespace get_client_model_renderable {
 		using fn = void*(__stdcall *)();
 		inline fn original;

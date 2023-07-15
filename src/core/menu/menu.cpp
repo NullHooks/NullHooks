@@ -154,7 +154,7 @@ void menu::render() {
 				gui::add_checkbox	("Backtrack chams",		variables::chams::backtrack_chams, variables::colors::bt_chams_enemy_fade, variables::colors::bt_chams_enemy);
 			}
 
-			gui::add_groupbox("Movement", 11); {
+			gui::add_groupbox("Movement", 12); {
 				gui::add_checkbox	("Infinite duck (WARNING: Untrusted)",	variables::misc::infinite_duck);
 				gui::add_checkbox	("Bhop",								variables::misc::bhop);
 				gui::add_combobox	("Autostrafe",							variables::misc::autostrafe_options, variables::misc::autostrafe_target);
@@ -162,6 +162,7 @@ void menu::render() {
 				gui::add_hotkey		("Edgejump key",						variables::misc::ej_key);
 				gui::add_checkbox	("Edgebug",								variables::misc::edgebug);
 				gui::add_hotkey		("Edgebug key",							variables::misc::eb_key);
+				gui::add_slider		("Edgebug radius",						variables::misc::edgebug_radius, 0.f, 999.f);
 				gui::add_checkbox	("Jumpbug",								variables::misc::jumpbug);
 				gui::add_hotkey		("Jumpbug key",							variables::misc::jb_key);
 				gui::add_checkbox	("Slowwalk",							variables::misc::slowwalk);

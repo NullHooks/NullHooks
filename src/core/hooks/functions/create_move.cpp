@@ -51,7 +51,6 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	
 	prediction::get_server_time(cmd);		// Call it once before prediction
 	prediction::start(cmd); {
-		misc::movement::edgebug(cmd, old_flags);
 		misc::movement::post_pred_jumpbug(cmd, old_flags);
 
 		aim::triggerbot(cmd);
@@ -64,6 +63,7 @@ bool hooks::create_move::hook(float input_sample_frametime, c_usercmd *cmd, bool
 	} prediction::end();
 
 	misc::movement::edgejump(cmd, old_flags);
+	misc::movement::edgebug(cmd);
 
 	/* ------------------------------------------------------------------------ */
 
